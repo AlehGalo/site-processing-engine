@@ -32,6 +32,7 @@ public class MapPages {
     private static class Listener implements IObserver<IContent> {
 
         private final Analyser analyser = new Analyser();
+
         private final Information information;
 
         public Listener(final Information inf) {
