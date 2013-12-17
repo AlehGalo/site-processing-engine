@@ -46,7 +46,6 @@ public class MapPages {
         public void addExtractor(final IExtractor<Set<String>, IContent> extractor) {
             analyser.addExtractor(extractor);
         }
-
     }
 
     /**
@@ -71,7 +70,7 @@ public class MapPages {
             final Spider spider = new Spider(inf);
             final Listener listener = new Listener(inf);
             listener.addExtractor(new MailExtractor());
-            
+
             spider.addListener(listener);
 
             spider.collect();
