@@ -10,7 +10,6 @@ import java.util.Set;
 import org.junit.Test;
 
 /**
- * @author Alexey Grigorev
  */
 public class SocialTest {
 

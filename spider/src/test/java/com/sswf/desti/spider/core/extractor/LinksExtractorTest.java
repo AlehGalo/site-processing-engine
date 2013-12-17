@@ -1,6 +1,6 @@
 package com.sswf.desti.spider.core.extractor;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +14,6 @@ import com.sswf.desti.spider.core.extractor.deprecation.DeprecationFactory;
 import com.sswf.desti.spider.core.extractor.deprecation.IDeprecated;
 
 /**
- * @author Alexey Grigorev
  */
 public class LinksExtractorTest {
 
@@ -35,7 +34,7 @@ public class LinksExtractorTest {
         System.out.println(expected);
     }
 
-    private static String readPage(String file) throws IOException {
+    private static String readPage(final String file) throws IOException {
         InputStream page = LinksExtractorTest.class.getResourceAsStream(file);
         return IOUtils.toString(page);
     }

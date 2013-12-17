@@ -1,14 +1,11 @@
 package com.sswf.desti.domain.social;
 
 /**
- * @author Alexey Grigorev
+ * @author Al
  */
 public enum SocialNetwork {
-    GOOGLE_PLUS("GooglePlus"),
-    FACEBOOK("Facebook"),
-    TWITTER("Twitter"),
-    PINTEREST("Pinterest"),
-    INSTAGRAM("Instagram");
+    GOOGLE_PLUS("GooglePlus"), FACEBOOK("Facebook"), TWITTER("Twitter"), PINTEREST("Pinterest"), INSTAGRAM(
+            "Instagram");
 
     private final String name;
 

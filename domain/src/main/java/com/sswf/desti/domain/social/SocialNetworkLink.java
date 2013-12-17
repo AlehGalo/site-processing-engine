@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * @author Alexey Grigorev
+ * @author Al
  */
 public class SocialNetworkLink {
 

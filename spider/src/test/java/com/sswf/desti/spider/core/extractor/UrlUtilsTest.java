@@ -1,13 +1,12 @@
 package com.sswf.desti.spider.core.extractor;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.junit.Test;
 
 /**
- * @author Alexey Grigorev
  */
 public class UrlUtilsTest {
 

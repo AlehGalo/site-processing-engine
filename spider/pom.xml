@@ -2,26 +2,23 @@
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>desti-spider</artifactId>
+	<artifactId>spider</artifactId>
 	<packaging>jar</packaging>
-	<name>desti-spider</name>
-
+	<name>spider</name>
 	<parent>
-		<groupId>com.sswf.desti</groupId>
-		<artifactId>desti-collector</artifactId>
+		<groupId>com.jdev.crawl</groupId>
+		<artifactId>collector</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-
 	<dependencies>
 		<dependency>
-			<groupId>com.jdev.crawler</groupId>
-			<artifactId>desti-crawler</artifactId>
+			<groupId>com.jdev.crawl</groupId>
+			<artifactId>crawler</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.sswf.desti</groupId>
-			<artifactId>desti-domain</artifactId>
+			<groupId>com.jdev.crawl</groupId>
+			<artifactId>domain</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

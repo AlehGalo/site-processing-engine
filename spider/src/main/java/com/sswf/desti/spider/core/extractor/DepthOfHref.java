@@ -6,8 +6,7 @@ package com.sswf.desti.spider.core.extractor;
 import java.net.URL;
 
 import org.apache.commons.lang3.StringUtils;
-
-import com.jdev.crawler.util.Assert;
+import org.springframework.util.Assert;
 
 /**
  * @author Aleh

@@ -8,13 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Alexey Grigorev
  */
 public class UrlUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UrlUtils.class);
 
-    public static URL buildUrl(String url) {
+    public static URL buildUrl(final String url) {
         try {
             return new URL(url);
         } catch (MalformedURLException e) {
@@ -23,11 +22,11 @@ public class UrlUtils {
         }
     }
 
-    public static String extractDomain(URL url) {
+    public static String extractDomain(final URL url) {
         return url.getProtocol() + "://" + url.getHost();
     }
 
-    public static String truncateFromLastSlash(URL url) {
+    public static String truncateFromLastSlash(final URL url) {
         String domain = extractDomain(url);
         String path = url.getPath();
         if (StringUtils.isNotEmpty(path)) {

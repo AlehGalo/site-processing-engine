@@ -1,7 +1,7 @@
 package com.sswf.desti.domain;
 
 /**
- * @author Alexey Grigorev
+ * @author Al
  */
 public class TargetWebSite {
 
