@@ -1,6 +1,5 @@
 package com.jdev.crawler.observer;
 
-
 /**
  * @author Aleh
  * @param <T>

@@ -18,7 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import com.sswf.desti.domain.price.Price;
+import com.jdev.domain.price.Price;
 
 /**
  * @author Aleh Abstract class for extractors test. Html file is input and xml

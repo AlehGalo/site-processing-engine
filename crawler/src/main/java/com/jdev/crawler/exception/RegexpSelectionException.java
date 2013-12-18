@@ -21,17 +21,15 @@ public class RegexpSelectionException extends SelectionException {
     /**
      *
      */
-    private static final String DETAILED_ERROR_FORMAT = ERROR_FORMAT
-	    + "\tDetails: [%s]";
+    private static final String DETAILED_ERROR_FORMAT = ERROR_FORMAT + "\tDetails: [%s]";
 
     /**
      * @param key
      * @param value
      * @param cause
      */
-    public RegexpSelectionException(final String key, final String value,
-	    final Throwable cause) {
-	super(String.format(ERROR_FORMAT, key, value), cause);
+    public RegexpSelectionException(final String key, final String value, final Throwable cause) {
+        super(String.format(ERROR_FORMAT, key, value), cause);
     }
 
     /**
@@ -39,7 +37,7 @@ public class RegexpSelectionException extends SelectionException {
      * @param value
      */
     public RegexpSelectionException(final String key, final String value) {
-	super(String.format(ERROR_FORMAT, key, value));
+        super(String.format(ERROR_FORMAT, key, value));
     }
 
     /**
@@ -48,8 +46,7 @@ public class RegexpSelectionException extends SelectionException {
      * @param additionalErrorMessage
      */
     public RegexpSelectionException(final String key, final String value,
-	    final String additionalErrorMessage) {
-	super(String.format(DETAILED_ERROR_FORMAT, key, value,
-		additionalErrorMessage));
+            final String additionalErrorMessage) {
+        super(String.format(DETAILED_ERROR_FORMAT, key, value, additionalErrorMessage));
     }
 }

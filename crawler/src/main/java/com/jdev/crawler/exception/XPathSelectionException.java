@@ -22,15 +22,14 @@ public class XPathSelectionException extends SelectionException {
      * @param message
      * @param cause
      */
-    public XPathSelectionException(final String key, final String value,
-	    final Throwable cause) {
-	super(String.format(ERROR_FORMAT, key, value), cause);
+    public XPathSelectionException(final String key, final String value, final Throwable cause) {
+        super(String.format(ERROR_FORMAT, key, value), cause);
     }
 
     /**
      * @param message
      */
     public XPathSelectionException(final String key, final String value) {
-	super(String.format(ERROR_FORMAT, key, value));
+        super(String.format(ERROR_FORMAT, key, value));
     }
 }

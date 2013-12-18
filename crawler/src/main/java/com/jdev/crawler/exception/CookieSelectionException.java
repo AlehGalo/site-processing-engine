@@ -23,7 +23,7 @@ public class CookieSelectionException extends SelectionException {
      * @param cause
      */
     public CookieSelectionException(final String key, final Throwable cause) {
-	super(String.format(ERROR_FORMAT, key), cause);
+        super(String.format(ERROR_FORMAT, key), cause);
     }
 
     /**
@@ -31,7 +31,7 @@ public class CookieSelectionException extends SelectionException {
      * @param message
      */
     public CookieSelectionException(final String key) {
-	super(String.format(ERROR_FORMAT, key));
+        super(String.format(ERROR_FORMAT, key));
     }
 
     /**
@@ -39,7 +39,7 @@ public class CookieSelectionException extends SelectionException {
      * @param message
      */
     public CookieSelectionException(final String key, final String message) {
-	super(String.format(ERROR_FORMAT, key) + message);
+        super(String.format(ERROR_FORMAT, key) + message);
     }
 
 }

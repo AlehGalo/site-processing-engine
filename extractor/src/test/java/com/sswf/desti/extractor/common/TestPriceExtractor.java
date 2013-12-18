@@ -13,8 +13,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.sswf.desti.domain.adapter.ContentUrl;
-import com.sswf.desti.domain.price.Price;
+import com.jdev.domain.adapter.ContentUrl;
+import com.jdev.domain.price.Price;
+import com.jdev.extractor.extractor.common.PriceExtractor;
 
 /**
  * @author Aleh Price extractor test.

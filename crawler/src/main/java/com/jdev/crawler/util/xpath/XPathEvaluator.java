@@ -39,13 +39,13 @@ public final class XPathEvaluator {
      *         expression and converting the result to <code>returnType</code>.
      * @throws XPathExpressionException
      */
-    public static Object eval(final String expression, final Node node,
-	    final QName returnType) throws XPathExpressionException {
-	Assert.notNull(node);
-	Assert.hasLength(expression);
-	Assert.notNull(returnType);
-	final XPath xPath = FACTORY.newXPath();
-	final XPathExpression xPathExpression = xPath.compile(expression);
-	return xPathExpression.evaluate(node, returnType);
+    public static Object eval(final String expression, final Node node, final QName returnType)
+            throws XPathExpressionException {
+        Assert.notNull(node);
+        Assert.hasLength(expression);
+        Assert.notNull(returnType);
+        final XPath xPath = FACTORY.newXPath();
+        final XPathExpression xPathExpression = xPath.compile(expression);
+        return xPathExpression.evaluate(node, returnType);
     }
 }

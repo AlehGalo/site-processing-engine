@@ -14,7 +14,7 @@ public class ProcessException extends CrawlerException {
      * @param message
      */
     public ProcessException(final String message) {
-	super(message);
+        super(message);
     }
 
     /**
@@ -22,6 +22,6 @@ public class ProcessException extends CrawlerException {
      * @param cause
      */
     public ProcessException(final String message, final Throwable cause) {
-	super(message, cause);
+        super(message, cause);
     }
 }

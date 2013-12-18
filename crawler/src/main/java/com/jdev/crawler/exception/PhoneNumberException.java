@@ -7,6 +7,7 @@ package com.jdev.crawler.exception;
  * @author Aleh
  * 
  */
+@Deprecated
 public class PhoneNumberException extends CrawlerException {
 
     /**
@@ -18,7 +19,7 @@ public class PhoneNumberException extends CrawlerException {
      * @param message
      */
     public PhoneNumberException(final String message) {
-	super(message);
+        super(message);
     }
 
     /**
@@ -26,7 +27,7 @@ public class PhoneNumberException extends CrawlerException {
      * @param cause
      */
     public PhoneNumberException(final String message, final Throwable cause) {
-	super(message, cause);
+        super(message, cause);
     }
 
 }

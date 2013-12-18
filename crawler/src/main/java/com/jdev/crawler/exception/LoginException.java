@@ -17,7 +17,7 @@ public class LoginException extends CrawlerException {
      * @param message
      */
     public LoginException(final String message) {
-	super(message);
+        super(message);
     }
 
     /**
@@ -25,6 +25,6 @@ public class LoginException extends CrawlerException {
      * @param cause
      */
     public LoginException(final String message, final Throwable cause) {
-	super(message, cause);
+        super(message, cause);
     }
 }

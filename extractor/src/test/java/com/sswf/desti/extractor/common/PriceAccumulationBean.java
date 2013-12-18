@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.sswf.desti.domain.price.Price;
+import com.jdev.domain.price.Price;
 
 /**
  * @author Aleh

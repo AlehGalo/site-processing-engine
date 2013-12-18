@@ -17,7 +17,7 @@ public class SelectionException extends CrawlerException {
      * @param message
      */
     public SelectionException(final String message) {
-	super(message);
+        super(message);
     }
 
     /**
@@ -25,6 +25,6 @@ public class SelectionException extends CrawlerException {
      * @param cause
      */
     public SelectionException(final String message, final Throwable cause) {
-	super(message, cause);
+        super(message, cause);
     }
 }
