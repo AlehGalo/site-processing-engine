@@ -26,7 +26,7 @@
 		<org.sl4j.version>1.7.0</org.sl4j.version>
 		<log4j.version>1.2.17</log4j.version>
 		<apache.poi.version>3.9</apache.poi.version>
-		<org.springframework.spring.web.version>3.2.4.RELEASE</org.springframework.spring.web.version>
+		<org.springframework.spring.web.version>4.0.0.RELEASE</org.springframework.spring.web.version>
 		<junit.version>4.11</junit.version>
 		<xmlunit.version>1.5</xmlunit.version>
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
@@ -42,9 +42,11 @@
 			<url>http://repository.jboss.org/maven2</url>
 		</repository>
 		<repository>
-			<id>spring-maven-release</id>
-			<name>Spring Maven Release Repository</name>
-			<url>http://maven.springframework.org/release</url>
+			<id>com.springsource.repository.maven.snapshot</id>
+			<url>http://maven.springframework.org/snapshot/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
 	<dependencyManagement>

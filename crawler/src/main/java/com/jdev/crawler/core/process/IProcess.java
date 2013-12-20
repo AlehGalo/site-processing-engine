@@ -14,7 +14,7 @@ public interface IProcess {
      * @return
      * @throws CrawlerException
      */
-    byte[] process(IProcessSession session, byte[] content,
-	    ISelectorExtractStrategy extractStrategy) throws CrawlerException;
+    byte[] process(IProcessSession session, byte[] content, ISelectorExtractStrategy extractStrategy)
+            throws CrawlerException;
 
 }

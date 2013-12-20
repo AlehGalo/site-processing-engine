@@ -35,31 +35,31 @@ public class CrawlerBuilder implements ICrawlerBuilder {
     }
 
     @Override
-    public CrawlerBuilder buildFileStorage(IFileStorage fileStorage) {
+    public ICrawlerBuilder buildFileStorage(final IFileStorage fileStorage) {
         crawler.setFileStorage(fileStorage);
         return this;
     }
 
     @Override
-    public CrawlerBuilder buildClient(HttpClient client) {
+    public ICrawlerBuilder buildClient(final HttpClient client) {
         crawler.setClient(client);
         return this;
     }
 
     @Override
-    public CrawlerBuilder buildRequestBuilder(IRequestBuilder requestBuilder) {
+    public ICrawlerBuilder buildRequestBuilder(final IRequestBuilder requestBuilder) {
         crawler.setRequestBuilder(requestBuilder);
         return this;
     }
 
     @Override
-    public CrawlerBuilder buildCookieStore(CookieStore cookieStore) {
+    public ICrawlerBuilder buildCookieStore(final CookieStore cookieStore) {
         crawler.setStore(cookieStore);
         return this;
     }
 
     @Override
-    public CrawlerBuilder buildStoreMarkup(boolean storeMarkup) {
+    public CrawlerBuilder buildStoreMarkup(final boolean storeMarkup) {
         crawler.setStoreMarkup(storeMarkup);
         return this;
     }
