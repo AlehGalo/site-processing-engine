@@ -26,8 +26,7 @@ public class CookieSelector implements ISelector {
     /**
      * Logger for the main actions.
      */
-    private static final Logger LOGGER = LoggerFactory
-	    .getLogger(CookieSelector.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CookieSelector.class);
 
     /**
      *
@@ -38,8 +37,8 @@ public class CookieSelector implements ISelector {
      * @param name
      */
     public CookieSelector(final String name) {
-	Assert.hasLength(name);
-	this.name = name;
+        Assert.hasLength(name);
+        this.name = name;
     }
 
     /*
@@ -51,30 +50,29 @@ public class CookieSelector implements ISelector {
      */
     @Override
     public List<ISelectorResult> selectValues(final Object cookStore)
-	    throws CookieSelectionException {
-	final List<ISelectorResult> list = new ArrayList<ISelectorResult>();
-	if (cookStore instanceof CookieStore) {
-	    final CookieStore cookieStore = (CookieStore) cookStore;
-	    for (final Cookie cookie : cookieStore.getCookies()) {
-		if (name.equals(cookie.getName())) {
-		    final String value = cookie.getValue();
-		    if (StringUtils.isEmpty(value)) {
-			throw new CookieSelectionException(name);
-		    }
-		    if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("[CookieSelector] >> {} {}", name, value);
-		    }
-		    list.add(new SelectorResult(name, value));
-		}
-	    }
-	} else {
-	    throw new CookieSelectionException(name,
-		    "Content is not a cookie store.");
-	}
-	if (list.isEmpty()) {
-	    LOGGER.error("No values selected.");
-	    throw new CookieSelectionException(name);
-	}
-	return list;
+            throws CookieSelectionException {
+        final List<ISelectorResult> list = new ArrayList<ISelectorResult>();
+        if (cookStore instanceof CookieStore) {
+            final CookieStore cookieStore = (CookieStore) cookStore;
+            for (final Cookie cookie : cookieStore.getCookies()) {
+                if (name.equals(cookie.getName())) {
+                    final String value = cookie.getValue();
+                    if (StringUtils.isEmpty(value)) {
+                        throw new CookieSelectionException(name);
+                    }
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("[CookieSelector] >> {} {}", name, value);
+                    }
+                    list.add(new SelectorResult(name, value));
+                }
+            }
+        } else {
+            throw new CookieSelectionException(name, "Content is not a cookie store.");
+        }
+        if (list.isEmpty()) {
+            LOGGER.error("No values selected.");
+            throw new CookieSelectionException(name);
+        }
+        return list;
     }
 }

@@ -15,8 +15,8 @@ import org.apache.http.client.CookieStore;
 import org.springframework.util.Assert;
 
 import com.jdev.crawler.builder.CrawlerBuilder;
-import com.jdev.crawler.core.Agent;
-import com.jdev.crawler.core.FileType;
+import com.jdev.crawler.core.AgentEnum;
+import com.jdev.crawler.core.FileTypeEnum;
 import com.jdev.crawler.core.HttpClientFactory;
 import com.jdev.crawler.core.ICrawler;
 import com.jdev.crawler.core.process.ProcessUtils;
@@ -86,7 +86,7 @@ public final class SpiderUtil {
     public static ICrawler createCrawler(final String url) {
         return new CrawlerBuilder(ProcessUtils.doGet(url, ACCEPTED_MIME_TYPES,
                 new SaveHTMLStreamHandlerIgnoreException()), USER)
-                .buildClient(HttpClientFactory.createHttpClient(Agent.CHROME_USER_AGENT))
+                .buildClient(HttpClientFactory.createHttpClient(AgentEnum.CHROME_USER_AGENT))
                 .buildCookieStore(COOKIESTORE).buildFileStorage(new FileStorage(FILE_STORAGE_NAME))
                 .buildRequestBuilder(REQUESTBUILDER).buildStoreMarkup(false).getResult();
     }
@@ -100,7 +100,7 @@ public final class SpiderUtil {
                 .getAllFileStore();
         if (!fileStoreCollection.isEmpty()) {
             final List<IIndexedItem> list = ((IFileStore) fileStoreCollection.toArray()[0])
-                    .getItems(FileType.HTML);
+                    .getItems(FileTypeEnum.HTML);
             Assert.isTrue(list.size() <= 1);
             if (list.size() != 0) {
                 return new File(list.get(0).getFileName());

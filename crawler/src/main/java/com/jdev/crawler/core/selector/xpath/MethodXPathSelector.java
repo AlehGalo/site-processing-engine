@@ -15,7 +15,7 @@ public class MethodXPathSelector extends EnumXPathSelector {
      * @param name
      */
     public MethodXPathSelector(final String selector) {
-	super(RequestReservedWord.METHOD, selector);
+        super(RequestReservedWord.METHOD, selector);
     }
 
 }

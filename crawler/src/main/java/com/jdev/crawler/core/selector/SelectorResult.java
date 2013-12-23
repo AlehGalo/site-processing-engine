@@ -19,18 +19,12 @@ public class SelectorResult implements ISelectorResult {
     private String value;
 
     /**
-     *
-     */
-    public SelectorResult() {
-    }
-
-    /**
      * @param name
      * @param value
      */
     public SelectorResult(final String name, final String value) {
-	this.name = name;
-	this.value = value;
+        this.name = name;
+        this.value = value;
     }
 
     /*
@@ -42,7 +36,7 @@ public class SelectorResult implements ISelectorResult {
      */
     @Override
     public String getName() {
-	return name;
+        return name;
     }
 
     /*
@@ -54,7 +48,7 @@ public class SelectorResult implements ISelectorResult {
      */
     @Override
     public String getValue() {
-	return value;
+        return value;
     }
 
     /**
@@ -62,7 +56,7 @@ public class SelectorResult implements ISelectorResult {
      *            the name to set
      */
     protected final void setName(final String name) {
-	this.name = name;
+        this.name = name;
     }
 
     /**
@@ -70,7 +64,7 @@ public class SelectorResult implements ISelectorResult {
      *            the value to set
      */
     protected final void setValue(final String value) {
-	this.value = value;
+        this.value = value;
     }
 
 }

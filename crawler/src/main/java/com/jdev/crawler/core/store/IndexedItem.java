@@ -6,7 +6,7 @@ package com.jdev.crawler.core.store;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.jdev.crawler.core.FileType;
+import com.jdev.crawler.core.FileTypeEnum;
 import com.jdev.crawler.util.Assert;
 
 /**
@@ -33,7 +33,7 @@ public class IndexedItem implements IIndexedItem {
     /**
      * HTML, PDF, CSV.
      */
-    private final FileType fileType;
+    private final FileTypeEnum fileType;
 
     /**
      * ID of the job.
@@ -45,7 +45,7 @@ public class IndexedItem implements IIndexedItem {
      * @param fileName
      *            fileName to the file.
      */
-    public IndexedItem(final FileType fileType, final String fileName) {
+    public IndexedItem(final FileTypeEnum fileType, final String fileName) {
         this(fileType, fileName, null);
     }
 
@@ -54,7 +54,7 @@ public class IndexedItem implements IIndexedItem {
      * @param filePath
      *            fileName to the file.
      */
-    public IndexedItem(final FileType fileType, final String fileName, final String jobId) {
+    public IndexedItem(final FileTypeEnum fileType, final String fileName, final String jobId) {
         this(fileType, fileName, jobId, null);
     }
 
@@ -63,7 +63,7 @@ public class IndexedItem implements IIndexedItem {
      * @param fileName
      *            fileName to the file.
      */
-    public IndexedItem(final FileType fileType, final String fileName, final String jobId,
+    public IndexedItem(final FileTypeEnum fileType, final String fileName, final String jobId,
             final String description) {
         Assert.notNull(fileType);
         Assert.hasLength(fileName);
@@ -99,7 +99,7 @@ public class IndexedItem implements IIndexedItem {
      * @see cinergy.crawler.core.store.IIndexedItem#getType()
      */
     @Override
-    public FileType getType() {
+    public FileTypeEnum getType() {
         return fileType;
     }
 

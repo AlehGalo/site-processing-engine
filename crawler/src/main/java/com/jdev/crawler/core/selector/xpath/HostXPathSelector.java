@@ -15,6 +15,6 @@ public class HostXPathSelector extends EnumXPathSelector {
      *            xpath expression
      */
     public HostXPathSelector(final String selector) {
-	super(RequestReservedWord.HOST, selector);
+        super(RequestReservedWord.HOST, selector);
     }
 }

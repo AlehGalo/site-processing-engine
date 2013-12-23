@@ -5,7 +5,7 @@ package com.jdev.crawler.core.store;
 
 import java.util.List;
 
-import com.jdev.crawler.core.FileType;
+import com.jdev.crawler.core.FileTypeEnum;
 
 /**
  * @author Aleh Files storage.
@@ -17,7 +17,7 @@ public interface IFileStore {
      *            HTML, PDF, CSV or any supported.
      * @return list of items.
      */
-    List<IIndexedItem> getItems(final FileType fileType);
+    List<IIndexedItem> getItems(final FileTypeEnum fileType);
 
     /**
      * @param fileType
@@ -26,7 +26,7 @@ public interface IFileStore {
      *            unique id for the job.
      * @return list of items.
      */
-    List<IIndexedItem> getItems(final FileType fileType, final String jobId);
+    List<IIndexedItem> getItems(final FileTypeEnum fileType, final String jobId);
 
     /**
      * @return All items.

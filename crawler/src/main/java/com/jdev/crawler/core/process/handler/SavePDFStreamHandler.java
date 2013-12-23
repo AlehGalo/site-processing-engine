@@ -3,7 +3,7 @@
  */
 package com.jdev.crawler.core.process.handler;
 
-import com.jdev.crawler.core.FileType;
+import com.jdev.crawler.core.FileTypeEnum;
 
 
 /**
@@ -30,8 +30,8 @@ public class SavePDFStreamHandler extends AbstractSaveStreamHandler {
      * getFileExtension()
      */
     @Override
-    protected FileType getFileType() {
-        return FileType.PDF;
+    protected FileTypeEnum getFileType() {
+        return FileTypeEnum.PDF;
     }
 
 }

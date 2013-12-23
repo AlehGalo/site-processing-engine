@@ -7,7 +7,7 @@ package com.jdev.crawler.core.event;
  * @author Aleh
  */
 @SuppressWarnings("javadoc")
-public enum Event {
+public enum EventEnum {
 
     ONLINE_LOGIN_OK,
 

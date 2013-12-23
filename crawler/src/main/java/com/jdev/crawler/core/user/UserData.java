@@ -33,10 +33,13 @@ public class UserData implements IUserData {
     private String securityCode;
 
     /**
-     * Virgin, Vodafone, Three.
+     * Company.
      */
     private ICompany company;
 
+    /**
+     * 
+     */
     private final String uuid = UUID.randomUUID().toString();
 
     /**
@@ -52,8 +55,8 @@ public class UserData implements IUserData {
      *            password.
      */
     public UserData(final String name, final String pass) {
-	setLogin(name);
-	setPassword(pass);
+        setLogin(name);
+        setPassword(pass);
     }
 
     /**
@@ -68,19 +71,18 @@ public class UserData implements IUserData {
      * @param company
      *            company.
      */
-    public UserData(final String login, final String password,
-	    final String phoneNumber, final String securityCode,
-	    final ICompany company) {
-	setLogin(login);
-	setPassword(password);
-	setPhoneNumber(phoneNumber);
-	setSecurityCode(securityCode);
-	setCompany(company);
+    public UserData(final String login, final String password, final String phoneNumber,
+            final String securityCode, final ICompany company) {
+        setLogin(login);
+        setPassword(password);
+        setPhoneNumber(phoneNumber);
+        setSecurityCode(securityCode);
+        setCompany(company);
     }
 
     @Override
     public String getUUID() {
-	return uuid;
+        return uuid;
     }
 
     /**
@@ -88,7 +90,7 @@ public class UserData implements IUserData {
      */
     @Override
     public String getLogin() {
-	return login;
+        return login;
     }
 
     /**
@@ -96,8 +98,8 @@ public class UserData implements IUserData {
      *            the login to set
      */
     public void setLogin(final String login) {
-	Assert.hasLength(login, "Login cannot be empty or null.");
-	this.login = login;
+        Assert.hasLength(login, "Login cannot be empty or null.");
+        this.login = login;
     }
 
     /**
@@ -105,7 +107,7 @@ public class UserData implements IUserData {
      */
     @Override
     public String getPassword() {
-	return password;
+        return password;
     }
 
     /**
@@ -113,17 +115,17 @@ public class UserData implements IUserData {
      *            the password to set
      */
     public void setPassword(final String password) {
-	this.password = password;
+        this.password = password;
     }
 
     @Override
     public String getUniqueKey() {
-	return phoneNumber;
+        return phoneNumber;
     }
 
     @Override
     public String getSecurityCode() {
-	return this.securityCode;
+        return this.securityCode;
     }
 
     /**
@@ -131,7 +133,7 @@ public class UserData implements IUserData {
      *            the phoneNumber to set
      */
     public void setPhoneNumber(final String phoneNumber) {
-	this.phoneNumber = phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
 
     /**
@@ -139,12 +141,12 @@ public class UserData implements IUserData {
      *            the securityCode to set
      */
     public void setSecurityCode(final String securityCode) {
-	this.securityCode = securityCode;
+        this.securityCode = securityCode;
     }
 
     @Override
     public ICompany getCompany() {
-	return company;
+        return company;
     }
 
     /**
@@ -152,6 +154,6 @@ public class UserData implements IUserData {
      *            the company to set
      */
     public void setCompany(final ICompany company) {
-	this.company = company;
+        this.company = company;
     }
 }

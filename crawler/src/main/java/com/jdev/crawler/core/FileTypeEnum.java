@@ -7,7 +7,7 @@ package com.jdev.crawler.core;
  * @author Aleh
  * 
  */
-public enum FileType {
+public enum FileTypeEnum {
 
     PDF, HTML, CSV
 }

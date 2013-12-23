@@ -26,8 +26,7 @@ public class XpathMultiSelector extends AbstractXPathSelector {
     /**
      * Logger.
      */
-    private static final Logger LOGGER = LoggerFactory
-	    .getLogger(XpathMultiSelector.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XpathMultiSelector.class);
     /**
      * 
      */
@@ -42,12 +41,11 @@ public class XpathMultiSelector extends AbstractXPathSelector {
      * @param nameSelector
      * @param valueSelector
      */
-    public XpathMultiSelector(final String nameSelector,
-	    final String valueSelector) {
-	Assert.hasLength(nameSelector);
-	Assert.hasLength(valueSelector);
-	this.name = nameSelector;
-	this.selector = valueSelector;
+    public XpathMultiSelector(final String nameSelector, final String valueSelector) {
+        Assert.hasLength(nameSelector);
+        Assert.hasLength(valueSelector);
+        this.name = nameSelector;
+        this.selector = valueSelector;
 
     }
 
@@ -58,23 +56,21 @@ public class XpathMultiSelector extends AbstractXPathSelector {
      * com.sswf.crawler.core.selector.ISelector#selectValues(java.lang.Object)
      */
     @Override
-    public Collection<ISelectorResult> selectValues(final Object content)
-	    throws SelectionException {
-	Assert.isInstanceOf(String.class, content);
-	setNode(TagSoupDomNormaliser.convertToNormalisedNode((String) content));
-	final List<ISelectorResult> names = selectNames();
-	final List<ISelectorResult> values = selectValues();
-	final List<ISelectorResult> result = new ArrayList<ISelectorResult>();
-	if (names.size() == 0 || names.size() != values.size()) {
-	    LOGGER.error("Names size {} and values size {} are incorrect.",
-		    names.size(), values.size());
-	    throw new XPathSelectionException(name, selector);
-	}
-	for (int i = 0; i < names.size(); i++) {
-	    result.add(new SelectorResult(names.get(i).getValue(), values
-		    .get(i).getValue()));
-	}
-	return result;
+    public Collection<ISelectorResult> selectValues(final Object content) throws SelectionException {
+        Assert.isInstanceOf(String.class, content);
+        setNode(TagSoupDomNormaliser.convertToNormalisedNode((String) content));
+        final List<ISelectorResult> names = selectNames();
+        final List<ISelectorResult> values = selectValues();
+        final List<ISelectorResult> result = new ArrayList<ISelectorResult>();
+        if (names.size() == 0 || names.size() != values.size()) {
+            LOGGER.error("Names size {} and values size {} are incorrect.", names.size(),
+                    values.size());
+            throw new XPathSelectionException(name, selector);
+        }
+        for (int i = 0; i < names.size(); i++) {
+            result.add(new SelectorResult(names.get(i).getValue(), values.get(i).getValue()));
+        }
+        return result;
     }
 
     /**
@@ -82,7 +78,7 @@ public class XpathMultiSelector extends AbstractXPathSelector {
      * @throws XPathSelectionException
      */
     private List<ISelectorResult> selectNames() throws XPathSelectionException {
-	return evaluateXPath("name", name);
+        return evaluateXPath("name", name);
     }
 
     /**
@@ -90,6 +86,6 @@ public class XpathMultiSelector extends AbstractXPathSelector {
      * @throws XPathSelectionException
      */
     private List<ISelectorResult> selectValues() throws XPathSelectionException {
-	return evaluateXPath("value", selector);
+        return evaluateXPath("value", selector);
     }
 }

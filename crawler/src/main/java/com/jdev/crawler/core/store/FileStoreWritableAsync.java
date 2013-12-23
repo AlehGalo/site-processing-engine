@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import com.jdev.crawler.core.FileType;
+import com.jdev.crawler.core.FileTypeEnum;
 
 /**
  * @author Aleh
@@ -17,7 +17,7 @@ import com.jdev.crawler.core.FileType;
 public class FileStoreWritableAsync extends FileStoreWritable {
 
     @Override
-    Map<FileType, Set<IIndexedItem>> createMapWithAssociatedFileType() {
+    Map<FileTypeEnum, Set<IIndexedItem>> createMapWithAssociatedFileType() {
         return new ConcurrentHashMap<>();
     }
 

@@ -6,7 +6,7 @@ package com.jdev.crawler.core;
 /**
  * @author Aleh Changeable agents.
  */
-public enum Agent {
+public enum AgentEnum {
     /**
      * Google chrome user agent simation.
      */
@@ -32,7 +32,7 @@ public enum Agent {
      * @param text
      *            of the agent.
      */
-    private Agent(String text) {
+    private AgentEnum(String text) {
         agentText = text;
     }
 

@@ -15,9 +15,8 @@ public class EnumXPathSelector extends XPathSelector {
      * @param word
      * @param selector
      */
-    public EnumXPathSelector(final RequestReservedWord word,
-	    final String selector) {
-	super(word.getWord(), selector);
+    public EnumXPathSelector(final RequestReservedWord word, final String selector) {
+        super(word.getWord(), selector);
     }
 
 }

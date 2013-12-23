@@ -1,4 +1,4 @@
-package com.jdev.crawler.core.selector.content;
+package com.jdev.crawler.core.evaluator;
 
 import javax.xml.namespace.QName;
 import javax.xml.xpath.XPathExpressionException;
@@ -12,13 +12,15 @@ import com.jdev.crawler.util.Assert;
 
 /**
  * XPath evaluate expression tool.
+ * 
+ * @param <T>
  */
-public final class XPathEvaluator implements IEvaluator<Object> {
+public abstract class AbstractXPathEvaluator<T> implements IEvaluator<T> {
 
     /**
      * Logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(XPathEvaluator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractXPathEvaluator.class);
 
     /**
      * Xpath factory.
@@ -45,7 +47,7 @@ public final class XPathEvaluator implements IEvaluator<Object> {
      * @param node
      * @param returnType
      */
-    public XPathEvaluator(final String expression, final Node node, final QName returnType) {
+    AbstractXPathEvaluator(final String expression, final Node node, final QName returnType) {
         Assert.notNull(node);
         Assert.hasLength(expression);
         Assert.notNull(returnType);
@@ -55,28 +57,14 @@ public final class XPathEvaluator implements IEvaluator<Object> {
     }
 
     /**
-     * <p>
-     * Evaluate the compiled XPath expression in the specified context and
-     * return the result as the specified type.
-     * </p>
-     * 
-     * @param expression
-     *            The XPath expression.
-     * @param node
-     *            The starting context.
-     * @param returnType
-     *            The desired return type.
-     * @return The <code>Object</code> that is the result of evaluating the
-     *         expression and converting the result to <code>returnType</code>.
-     * @throws XPathExpressionException
+     * @return object.
      */
-    @Override
-    public Object evaluate() {
+    protected final Object commonEvaluate() {
         try {
             return FACTORY.newXPath().compile(expression).evaluate(node, returnType);
         } catch (XPathExpressionException ex) {
             LOGGER.error(ex.getMessage());
-            return new EmptyObject();
+            return null;
         }
     }
 }

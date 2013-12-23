@@ -52,7 +52,7 @@ public final class HttpClientFactory {
     /**
      * @return HttpClient configured.
      */
-    public static HttpClient createHttpClient(Agent agent) {
+    public static HttpClient createHttpClient(AgentEnum agent) {
         try {
             final DefaultHttpClient client = new DefaultHttpClient(buildClientConnectionManager());
             client.setParams(buildParameters(agent));
@@ -70,7 +70,7 @@ public final class HttpClientFactory {
     /**
      * @return
      */
-    private static HttpParams buildParameters(Agent agent) {
+    private static HttpParams buildParameters(AgentEnum agent) {
         final HttpParams params = new SyncBasicHttpParams();
         HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
         HttpProtocolParams.setContentCharset(params, Consts.UTF_8.toString());

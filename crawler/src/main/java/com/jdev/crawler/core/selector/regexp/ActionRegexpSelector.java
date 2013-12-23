@@ -3,7 +3,7 @@
  */
 package com.jdev.crawler.core.selector.regexp;
 
-import com.jdev.crawler.core.selector.RequestReservedWord;
+import static com.jdev.crawler.core.selector.RequestReservedWord.ACTION;
 
 /**
  * @author Aleh
@@ -16,6 +16,6 @@ public class ActionRegexpSelector extends RegexpSelector {
      * @param selector
      */
     public ActionRegexpSelector(final String selector) {
-	super(RequestReservedWord.ACTION, selector);
+        super(ACTION, selector);
     }
 }

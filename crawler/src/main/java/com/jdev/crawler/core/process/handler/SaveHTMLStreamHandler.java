@@ -3,7 +3,7 @@
  */
 package com.jdev.crawler.core.process.handler;
 
-import com.jdev.crawler.core.FileType;
+import com.jdev.crawler.core.FileTypeEnum;
 
 /**
  * @author Aleh
@@ -18,8 +18,8 @@ public class SaveHTMLStreamHandler extends AbstractSaveStreamHandler {
      * getFileExtension()
      */
     @Override
-    protected FileType getFileType() {
-        return FileType.HTML;
+    protected FileTypeEnum getFileType() {
+        return FileTypeEnum.HTML;
     }
 
     /*

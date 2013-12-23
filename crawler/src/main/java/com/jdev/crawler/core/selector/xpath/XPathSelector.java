@@ -19,8 +19,10 @@ import com.jdev.crawler.util.Assert;
  */
 public class XPathSelector extends AbstractXPathSelector {
 
-    private static final Logger LOGGER = LoggerFactory
-	    .getLogger(XPathSelector.class);
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(XPathSelector.class);
 
     /**
      * Name of parameter.
@@ -37,10 +39,10 @@ public class XPathSelector extends AbstractXPathSelector {
      * @param selector
      */
     public XPathSelector(final String name, final String selector) {
-	Assert.hasLength(name);
-	Assert.hasLength(selector);
-	this.name = name;
-	this.selector = selector;
+        Assert.hasLength(name);
+        Assert.hasLength(selector);
+        this.name = name;
+        this.selector = selector;
     }
 
     /*
@@ -51,16 +53,14 @@ public class XPathSelector extends AbstractXPathSelector {
      * (java.lang.String, java.lang.String)
      */
     @Override
-    public List<ISelectorResult> selectValues(final Object content)
-	    throws SelectionException {
-	Assert.isInstanceOf(String.class, content);
-	setNode(TagSoupDomNormaliser.convertToNormalisedNode((String) content));
-	final List<ISelectorResult> list = evaluateXPath(name, selector);
-	if (list.isEmpty()) {
-	    LOGGER.error("XPath selector extracted 0 items for {} {}", name,
-		    selector);
-	    throw new XPathSelectionException(name, selector);
-	}
-	return list;
+    public List<ISelectorResult> selectValues(final Object content) throws SelectionException {
+        Assert.isInstanceOf(String.class, content);
+        setNode(TagSoupDomNormaliser.convertToNormalisedNode((String) content));
+        final List<ISelectorResult> list = evaluateXPath(name, selector);
+        if (list.isEmpty()) {
+            LOGGER.error("XPath selector extracted 0 items for {} {}", name, selector);
+            throw new XPathSelectionException(name, selector);
+        }
+        return list;
     }
 }

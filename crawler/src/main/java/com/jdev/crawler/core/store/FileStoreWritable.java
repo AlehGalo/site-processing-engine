@@ -14,7 +14,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.jdev.crawler.core.FileType;
+import com.jdev.crawler.core.FileTypeEnum;
 import com.jdev.crawler.util.Assert;
 
 /**
@@ -31,7 +31,7 @@ public class FileStoreWritable implements IFileStoreWritable {
     /**
      * Map of all items sorted by file type.
      */
-    private final Map<FileType, Set<IIndexedItem>> map;
+    private final Map<FileTypeEnum, Set<IIndexedItem>> map;
 
     /**
      * Map of indexed items.
@@ -56,10 +56,10 @@ public class FileStoreWritable implements IFileStoreWritable {
      * (non-Javadoc)
      * 
      * @see cinergy.crawler.core.store.IFileStore#getItems(cinergy.crawler.core.
-     * FileType)
+     * FileTypeEnum)
      */
     @Override
-    public List<IIndexedItem> getItems(final FileType fileType) {
+    public List<IIndexedItem> getItems(final FileTypeEnum fileType) {
         return getNotNullNonModifiableItemsList(map.get(fileType));
     }
 
@@ -113,7 +113,7 @@ public class FileStoreWritable implements IFileStoreWritable {
     private void addToSortedMap(final IIndexedItem item) {
         final Set<IIndexedItem> set = createSet();
         set.add(item);
-        final FileType type = item.getType();
+        final FileTypeEnum type = item.getType();
         Assert.notNull(type, "File type is not set for item.");
         final Set<IIndexedItem> setOfItems = map.get(type);
         if (setOfItems == null) {
@@ -163,7 +163,7 @@ public class FileStoreWritable implements IFileStoreWritable {
     }
 
     @Override
-    public List<IIndexedItem> getItems(final FileType fileType, final String jobId) {
+    public List<IIndexedItem> getItems(final FileTypeEnum fileType, final String jobId) {
         return null;
     }
 
@@ -184,7 +184,7 @@ public class FileStoreWritable implements IFileStoreWritable {
     /**
      * @return map instance.
      */
-    Map<FileType, Set<IIndexedItem>> createMapWithAssociatedFileType() {
+    Map<FileTypeEnum, Set<IIndexedItem>> createMapWithAssociatedFileType() {
         return new HashMap<>();
     }
 

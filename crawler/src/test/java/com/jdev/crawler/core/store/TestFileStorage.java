@@ -7,7 +7,7 @@ import org.apache.commons.lang3.SerializationUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.jdev.crawler.core.FileType;
+import com.jdev.crawler.core.FileTypeEnum;
 import com.jdev.crawler.core.user.IStorageUniqueKey;
 
 /**
@@ -24,7 +24,7 @@ public class TestFileStorage {
     /**
      * IIndexedItem item.
      */
-    private static final IndexedItem ITEM = new IndexedItem(FileType.HTML, KEY, KEY);
+    private static final IndexedItem ITEM = new IndexedItem(FileTypeEnum.HTML, KEY, KEY);
 
     /**
      * Unique key.
@@ -75,8 +75,8 @@ public class TestFileStorage {
         Assert.assertTrue(fileStorage.getName().equals(KEY));
         Assert.assertEquals(fileStorage.getAllFileStore().size(), 1);
         Assert.assertFalse(fileStorage.getFileStore(UNIQUE_KEY).isEmpty());
-        Assert.assertEquals(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileType.HTML).size(), 1);
-        Assert.assertTrue(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileType.HTML).get(0)
+        Assert.assertEquals(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileTypeEnum.HTML).size(), 1);
+        Assert.assertTrue(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileTypeEnum.HTML).get(0)
                 .equals(ITEM));
     }
 
@@ -87,7 +87,7 @@ public class TestFileStorage {
         Assert.assertTrue(fileStorage.isEmpty());
         Assert.assertEquals(fileStorage.getAllFileStore().size(), 1);
         Assert.assertTrue(fileStorage.getFileStore(UNIQUE_KEY).isEmpty());
-        Assert.assertEquals(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileType.HTML).size(), 0);
-        Assert.assertTrue(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileType.HTML).isEmpty());
+        Assert.assertEquals(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileTypeEnum.HTML).size(), 0);
+        Assert.assertTrue(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileTypeEnum.HTML).isEmpty());
     }
 }

@@ -26,8 +26,7 @@ public class CookieSelectorUnion implements ISelector {
     /**
      * Logger.
      */
-    private static final Logger LOGGER = Logger
-	    .getLogger(CookieSelectorUnion.class);
+    private static final Logger LOGGER = Logger.getLogger(CookieSelectorUnion.class);
 
     /**
      * List of cookies selectors.
@@ -43,12 +42,11 @@ public class CookieSelectorUnion implements ISelector {
      * <b>Please note</b> only Cookie selector and static selectors are
      * accepted.
      */
-    public CookieSelectorUnion(final String name,
-	    final ISelector... cookieSelectors) {
-	Assert.isTrue(cookieSelectors != null && cookieSelectors.length > 0);
-	Assert.hasLength(name);
-	parameterName = name;
-	list = Arrays.asList(cookieSelectors);
+    public CookieSelectorUnion(final String name, final ISelector... cookieSelectors) {
+        Assert.isTrue(cookieSelectors != null && cookieSelectors.length > 0);
+        Assert.hasLength(name);
+        parameterName = name;
+        list = Arrays.asList(cookieSelectors);
     }
 
     /*
@@ -59,27 +57,25 @@ public class CookieSelectorUnion implements ISelector {
      * Object )
      */
     @Override
-    public Collection<ISelectorResult> selectValues(final Object content)
-	    throws SelectionException {
-	final List<ISelectorResult> resultList = new ArrayList<ISelectorResult>();
-	if (content instanceof CookieStore) {
-	    final StringBuilder sb = new StringBuilder();
-	    for (final ISelector selector : list) {
-		final Collection<ISelectorResult> selectorResultList = selector
-			.selectValues(content);
-		for (final ISelectorResult iSelectorResult : selectorResultList) {
-		    sb.append(iSelectorResult.getValue());
-		}
-	    }
-	    resultList.add(new SelectorResult(parameterName, sb.toString()));
-	} else {
-	    throw new CookieSelectionException(parameterName,
-		    "Content is not a cookie store.");
-	}
-	if (resultList.isEmpty()) {
-	    LOGGER.error("No data selected.");
-	    throw new CookieSelectionException(parameterName);
-	}
-	return resultList;
+    public Collection<ISelectorResult> selectValues(final Object content) throws SelectionException {
+        final List<ISelectorResult> resultList = new ArrayList<ISelectorResult>();
+        if (content instanceof CookieStore) {
+            final StringBuilder sb = new StringBuilder();
+            for (final ISelector selector : list) {
+                final Collection<ISelectorResult> selectorResultList = selector
+                        .selectValues(content);
+                for (final ISelectorResult iSelectorResult : selectorResultList) {
+                    sb.append(iSelectorResult.getValue());
+                }
+            }
+            resultList.add(new SelectorResult(parameterName, sb.toString()));
+        } else {
+            throw new CookieSelectionException(parameterName, "Content is not a cookie store.");
+        }
+        if (resultList.isEmpty()) {
+            LOGGER.error("No data selected.");
+            throw new CookieSelectionException(parameterName);
+        }
+        return resultList;
     }
 }

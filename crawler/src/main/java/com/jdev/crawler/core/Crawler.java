@@ -31,7 +31,6 @@ public class Crawler implements ICrawler, IProcessContext {
 
     private IProcess flowProcess;
 
-
     private int repeatTime = 5;
     private int waitInterval = 10000;
 
@@ -39,7 +38,6 @@ public class Crawler implements ICrawler, IProcessContext {
      * By default all html files are save at a hard drive.
      */
     private boolean storeMarkup = true;
-
 
     /**
      * @param process

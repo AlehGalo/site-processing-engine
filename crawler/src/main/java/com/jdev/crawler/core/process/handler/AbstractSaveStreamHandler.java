@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.jdev.crawler.core.FileType;
+import com.jdev.crawler.core.FileTypeEnum;
 import com.jdev.crawler.core.process.FileUtils;
 import com.jdev.crawler.core.process.IProcessContext;
 import com.jdev.crawler.core.process.IProcessResultHandler;
@@ -104,5 +104,5 @@ public abstract class AbstractSaveStreamHandler implements IProcessResultHandler
      * 
      * @return file extension.
      */
-    protected abstract FileType getFileType();
+    protected abstract FileTypeEnum getFileType();
 }

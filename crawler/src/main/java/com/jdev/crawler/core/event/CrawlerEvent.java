@@ -13,7 +13,7 @@ public final class CrawlerEvent implements ICrawlerEvent {
     /**
      *
      */
-    private Event event;
+    private EventEnum event;
 
     /**
      *
@@ -26,9 +26,9 @@ public final class CrawlerEvent implements ICrawlerEvent {
      * @param message
      *            for information or display.
      */
-    public CrawlerEvent(final Event event, final String message) {
-	setEvent(event);
-	setMessage(message);
+    public CrawlerEvent(final EventEnum event, final String message) {
+        setEvent(event);
+        setMessage(message);
     }
 
     /*
@@ -37,8 +37,8 @@ public final class CrawlerEvent implements ICrawlerEvent {
      * @see cinergy.crawler.core.event.ICrawlerEvent#getEvent()
      */
     @Override
-    public Event getEvent() {
-	return event;
+    public EventEnum getEvent() {
+        return event;
     }
 
     /*
@@ -48,16 +48,16 @@ public final class CrawlerEvent implements ICrawlerEvent {
      */
     @Override
     public String getMessage() {
-	return message;
+        return message;
     }
 
     /**
      * @param event
      *            the event to set
      */
-    public void setEvent(final Event event) {
-	Assert.notNull(event);
-	this.event = event;
+    public void setEvent(final EventEnum event) {
+        Assert.notNull(event);
+        this.event = event;
     }
 
     /**
@@ -65,8 +65,8 @@ public final class CrawlerEvent implements ICrawlerEvent {
      *            the message to set
      */
     public void setMessage(final String message) {
-	Assert.hasLength(message);
-	this.message = message;
+        Assert.hasLength(message);
+        this.message = message;
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.jdev.crawler.core.FileType;
+import com.jdev.crawler.core.FileTypeEnum;
 
 /**
  * @author Aleh Simple dummy empty file store.
@@ -21,7 +21,7 @@ class DummyFileStore implements IFileStoreWritable {
             .unmodifiableList(new ArrayList<IIndexedItem>());
 
     @Override
-    public List<IIndexedItem> getItems(final FileType fileType) {
+    public List<IIndexedItem> getItems(final FileTypeEnum fileType) {
         return DEFAULT_LIST;
     }
 
@@ -36,7 +36,7 @@ class DummyFileStore implements IFileStoreWritable {
     }
 
     @Override
-    public List<IIndexedItem> getItems(final FileType fileType, final String jobId) {
+    public List<IIndexedItem> getItems(final FileTypeEnum fileType, final String jobId) {
         return DEFAULT_LIST;
     }
 

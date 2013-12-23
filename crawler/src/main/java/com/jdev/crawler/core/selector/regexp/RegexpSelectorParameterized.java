@@ -31,9 +31,9 @@ public class RegexpSelectorParameterized extends RegexpSelector {
      * @param selector
      * @param indexOfElements
      */
-    public RegexpSelectorParameterized(final String name,
-	    final String selector, final int indexOfElements) {
-	this(name, selector, new int[] { indexOfElements });
+    public RegexpSelectorParameterized(final String name, final String selector,
+            final int indexOfElements) {
+        this(name, selector, new int[] { indexOfElements });
     }
 
     /**
@@ -41,32 +41,28 @@ public class RegexpSelectorParameterized extends RegexpSelector {
      * @param selector
      * @param indexOfElements
      */
-    public RegexpSelectorParameterized(final String name,
-	    final String selector, final int[] indexOfElements) {
-	super(name, selector);
-	Assert.isTrue(ArrayUtils.isNotEmpty(indexOfElements));
-	indexSet = new HashSet<Integer>(Arrays.<Integer> asList(ArrayUtils
-		.toObject(indexOfElements)));
+    public RegexpSelectorParameterized(final String name, final String selector,
+            final int[] indexOfElements) {
+        super(name, selector);
+        Assert.isTrue(ArrayUtils.isNotEmpty(indexOfElements));
+        indexSet = new HashSet<Integer>(Arrays.<Integer> asList(ArrayUtils
+                .toObject(indexOfElements)));
 
     }
 
     @Override
-    public List<ISelectorResult> selectValues(final Object cont)
-	    throws RegexpSelectionException {
-	final List<ISelectorResult> list = super.selectValues(cont);
-	final List<ISelectorResult> selectionResult = new ArrayList<ISelectorResult>();
-	for (final Integer index : indexSet) {
-	    if (list.size() <= index || index < 0) {
-		throw new RegexpSelectionException(
-			getName(),
-			getSelector(),
-			String.format(
-				"Index of requested regexp is out of result size. Index=%d, size=%d",
-				index, list.size()));
-	    }
-	    selectionResult.add(list.get(index));
-	}
-	return selectionResult;
+    public List<ISelectorResult> selectValues(final Object cont) throws RegexpSelectionException {
+        final List<ISelectorResult> list = super.selectValues(cont);
+        final List<ISelectorResult> selectionResult = new ArrayList<ISelectorResult>();
+        for (final Integer index : indexSet) {
+            if (list.size() <= index || index < 0) {
+                throw new RegexpSelectionException(getName(), getSelector(), String.format(
+                        "Index of requested regexp is out of result size. Index=%d, size=%d",
+                        index, list.size()));
+            }
+            selectionResult.add(list.get(index));
+        }
+        return selectionResult;
     }
 
 }

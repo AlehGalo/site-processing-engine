@@ -20,7 +20,7 @@
 		<commons.collections.version>3.2.1</commons.collections.version>
 		<commons.validator.version>1.4.0</commons.validator.version>
 		<httpcomponents.version>4.2.5</httpcomponents.version>
-		<jsoup.version>1.7.2</jsoup.version>
+		<jsoup.version>1.7.3</jsoup.version>
 		<tagsoup.version>1.2.1</tagsoup.version>
 		<json.simple.version>1.1.1</json.simple.version>
 		<org.sl4j.version>1.7.0</org.sl4j.version>

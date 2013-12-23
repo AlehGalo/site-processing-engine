@@ -37,10 +37,10 @@ public class RegexpSelector implements ISelector {
      * @param selector
      */
     public RegexpSelector(final String name, final String selector) {
-	Assert.hasLength(selector);
-	Assert.hasLength(name);
-	this.selector = selector;
-	this.name = name;
+        Assert.hasLength(selector);
+        Assert.hasLength(name);
+        this.selector = selector;
+        this.name = name;
     }
 
     /**
@@ -48,10 +48,10 @@ public class RegexpSelector implements ISelector {
      * @param selector
      */
     public RegexpSelector(final RequestReservedWord word, final String selector) {
-	Assert.hasLength(selector);
-	Assert.notNull(word);
-	this.selector = selector;
-	this.name = word.getWord();
+        Assert.hasLength(selector);
+        Assert.notNull(word);
+        this.selector = selector;
+        this.name = word.getWord();
     }
 
     /**
@@ -60,43 +60,41 @@ public class RegexpSelector implements ISelector {
      * after selection results.
      */
     @Override
-    public List<ISelectorResult> selectValues(final Object cont)
-	    throws RegexpSelectionException {
-	Assert.notNull(cont);
-	final List<ISelectorResult> list = new ArrayList<ISelectorResult>();
-	if (cont instanceof String) {
-	    final String content = (String) cont;
-	    if (!StringUtils.isEmpty(content) && !StringUtils.isEmpty(selector)) {
-		final Pattern pattern = Pattern.compile(selector);
-		final Matcher m = pattern.matcher(content);
-		while (m.find()) {
-		    final String value = m.group(1);
-		    if (StringUtils.isEmpty(value)) {
-			throw new RegexpSelectionException(
-				"Selected value is null or empty.", name,
-				selector);
-		    }
-		    list.add(new SelectorResult(name, value));
-		}
-	    }
-	}
-	if (list.isEmpty()) {
-	    throw new RegexpSelectionException(name, selector);
-	}
-	return list;
+    public List<ISelectorResult> selectValues(final Object cont) throws RegexpSelectionException {
+        Assert.notNull(cont);
+        final List<ISelectorResult> list = new ArrayList<ISelectorResult>();
+        if (cont instanceof String) {
+            final String content = (String) cont;
+            if (!StringUtils.isEmpty(content) && !StringUtils.isEmpty(selector)) {
+                final Pattern pattern = Pattern.compile(selector);
+                final Matcher m = pattern.matcher(content);
+                while (m.find()) {
+                    final String value = m.group(1);
+                    if (StringUtils.isEmpty(value)) {
+                        throw new RegexpSelectionException("Selected value is null or empty.",
+                                name, selector);
+                    }
+                    list.add(new SelectorResult(name, value));
+                }
+            }
+        }
+        if (list.isEmpty()) {
+            throw new RegexpSelectionException(name, selector);
+        }
+        return list;
     }
 
     /**
      * @return the selector.
      */
     protected final String getSelector() {
-	return selector;
+        return selector;
     }
 
     /**
      * @return the name.
      */
     protected final String getName() {
-	return name;
+        return name;
     }
 }

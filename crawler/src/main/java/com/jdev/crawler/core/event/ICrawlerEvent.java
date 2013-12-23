@@ -11,7 +11,7 @@ public interface ICrawlerEvent {
     /**
      * @return
      */
-    Event getEvent();
+    EventEnum getEvent();
 
     /**
      * @return

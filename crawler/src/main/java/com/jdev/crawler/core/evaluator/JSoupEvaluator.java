@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.jdev.crawler.core.selector.content;
+package com.jdev.crawler.core.evaluator;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;

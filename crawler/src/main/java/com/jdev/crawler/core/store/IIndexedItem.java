@@ -3,7 +3,7 @@
  */
 package com.jdev.crawler.core.store;
 
-import com.jdev.crawler.core.FileType;
+import com.jdev.crawler.core.FileTypeEnum;
 import com.jdev.crawler.core.process.IDescription;
 
 /**
@@ -20,7 +20,7 @@ public interface IIndexedItem extends IDescription {
     /**
      * @return File type.
      */
-    FileType getType();
+    FileTypeEnum getType();
 
     /**
      * @return job id.
