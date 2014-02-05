@@ -59,9 +59,10 @@ public abstract class AbstractXPathEvaluator<T> implements IEvaluator<T> {
     /**
      * @return object.
      */
-    protected final Object commonEvaluate() {
+    @SuppressWarnings("unchecked")
+    protected final T commonEvaluate() {
         try {
-            return FACTORY.newXPath().compile(expression).evaluate(node, returnType);
+            return (T) FACTORY.newXPath().compile(expression).evaluate(node, returnType);
         } catch (XPathExpressionException ex) {
             LOGGER.error(ex.getMessage());
             return null;

@@ -17,12 +17,12 @@ public class GooglePlusPusher extends FacebookPusher {
      * (non-Javadoc)
      * 
      * @see
-     * com.jdev.extractor.extractor.social.AbstractSetOfStringsPusher#fillBean(java
-     * .lang.Object, java.lang.String)
+     * com.jdev.extractor.extractor.social.AbstractSetOfStringsPusher#fillBean
+     * (java .lang.Object, java.lang.String)
      */
     @Override
     public void fillBean(final Social e, final URI data) {
-	e.setGooglePlusUri(data);
+        e.setGooglePlusUri(data);
     }
 
 }

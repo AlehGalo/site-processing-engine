@@ -23,7 +23,7 @@ public class StringXPathEvaluator extends AbstractXPathEvaluator<String> {
 
     @Override
     public String evaluate() {
-        return (String) commonEvaluate();
+        return commonEvaluate();
     }
 
 }

@@ -24,7 +24,6 @@ public class NodeListXPathEvaluator extends AbstractXPathEvaluator<NodeList> {
 
     @Override
     public NodeList evaluate() {
-        return (NodeList) commonEvaluate();
+        return commonEvaluate();
     }
-
 }

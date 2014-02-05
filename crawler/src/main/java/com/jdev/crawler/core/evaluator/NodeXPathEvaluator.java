@@ -23,7 +23,7 @@ public class NodeXPathEvaluator extends AbstractXPathEvaluator<Node> {
 
     @Override
     public Node evaluate() {
-        return (Node) commonEvaluate();
+        return commonEvaluate();
     }
 
 }
