@@ -21,7 +21,7 @@ import com.jdev.crawler.util.Assert;
  * @author Aleh
  * 
  */
-public class XpathMultiSelector extends AbstractXPathSelector {
+public class XpathMultiSelector extends AbstractXPathSelector<String> {
 
     /**
      * Logger.
@@ -56,9 +56,8 @@ public class XpathMultiSelector extends AbstractXPathSelector {
      * com.sswf.crawler.core.selector.ISelector#selectValues(java.lang.Object)
      */
     @Override
-    public Collection<ISelectorResult> selectValues(final Object content) throws SelectionException {
-        Assert.isInstanceOf(String.class, content);
-        setNode(TagSoupDomNormaliser.convertToNormalisedNode((String) content));
+    public Collection<ISelectorResult> selectValues(final String content) throws SelectionException {
+        setNode(TagSoupDomNormaliser.convertToNormalisedNode(content));
         final List<ISelectorResult> names = selectNames();
         final List<ISelectorResult> values = selectValues();
         final List<ISelectorResult> result = new ArrayList<ISelectorResult>();

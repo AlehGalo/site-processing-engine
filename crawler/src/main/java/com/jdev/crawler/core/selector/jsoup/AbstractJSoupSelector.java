@@ -3,8 +3,8 @@
  */
 package com.jdev.crawler.core.selector.jsoup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.util.Assert;
@@ -13,17 +13,7 @@ import com.jdev.crawler.util.Assert;
  * @author Aleh
  * 
  */
-abstract class AbstractJSoupSelector<T> implements ISelector {
-
-    /**
-     * Logger for the main actions.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractJSoupSelector.class);
-
-    /**
-     * JSoup document. To be analysed.
-     */
-    // private final Document doc;
+abstract class AbstractJSoupSelector<T> implements ISelector<T> {
 
     /**
      * JSoup css selector selector style.
@@ -31,46 +21,41 @@ abstract class AbstractJSoupSelector<T> implements ISelector {
     private final String selector;
 
     /**
-     * @param document
-     *            JSoup document.
+     * JSoup css selector name.
+     */
+    private final String name;
+
+    /**
      * @param selector
      *            jsoup selector.
      */
-    AbstractJSoupSelector(
-    // final Document document,
-            final String selector) {
-        // Assert.notNull(document);
+    AbstractJSoupSelector(final String selector, final String name) {
         Assert.hasLength(selector);
-        // this.doc = document;
+        Assert.hasLength(name);
         this.selector = selector;
+        this.name = name;
     }
-
-    // /**
-    // * @param htmlContent
-    // * Html document as string.
-    // * @param selector
-    // * jsoup selector.
-    // */
-    // AbstractJSoupSelector(final String htmlContent, final String selector) {
-    // this(Jsoup.parse(htmlContent), selector);
-    // }
 
     /**
-     * @return object.
+     * @param htmlCode
+     * @return
      */
-    @SuppressWarnings("unchecked")
-    protected final T commonEvaluate() {
-        return null;
-        // try {
-        // Elements elements = doc.select(selector);
-        // if (elements.isEmpty()){
-        //
-        // } else {
-        // elements.get(0).
-        // }
-        // } catch (XPathExpressionException ex) {
-        // LOGGER.error(ex.getMessage());
-        // return null;
-        // }
+    protected final static Document createDocument(final String htmlCode) {
+        return Jsoup.parse(htmlCode);
     }
+
+    /**
+     * @return the selector
+     */
+    final String getSelector() {
+        return selector;
+    }
+
+    /**
+     * @return the name
+     */
+    final String getName() {
+        return name;
+    }
+
 }

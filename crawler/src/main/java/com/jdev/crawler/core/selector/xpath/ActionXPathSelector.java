@@ -15,6 +15,6 @@ public class ActionXPathSelector extends EnumXPathSelector {
      *            xpath expression
      */
     public ActionXPathSelector(final String selector) {
-	super(RequestReservedWord.ACTION, selector);
+        super(RequestReservedWord.ACTION, selector);
     }
 }

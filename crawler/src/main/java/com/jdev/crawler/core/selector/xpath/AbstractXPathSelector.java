@@ -24,7 +24,7 @@ import com.jdev.crawler.exception.XPathSelectionException;
  * @author Aleh
  * 
  */
-abstract class AbstractXPathSelector implements ISelector {
+abstract class AbstractXPathSelector<T> implements ISelector<T> {
 
     /**
      * Logger.
@@ -44,7 +44,7 @@ abstract class AbstractXPathSelector implements ISelector {
      */
     protected final List<ISelectorResult> evaluateXPath(final String name, final String xPath)
             throws XPathSelectionException {
-        final List<ISelectorResult> resultList = new ArrayList<ISelectorResult>();
+        final List<ISelectorResult> resultList = new ArrayList<>();
         if (node != null) {
             try {
                 resultList.addAll(selectFromNodeList(name, xPath, node));

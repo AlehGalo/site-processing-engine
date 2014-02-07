@@ -10,12 +10,12 @@ import com.jdev.crawler.exception.SelectionException;
 /**
  * @author Aleh
  */
-public interface ISelector {
+public interface ISelector<T> {
 
     /**
      * @param content
      * @return
      * @throws SelectionException
      */
-    Collection<ISelectorResult> selectValues(Object content) throws SelectionException;
+    Collection<ISelectorResult> selectValues(T content) throws SelectionException;
 }

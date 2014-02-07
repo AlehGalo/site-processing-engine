@@ -20,7 +20,7 @@ import com.jdev.crawler.util.Assert;
 /**
  * @author Aleh Non empty list will be the result of selectValues or exception.
  */
-public class RegexpSelector implements ISelector {
+public class RegexpSelector implements ISelector<String> {
 
     /**
      * String that contains Regexp for selection.
@@ -60,22 +60,18 @@ public class RegexpSelector implements ISelector {
      * after selection results.
      */
     @Override
-    public List<ISelectorResult> selectValues(final Object cont) throws RegexpSelectionException {
-        Assert.notNull(cont);
+    public List<ISelectorResult> selectValues(final String cont) throws RegexpSelectionException {
         final List<ISelectorResult> list = new ArrayList<ISelectorResult>();
-        if (cont instanceof String) {
-            final String content = (String) cont;
-            if (!StringUtils.isEmpty(content) && !StringUtils.isEmpty(selector)) {
-                final Pattern pattern = Pattern.compile(selector);
-                final Matcher m = pattern.matcher(content);
-                while (m.find()) {
-                    final String value = m.group(1);
-                    if (StringUtils.isEmpty(value)) {
-                        throw new RegexpSelectionException("Selected value is null or empty.",
-                                name, selector);
-                    }
-                    list.add(new SelectorResult(name, value));
+        if (!StringUtils.isEmpty(cont) && !StringUtils.isEmpty(selector)) {
+            final Pattern pattern = Pattern.compile(selector);
+            final Matcher m = pattern.matcher(cont);
+            while (m.find()) {
+                final String value = m.group(1);
+                if (StringUtils.isEmpty(value)) {
+                    throw new RegexpSelectionException("Selected value is null or empty.", name,
+                            selector);
                 }
+                list.add(new SelectorResult(name, value));
             }
         }
         if (list.isEmpty()) {

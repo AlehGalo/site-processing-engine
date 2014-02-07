@@ -17,7 +17,7 @@ import com.jdev.crawler.util.Assert;
 /**
  * @author Aleh
  */
-public class XPathSelector extends AbstractXPathSelector {
+public class XPathSelector extends AbstractXPathSelector<String> {
 
     /**
      * Logger.
@@ -53,9 +53,8 @@ public class XPathSelector extends AbstractXPathSelector {
      * (java.lang.String, java.lang.String)
      */
     @Override
-    public List<ISelectorResult> selectValues(final Object content) throws SelectionException {
-        Assert.isInstanceOf(String.class, content);
-        setNode(TagSoupDomNormaliser.convertToNormalisedNode((String) content));
+    public List<ISelectorResult> selectValues(final String content) throws SelectionException {
+        setNode(TagSoupDomNormaliser.convertToNormalisedNode(content));
         final List<ISelectorResult> list = evaluateXPath(name, selector);
         if (list.isEmpty()) {
             LOGGER.error("XPath selector extracted 0 items for {} {}", name, selector);

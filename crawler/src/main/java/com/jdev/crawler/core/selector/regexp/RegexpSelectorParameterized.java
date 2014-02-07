@@ -50,8 +50,15 @@ public class RegexpSelectorParameterized extends RegexpSelector {
 
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.jdev.crawler.core.selector.regexp.RegexpSelector#selectValues(java
+     * .lang.String)
+     */
     @Override
-    public List<ISelectorResult> selectValues(final Object cont) throws RegexpSelectionException {
+    public List<ISelectorResult> selectValues(final String cont) throws RegexpSelectionException {
         final List<ISelectorResult> list = super.selectValues(cont);
         final List<ISelectorResult> selectionResult = new ArrayList<ISelectorResult>();
         for (final Integer index : indexSet) {
