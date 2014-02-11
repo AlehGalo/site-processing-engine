@@ -13,9 +13,9 @@ import com.jdev.crawler.exception.CrawlerException;
  */
 public class ForEachProcess implements IProcess {
 
-    private ISelector cycle;
+    private final ISelector cycle;
 
-    private IProcess inner;
+    private final IProcess inner;
 
     /**
      * @param cycle
@@ -23,18 +23,16 @@ public class ForEachProcess implements IProcess {
      */
     public ForEachProcess(final ISelector cycle, final IProcess process) {
         this.cycle = cycle;
-        this.inner = process;
+        inner = process;
     }
 
     @Override
     public byte[] process(final IProcessSession session, final byte[] content,
-	    final ISelectorExtractStrategy extractStrategy)
-	    throws CrawlerException {
-	final Collection<? extends ISelectorResult> list = cycle
-		.selectValues(new String(content, Consts.UTF_8));
-	for (final ISelectorResult result : list) {
-	    inner.process(session, content, new MergingSelectorExtractStrategy(
-		    result));
+            final ISelectorExtractStrategy extractStrategy) throws CrawlerException {
+        final Collection<? extends ISelectorResult> list = cycle.selectValues(new String(content,
+                Consts.UTF_8));
+        for (final ISelectorResult result : list) {
+            inner.process(session, content, new MergingSelectorExtractStrategy(result));
         }
         return null;
     }

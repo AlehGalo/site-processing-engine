@@ -4,7 +4,6 @@
 package com.jdev.crawler.core.selector.cookie;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,7 +20,7 @@ import com.jdev.crawler.util.Assert;
 /**
  * @author Aleh
  */
-public class CookieSelectorUnion implements ISelector {
+public class CookieSelectorUnion implements ISelector<CookieStore> {
 
     /**
      * Logger.
@@ -31,7 +30,7 @@ public class CookieSelectorUnion implements ISelector {
     /**
      * List of cookies selectors.
      */
-    private final List<ISelector> list;
+    private final List<ISelector<CookieStore>> list;
 
     /**
      * Composite parameter name.
@@ -42,11 +41,11 @@ public class CookieSelectorUnion implements ISelector {
      * <b>Please note</b> only Cookie selector and static selectors are
      * accepted.
      */
-    public CookieSelectorUnion(final String name, final ISelector... cookieSelectors) {
-        Assert.isTrue(cookieSelectors != null && cookieSelectors.length > 0);
+    public CookieSelectorUnion(final String name, final List<ISelector<CookieStore>> cookieSelectors) {
+        Assert.isTrue(cookieSelectors != null && !cookieSelectors.isEmpty());
         Assert.hasLength(name);
         parameterName = name;
-        list = Arrays.asList(cookieSelectors);
+        list = cookieSelectors;
     }
 
     /*
@@ -57,21 +56,17 @@ public class CookieSelectorUnion implements ISelector {
      * Object )
      */
     @Override
-    public Collection<ISelectorResult> selectValues(final Object content) throws SelectionException {
+    public Collection<ISelectorResult> selectValues(final CookieStore content)
+            throws SelectionException {
         final List<ISelectorResult> resultList = new ArrayList<ISelectorResult>();
-        if (content instanceof CookieStore) {
-            final StringBuilder sb = new StringBuilder();
-            for (final ISelector selector : list) {
-                final Collection<ISelectorResult> selectorResultList = selector
-                        .selectValues(content);
-                for (final ISelectorResult iSelectorResult : selectorResultList) {
-                    sb.append(iSelectorResult.getValue());
-                }
+        final StringBuilder sb = new StringBuilder();
+        for (final ISelector<CookieStore> selector : list) {
+            final Collection<ISelectorResult> selectorResultList = selector.selectValues(content);
+            for (final ISelectorResult iSelectorResult : selectorResultList) {
+                sb.append(iSelectorResult.getValue());
             }
-            resultList.add(new SelectorResult(parameterName, sb.toString()));
-        } else {
-            throw new CookieSelectionException(parameterName, "Content is not a cookie store.");
         }
+        resultList.add(new SelectorResult(parameterName, sb.toString()));
         if (resultList.isEmpty()) {
             LOGGER.error("No data selected.");
             throw new CookieSelectionException(parameterName);

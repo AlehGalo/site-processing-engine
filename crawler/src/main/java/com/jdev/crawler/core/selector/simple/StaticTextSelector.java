@@ -18,12 +18,12 @@ import com.jdev.crawler.core.selector.SelectorResult;
 /**
  * @author Aleh
  */
-public class StaticTextSelector implements ISelector {
+public class StaticTextSelector implements ISelector<Object> {
 
     /**
      * Logger.
      */
-    private static Logger LOGGER = LoggerFactory.getLogger(StaticTextSelector.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StaticTextSelector.class);
 
     /**
      * 

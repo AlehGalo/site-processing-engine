@@ -21,27 +21,26 @@ import com.jdev.crawler.exception.SelectionException;
 public class DefaultSelectorExtractStrategy implements ISelectorExtractStrategy {
 
     @Override
-    public List<ISelectorResult> extractSelectors(
-	    final IProcessContext context, final IStepConfig config,
-	    final byte[] content) throws SelectionException {
-	final List<ISelectorResult> resultList = new ArrayList<ISelectorResult>();
-	if (content != null) {
-	    final Collection<ISelector> selectorsList = config.getParameters();
-	    if (!CollectionUtils.isEmpty(selectorsList)) {
-		for (final ISelector iSelector : selectorsList) {
-		    if (iSelector instanceof CookieSelector
-			    || iSelector instanceof CookieSelectorUnion) {
-			final Collection<? extends ISelectorResult> result = iSelector
-				.selectValues(context.getCookieStore());
-			resultList.addAll(result);
-		    } else {
-			final Collection<? extends ISelectorResult> result = iSelector
-				.selectValues(new String(content, Consts.UTF_8));
-			resultList.addAll(result);
-		    }
-		}
-	    }
-	}
-	return resultList;
+    public List<ISelectorResult> extractSelectors(final IProcessContext context,
+            final IStepConfig config, final byte[] content) throws SelectionException {
+        final List<ISelectorResult> resultList = new ArrayList<ISelectorResult>();
+        if (content != null) {
+            final Collection<ISelector> selectorsList = config.getParameters();
+            if (!CollectionUtils.isEmpty(selectorsList)) {
+                for (final ISelector iSelector : selectorsList) {
+                    if (iSelector instanceof CookieSelector
+                            || iSelector instanceof CookieSelectorUnion) {
+                        final Collection<? extends ISelectorResult> result = iSelector
+                                .selectValues(context.getCookieStore());
+                        resultList.addAll(result);
+                    } else {
+                        final Collection<? extends ISelectorResult> result = iSelector
+                                .selectValues(new String(content, Consts.UTF_8));
+                        resultList.addAll(result);
+                    }
+                }
+            }
+        }
+        return resultList;
     }
 }

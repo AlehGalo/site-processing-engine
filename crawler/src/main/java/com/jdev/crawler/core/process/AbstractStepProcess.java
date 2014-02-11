@@ -1,9 +1,10 @@
 package com.jdev.crawler.core.process;
 
+import static java.text.MessageFormat.format;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -80,7 +81,8 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
             ISelectorExtractStrategy selectorExtractStrategy) throws CrawlerException {
         try {
             IProcessContext context = session.getSessionContext();
-            List<ISelectorResult> selectors = extractSelectors(context, selectorExtractStrategy, content);
+            List<ISelectorResult> selectors = extractSelectors(context, selectorExtractStrategy,
+                    content);
             HttpRequestBase request = createRequest(context, selectors);
             byte[] result = executeRequest(context, request);
             return handle(session, result);
@@ -130,7 +132,7 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
             }
         } while (++count < context.getRepeatTime() && !(valid = getValidator().validate(b)));
         if (!valid) {
-            throw new CrawlerException(MessageFormat.format(
+            throw new CrawlerException(format(
                     "Waiting {0} ms for a page {1} is failed. Operator is {2}",
                     context.getWaitInterval() * context.getRepeatTime(), request.getURI()
                             .toASCIIString(), context.getUserData().getCompany().getCompanyName()));

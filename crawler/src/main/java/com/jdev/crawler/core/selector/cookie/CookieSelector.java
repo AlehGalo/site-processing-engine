@@ -21,7 +21,7 @@ import com.jdev.crawler.util.Assert;
 /**
  * @author Aleh
  */
-public class CookieSelector implements ISelector {
+public class CookieSelector implements ISelector<CookieStore> {
 
     /**
      * Logger for the main actions.
@@ -49,25 +49,20 @@ public class CookieSelector implements ISelector {
      * (java.lang.String)
      */
     @Override
-    public List<ISelectorResult> selectValues(final Object cookStore)
+    public List<ISelectorResult> selectValues(final CookieStore cookStore)
             throws CookieSelectionException {
         final List<ISelectorResult> list = new ArrayList<ISelectorResult>();
-        if (cookStore instanceof CookieStore) {
-            final CookieStore cookieStore = (CookieStore) cookStore;
-            for (final Cookie cookie : cookieStore.getCookies()) {
-                if (name.equals(cookie.getName())) {
-                    final String value = cookie.getValue();
-                    if (StringUtils.isEmpty(value)) {
-                        throw new CookieSelectionException(name);
-                    }
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("[CookieSelector] >> {} {}", name, value);
-                    }
-                    list.add(new SelectorResult(name, value));
+        for (final Cookie cookie : cookStore.getCookies()) {
+            if (name.equals(cookie.getName())) {
+                final String value = cookie.getValue();
+                if (StringUtils.isEmpty(value)) {
+                    throw new CookieSelectionException(name);
                 }
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("[CookieSelector] >> {} {}", name, value);
+                }
+                list.add(new SelectorResult(name, value));
             }
-        } else {
-            throw new CookieSelectionException(name, "Content is not a cookie store.");
         }
         if (list.isEmpty()) {
             LOGGER.error("No values selected.");
