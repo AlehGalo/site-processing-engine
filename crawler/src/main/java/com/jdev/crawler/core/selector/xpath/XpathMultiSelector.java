@@ -56,7 +56,7 @@ public class XpathMultiSelector extends AbstractXPathSelector<String> {
      * com.sswf.crawler.core.selector.ISelector#selectValues(java.lang.Object)
      */
     @Override
-    public Collection<ISelectorResult> selectValues(final String content) throws SelectionException {
+    public Collection<ISelectorResult> select(final String content) throws SelectionException {
         setNode(TagSoupDomNormaliser.convertToNormalisedNode(content));
         final List<ISelectorResult> names = selectNames();
         final List<ISelectorResult> values = selectValues();
@@ -87,4 +87,5 @@ public class XpathMultiSelector extends AbstractXPathSelector<String> {
     private List<ISelectorResult> selectValues() throws XPathSelectionException {
         return evaluateXPath("value", selector);
     }
+
 }

@@ -1,5 +1,6 @@
 package com.jdev.crawler.core.process;
 
+import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.exception.CrawlerException;
 
 /**

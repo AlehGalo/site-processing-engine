@@ -29,8 +29,8 @@ public class StepConfigAdapter implements IStepConfig {
      * @see cinergy.crawler.core.step.IStepConfig#getParameters()
      */
     @Override
-    public Collection<ISelector> getParameters() {
-        return Collections.<ISelector> emptyList();
+    public Collection<ISelector<?>> getParameters() {
+        return Collections.<ISelector<?>> emptyList();
     }
 
     /*

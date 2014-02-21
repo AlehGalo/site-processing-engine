@@ -14,7 +14,7 @@ public interface IStepConfig {
 
     String getUrl();
 
-    Collection<ISelector> getParameters();
+    Collection<ISelector<?>> getParameters();
 
     String getMethod();
 }

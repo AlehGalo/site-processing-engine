@@ -56,12 +56,12 @@ public class CookieSelectorUnion implements ISelector<CookieStore> {
      * Object )
      */
     @Override
-    public Collection<ISelectorResult> selectValues(final CookieStore content)
+    public Collection<ISelectorResult> select(final CookieStore content)
             throws SelectionException {
         final List<ISelectorResult> resultList = new ArrayList<ISelectorResult>();
         final StringBuilder sb = new StringBuilder();
         for (final ISelector<CookieStore> selector : list) {
-            final Collection<ISelectorResult> selectorResultList = selector.selectValues(content);
+            final Collection<ISelectorResult> selectorResultList = selector.select(content);
             for (final ISelectorResult iSelectorResult : selectorResultList) {
                 sb.append(iSelectorResult.getValue());
             }

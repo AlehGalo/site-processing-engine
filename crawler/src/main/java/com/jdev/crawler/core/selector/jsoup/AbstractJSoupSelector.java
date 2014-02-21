@@ -35,7 +35,7 @@ abstract class AbstractJSoupSelector<T> implements ISelector<T> {
      * @param selector
      *            jsoup selector.
      */
-    AbstractJSoupSelector(final String selector, final String name) {
+    AbstractJSoupSelector(final String name, final String selector) {
         Assert.hasLength(selector);
         Assert.hasLength(name);
         this.selector = selector;
@@ -75,7 +75,7 @@ abstract class AbstractJSoupSelector<T> implements ISelector<T> {
      * @param extractor
      *            the extractor to set
      */
-    public void setExtractor(IJSoupElementExtractor extractor) {
+    public void setExtractor(final IJSoupElementExtractor extractor) {
         this.extractor = extractor;
     }
 

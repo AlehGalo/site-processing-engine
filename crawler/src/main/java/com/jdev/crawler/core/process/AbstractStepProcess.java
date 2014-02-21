@@ -19,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.process.handler.MimeType;
 import com.jdev.crawler.core.process.handler.MimeTypeUtil;
 import com.jdev.crawler.core.request.IRequestBuilder;

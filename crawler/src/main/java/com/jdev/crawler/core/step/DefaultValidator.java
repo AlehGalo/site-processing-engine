@@ -11,18 +11,18 @@ public class DefaultValidator implements IValidator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultValidator.class);
 
-    private final ISelector[] selector;
+    private final ISelector<String>[] selector;
 
-    public DefaultValidator(final ISelector... selector) {
+    public DefaultValidator(final ISelector<String>[] selector) {
         this.selector = selector;
     }
 
     @Override
     public boolean validate(final byte[] content) {
         final String contentString = new String(content, Consts.UTF_8);
-        for (final ISelector sel : selector) {
+        for (final ISelector<String> sel : selector) {
             try {
-                if (sel.selectValues(contentString).isEmpty()) {
+                if (sel.select(contentString).isEmpty()) {
                     return false;
                 }
             } catch (final SelectionException e) {

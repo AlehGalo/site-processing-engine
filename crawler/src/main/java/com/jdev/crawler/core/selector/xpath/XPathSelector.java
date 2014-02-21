@@ -53,7 +53,7 @@ public class XPathSelector extends AbstractXPathSelector<String> {
      * (java.lang.String, java.lang.String)
      */
     @Override
-    public List<ISelectorResult> selectValues(final String content) throws SelectionException {
+    public List<ISelectorResult> select(final String content) throws SelectionException {
         setNode(TagSoupDomNormaliser.convertToNormalisedNode(content));
         final List<ISelectorResult> list = evaluateXPath(name, selector);
         if (list.isEmpty()) {

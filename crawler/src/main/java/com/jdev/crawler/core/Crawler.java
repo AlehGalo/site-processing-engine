@@ -3,10 +3,10 @@ package com.jdev.crawler.core;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 
-import com.jdev.crawler.core.process.DefaultSelectorExtractStrategy;
 import com.jdev.crawler.core.process.IProcess;
 import com.jdev.crawler.core.process.IProcessContext;
 import com.jdev.crawler.core.process.ProcessSession;
+import com.jdev.crawler.core.process.extract.DefaultSelectorExtractStrategy;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.RequestReservedWord;
 import com.jdev.crawler.core.store.FileStorage;

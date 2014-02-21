@@ -58,8 +58,8 @@ public class RegexpSelectorParameterized extends RegexpSelector {
      * .lang.String)
      */
     @Override
-    public List<ISelectorResult> selectValues(final String cont) throws RegexpSelectionException {
-        final List<ISelectorResult> list = super.selectValues(cont);
+    public List<ISelectorResult> select(final String cont) throws RegexpSelectionException {
+        final List<ISelectorResult> list = super.select(cont);
         final List<ISelectorResult> selectionResult = new ArrayList<ISelectorResult>();
         for (final Integer index : indexSet) {
             if (list.size() <= index || index < 0) {

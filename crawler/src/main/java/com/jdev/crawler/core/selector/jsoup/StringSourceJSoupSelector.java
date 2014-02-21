@@ -33,12 +33,12 @@ public class StringSourceJSoupSelector extends AbstractJSoupSelector<String> {
      * @param selector
      * @param name
      */
-    public StringSourceJSoupSelector(final String selector, final String name) {
-        super(selector, name);
+    public StringSourceJSoupSelector(final String name, final String selector) {
+        super(name, selector);
     }
 
     @Override
-    public List<ISelectorResult> selectValues(final String content) throws SelectionException {
+    public List<ISelectorResult> select(final String content) throws SelectionException {
         List<ISelectorResult> result = new ArrayList<>();
         if (StringUtils.isNotBlank(content)) {
             IJSoupElementExtractor extractor = getExtractorOrThrowExceptionIfNull();
@@ -68,4 +68,5 @@ public class StringSourceJSoupSelector extends AbstractJSoupSelector<String> {
         Assert.notNull(extractor, "Extractor for JSoup should be set");
         return extractor;
     }
+
 }

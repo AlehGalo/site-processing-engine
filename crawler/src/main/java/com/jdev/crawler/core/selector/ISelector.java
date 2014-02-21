@@ -17,5 +17,5 @@ public interface ISelector<T> {
      * @return
      * @throws SelectionException
      */
-    Collection<ISelectorResult> selectValues(T content) throws SelectionException;
+    Collection<ISelectorResult> select(T content) throws SelectionException;
 }

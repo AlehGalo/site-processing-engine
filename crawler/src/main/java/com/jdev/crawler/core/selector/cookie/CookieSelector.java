@@ -49,7 +49,7 @@ public class CookieSelector implements ISelector<CookieStore> {
      * (java.lang.String)
      */
     @Override
-    public List<ISelectorResult> selectValues(final CookieStore cookStore)
+    public List<ISelectorResult> select(final CookieStore cookStore)
             throws CookieSelectionException {
         final List<ISelectorResult> list = new ArrayList<ISelectorResult>();
         for (final Cookie cookie : cookStore.getCookies()) {

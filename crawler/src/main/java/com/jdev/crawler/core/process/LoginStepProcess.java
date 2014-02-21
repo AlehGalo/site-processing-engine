@@ -5,6 +5,7 @@ package com.jdev.crawler.core.process;
 
 import java.util.List;
 
+import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.step.IStepConfig;
 import com.jdev.crawler.exception.CrawlerException;

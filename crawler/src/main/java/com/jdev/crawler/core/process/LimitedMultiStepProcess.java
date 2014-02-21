@@ -14,6 +14,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.process.handler.SessionPopulateHandlerSelectionResult;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.ISelectorResult;

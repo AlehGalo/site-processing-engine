@@ -60,7 +60,7 @@ public class RegexpSelector implements ISelector<String> {
      * after selection results.
      */
     @Override
-    public List<ISelectorResult> selectValues(final String cont) throws RegexpSelectionException {
+    public List<ISelectorResult> select(final String cont) throws RegexpSelectionException {
         final List<ISelectorResult> list = new ArrayList<ISelectorResult>();
         if (!StringUtils.isEmpty(cont) && !StringUtils.isEmpty(selector)) {
             final Pattern pattern = Pattern.compile(selector);
