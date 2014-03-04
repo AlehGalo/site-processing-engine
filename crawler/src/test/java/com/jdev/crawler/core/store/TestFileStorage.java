@@ -3,8 +3,11 @@
  */
 package com.jdev.crawler.core.store;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.apache.commons.lang3.SerializationUtils;
-import org.junit.Assert;
 import org.junit.Test;
 
 import com.jdev.crawler.core.FileTypeEnum;
@@ -71,12 +74,12 @@ public class TestFileStorage {
      * @param fileStorage
      */
     private void assertion(final FileStorage fileStorage) {
-        Assert.assertFalse(fileStorage.isEmpty());
-        Assert.assertTrue(fileStorage.getName().equals(KEY));
-        Assert.assertEquals(fileStorage.getAllFileStore().size(), 1);
-        Assert.assertFalse(fileStorage.getFileStore(UNIQUE_KEY).isEmpty());
-        Assert.assertEquals(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileTypeEnum.HTML).size(), 1);
-        Assert.assertTrue(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileTypeEnum.HTML).get(0)
+        assertFalse(fileStorage.isEmpty());
+        assertTrue(fileStorage.getName().equals(KEY));
+        assertEquals(fileStorage.getAllFileStore().size(), 1);
+        assertFalse(fileStorage.getFileStore(UNIQUE_KEY).isEmpty());
+        assertEquals(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileTypeEnum.HTML).size(), 1);
+        assertTrue(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileTypeEnum.HTML).get(0)
                 .equals(ITEM));
     }
 
@@ -84,10 +87,10 @@ public class TestFileStorage {
      * @param fileStorage
      */
     private void assertion1(final FileStorage fileStorage) {
-        Assert.assertTrue(fileStorage.isEmpty());
-        Assert.assertEquals(fileStorage.getAllFileStore().size(), 1);
-        Assert.assertTrue(fileStorage.getFileStore(UNIQUE_KEY).isEmpty());
-        Assert.assertEquals(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileTypeEnum.HTML).size(), 0);
-        Assert.assertTrue(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileTypeEnum.HTML).isEmpty());
+        assertTrue(fileStorage.isEmpty());
+        assertEquals(fileStorage.getAllFileStore().size(), 1);
+        assertTrue(fileStorage.getFileStore(UNIQUE_KEY).isEmpty());
+        assertEquals(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileTypeEnum.HTML).size(), 0);
+        assertTrue(fileStorage.getFileStore(UNIQUE_KEY).getItems(FileTypeEnum.HTML).isEmpty());
     }
 }

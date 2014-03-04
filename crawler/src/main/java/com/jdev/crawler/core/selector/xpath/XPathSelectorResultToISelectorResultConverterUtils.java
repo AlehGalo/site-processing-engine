@@ -42,8 +42,7 @@ public final class XPathSelectorResultToISelectorResultConverterUtils {
      * @throws XPathExpressionException
      */
     public static final List<ISelectorResult> selectFromNodeList(final String name,
-            final String xPath, final Node node) throws XPathSelectionException,
-            XPathExpressionException {
+            final String xPath, final Node node) throws XPathExpressionException {
         final List<ISelectorResult> resultList = new ArrayList<ISelectorResult>();
         final NodeList nodes = new NodeListXPathEvaluator(xPath, node).evaluate();
         if (nodes != null) {
@@ -55,11 +54,9 @@ public final class XPathSelectorResultToISelectorResultConverterUtils {
             for (int i = 0; i < length; i++) {
                 final Node nodeLoc = nodes.item(i);
                 final String nodeValue = nodeLoc.getNodeValue();
-                if (StringUtils.isEmpty(nodeValue)) {
-                    LOGGER.error("Node value selected by XPath is empty {} {}", name, xPath);
-                    throw new XPathSelectionException(name, xPath);
+                if (StringUtils.isNotBlank(nodeValue)) {
+                    resultList.add(new SelectorResult(name, nodeValue));
                 }
-                resultList.add(new SelectorResult(name, nodeValue));
                 LOGGER.debug("[XpathSelector] >> {} {}", name, nodeValue);
             }
         } else {
@@ -81,7 +78,9 @@ public final class XPathSelectorResultToISelectorResultConverterUtils {
         final Node nodeSelected = new NodeXPathEvaluator(xPath, node).evaluate();
         if (nodeSelected != null) {
             final String value = nodeSelected.getNodeValue();
-            resultList.add(new SelectorResult(name, value));
+            if (StringUtils.isNotBlank(value)) {
+                resultList.add(new SelectorResult(name, value));
+            }
             LOGGER.debug("[XpathSelector]> {} {}", name, value);
         } else {
             LOGGER.debug("Evaluation is not a node for [name={}] [selector={}]", name, xPath);
@@ -97,15 +96,14 @@ public final class XPathSelectorResultToISelectorResultConverterUtils {
      * @throws XPathExpressionException
      */
     public static final List<ISelectorResult> selectFromString(final String name,
-            final String xPath, final Node node) throws XPathExpressionException {
+            final String xPath, final Node node) throws XPathExpressionException,
+            XPathSelectionException {
         final List<ISelectorResult> resultList = new ArrayList<ISelectorResult>();
         final String stringSelected = new StringXPathEvaluator(xPath, node).evaluate();
-        if (StringUtils.isNotEmpty(stringSelected)) {
+        if (StringUtils.isNotBlank(stringSelected)) {
             resultList.add(new SelectorResult(name, stringSelected));
-            LOGGER.debug("[XpathSelector]> {} {}", name, stringSelected);
-        } else {
-            LOGGER.debug("Evaluation is not a string for [name={}] [selector={}]", name, xPath);
         }
+        LOGGER.debug("[XpathSelector]> {} {}", name, stringSelected);
         return resultList;
     }
 }

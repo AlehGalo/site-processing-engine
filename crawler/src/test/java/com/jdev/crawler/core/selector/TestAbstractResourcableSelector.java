@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.collections.ListUtils;
@@ -70,7 +71,8 @@ public abstract class TestAbstractResourcableSelector<T> {
     @Test
     public void processSelector() throws SelectionException {
         ISelector<T> selector = createSelectorWithExtractor();
-        List<ISelectorResult> list = selector.select(contentString);
+        Assert.assertNotNull("Create selector first", selector);
+        Collection<ISelectorResult> list = selector.select(convertStringToParameter(contentString));
         List<String> result = new ArrayList<>();
         for (ISelectorResult iSelectorResult : list) {
             result.add(iSelectorResult.getValue());
@@ -83,6 +85,13 @@ public abstract class TestAbstractResourcableSelector<T> {
      * @return selector to be tested.
      */
     public abstract ISelector<T> createSelectorWithExtractor();
+
+    /**
+     * @param par
+     *            parameter.
+     * @return object.
+     */
+    public abstract T convertStringToParameter(final String par);
 
     /**
      * @param name

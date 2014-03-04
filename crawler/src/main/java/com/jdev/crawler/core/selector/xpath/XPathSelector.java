@@ -5,8 +5,7 @@ package com.jdev.crawler.core.selector.xpath;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
 
 import com.jdev.crawler.config.dom.TagSoupDomNormaliser;
 import com.jdev.crawler.core.selector.ISelectorResult;
@@ -18,11 +17,6 @@ import com.jdev.crawler.util.Assert;
  * @author Aleh
  */
 public class XPathSelector extends AbstractXPathSelector<String> {
-
-    /**
-     * Logger.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(XPathSelector.class);
 
     /**
      * Name of parameter.
@@ -54,12 +48,10 @@ public class XPathSelector extends AbstractXPathSelector<String> {
      */
     @Override
     public List<ISelectorResult> select(final String content) throws SelectionException {
-        setNode(TagSoupDomNormaliser.convertToNormalisedNode(content));
-        final List<ISelectorResult> list = evaluateXPath(name, selector);
-        if (list.isEmpty()) {
-            LOGGER.error("XPath selector extracted 0 items for {} {}", name, selector);
-            throw new XPathSelectionException(name, selector);
+        if (StringUtils.isBlank(content)) {
+            throw new XPathSelectionException("Content cannot be null or empty for selector");
         }
-        return list;
+        setNode(TagSoupDomNormaliser.convertToNormalisedNode(content));
+        return evaluateXPath(name, selector);
     }
 }

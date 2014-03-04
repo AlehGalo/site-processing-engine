@@ -3,6 +3,8 @@
  */
 package com.jdev.crawler.exception;
 
+import static java.lang.String.format;
+
 /**
  * @author Aleh
  */
@@ -19,27 +21,17 @@ public class CookieSelectionException extends SelectionException {
     private static final String ERROR_FORMAT = "Error retrieving cookie with [name=%s]";
 
     /**
-     * @param key
-     * @param cause
+     * @param message
      */
-    public CookieSelectionException(final String key, final Throwable cause) {
-        super(String.format(ERROR_FORMAT, key), cause);
+    public CookieSelectionException(final String message) {
+        super(message);
     }
 
     /**
-     * @param key
-     * @param message
+     * @param name
+     * @return creation of custom exception.
      */
-    public CookieSelectionException(final String key) {
-        super(String.format(ERROR_FORMAT, key));
+    public static final CookieSelectionException createFormatted(final String name) {
+        return new CookieSelectionException(format(ERROR_FORMAT, name));
     }
-
-    /**
-     * @param key
-     * @param message
-     */
-    public CookieSelectionException(final String key, final String message) {
-        super(String.format(ERROR_FORMAT, key) + message);
-    }
-
 }

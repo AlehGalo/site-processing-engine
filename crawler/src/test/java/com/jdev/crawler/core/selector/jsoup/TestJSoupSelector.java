@@ -41,8 +41,8 @@ public class TestJSoupSelector extends TestAbstractResourcableSelector<String> {
      * @throws IOException
      *             exception.
      */
-    public TestJSoupSelector(String resourceFileName, String selectorFileName, String resultFileName)
-            throws IOException {
+    public TestJSoupSelector(final String resourceFileName, final String selectorFileName,
+            final String resultFileName) throws IOException {
         super(resourceFileName, selectorFileName, resultFileName);
     }
 
@@ -61,5 +61,10 @@ public class TestJSoupSelector extends TestAbstractResourcableSelector<String> {
             }
         });
         return selector;
+    }
+
+    @Override
+    public String convertStringToParameter(final String par) {
+        return par;
     }
 }

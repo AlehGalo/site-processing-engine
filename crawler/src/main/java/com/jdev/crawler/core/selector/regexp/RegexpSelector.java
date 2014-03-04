@@ -3,12 +3,15 @@
  */
 package com.jdev.crawler.core.selector.regexp;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.ISelectorResult;
@@ -21,6 +24,11 @@ import com.jdev.crawler.util.Assert;
  * @author Aleh Non empty list will be the result of selectValues or exception.
  */
 public class RegexpSelector implements ISelector<String> {
+
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegexpSelector.class);
 
     /**
      * String that contains Regexp for selection.
@@ -61,22 +69,21 @@ public class RegexpSelector implements ISelector<String> {
      */
     @Override
     public List<ISelectorResult> select(final String cont) throws RegexpSelectionException {
-        final List<ISelectorResult> list = new ArrayList<ISelectorResult>();
-        if (!StringUtils.isEmpty(cont) && !StringUtils.isEmpty(selector)) {
-            final Pattern pattern = Pattern.compile(selector);
-            final Matcher m = pattern.matcher(cont);
-            while (m.find()) {
-                final String value = m.group(1);
-                if (StringUtils.isEmpty(value)) {
-                    throw new RegexpSelectionException("Selected value is null or empty.", name,
-                            selector);
-                }
-                list.add(new SelectorResult(name, value));
+        if (isEmpty(cont)) {
+            throw new RegexpSelectionException("Content cannot be null or empty for selector");
+        }
+        final List<ISelectorResult> list = new ArrayList<>();
+        final Pattern pattern = Pattern.compile(selector);
+        final Matcher m = pattern.matcher(cont);
+        while (m.find()) {
+            final String value = m.group(1);
+            if (isEmpty(value)) {
+                throw new RegexpSelectionException(name, selector);
             }
+            LOGGER.debug("[RegexpSelector] Found item name = {} value = {}" + name, value);
+            list.add(new SelectorResult(name, value));
         }
-        if (list.isEmpty()) {
-            throw new RegexpSelectionException(name, selector);
-        }
+        LOGGER.debug("[RegexpSelector] Selection result found {} items" + list.size());
         return list;
     }
 

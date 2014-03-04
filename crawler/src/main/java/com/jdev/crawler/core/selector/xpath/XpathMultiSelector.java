@@ -62,8 +62,8 @@ public class XpathMultiSelector extends AbstractXPathSelector<String> {
         final List<ISelectorResult> values = selectValues();
         final List<ISelectorResult> result = new ArrayList<ISelectorResult>();
         if (names.size() == 0 || names.size() != values.size()) {
-            LOGGER.error("Names size {} and values size {} are incorrect.", names.size(),
-                    values.size());
+            LOGGER.error("[XpathMultiSelector] Names size {} and values size {} are incorrect.",
+                    names.size(), values.size());
             throw new XPathSelectionException(name, selector);
         }
         for (int i = 0; i < names.size(); i++) {

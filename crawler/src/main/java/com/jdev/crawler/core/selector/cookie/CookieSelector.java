@@ -3,10 +3,11 @@
  */
 package com.jdev.crawler.core.selector.cookie;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
 import org.slf4j.Logger;
@@ -51,22 +52,23 @@ public class CookieSelector implements ISelector<CookieStore> {
     @Override
     public List<ISelectorResult> select(final CookieStore cookStore)
             throws CookieSelectionException {
+        if (cookStore == null) {
+            throw new CookieSelectionException("Cookie store for cookie selector cannot be null");
+        }
         final List<ISelectorResult> list = new ArrayList<ISelectorResult>();
         for (final Cookie cookie : cookStore.getCookies()) {
             if (name.equals(cookie.getName())) {
                 final String value = cookie.getValue();
-                if (StringUtils.isEmpty(value)) {
-                    throw new CookieSelectionException(name);
+                if (isEmpty(value)) {
+                    throw CookieSelectionException.createFormatted(name);
                 }
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("[CookieSelector] >> {} {}", name, value);
-                }
+                LOGGER.debug("[CookieSelector] >> {} {}", name, value);
                 list.add(new SelectorResult(name, value));
             }
         }
         if (list.isEmpty()) {
-            LOGGER.error("No values selected.");
-            throw new CookieSelectionException(name);
+            LOGGER.debug("[CookieSelector] >> No values selected.");
+
         }
         return list;
     }

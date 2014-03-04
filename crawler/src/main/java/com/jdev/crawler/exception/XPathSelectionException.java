@@ -14,22 +14,25 @@ public class XPathSelectionException extends SelectionException {
     private static final long serialVersionUID = 1L;
 
     /**
-     *
-     */
-    private static final String ERROR_FORMAT = "Error extracting xpath: [name=%s] [value=%s]";
-
-    /**
      * @param message
      * @param cause
      */
     public XPathSelectionException(final String key, final String value, final Throwable cause) {
-        super(String.format(ERROR_FORMAT, key, value), cause);
+        super(key, value, cause);
     }
 
     /**
      * @param message
      */
     public XPathSelectionException(final String key, final String value) {
-        super(String.format(ERROR_FORMAT, key, value));
+        super(key, value);
     }
+
+    /**
+     * @param message
+     */
+    public XPathSelectionException(final String message) {
+        super(message);
+    }
+
 }

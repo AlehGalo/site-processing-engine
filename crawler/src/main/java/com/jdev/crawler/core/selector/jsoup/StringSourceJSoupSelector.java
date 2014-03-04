@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.SelectorResult;
 import com.jdev.crawler.core.selector.jsoup.extractor.IJSoupElementExtractor;
+import com.jdev.crawler.exception.JSoupSelectionException;
 import com.jdev.crawler.exception.SelectionException;
 import com.jdev.crawler.util.Assert;
 
@@ -25,7 +26,7 @@ import com.jdev.crawler.util.Assert;
 public class StringSourceJSoupSelector extends AbstractJSoupSelector<String> {
 
     /**
-     * Logger.
+     * Logger for the main actions.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(StringSourceJSoupSelector.class);
 
@@ -39,24 +40,23 @@ public class StringSourceJSoupSelector extends AbstractJSoupSelector<String> {
 
     @Override
     public List<ISelectorResult> select(final String content) throws SelectionException {
-        List<ISelectorResult> result = new ArrayList<>();
-        if (StringUtils.isNotBlank(content)) {
-            IJSoupElementExtractor extractor = getExtractorOrThrowExceptionIfNull();
-            Elements elements = createDocument(content).select(getSelector());
-            if (elements.isEmpty()) {
-                LOGGER.debug("No elements found by selector {0}", getSelector());
-            } else {
-                final String name = getName();
-                for (Element element : elements) {
-                    String value = extractor.getValueFromRecord(element);
-                    if (value != null) {
-                        result.add(new SelectorResult(name, value));
-                    }
-                }
-            }
-        } else {
-            LOGGER.debug("Content is empty");
+        if (StringUtils.isEmpty(content)) {
+            throw new JSoupSelectionException("Selection source cannot be null or empty");
         }
+        List<ISelectorResult> result = new ArrayList<>();
+        IJSoupElementExtractor extractor = getExtractorOrThrowExceptionIfNull();
+        Elements elements = createDocument(content).select(getSelector());
+        final String name = getName();
+        for (Element element : elements) {
+            String value = extractor.getValueFromRecord(element);
+            if (StringUtils.isBlank(value)) {
+                throw new JSoupSelectionException(name, getSelector());
+            }
+            LOGGER.debug("[CookieSelector] >> {} {}", name, value);
+            result.add(new SelectorResult(name, value));
+
+        }
+        LOGGER.debug("[CookieSelector] >> Results found {}", result.size());
         return result;
     }
 

@@ -8,12 +8,12 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.http.client.CookieStore;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.SelectorResult;
-import com.jdev.crawler.exception.CookieSelectionException;
 import com.jdev.crawler.exception.SelectionException;
 import com.jdev.crawler.util.Assert;
 
@@ -25,7 +25,7 @@ public class CookieSelectorUnion implements ISelector<CookieStore> {
     /**
      * Logger.
      */
-    private static final Logger LOGGER = Logger.getLogger(CookieSelectorUnion.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CookieSelectorUnion.class);
 
     /**
      * List of cookies selectors.
@@ -56,8 +56,7 @@ public class CookieSelectorUnion implements ISelector<CookieStore> {
      * Object )
      */
     @Override
-    public Collection<ISelectorResult> select(final CookieStore content)
-            throws SelectionException {
+    public Collection<ISelectorResult> select(final CookieStore content) throws SelectionException {
         final List<ISelectorResult> resultList = new ArrayList<ISelectorResult>();
         final StringBuilder sb = new StringBuilder();
         for (final ISelector<CookieStore> selector : list) {
@@ -67,10 +66,8 @@ public class CookieSelectorUnion implements ISelector<CookieStore> {
             }
         }
         resultList.add(new SelectorResult(parameterName, sb.toString()));
-        if (resultList.isEmpty()) {
-            LOGGER.error("No data selected.");
-            throw new CookieSelectionException(parameterName);
-        }
+        LOGGER.debug("[CookieSelector] Selected name= {} value = {}", parameterName, sb.toString());
+        LOGGER.debug("[CookieSelector] Selected number of records {}", resultList.size());
         return resultList;
     }
 }

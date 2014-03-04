@@ -9,7 +9,8 @@ public interface IJSoupElementExtractor {
 
     /**
      * @param element
-     * @return
+     *            JSoup element.
+     * @return String property or value from the element.
      */
     String getValueFromRecord(final Element element);
 }

@@ -14,22 +14,12 @@ public class RegexpSelectionException extends SelectionException {
     private static final long serialVersionUID = 1L;
 
     /**
-     *
-     */
-    private static final String ERROR_FORMAT = "Error extracting regexp from HTML page: [name=%s] [value=%s]";
-
-    /**
-     *
-     */
-    private static final String DETAILED_ERROR_FORMAT = ERROR_FORMAT + "\tDetails: [%s]";
-
-    /**
      * @param key
      * @param value
      * @param cause
      */
     public RegexpSelectionException(final String key, final String value, final Throwable cause) {
-        super(String.format(ERROR_FORMAT, key, value), cause);
+        super(key, value, cause);
     }
 
     /**
@@ -37,7 +27,14 @@ public class RegexpSelectionException extends SelectionException {
      * @param value
      */
     public RegexpSelectionException(final String key, final String value) {
-        super(String.format(ERROR_FORMAT, key, value));
+        super(key, value);
+    }
+
+    /**
+     * @param message
+     */
+    public RegexpSelectionException(final String message) {
+        super(message);
     }
 
     /**
@@ -47,6 +44,6 @@ public class RegexpSelectionException extends SelectionException {
      */
     public RegexpSelectionException(final String key, final String value,
             final String additionalErrorMessage) {
-        super(String.format(DETAILED_ERROR_FORMAT, key, value, additionalErrorMessage));
+        super(key, value, additionalErrorMessage);
     }
 }

@@ -5,7 +5,8 @@ package com.jdev.crawler.core.process;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.step.IStepConfig;
@@ -29,7 +30,7 @@ class OptionalAssembledStepProcessor extends AssembledStepProcess {
     /**
      * Logger.
      */
-    private final Logger LOGGER = Logger.getLogger(OptionalAssembledStepProcessor.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(OptionalAssembledStepProcessor.class);
 
     /**
      * 
@@ -47,8 +48,8 @@ class OptionalAssembledStepProcessor extends AssembledStepProcess {
     }
 
     @Override
-    public byte[] process(IProcessSession session, byte[] content,
-            ISelectorExtractStrategy extractStrategy) throws CrawlerException {
+    public byte[] process(final IProcessSession session, final byte[] content,
+            final ISelectorExtractStrategy extractStrategy) throws CrawlerException {
         try {
             extractStrategy.extractSelectors(session.getSessionContext(), config, content);
             return super.process(session, content, extractStrategy);

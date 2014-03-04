@@ -17,20 +17,18 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.SyncBasicHttpParams;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.exception.SelectionException;
 
-/**
- * @author Aleh
- */
 public class BasicRequestBuilder implements IRequestBuilder {
 
     /**
      *
      */
-    private static final Logger LOGGER = Logger.getLogger(BasicRequestBuilder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BasicRequestBuilder.class);
 
     /**
      * @param method
