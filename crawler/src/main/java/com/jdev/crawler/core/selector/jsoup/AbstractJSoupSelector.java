@@ -3,9 +3,6 @@
  */
 package com.jdev.crawler.core.selector.jsoup;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.jsoup.extractor.IJSoupElementExtractor;
 import com.jdev.crawler.util.Assert;
@@ -40,14 +37,6 @@ abstract class AbstractJSoupSelector<T> implements ISelector<T> {
         Assert.hasLength(name);
         this.selector = selector;
         this.name = name;
-    }
-
-    /**
-     * @param htmlCode
-     * @return
-     */
-    protected final static Document createDocument(final String htmlCode) {
-        return Jsoup.parse(htmlCode);
     }
 
     /**

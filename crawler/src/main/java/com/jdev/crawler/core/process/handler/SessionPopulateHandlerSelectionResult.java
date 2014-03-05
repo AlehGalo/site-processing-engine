@@ -13,34 +13,30 @@ import com.jdev.crawler.util.Assert;
  * @author Aleh
  * 
  */
-public class SessionPopulateHandlerSelectionResult implements
-	IProcessResultHandler {
+public class SessionPopulateHandlerSelectionResult implements IProcessResultHandler {
 
     /**
      * 
      */
-    private ISelectorResult result;
+    private final ISelectorResult result;
 
     /**
      * 
      */
     public SessionPopulateHandlerSelectionResult(final ISelectorResult result) {
-	Assert.notNull(result);
-	this.result = result;
+        Assert.notNull(result);
+        this.result = result;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * com.jdev.crawler.core.process.IProcessResultHandler#handle(cinergy
+     * @see com.jdev.crawler.core.process.IProcessResultHandler#handle(cinergy
      * .crawler .core.process.IProcessSession, byte[])
      */
     @Override
-    public void handle(final IProcessSession session, final byte[] content)
-	    throws CrawlerException {
-	Assert.notNull(session);
-	session.putValue(result.getName(), result.getValue());
+    public void handle(final IProcessSession session, final byte[] content) throws CrawlerException {
+        Assert.notNull(session);
+        session.putValue(result.getName(), result.getValue());
     }
-
 }

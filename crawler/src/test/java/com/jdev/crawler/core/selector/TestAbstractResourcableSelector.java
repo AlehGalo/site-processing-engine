@@ -3,6 +3,9 @@
  */
 package com.jdev.crawler.core.selector;
 
+import static org.apache.commons.collections.ListUtils.subtract;
+import static org.junit.Assert.assertEquals;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -11,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -77,8 +79,9 @@ public abstract class TestAbstractResourcableSelector<T> {
         for (ISelectorResult iSelectorResult : list) {
             result.add(iSelectorResult.getValue());
         }
-        Assert.assertEquals(result.size(), resultFileContent.size());
-        Assert.assertTrue(ListUtils.subtract(resultFileContent, result).isEmpty());
+        assertEquals(result.size(), resultFileContent.size());
+        assertEquals("Subtraction error. Not equal values met.",
+                subtract(resultFileContent, result).size(), 0);
     }
 
     /**

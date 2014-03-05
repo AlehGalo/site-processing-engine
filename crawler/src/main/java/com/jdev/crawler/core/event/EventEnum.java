@@ -9,13 +9,13 @@ package com.jdev.crawler.core.event;
 @SuppressWarnings("javadoc")
 public enum EventEnum {
 
-    ONLINE_LOGIN_OK,
+    LOGIN_OK,
 
-    ONLINE_LOGINING_NOW,
+    LOGINING_NOW,
 
-    ONLINE_CONNECT_OK,
+    CONNECT_OK,
 
-    ONLINE_CONNECTING_NOW,
+    CONNECTING_NOW,
 
     PDF_DOWNLOAD_OK,
 

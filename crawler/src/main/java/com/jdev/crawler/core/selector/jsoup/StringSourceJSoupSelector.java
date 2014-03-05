@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jdev.crawler.core.evaluator.JSoupEvaluator;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.SelectorResult;
 import com.jdev.crawler.core.selector.jsoup.extractor.IJSoupElementExtractor;
@@ -45,7 +46,7 @@ public class StringSourceJSoupSelector extends AbstractJSoupSelector<String> {
         }
         List<ISelectorResult> result = new ArrayList<>();
         IJSoupElementExtractor extractor = getExtractorOrThrowExceptionIfNull();
-        Elements elements = createDocument(content).select(getSelector());
+        Elements elements = new JSoupEvaluator(getSelector(), content).evaluate();
         final String name = getName();
         for (Element element : elements) {
             String value = extractor.getValueFromRecord(element);
@@ -68,5 +69,4 @@ public class StringSourceJSoupSelector extends AbstractJSoupSelector<String> {
         Assert.notNull(extractor, "Extractor for JSoup should be set");
         return extractor;
     }
-
 }

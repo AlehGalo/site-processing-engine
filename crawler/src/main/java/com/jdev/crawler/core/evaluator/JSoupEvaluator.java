@@ -3,6 +3,7 @@
  */
 package com.jdev.crawler.core.evaluator;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
@@ -31,7 +32,17 @@ public class JSoupEvaluator implements IEvaluator<Elements> {
         Assert.hasLength(selector);
         Assert.notNull(document);
         this.selector = selector;
-        this.doc = document;
+        doc = document;
+    }
+
+    /**
+     * @param selector
+     *            jsoup selector.
+     * @param document
+     *            html document.
+     */
+    public JSoupEvaluator(final String selector, final String document) {
+        this(selector, Jsoup.parse(document));
     }
 
     /*

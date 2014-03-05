@@ -18,14 +18,14 @@ public class UserData implements IUserData {
     private String login;
 
     /**
-     * Password of th user.
+     * Password of the user.
      */
     private String password;
 
     /**
-     * Phone number.
+     * Unique key of the user in the system.
      */
-    private String phoneNumber;
+    private String uniqueKey;
 
     /**
      * Security code as usual it can be pin.
@@ -64,18 +64,18 @@ public class UserData implements IUserData {
      *            user's login.
      * @param password
      *            user's password.
-     * @param phoneNumber
+     * @param uniqueKey
      *            user's phone number.
      * @param securityCode
      *            user's security code.
      * @param company
      *            company.
      */
-    public UserData(final String login, final String password, final String phoneNumber,
+    public UserData(final String login, final String password, final String key,
             final String securityCode, final ICompany company) {
         setLogin(login);
         setPassword(password);
-        setPhoneNumber(phoneNumber);
+        setUniqueKey(key);
         setSecurityCode(securityCode);
         setCompany(company);
     }
@@ -120,20 +120,20 @@ public class UserData implements IUserData {
 
     @Override
     public String getUniqueKey() {
-        return phoneNumber;
+        return uniqueKey;
     }
 
     @Override
     public String getSecurityCode() {
-        return this.securityCode;
+        return securityCode;
     }
 
     /**
-     * @param phoneNumber
-     *            the phoneNumber to set
+     * @param uniqueKey
+     *            the uniqueKey to set
      */
-    public void setPhoneNumber(final String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setUniqueKey(final String key) {
+        uniqueKey = key;
     }
 
     /**

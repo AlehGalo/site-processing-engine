@@ -55,7 +55,6 @@ abstract class AbstractXPathSelector<T> implements ISelector<T> {
                     resultList.addAll(selectFromString(name, xPath, node));
                 }
             } catch (final XPathExpressionException e) {
-                LOGGER.error(e.getLocalizedMessage(), e);
                 throw new XPathSelectionException(name, xPath, e);
             }
         }

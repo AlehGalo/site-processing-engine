@@ -51,7 +51,7 @@ public class BasicRequestBuilder implements IRequestBuilder {
             request = buildPostRequest(url, list);
             debugUrl(request);
         } else {
-            throw new SelectionException(String.format("Method [%s] is not selected", method));
+            throw new SelectionException(String.format("Method [%s] is not supported", method));
         }
         return request;
     }

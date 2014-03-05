@@ -24,7 +24,8 @@ public class TestXPathSelector extends TestAbstractResourcableSelector<String> {
     public static Iterable<String[]> data() {
         return Arrays.<String[]> asList(new String[] { "input1.htm", "input1.htm.selector",
                 "input1.htm.result" }, new String[] { "input1.htm", "input2.htm.selector",
-                "input2.htm.result" });
+                "input2.htm.result" }, new String[] { "input1.htm", "input3.htm.selector",
+                "input3.htm.result" });
     }
 
     /**
