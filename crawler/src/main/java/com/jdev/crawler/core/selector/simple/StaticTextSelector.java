@@ -56,7 +56,7 @@ public class StaticTextSelector implements ISelector<Object> {
 
     @Override
     public Collection<ISelectorResult> select(final Object content) {
-        LOGGER.debug("[StaticTextSelector] >> {} {}", result.getName(), result.getValue());
+        LOGGER.debug("Selected values {} {}", result.getName(), result.getValue());
         return Collections.singletonList(result);
     }
 }

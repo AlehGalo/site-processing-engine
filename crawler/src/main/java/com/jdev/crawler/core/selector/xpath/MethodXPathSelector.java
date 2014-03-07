@@ -3,7 +3,7 @@
  */
 package com.jdev.crawler.core.selector.xpath;
 
-import com.jdev.crawler.core.selector.RequestReservedWord;
+import static com.jdev.crawler.core.selector.RequestReservedWord.METHOD;
 
 /**
  * @author Aleh
@@ -15,7 +15,7 @@ public class MethodXPathSelector extends EnumXPathSelector {
      * @param name
      */
     public MethodXPathSelector(final String selector) {
-        super(RequestReservedWord.METHOD, selector);
+        super(METHOD, selector);
     }
 
 }

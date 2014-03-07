@@ -57,7 +57,7 @@ public final class XPathSelectorResultToISelectorResultConverterUtils {
                 if (StringUtils.isNotBlank(nodeValue)) {
                     resultList.add(new SelectorResult(name, nodeValue));
                 }
-                LOGGER.debug("[XpathSelector] >> {} {}", name, nodeValue);
+                LOGGER.debug("Selected {} {}", name, nodeValue);
             }
         } else {
             LOGGER.debug("Evaluation is not a node list for [name={}] [selector={}]");
@@ -81,7 +81,7 @@ public final class XPathSelectorResultToISelectorResultConverterUtils {
             if (StringUtils.isNotBlank(value)) {
                 resultList.add(new SelectorResult(name, value));
             }
-            LOGGER.debug("[XpathSelector]> {} {}", name, value);
+            LOGGER.debug("Selected {} {}", name, value);
         } else {
             LOGGER.debug("Evaluation is not a node for [name={}] [selector={}]", name, xPath);
         }
@@ -103,7 +103,7 @@ public final class XPathSelectorResultToISelectorResultConverterUtils {
         if (StringUtils.isNotBlank(stringSelected)) {
             resultList.add(new SelectorResult(name, stringSelected));
         }
-        LOGGER.debug("[XpathSelector]> {} {}", name, stringSelected);
+        LOGGER.debug("Selected {} {}", name, stringSelected);
         return resultList;
     }
 }

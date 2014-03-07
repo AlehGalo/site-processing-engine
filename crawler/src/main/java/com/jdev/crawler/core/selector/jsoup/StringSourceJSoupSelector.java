@@ -53,11 +53,11 @@ public class StringSourceJSoupSelector extends AbstractJSoupSelector<String> {
             if (StringUtils.isBlank(value)) {
                 throw new JSoupSelectionException(name, getSelector());
             }
-            LOGGER.debug("[CookieSelector] >> {} {}", name, value);
+            LOGGER.debug("Properties extracted {} {}", name, value);
             result.add(new SelectorResult(name, value));
 
         }
-        LOGGER.debug("[CookieSelector] >> Results found {}", result.size());
+        LOGGER.debug("Results found {}", result.size());
         return result;
     }
 

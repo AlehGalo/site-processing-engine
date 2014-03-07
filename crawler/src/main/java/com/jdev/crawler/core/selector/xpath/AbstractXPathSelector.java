@@ -58,7 +58,7 @@ abstract class AbstractXPathSelector<T> implements ISelector<T> {
                 throw new XPathSelectionException(name, xPath, e);
             }
         }
-        LOGGER.debug("[XPathSelector] found {} items" + resultList.size());
+        LOGGER.debug("XPathSelector found {} items" + resultList.size());
         return resultList;
     }
 

@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -72,14 +74,15 @@ public abstract class TestAbstractResourcableSelector<T> {
      */
     @Test
     public void processSelector() throws SelectionException {
-        ISelector<T> selector = createSelectorWithExtractor();
+        ISelector<T> selector = createSelector();
         Assert.assertNotNull("Create selector first", selector);
         Collection<ISelectorResult> list = selector.select(convertStringToParameter(contentString));
         List<String> result = new ArrayList<>();
         for (ISelectorResult iSelectorResult : list) {
             result.add(iSelectorResult.getValue());
         }
-        assertEquals(result.size(), resultFileContent.size());
+        assertEquals("Selector result differs from the expected", resultFileContent.size(),
+                result.size());
         assertEquals("Subtraction error. Not equal values met.",
                 subtract(resultFileContent, result).size(), 0);
     }
@@ -87,9 +90,11 @@ public abstract class TestAbstractResourcableSelector<T> {
     /**
      * @return selector to be tested.
      */
-    public abstract ISelector<T> createSelectorWithExtractor();
+    public abstract ISelector<T> createSelector();
 
     /**
+     * Converting string parameter to exptected T.
+     * 
      * @param par
      *            parameter.
      * @return object.
@@ -103,11 +108,23 @@ public abstract class TestAbstractResourcableSelector<T> {
      */
     private String getFileContent(final String name) {
         try {
-            return IOUtils.toString(this.getClass().getResourceAsStream(name), Charsets.UTF_8);
+            InputStream is = this.getClass().getResourceAsStream(name);
+            assertFile(is, name);
+            return IOUtils.toString(is, Charsets.UTF_8);
         } catch (IOException e) {
             Assert.fail(e.getMessage());
             return null;
         }
+    }
+
+    /**
+     * @param resource
+     *            URL or file.
+     * @param name
+     *            of the file resource.
+     */
+    private void assertFile(final Object resource, final String name) {
+        Assert.assertNotNull("File not found [" + name + "]", resource);
     }
 
     /**
@@ -116,7 +133,9 @@ public abstract class TestAbstractResourcableSelector<T> {
      * @return file object associated with resource name.
      */
     private File findFile(final String resourceName) {
-        return new File(this.getClass().getResource(resourceName).getFile());
+        URL url = this.getClass().getResource(resourceName);
+        assertFile(url, resourceName);
+        return new File(url.getFile());
     }
 
     /**

@@ -76,14 +76,18 @@ public class RegexpSelector implements ISelector<String> {
         final Pattern pattern = Pattern.compile(selector);
         final Matcher m = pattern.matcher(cont);
         while (m.find()) {
+            if (m.groupCount() < 1) {
+                throw new RegexpSelectionException(
+                        "Regexp selection failed. At least 1 group is required.");
+            }
             final String value = m.group(1);
             if (isEmpty(value)) {
                 throw new RegexpSelectionException(name, selector);
             }
-            LOGGER.debug("[RegexpSelector] Found item name = {} value = {}" + name, value);
+            LOGGER.debug("Found item name = {} value = {}" + name, value);
             list.add(new SelectorResult(name, value));
         }
-        LOGGER.debug("[RegexpSelector] Selection result found {} items" + list.size());
+        LOGGER.debug("Selection result found {} items" + list.size());
         return list;
     }
 

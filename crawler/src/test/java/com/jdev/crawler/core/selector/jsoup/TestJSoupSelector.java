@@ -47,7 +47,7 @@ public class TestJSoupSelector extends TestAbstractResourcableSelector<String> {
     }
 
     @Override
-    public ISelector<String> createSelectorWithExtractor() {
+    public ISelector<String> createSelector() {
         StringSourceJSoupSelector selector = new StringSourceJSoupSelector("seletor",
                 getSelectorString());
         selector.setExtractor(new IJSoupElementExtractor() {

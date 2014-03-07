@@ -3,7 +3,7 @@
  */
 package com.jdev.crawler.core.selector.xpath;
 
-import com.jdev.crawler.core.selector.RequestReservedWord;
+import static com.jdev.crawler.core.selector.RequestReservedWord.HOST;
 
 /**
  * @author Aleh
@@ -15,6 +15,6 @@ public class HostXPathSelector extends EnumXPathSelector {
      *            xpath expression
      */
     public HostXPathSelector(final String selector) {
-        super(RequestReservedWord.HOST, selector);
+        super(HOST, selector);
     }
 }
