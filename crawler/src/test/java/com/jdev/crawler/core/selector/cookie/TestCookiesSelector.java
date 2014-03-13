@@ -8,14 +8,13 @@ import java.io.IOException;
 import org.apache.http.client.CookieStore;
 
 import com.jdev.crawler.core.selector.ISelector;
+import com.jdev.crawler.core.selector.TestAbstractResourcableSelector;
 
 /**
  * @author Aleh
  * 
  */
-public class TestCookiesSelector {// extends
-                                  // TestAbstractResourcableSelector<CookieStore>
-                                  // {
+public class TestCookiesSelector extends TestAbstractResourcableSelector<CookieStore> {
 
     /**
      * @param resourceFileName
@@ -29,16 +28,17 @@ public class TestCookiesSelector {// extends
      */
     public TestCookiesSelector(final String resourceFileName, final String selectorFileName,
             final String resultFileName) throws IOException {
-        // super(resourceFileName, selectorFileName, resultFileName);
+        super(resourceFileName, selectorFileName, resultFileName);
     }
 
     // @Override
+    @Override
     public ISelector<CookieStore> createSelector() {
-        // return new CookieSelector(getSelectorString());
-        return null;
+        return new CookieSelector(getSelectorString());
     }
 
     // @Override
+    @Override
     public CookieStore convertStringToParameter(final String par) {
         // BasicClientCookie cookies = new BasicClientCookie();
         // cookies.setDomain(domain);

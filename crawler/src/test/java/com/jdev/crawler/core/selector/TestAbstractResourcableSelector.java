@@ -30,7 +30,7 @@ public abstract class TestAbstractResourcableSelector<T> {
     /**
      * String limitter.
      */
-    private static final String LIMITTER = "@--------";
+    protected static final String LIMITTER = "@--------";
 
     /**
      * Resources input file, selectors file, result.
