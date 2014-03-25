@@ -6,6 +6,8 @@ package com.jdev.crawler.core.selector.cookie;
 import java.io.IOException;
 
 import org.apache.http.client.CookieStore;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.cookie.BasicClientCookie;
 
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.TestAbstractResourcableSelector;
@@ -40,9 +42,9 @@ public class TestCookiesSelector extends TestAbstractResourcableSelector<CookieS
     // @Override
     @Override
     public CookieStore convertStringToParameter(final String par) {
-        // BasicClientCookie cookies = new BasicClientCookie();
-        // cookies.setDomain(domain);
-        // return new BasicCookieStore().;
-        return null;
+         
+         BasicClientCookie cookies = new BasicClientCookie();
+         
+         return new BasicCookieStore().;
     }
 }
