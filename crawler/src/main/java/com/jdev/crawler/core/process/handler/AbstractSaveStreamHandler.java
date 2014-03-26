@@ -30,14 +30,14 @@ public abstract class AbstractSaveStreamHandler implements IProcessResultHandler
     @Override
     public void handle(final IProcessSession session, final byte[] content) throws CrawlerException {
         final IProcessContext context = session.getSessionContext();
-        final String phoneNumber = session.getStringValue(RequestReservedWord.PHONE.getWord()), dateName = session
+        final String uuid = session.getStringValue(RequestReservedWord.UUID.getWord()), dateName = session
                 .getStringValue(RequestReservedWord.DATE.getWord()) == null ? "" : session
                 .getStringValue(RequestReservedWord.DATE.getWord());
         context.getFileStorage()
                 .getFileStore(new IStorageUniqueKey() {
                     @Override
                     public String getUniqueKey() {
-                        return phoneNumber;
+                        return uuid;
                     }
                 })
                 .add(new IndexedItem(getFileType(), storeFile(context, content), dateName, session
@@ -47,7 +47,7 @@ public abstract class AbstractSaveStreamHandler implements IProcessResultHandler
     private String storeFile(final IProcessContext context, final byte[] content)
             throws CrawlerException {
         String result = null;
-        if (checkFileContent(content)) {
+        if (validateFileContent(content)) {
             try {
                 final ByteArrayInputStream bis = new ByteArrayInputStream(content);
                 try {
@@ -95,7 +95,7 @@ public abstract class AbstractSaveStreamHandler implements IProcessResultHandler
      *            byte content.
      * @return true/false.
      */
-    protected boolean checkFileContent(final byte[] content) {
+    protected boolean validateFileContent(final byte[] content) {
         return true;
     }
 

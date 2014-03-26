@@ -1,8 +1,9 @@
 package com.jdev.crawler.core.process;
 
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
 import java.io.File;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +36,7 @@ public final class FileUtils {
         final File companyRoot = new File(System.getProperty("java.io.tmpdir"), ""
                 + userData.getCompany().getCompanyId());
         final File f = new File(companyRoot,
-                StringUtils.isNotEmpty(userData.getUniqueKey()) ? userData.getUniqueKey()
-                        : userData.getLogin());
+                isNotEmpty(userData.getUniqueKey()) ? userData.getUniqueKey() : userData.getLogin());
         final File file = new File(f, userData.getUUID());
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(file.getAbsolutePath());

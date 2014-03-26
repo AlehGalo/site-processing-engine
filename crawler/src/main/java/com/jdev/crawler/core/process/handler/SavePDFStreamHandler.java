@@ -19,7 +19,7 @@ public class SavePDFStreamHandler extends AbstractSaveStreamHandler {
      * checkFileContent(byte[])
      */
     @Override
-    protected boolean checkFileContent(byte[] content) {
+    protected boolean validateFileContent(byte[] content) {
         return MimeTypeUtil.isPDFContent(content);
     }
 

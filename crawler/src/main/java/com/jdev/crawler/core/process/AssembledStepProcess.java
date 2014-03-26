@@ -75,8 +75,8 @@ public class AssembledStepProcess extends AbstractStepProcess {
     }
 
     private void log(final String name, final String value) {
-        if (AssembledStepProcess.LOGGER.isDebugEnabled()) {
-            AssembledStepProcess.LOGGER.debug(" > {}  {}", name, value);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(" > {}  {}", name, value);
         }
     }
 

@@ -13,6 +13,7 @@ import com.jdev.crawler.core.store.FileStorage;
 import com.jdev.crawler.core.store.IFileStorage;
 import com.jdev.crawler.core.user.IUserData;
 import com.jdev.crawler.exception.CrawlerException;
+import com.jdev.crawler.util.Assert;
 
 /**
  * @author Aleh
@@ -45,7 +46,7 @@ public class Crawler implements ICrawler, IProcessContext {
      */
     public Crawler(final IProcess process, final IUserData userData) {
         this.flowProcess = process;
-        this.userData = userData;
+        this.userData = verifyUserData(userData);
         this.fileStorage = new FileStorage(DEFAULT_STORAGE_NAME);
     }
 
@@ -53,7 +54,7 @@ public class Crawler implements ICrawler, IProcessContext {
     public void collect() throws CrawlerException {
         try {
             final ProcessSession session = new ProcessSession(this);
-            session.putValue(RequestReservedWord.PHONE.getWord(), userData.getUniqueKey());
+            session.putValue(RequestReservedWord.UUID.getWord(), userData.getUniqueKey());
             flowProcess.process(session, null, new DefaultSelectorExtractStrategy());
         } finally {
             client.getConnectionManager().shutdown();
@@ -131,5 +132,19 @@ public class Crawler implements ICrawler, IProcessContext {
 
     public final void setFileStorage(final IFileStorage fileStorage) {
         this.fileStorage = fileStorage;
+    }
+
+    /**
+     * If there is not user required you have to create at least some dummy
+     * user.
+     * 
+     * @param data
+     *            to be validated.
+     * @return user data validated.
+     */
+    private IUserData verifyUserData(final IUserData data) {
+        Assert.notNull(data, "User data should be specified");
+        Assert.notNull(data.getCompany(), "Company should be specified for user datat");
+        return data;
     }
 }

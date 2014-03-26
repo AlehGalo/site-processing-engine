@@ -1,6 +1,8 @@
 package com.jdev.crawler.core.process.handler;
 
-import org.apache.commons.lang3.StringUtils;
+import static org.apache.commons.lang3.StringUtils.contains;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 import org.apache.http.Consts;
 
 /**
@@ -69,9 +71,9 @@ public final class MimeTypeUtil {
      * @return MimeType or null.
      */
     public static MimeType findMime(final String mimeString, final MimeType types[]) {
-        if (StringUtils.isNotBlank(mimeString)) {
+        if (isNotBlank(mimeString)) {
             for (MimeType mimeType : types) {
-                if (StringUtils.contains(mimeString, mimeType.val)) {
+                if (contains(mimeString, mimeType.val)) {
                     return mimeType;
                 }
             }

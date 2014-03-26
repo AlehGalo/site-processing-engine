@@ -26,7 +26,7 @@ public class SaveCSVStreamHandler extends AbstractSaveStreamHandler {
      * @see com.jdev.crawler.core.process.handler.AbstractSaveStreamHandler#checkFileContent(byte[])
      */
     @Override
-    protected boolean checkFileContent(byte[] content) {
+    protected boolean validateFileContent(byte[] content) {
         return MimeTypeUtil.isCSVContent(content);
     }
 }

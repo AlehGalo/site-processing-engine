@@ -51,7 +51,7 @@ public class LoginStepProcess extends AssembledStepProcess {
             throw e;
         }
         try {
-            super.createRequest(session.getSessionContext(),
+            createRequest(session.getSessionContext(),
                     extractSelectors(session.getSessionContext(), selectorExtractStrategy, cont));
         } catch (final SelectionException se) {
             // All if fine. Input elements are absent as a result login screen

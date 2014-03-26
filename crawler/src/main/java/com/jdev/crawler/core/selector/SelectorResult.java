@@ -3,6 +3,9 @@
  */
 package com.jdev.crawler.core.selector;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * @author Aleh
  */
@@ -65,6 +68,16 @@ public class SelectorResult implements ISelectorResult {
      */
     protected final void setValue(final String value) {
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
 }

@@ -78,8 +78,8 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
     }
 
     @Override
-    public byte[] process(IProcessSession session, byte[] content,
-            ISelectorExtractStrategy selectorExtractStrategy) throws CrawlerException {
+    public byte[] process(final IProcessSession session, final byte[] content,
+            final ISelectorExtractStrategy selectorExtractStrategy) throws CrawlerException {
         try {
             IProcessContext context = session.getSessionContext();
             List<ISelectorResult> selectors = extractSelectors(context, selectorExtractStrategy,

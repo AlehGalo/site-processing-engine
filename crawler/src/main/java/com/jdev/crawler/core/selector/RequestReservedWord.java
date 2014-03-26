@@ -9,9 +9,8 @@ package com.jdev.crawler.core.selector;
  */
 public enum RequestReservedWord {
 
-    ACTION("${action}"), METHOD("${method}"), HOST("${host}"), PARAMS(
-	    "${params}"), PHONE("${phone}"), DATE("${date}"), DESCRIPTION(
-	    "${description}");
+    ACTION("${action}"), METHOD("${method}"), HOST("${host}"), PARAMS("${params}"), UUID("${uuid}"), DATE(
+            "${date}"), DESCRIPTION("${description}");
 
     /**
      * Value of the word.
@@ -23,13 +22,13 @@ public enum RequestReservedWord {
      *            string.
      */
     private RequestReservedWord(final String value) {
-	word = value;
+        word = value;
     }
 
     /**
      * @return the word.
      */
     public final String getWord() {
-	return word;
+        return word;
     }
 }

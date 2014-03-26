@@ -29,7 +29,7 @@ public class SaveHTMLStreamHandler extends AbstractSaveStreamHandler {
      * #checkFileContent(byte[])
      */
     @Override
-    protected boolean checkFileContent(final byte[] content) {
+    protected boolean validateFileContent(final byte[] content) {
         return MimeTypeUtil.isHtmlContent(content);
     }
 
