@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.process.handler.SessionPopulateHandlerSelectionResult;
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.RequestReservedWord;
@@ -101,7 +102,7 @@ public class LimitedMultiStepProcess extends AssembledStepProcess {
      * com.jdev.crawler.core.process.ISelectorExtractStrategy)
      */
     @Override
-    public byte[] process(final IProcessSession session, final byte[] content,
+    public IEntity process(final IProcessSession session, final IEntity content,
             final ISelectorExtractStrategy selectorExtractStrategy) throws CrawlerException {
         final Map<String, List<ISelectorResult>> allParameters = organizeParamsRequests(
                 session.getSessionContext(), config, content, selectorExtractStrategy);
@@ -136,7 +137,7 @@ public class LimitedMultiStepProcess extends AssembledStepProcess {
                             });
                     populateHandler.handle(session, content);
                 }
-                final byte[] cont = handle(session,
+                final IEntity cont = handle(session,
                         executeRequest(session.getSessionContext(), listOfRequests.get(i)));
                 if (process != null) {
                     process.process(session, cont, selectorExtractStrategy);
@@ -164,7 +165,7 @@ public class LimitedMultiStepProcess extends AssembledStepProcess {
      *             any kind of exception.
      */
     private Map<String, List<ISelectorResult>> organizeParamsRequests(
-            final IProcessContext context, final IStepConfig config, final byte[] content,
+            final IProcessContext context, final IStepConfig config, final IEntity content,
             final ISelectorExtractStrategy strategy) throws CrawlerException {
         final List<ISelectorResult> list = strategy.extractSelectors(context, config, content);
         final Map<String, List<ISelectorResult>> resMap = new HashMap<String, List<ISelectorResult>>();

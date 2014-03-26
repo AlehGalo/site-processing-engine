@@ -2,15 +2,13 @@ package com.jdev.crawler.core.process;
 
 import static java.text.MessageFormat.format;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -22,6 +20,8 @@ import org.slf4j.LoggerFactory;
 import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.process.handler.MimeType;
 import com.jdev.crawler.core.process.handler.MimeTypeUtil;
+import com.jdev.crawler.core.process.model.IEntity;
+import com.jdev.crawler.core.process.model.TransferEntity;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.step.DummyValidator;
@@ -46,7 +46,7 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
      * Logger.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractStepProcess.class);
-
+    // TODO: add logging
     private final List<IProcessResultHandler> handlers;
 
     private final IStepConfig config;
@@ -78,14 +78,14 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
     }
 
     @Override
-    public byte[] process(final IProcessSession session, final byte[] content,
+    public IEntity process(final IProcessSession session, final IEntity content,
             final ISelectorExtractStrategy selectorExtractStrategy) throws CrawlerException {
         try {
             IProcessContext context = session.getSessionContext();
             List<ISelectorResult> selectors = extractSelectors(context, selectorExtractStrategy,
                     content);
             HttpRequestBase request = createRequest(context, selectors);
-            byte[] result = executeRequest(context, request);
+            IEntity result = executeRequest(context, request);
             return handle(session, result);
         } catch (final IOException | InterruptedException ex) {
             throw new CrawlerException(ex.getMessage(), ex);
@@ -107,38 +107,38 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
      * @return
      * @throws CrawlerException
      */
-    protected byte[] handle(final IProcessSession session, final byte[] content)
+    protected IEntity handle(final IProcessSession session, final IEntity entity)
             throws CrawlerException {
         if (CollectionUtils.isNotEmpty(handlers)) {
             for (final IProcessResultHandler handler : handlers) {
-                handler.handle(session, content);
+                handler.handle(session, entity);
             }
         }
-        return content;
+        return entity;
     }
 
-    protected byte[] executeRequest(final IProcessContext context, final HttpRequestBase request)
+    protected IEntity executeRequest(final IProcessContext context, final HttpRequestBase request)
             throws CrawlerException, InterruptedException, IOException {
         int count = 0;
         boolean valid = false;
-        byte[] b;
+        IEntity entity;
         final boolean isEmpty = CollectionUtils.isEmpty(handlers);
         do {
             if (count > 0) {
                 Thread.sleep(context.getWaitInterval());
             }
-            b = download(context, request);
+            entity = download(context, request);
             if (context.isStoreMarkup() && isEmpty) {
-                storeMarkup(context, b);
+                com.jdev.crawler.core.process.FileUtils.storeMarkup(context, entity, this);
             }
-        } while (++count < context.getRepeatTime() && !(valid = getValidator().validate(b)));
+        } while (++count < context.getRepeatTime() && !(valid = getValidator().validate(entity)));
         if (!valid) {
             throw new CrawlerException(format(
                     "Waiting {0} ms for a page {1} is failed. Operator is {2}",
                     context.getWaitInterval() * context.getRepeatTime(), request.getURI()
                             .toASCIIString(), context.getUserData().getCompany().getCompanyName()));
         } else {
-            return b;
+            return entity;
         }
     }
 
@@ -147,7 +147,7 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
      * @throws SelectionException
      */
     protected List<ISelectorResult> extractSelectors(final IProcessContext context,
-            final ISelectorExtractStrategy extractStrategy, final byte[] content)
+            final ISelectorExtractStrategy extractStrategy, final IEntity content)
             throws SelectionException {
         return extractStrategy.extractSelectors(context, config, content);
     }
@@ -158,13 +158,16 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
      * @return
      * @throws IOException
      */
-    private byte[] download(final IProcessContext context, final HttpRequestBase request)
+    private IEntity download(final IProcessContext context, final HttpRequestBase request)
             throws IOException, InvalidPageException {
-        byte[] content = null;
         final HttpClient client = context.getClient();
         final HttpResponse response = client.execute(request);
         final HttpEntity entity = response.getEntity();
+        final TransferEntity resultEntity = new TransferEntity();
         String mimeType = entity.getContentType().getValue();
+        resultEntity.setMimeType(mimeType);
+        resultEntity.setCharset(Charset.forName(entity.getContentEncoding().getValue()));
+        resultEntity.setStatusCode(response.getStatusLine().getStatusCode());
         if ((response.getStatusLine().getStatusCode() / 100) == 4) {
             throw new InvalidPageException("Page you are requested is not valid error code: "
                     + response.getStatusLine());
@@ -173,7 +176,7 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
             try {
                 final InputStream is = entity.getContent();
                 try {
-                    content = IOUtils.toByteArray(is);
+                    resultEntity.setContent(IOUtils.toByteArray(is));
                 } finally {
                     is.close();
                 }
@@ -183,26 +186,7 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
         } else {
             throw new UnsupportedMimeTypeException(mimeType);
         }
-        return content;
-    }
-
-    private void storeMarkup(final IProcessContext context, final byte[] content) {
-        try {
-            final File parent = com.jdev.crawler.core.process.FileUtils.getJobPath(context);
-            if (parent.exists() || parent.mkdirs()) {
-                FileUtils.write(new File(parent, getFileName()),
-                        new String(content == null ? "".getBytes() : content, Consts.UTF_8));
-            } else {
-                AbstractStepProcess.LOGGER.warn("Failed to create " + parent.getAbsolutePath()
-                        + " folder.");
-            }
-        } catch (final IOException e) {
-            AbstractStepProcess.LOGGER.warn(e.getMessage(), e);
-        }
-    }
-
-    private String getFileName() {
-        return System.currentTimeMillis() + "_" + this.getClass().getCanonicalName() + ".html";
+        return resultEntity;
     }
 
     private boolean isMimeTypeAccepted(final String mimeType) {

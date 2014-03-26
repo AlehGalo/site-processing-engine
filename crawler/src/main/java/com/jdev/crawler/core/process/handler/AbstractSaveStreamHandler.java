@@ -14,6 +14,7 @@ import com.jdev.crawler.core.process.FileUtils;
 import com.jdev.crawler.core.process.IProcessContext;
 import com.jdev.crawler.core.process.IProcessResultHandler;
 import com.jdev.crawler.core.process.IProcessSession;
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.selector.RequestReservedWord;
 import com.jdev.crawler.core.store.IndexedItem;
 import com.jdev.crawler.core.user.IStorageUniqueKey;
@@ -28,7 +29,8 @@ public abstract class AbstractSaveStreamHandler implements IProcessResultHandler
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSaveStreamHandler.class);
 
     @Override
-    public void handle(final IProcessSession session, final byte[] content) throws CrawlerException {
+    public void handle(final IProcessSession session, final IEntity content)
+            throws CrawlerException {
         final IProcessContext context = session.getSessionContext();
         final String uuid = session.getStringValue(RequestReservedWord.UUID.getWord()), dateName = session
                 .getStringValue(RequestReservedWord.DATE.getWord()) == null ? "" : session
@@ -44,12 +46,12 @@ public abstract class AbstractSaveStreamHandler implements IProcessResultHandler
                         .getStringValue(RequestReservedWord.DESCRIPTION.getWord())));
     }
 
-    private String storeFile(final IProcessContext context, final byte[] content)
+    private String storeFile(final IProcessContext context, final IEntity content)
             throws CrawlerException {
         String result = null;
-        if (validateFileContent(content)) {
+        if (validateFileContent(content.getContent())) {
             try {
-                final ByteArrayInputStream bis = new ByteArrayInputStream(content);
+                final ByteArrayInputStream bis = new ByteArrayInputStream(content.getContent());
                 try {
                     final File parent = FileUtils.getJobPath(context);
                     if (parent.exists() || parent.mkdirs()) {

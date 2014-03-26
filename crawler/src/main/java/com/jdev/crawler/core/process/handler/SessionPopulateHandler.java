@@ -3,11 +3,11 @@
  */
 package com.jdev.crawler.core.process.handler;
 
-import java.nio.charset.Charset;
 import java.util.Collection;
 
 import com.jdev.crawler.core.process.IProcessResultHandler;
 import com.jdev.crawler.core.process.IProcessSession;
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.exception.SelectionException;
@@ -41,12 +41,12 @@ public class SessionPopulateHandler implements IProcessResultHandler {
      * cinergy.crawler.core.selector.ISelectorResult)
      */
     @Override
-    public void handle(final IProcessSession session, final byte[] content)
+    public void handle(final IProcessSession session, final IEntity content)
             throws SelectionException {
         Assert.notNull(session);
         Assert.notNull(content);
-        final Collection<ISelectorResult> result = selector.select(new String(content,
-                Charset.forName("UTF-8")));
+        final Collection<ISelectorResult> result = selector.select(new String(content.getContent(),
+                content.getCharset()));
         Assert.isTrue(result.size() == 1);
         final ISelectorResult selRes = (ISelectorResult) result.toArray()[0];
         session.putValue(selRes.getName(), selRes.getValue());

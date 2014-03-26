@@ -11,6 +11,7 @@ import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 
 import com.jdev.crawler.core.process.IProcessContext;
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.RequestReservedWord;
@@ -37,7 +38,7 @@ public class DefaultSelectorExtractStrategy implements ISelectorExtractStrategy 
      */
     @Override
     public List<ISelectorResult> extractSelectors(final IProcessContext context,
-            final IStepConfig config, final byte[] content) throws SelectionException {
+            final IStepConfig config, final IEntity content) throws SelectionException {
         final Set<ISelectorResult> set = new HashSet<ISelectorResult>();
         if (content != null) {
             final Collection<ISelector<?>> selectorsList = config.getParameters();

@@ -6,6 +6,7 @@ package com.jdev.crawler.core.process;
 import java.util.List;
 
 import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.step.IStepConfig;
 import com.jdev.crawler.exception.CrawlerException;
@@ -42,9 +43,9 @@ public class LoginStepProcess extends AssembledStepProcess {
     }
 
     @Override
-    public byte[] process(final IProcessSession session, final byte[] content,
+    public IEntity process(final IProcessSession session, final IEntity content,
             final ISelectorExtractStrategy selectorExtractStrategy) throws CrawlerException {
-        byte[] cont = null;
+        IEntity cont = null;
         try {
             cont = super.process(session, content, selectorExtractStrategy);
         } catch (final CrawlerException e) {

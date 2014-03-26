@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.jdev.crawler.core.process.extract.DefaultSelectorExtractStrategy;
 import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.exception.CrawlerException;
 
 public class ProcessChain implements IProcess {
@@ -15,9 +16,9 @@ public class ProcessChain implements IProcess {
     }
 
     @Override
-    public byte[] process(final IProcessSession session, final byte[] content,
+    public IEntity process(final IProcessSession session, final IEntity content,
             final ISelectorExtractStrategy selectorExtractStrategy) throws CrawlerException {
-        byte[] c = content;
+        IEntity c = content;
         for (int i = 0; i < elements.size(); i++) {
             final IProcess element = elements.get(i);
             c = element.process(session, c, i == 0 ? selectorExtractStrategy

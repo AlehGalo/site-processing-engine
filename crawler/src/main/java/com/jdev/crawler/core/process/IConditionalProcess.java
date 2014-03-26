@@ -1,5 +1,7 @@
 package com.jdev.crawler.core.process;
 
+import com.jdev.crawler.core.process.model.IEntity;
+
 /**
  *
  */
@@ -10,6 +12,6 @@ public interface IConditionalProcess extends IProcess {
      *            binary stream for processing.
      * @return true/false.
      */
-    boolean match(byte[] content);
+    boolean match(IEntity content);
 
 }

@@ -1,9 +1,9 @@
 package com.jdev.crawler.core.step;
 
-import org.apache.http.Consts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.exception.SelectionException;
 
@@ -18,8 +18,8 @@ public class DefaultValidator implements IValidator {
     }
 
     @Override
-    public boolean validate(final byte[] content) {
-        final String contentString = new String(content, Consts.UTF_8);
+    public boolean validate(final IEntity entity) {
+        final String contentString = new String(entity.getContent(), entity.getCharset());
         for (final ISelector<String> sel : selector) {
             try {
                 if (sel.select(contentString).isEmpty()) {

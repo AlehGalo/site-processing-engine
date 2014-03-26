@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.exception.CrawlerException;
 
 /**
@@ -46,7 +47,7 @@ public class HandlersOnlyStepProcess implements IProcess, IDescription {
     }
 
     @Override
-    public byte[] process(IProcessSession session, byte[] content,
+    public IEntity process(IProcessSession session, IEntity content,
             ISelectorExtractStrategy extractStrategy) throws CrawlerException {
         for (IProcessResultHandler handler : handlersList) {
             handler.handle(session, content);

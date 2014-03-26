@@ -2,10 +2,9 @@ package com.jdev.crawler.core.process;
 
 import java.util.Collection;
 
-import org.apache.http.Consts;
-
 import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.process.extract.MergingSelectorExtractStrategy;
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.exception.CrawlerException;
@@ -29,10 +28,10 @@ public class ForEachProcess implements IProcess {
     }
 
     @Override
-    public byte[] process(final IProcessSession session, final byte[] content,
+    public IEntity process(final IProcessSession session, final IEntity content,
             final ISelectorExtractStrategy extractStrategy) throws CrawlerException {
-        final Collection<? extends ISelectorResult> list = cycle.select(new String(content,
-                Consts.UTF_8));
+        final Collection<? extends ISelectorResult> list = cycle.select(new String(content
+                .getContent(), content.getCharset()));
         for (final ISelectorResult result : list) {
             inner.process(session, content, new MergingSelectorExtractStrategy(result));
         }

@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.step.IStepConfig;
 import com.jdev.crawler.exception.CrawlerException;
 import com.jdev.crawler.exception.SelectionException;
@@ -48,7 +49,7 @@ class OptionalAssembledStepProcessor extends AssembledStepProcess {
     }
 
     @Override
-    public byte[] process(final IProcessSession session, final byte[] content,
+    public IEntity process(final IProcessSession session, final IEntity content,
             final ISelectorExtractStrategy extractStrategy) throws CrawlerException {
         try {
             extractStrategy.extractSelectors(session.getSessionContext(), config, content);

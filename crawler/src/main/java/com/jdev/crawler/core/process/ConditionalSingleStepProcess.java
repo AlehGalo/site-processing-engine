@@ -2,6 +2,7 @@ package com.jdev.crawler.core.process;
 
 import java.util.Collections;
 
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.step.IStepConfig;
 import com.jdev.crawler.core.step.IValidator;
 
@@ -20,7 +21,7 @@ public class ConditionalSingleStepProcess extends SimpleStepProcess implements I
     }
 
     @Override
-    public boolean match(byte[] content) {
+    public boolean match(IEntity content) {
         return validator.validate(content);
     }
 }

@@ -85,6 +85,5 @@ public class FLRUCollector {
         } catch (CrawlerException e) {
             e.printStackTrace();
         }
-
     }
 }

@@ -8,16 +8,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.http.Consts;
 import org.apache.http.client.CookieStore;
 
 import com.jdev.crawler.core.process.IProcessContext;
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.exception.SelectionException;
 
 /**
- * @author Aleh Adapter point to make a desition of what kind of content should
+ * @author Aleh Adapter point to make a decision of what kind of content should
  *         be inserted into selector's select method.
  */
 final class SelectrosExtractStrategyAdapter {
@@ -40,7 +40,7 @@ final class SelectrosExtractStrategyAdapter {
      */
     @SuppressWarnings("unchecked")
     public List<ISelectorResult> extractSelectors(final ISelector<?> selector,
-            final IProcessContext context, final byte[] content) throws SelectionException {
+            final IProcessContext context, final IEntity content) throws SelectionException {
         List<ISelectorResult> list = new ArrayList<>();
         if (cookieStoreValidator.isContentValid(selector)) {
             list.addAll(processSelectorsWithCookieStoreContent((ISelector<CookieStore>) selector,
@@ -61,11 +61,11 @@ final class SelectrosExtractStrategyAdapter {
      *             ex.
      */
     private Collection<ISelectorResult> processSelectorsWithStringContent(
-            final ISelector<String> selector, final byte[] content) throws SelectionException {
+            final ISelector<String> selector, final IEntity content) throws SelectionException {
         if (content == null) {
             return Collections.<ISelectorResult> emptyList();
         }
-        return selector.select(new String(content, Consts.UTF_8));
+        return selector.select(new String(content.getContent(), content.getCharset()));
     }
 
     /**

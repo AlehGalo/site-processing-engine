@@ -5,6 +5,7 @@ package com.jdev.crawler.core.process.handler;
 
 import com.jdev.crawler.core.process.IProcessResultHandler;
 import com.jdev.crawler.core.process.IProcessSession;
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.exception.CrawlerException;
 import com.jdev.crawler.util.Assert;
@@ -35,7 +36,8 @@ public class SessionPopulateHandlerSelectionResult implements IProcessResultHand
      * .crawler .core.process.IProcessSession, byte[])
      */
     @Override
-    public void handle(final IProcessSession session, final byte[] content) throws CrawlerException {
+    public void handle(final IProcessSession session, final IEntity content)
+            throws CrawlerException {
         Assert.notNull(session);
         session.putValue(result.getName(), result.getValue());
     }
