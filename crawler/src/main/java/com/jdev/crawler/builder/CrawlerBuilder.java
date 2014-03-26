@@ -59,12 +59,6 @@ public class CrawlerBuilder implements ICrawlerBuilder {
     }
 
     @Override
-    public CrawlerBuilder buildStoreMarkup(final boolean storeMarkup) {
-        crawler.setStoreMarkup(storeMarkup);
-        return this;
-    }
-
-    @Override
     public ICrawler getResult() {
         return crawler;
     }

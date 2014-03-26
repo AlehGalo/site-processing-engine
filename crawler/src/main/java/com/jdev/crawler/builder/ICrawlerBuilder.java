@@ -43,13 +43,6 @@ public interface ICrawlerBuilder {
     ICrawlerBuilder buildCookieStore(CookieStore cookieStore);
 
     /**
-     * @param storeMarkup
-     *            or not.
-     * @return crawler builder.
-     */
-    ICrawlerBuilder buildStoreMarkup(boolean storeMarkup);
-
-    /**
      * @return crawler.
      */
     ICrawler getResult();

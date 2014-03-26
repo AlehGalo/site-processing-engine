@@ -9,6 +9,7 @@ import com.jdev.crawler.core.process.ProcessSession;
 import com.jdev.crawler.core.process.extract.DefaultSelectorExtractStrategy;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.RequestReservedWord;
+import com.jdev.crawler.core.settings.CrawlerProperties;
 import com.jdev.crawler.core.store.FileStorage;
 import com.jdev.crawler.core.store.IFileStorage;
 import com.jdev.crawler.core.user.IUserData;
@@ -31,14 +32,6 @@ public class Crawler implements ICrawler, IProcessContext {
     private final IUserData userData;
 
     private IProcess flowProcess;
-
-    private int repeatTime = 5;
-    private int waitInterval = 10000;
-
-    /**
-     * By default all html files are save at a hard drive.
-     */
-    private boolean storeMarkup = true;
 
     /**
      * @param process
@@ -73,18 +66,6 @@ public class Crawler implements ICrawler, IProcessContext {
         this.requestBuilder = requestBuilder;
     }
 
-    public final void setWaitInterval(final int waitInterval) {
-        this.waitInterval = waitInterval;
-    }
-
-    public void setRepeatTime(final int repeatTime) {
-        this.repeatTime = repeatTime;
-    }
-
-    public void setStoreMarkup(final boolean storeMarkup) {
-        this.storeMarkup = storeMarkup;
-    }
-
     @Override
     public HttpClient getClient() {
         return client;
@@ -107,17 +88,17 @@ public class Crawler implements ICrawler, IProcessContext {
 
     @Override
     public int getRepeatTime() {
-        return repeatTime;
+        return CrawlerProperties.getRepeatTime();
     }
 
     @Override
     public int getWaitInterval() {
-        return waitInterval;
+        return CrawlerProperties.getWaitInterval();
     }
 
     @Override
     public boolean isStoreMarkup() {
-        return storeMarkup;
+        return CrawlerProperties.isStoremarkup();
     }
 
     @Override
