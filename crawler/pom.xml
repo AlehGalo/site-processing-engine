@@ -7,7 +7,7 @@
 	<name>crawler</name>
 	<parent>
 		<groupId>com.jdev.crawl</groupId>
-		<artifactId>collector</artifactId>
+		<artifactId>informer</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<dependencies>
