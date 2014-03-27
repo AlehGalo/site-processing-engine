@@ -57,7 +57,9 @@ public class StringSourceJSoupSelector extends AbstractJSoupSelector<String> {
             result.add(new SelectorResult(name, value));
 
         }
-        LOGGER.debug("Results found {}", result.size());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Results found {}", result.size());
+        }
         return result;
     }
 

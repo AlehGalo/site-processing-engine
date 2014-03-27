@@ -3,17 +3,10 @@ package com.jdev.crawler.core.process;
 import static java.text.MessageFormat.format;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,16 +14,14 @@ import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.process.handler.MimeType;
 import com.jdev.crawler.core.process.handler.MimeTypeUtil;
 import com.jdev.crawler.core.process.model.IEntity;
-import com.jdev.crawler.core.process.model.TransferEntity;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.ISelectorResult;
+import com.jdev.crawler.core.settings.ISettings;
 import com.jdev.crawler.core.step.DummyValidator;
 import com.jdev.crawler.core.step.IStepConfig;
 import com.jdev.crawler.core.step.IValidator;
 import com.jdev.crawler.exception.CrawlerException;
-import com.jdev.crawler.exception.InvalidPageException;
 import com.jdev.crawler.exception.SelectionException;
-import com.jdev.crawler.exception.UnsupportedMimeTypeException;
 
 /**
  *
@@ -47,9 +38,21 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractStepProcess.class);
     // TODO: add logging
+
+    /**
+     * List of handler to be applied.
+     */
     private final List<IProcessResultHandler> handlers;
 
+    /**
+     * 
+     */
     private final IStepConfig config;
+
+    /**
+     * 
+     */
+    private ISettings settings;
 
     /**
      * Accepted mime type.
@@ -125,17 +128,17 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
         final boolean isEmpty = CollectionUtils.isEmpty(handlers);
         do {
             if (count > 0) {
-                Thread.sleep(context.getWaitInterval());
+                Thread.sleep(settings.getWaitInterval());
             }
-            entity = download(context, request);
-            if (context.isStoreMarkup() && isEmpty) {
+            entity = FileUtils.download(context, request);
+            if (settings.isStoremarkup() && isEmpty) {
                 com.jdev.crawler.core.process.FileUtils.storeMarkup(context, entity, this);
             }
-        } while (++count < context.getRepeatTime() && !(valid = getValidator().validate(entity)));
+        } while (++count < settings.getRepeatTime() && !(valid = getValidator().validate(entity)));
         if (!valid) {
             throw new CrawlerException(format(
                     "Waiting {0} ms for a page {1} is failed. Operator is {2}",
-                    context.getWaitInterval() * context.getRepeatTime(), request.getURI()
+                    settings.getWaitInterval() * settings.getRepeatTime(), request.getURI()
                             .toASCIIString(), context.getUserData().getCompany().getCompanyName()));
         } else {
             return entity;
@@ -150,43 +153,6 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
             final ISelectorExtractStrategy extractStrategy, final IEntity content)
             throws SelectionException {
         return extractStrategy.extractSelectors(context, config, content);
-    }
-
-    /**
-     * @param context
-     * @param request
-     * @return
-     * @throws IOException
-     */
-    private IEntity download(final IProcessContext context, final HttpRequestBase request)
-            throws IOException, InvalidPageException {
-        final HttpClient client = context.getClient();
-        final HttpResponse response = client.execute(request);
-        final HttpEntity entity = response.getEntity();
-        final TransferEntity resultEntity = new TransferEntity();
-        String mimeType = entity.getContentType().getValue();
-        resultEntity.setMimeType(mimeType);
-        resultEntity.setCharset(Charset.forName(entity.getContentEncoding().getValue()));
-        resultEntity.setStatusCode(response.getStatusLine().getStatusCode());
-        if ((response.getStatusLine().getStatusCode() / 100) == 4) {
-            throw new InvalidPageException("Page you are requested is not valid error code: "
-                    + response.getStatusLine());
-        }
-        if (isMimeTypeAccepted(mimeType)) {
-            try {
-                final InputStream is = entity.getContent();
-                try {
-                    resultEntity.setContent(IOUtils.toByteArray(is));
-                } finally {
-                    is.close();
-                }
-            } finally {
-                EntityUtils.consume(response.getEntity());
-            }
-        } else {
-            throw new UnsupportedMimeTypeException(mimeType);
-        }
-        return resultEntity;
     }
 
     private boolean isMimeTypeAccepted(final String mimeType) {

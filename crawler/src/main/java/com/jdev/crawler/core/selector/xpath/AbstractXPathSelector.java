@@ -3,9 +3,9 @@
  */
 package com.jdev.crawler.core.selector.xpath;
 
-import static com.jdev.crawler.core.selector.xpath.XPathSelectorResultToISelectorResultConverterUtils.selectFromNode;
-import static com.jdev.crawler.core.selector.xpath.XPathSelectorResultToISelectorResultConverterUtils.selectFromNodeList;
-import static com.jdev.crawler.core.selector.xpath.XPathSelectorResultToISelectorResultConverterUtils.selectFromString;
+import static com.jdev.crawler.core.selector.xpath.XPathSelectorUtils.selectFromNode;
+import static com.jdev.crawler.core.selector.xpath.XPathSelectorUtils.selectFromNodeList;
+import static com.jdev.crawler.core.selector.xpath.XPathSelectorUtils.selectFromString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +58,9 @@ abstract class AbstractXPathSelector<T> implements ISelector<T> {
                 throw new XPathSelectionException(name, xPath, e);
             }
         }
-        LOGGER.debug("XPathSelector found {} items" + resultList.size());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Results found {}", resultList.size());
+        }
         return resultList;
     }
 

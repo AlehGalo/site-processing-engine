@@ -87,7 +87,9 @@ public class RegexpSelector implements ISelector<String> {
             LOGGER.debug("Found item name = {} value = {}" + name, value);
             list.add(new SelectorResult(name, value));
         }
-        LOGGER.debug("Selection result found {} items" + list.size());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Results found {}", list.size());
+        }
         return list;
     }
 

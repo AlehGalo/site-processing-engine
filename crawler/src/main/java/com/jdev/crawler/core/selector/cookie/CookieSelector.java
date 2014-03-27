@@ -30,7 +30,7 @@ public class CookieSelector implements ISelector<CookieStore> {
     private static final Logger LOGGER = LoggerFactory.getLogger(CookieSelector.class);
 
     /**
-     *
+     * Name of the property.
      */
     private final String name;
 
@@ -62,13 +62,12 @@ public class CookieSelector implements ISelector<CookieStore> {
                 if (isEmpty(value)) {
                     throw CookieSelectionException.createFormatted(name);
                 }
-                LOGGER.debug("[CookieSelector] >> {} {}", name, value);
+                LOGGER.debug("Properties extracted {} {}", name, value);
                 list.add(new SelectorResult(name, value));
             }
         }
-        if (list.isEmpty()) {
-            LOGGER.debug("[CookieSelector] >> No values selected.");
-
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Results found {}", list.size());
         }
         return list;
     }

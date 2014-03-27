@@ -29,7 +29,7 @@ public class AssembledStepProcess extends AbstractStepProcess {
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleStepProcess.class);
 
     public AssembledStepProcess(final IStepConfig config, final List<IProcessResultHandler> handlers) {
-        super(handlers, config, "");
+        super(handlers, config, "AssembledStepProcess");
     }
 
     /**

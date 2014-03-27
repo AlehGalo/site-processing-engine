@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jdev.crawler.core.selector.ISelectorResult;
+import com.jdev.crawler.core.step.HTTPMethod;
 import com.jdev.crawler.exception.SelectionException;
 
 public class BasicRequestBuilder implements IRequestBuilder {
@@ -37,35 +38,28 @@ public class BasicRequestBuilder implements IRequestBuilder {
      * @throws SelectionException
      */
     @Override
-    public HttpRequestBase buildRequest(final String method, final String url,
+    public HttpRequestBase buildRequest(final HTTPMethod method, final String url,
             final List<ISelectorResult> list) throws SelectionException {
-        if (StringUtils.isEmpty(method) || StringUtils.isEmpty(url)) {
+        if (method == null || StringUtils.isEmpty(url)) {
             throw new SelectionException(String.format(
                     "Method[%s] or url[%s] cannot be null or empty", method, url));
         }
         HttpRequestBase request = null;
-        if (HttpGet.METHOD_NAME.equalsIgnoreCase(method)) {
-            request = buildGetRequest(url, list);
-            debugUrl(request);
-        } else if (HttpPost.METHOD_NAME.equalsIgnoreCase(method)) {
+        switch (method) {
+        case POST:
             request = buildPostRequest(url, list);
-            debugUrl(request);
-        } else {
+            break;
+        case GET:
+            request = buildGetRequest(url, list);
+            break;
+        case DELETE:
+        case PUT:
+        case HEAD:
+        case OPTIONS:
+        case TRACE:
             throw new SelectionException(String.format("Method [%s] is not supported", method));
         }
-        return request;
-    }
-
-    /**
-     * @param url
-     * @param params
-     * @return
-     */
-    protected HttpRequestBase buildPostRequest(final String url, final List<ISelectorResult> list)
-            throws SelectionException {
-        final HttpPost request = new HttpPost(url);
-        request.setEntity(new UrlEncodedFormEntity(convertToListValuePair(convertParams(list)),
-                Consts.UTF_8));
+        debugUrl(request);
         return request;
     }
 
@@ -94,6 +88,19 @@ public class BasicRequestBuilder implements IRequestBuilder {
             throws SelectionException {
         final HttpGet request = new HttpGet(url);
         request.setParams(convertParams(list));
+        return request;
+    }
+
+    /**
+     * @param url
+     * @param params
+     * @return
+     */
+    protected HttpRequestBase buildPostRequest(final String url, final List<ISelectorResult> list)
+            throws SelectionException {
+        final HttpPost request = new HttpPost(url);
+        request.setEntity(new UrlEncodedFormEntity(convertToListValuePair(convertParams(list)),
+                Consts.UTF_8));
         return request;
     }
 

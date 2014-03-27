@@ -4,13 +4,23 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jdev.crawler.core.process.model.IEntity;
+import com.jdev.crawler.core.process.model.TransferEntity;
 import com.jdev.crawler.core.user.IUserData;
+import com.jdev.crawler.exception.InvalidPageException;
 
 /**
  * @author Aleh
@@ -76,5 +86,42 @@ public final class FileUtils {
         return System.currentTimeMillis() + "_"
                 + (desc.getDescription() == null ? StringUtils.EMPTY : desc.getDescription())
                 + ".html";
+    }
+
+    /**
+     * @param context
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    public static IEntity download(final IProcessContext context, final HttpRequestBase request)
+            throws IOException, InvalidPageException {
+        final HttpClient client = context.getClient();
+        final HttpResponse response = client.execute(request);
+        final HttpEntity entity = response.getEntity();
+        final TransferEntity resultEntity = new TransferEntity();
+        String mimeType = entity.getContentType().getValue();
+        resultEntity.setMimeType(mimeType);
+        resultEntity.setCharset(Charset.forName(entity.getContentEncoding().getValue()));
+        resultEntity.setStatusCode(response.getStatusLine().getStatusCode());
+        if ((response.getStatusLine().getStatusCode() / 100) == 4) {
+            throw new InvalidPageException("Page you are requested is not valid error code: "
+                    + response.getStatusLine());
+        }
+        // if (isMimeTypeAccepted(mimeType)) {
+        try {
+            final InputStream is = entity.getContent();
+            try {
+                resultEntity.setContent(IOUtils.toByteArray(is));
+            } finally {
+                is.close();
+            }
+        } finally {
+            EntityUtils.consume(response.getEntity());
+        }
+        // } else {
+        // throw new UnsupportedMimeTypeException(mimeType);
+        // }
+        return resultEntity;
     }
 }

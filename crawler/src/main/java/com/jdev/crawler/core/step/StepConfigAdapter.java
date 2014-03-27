@@ -39,8 +39,8 @@ public class StepConfigAdapter implements IStepConfig {
      * @see cinergy.crawler.core.step.IStepConfig#getMethod()
      */
     @Override
-    public String getMethod() {
-        return "get";
+    public HTTPMethod getMethod() {
+        return HTTPMethod.GET;
     }
 
 }

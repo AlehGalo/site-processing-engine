@@ -9,7 +9,8 @@ import com.jdev.crawler.core.process.ProcessSession;
 import com.jdev.crawler.core.process.extract.DefaultSelectorExtractStrategy;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.RequestReservedWord;
-import com.jdev.crawler.core.settings.CrawlerProperties;
+import com.jdev.crawler.core.settings.CrawlerSettings;
+import com.jdev.crawler.core.settings.ISettings;
 import com.jdev.crawler.core.store.FileStorage;
 import com.jdev.crawler.core.store.IFileStorage;
 import com.jdev.crawler.core.user.IUserData;
@@ -25,13 +26,11 @@ public class Crawler implements ICrawler, IProcessContext {
 
     private HttpClient client;
     private IRequestBuilder requestBuilder;
-
     private IFileStorage fileStorage;
     private CookieStore cookieStorage;
-
     private final IUserData userData;
-
     private IProcess flowProcess;
+    private final ISettings settings;
 
     /**
      * @param process
@@ -41,6 +40,7 @@ public class Crawler implements ICrawler, IProcessContext {
         this.flowProcess = process;
         this.userData = verifyUserData(userData);
         this.fileStorage = new FileStorage(DEFAULT_STORAGE_NAME);
+        this.settings = new CrawlerSettings();
     }
 
     @Override
@@ -67,11 +67,6 @@ public class Crawler implements ICrawler, IProcessContext {
     }
 
     @Override
-    public HttpClient getClient() {
-        return client;
-    }
-
-    @Override
     public IRequestBuilder getRequestBuilder() {
         return requestBuilder;
     }
@@ -84,21 +79,6 @@ public class Crawler implements ICrawler, IProcessContext {
     @Override
     public IFileStorage getFileStorage() {
         return fileStorage;
-    }
-
-    @Override
-    public int getRepeatTime() {
-        return CrawlerProperties.getRepeatTime();
-    }
-
-    @Override
-    public int getWaitInterval() {
-        return CrawlerProperties.getWaitInterval();
-    }
-
-    @Override
-    public boolean isStoreMarkup() {
-        return CrawlerProperties.isStoremarkup();
     }
 
     @Override
@@ -127,5 +107,10 @@ public class Crawler implements ICrawler, IProcessContext {
         Assert.notNull(data, "User data should be specified");
         Assert.notNull(data.getCompany(), "Company should be specified for user datat");
         return data;
+    }
+
+    @Override
+    public ISettings getSettings() {
+        return settings;
     }
 }

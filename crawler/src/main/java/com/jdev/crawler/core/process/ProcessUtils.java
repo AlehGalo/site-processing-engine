@@ -8,6 +8,7 @@ import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.RequestReservedWord;
 import com.jdev.crawler.core.step.DummyValidator;
+import com.jdev.crawler.core.step.HTTPMethod;
 import com.jdev.crawler.core.step.IStepConfig;
 import com.jdev.crawler.core.step.IValidator;
 import com.jdev.crawler.core.step.StepConfigAdapter;
@@ -208,8 +209,8 @@ public final class ProcessUtils {
             }
 
             @Override
-            public String getMethod() {
-                return "POST";
+            public HTTPMethod getMethod() {
+                return HTTPMethod.POST;
             }
         }, Collections.<IProcessResultHandler> emptyList());
     }

@@ -66,7 +66,7 @@ public class DefaultSelectorExtractStrategy implements ISelectorExtractStrategy 
     protected Set<ISelectorResult> populateHostMethod(final IStepConfig config) {
         Set<ISelectorResult> set = new HashSet<>();
         if (config != null) {
-            populateSelectorResult(RequestReservedWord.METHOD, config.getMethod(), set);
+            populateSelectorResult(RequestReservedWord.METHOD, config.getMethod().name(), set);
             populateSelectorResult(RequestReservedWord.HOST, config.getUrl(), set);
         }
         return set;

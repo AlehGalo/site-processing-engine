@@ -5,6 +5,10 @@ package com.jdev.crawler.core.selector.jsoup.extractor;
 
 import org.jsoup.nodes.Element;
 
+/**
+ * @author Aleh
+ * 
+ */
 public interface IJSoupElementExtractor {
 
     /**

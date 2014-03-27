@@ -25,13 +25,13 @@ import com.jdev.crawler.exception.XPathSelectionException;
  * @author Aleh
  * 
  */
-public final class XPathSelectorResultToISelectorResultConverterUtils {
+public final class XPathSelectorUtils {
 
     /**
      * Logger.
      */
     private static final Logger LOGGER = LoggerFactory
-            .getLogger(XPathSelectorResultToISelectorResultConverterUtils.class);
+            .getLogger(XPathSelectorUtils.class);
 
     /**
      * @param name
