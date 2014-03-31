@@ -21,6 +21,7 @@ import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.process.model.TransferEntity;
 import com.jdev.crawler.core.user.IUserData;
 import com.jdev.crawler.exception.InvalidPageException;
+import com.jdev.crawler.util.Assert;
 
 /**
  * @author Aleh
@@ -94,9 +95,10 @@ public final class FileUtils {
      * @return
      * @throws IOException
      */
-    public static IEntity download(final IProcessContext context, final HttpRequestBase request)
+    public static IEntity download(final HttpClient client, final HttpRequestBase request)
             throws IOException, InvalidPageException {
-        final HttpClient client = context.getClient();
+        Assert.notNull(client);
+        Assert.notNull(request);
         final HttpResponse response = client.execute(request);
         final HttpEntity entity = response.getEntity();
         final TransferEntity resultEntity = new TransferEntity();

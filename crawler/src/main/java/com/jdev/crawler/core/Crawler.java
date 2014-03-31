@@ -54,10 +54,6 @@ public class Crawler implements ICrawler, IProcessContext {
         }
     }
 
-    public void setClient(final HttpClient client) {
-        this.client = client;
-    }
-
     public void setStore(final CookieStore store) {
         this.cookieStorage = store;
     }
@@ -113,4 +109,23 @@ public class Crawler implements ICrawler, IProcessContext {
     public ISettings getSettings() {
         return settings;
     }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.jdev.crawler.core.process.IProcessContext#getHttpClient()
+     */
+    @Override
+    public HttpClient getHttpClient() {
+        return this.client;
+    }
+
+    /**
+     * @param client
+     *            any implementation of HttpClient.
+     */
+    public void setClient(final HttpClient client) {
+        this.client = client;
+    }
+
 }

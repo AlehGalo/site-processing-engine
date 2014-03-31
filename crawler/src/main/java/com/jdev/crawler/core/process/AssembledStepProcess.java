@@ -1,5 +1,6 @@
 package com.jdev.crawler.core.process;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.RequestReservedWord;
+import com.jdev.crawler.core.step.HTTPMethod;
 import com.jdev.crawler.core.step.IStepConfig;
 import com.jdev.crawler.exception.CrawlerException;
 import com.jdev.crawler.exception.SelectionException;
@@ -52,7 +54,7 @@ public class AssembledStepProcess extends AbstractStepProcess {
     protected HttpRequestBase createRequest(final IProcessContext context,
             List<ISelectorResult> list) throws CrawlerException {
         Assert.notEmpty(list);
-        String method = null;
+        HTTPMethod method = null;
         final String params[] = new String[2];
         final Map<String, ISelectorResult> map = new HashMap<String, ISelectorResult>();
         for (final ISelectorResult iSelectorResult : list) {
@@ -62,7 +64,13 @@ public class AssembledStepProcess extends AbstractStepProcess {
             } else if (RequestReservedWord.ACTION.getWord().equalsIgnoreCase(name)) {
                 params[1] = value;
             } else if (RequestReservedWord.METHOD.getWord().equalsIgnoreCase(name)) {
-                method = iSelectorResult.getValue();
+                String valueFromSelector = iSelectorResult.getValue();
+                try {
+                    method = HTTPMethod.valueOf(valueFromSelector);
+                } catch (IllegalArgumentException | NullPointerException e) {
+                    throw new SelectionException(MessageFormat.format(
+                            "Invalid value for method name {0}", valueFromSelector), e);
+                }
             } else {
                 map.put(name, iSelectorResult);
             }

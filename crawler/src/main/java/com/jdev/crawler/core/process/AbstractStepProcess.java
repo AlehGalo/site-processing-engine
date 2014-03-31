@@ -130,7 +130,7 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
             if (count > 0) {
                 Thread.sleep(settings.getWaitInterval());
             }
-            entity = FileUtils.download(context, request);
+            entity = FileUtils.download(context.getHttpClient(), request);
             if (settings.isStoremarkup() && isEmpty) {
                 com.jdev.crawler.core.process.FileUtils.storeMarkup(context, entity, this);
             }

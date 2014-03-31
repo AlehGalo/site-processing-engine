@@ -17,6 +17,7 @@ import com.jdev.crawler.builder.CrawlerBuilder;
 import com.jdev.crawler.core.request.BasicRequestBuilder;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.simple.StaticTextSelector;
+import com.jdev.crawler.core.step.HTTPMethod;
 import com.jdev.crawler.core.step.StepConfigAdapter;
 import com.jdev.crawler.core.user.ICompany;
 import com.jdev.crawler.core.user.UserData;
@@ -71,8 +72,8 @@ public class FLRUCollector {
                 }
 
                 @Override
-                public String getMethod() {
-                    return "POST";
+                public HTTPMethod getMethod() {
+                    return HTTPMethod.POST;
                 }
 
                 @Override
