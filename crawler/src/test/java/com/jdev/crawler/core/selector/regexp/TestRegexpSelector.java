@@ -6,6 +6,7 @@ import java.util.Arrays;
 import org.junit.runners.Parameterized.Parameters;
 
 import com.jdev.crawler.core.selector.ISelector;
+import com.jdev.crawler.core.selector.SelectUnit;
 import com.jdev.crawler.core.selector.TestAbstractResourcableSelector;
 
 public class TestRegexpSelector extends TestAbstractResourcableSelector<String> {
@@ -37,7 +38,7 @@ public class TestRegexpSelector extends TestAbstractResourcableSelector<String> 
 
     @Override
     public ISelector<String> createSelector() {
-        return new RegexpSelector("seletor", getSelectorString());
+        return new RegexpSelector(new SelectUnit("seletor", getSelectorString()));
     }
 
     @Override

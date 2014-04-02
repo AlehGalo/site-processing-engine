@@ -9,6 +9,7 @@ import java.util.Arrays;
 import org.junit.runners.Parameterized.Parameters;
 
 import com.jdev.crawler.core.selector.ISelector;
+import com.jdev.crawler.core.selector.SelectUnit;
 import com.jdev.crawler.core.selector.TestAbstractResourcableSelector;
 
 /**
@@ -45,7 +46,7 @@ public class TestXPathSelector extends TestAbstractResourcableSelector<String> {
 
     @Override
     public ISelector<String> createSelector() {
-        return new XPathSelector("seletor", getSelectorString());
+        return new XPathSelector(new SelectUnit("seletor", getSelectorString()));
     }
 
     @Override

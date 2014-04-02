@@ -3,8 +3,6 @@
  */
 package com.jdev.crawler.core.selector.complex;
 
-import static org.apache.commons.collections.CollectionUtils.get;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -79,14 +77,21 @@ public class SelectiveValuesSelector<T> implements ISelector<T> {
     public List<ISelectorResult> select(final T cont) throws SelectionException {
         final Collection<ISelectorResult> collection = selector.select(cont);
         final List<ISelectorResult> selectionResult = new ArrayList<ISelectorResult>();
+        ISelectorResult[] array = collection.toArray(new ISelectorResult[collection.size()]);
         for (final Integer index : indexSet) {
             if (collection.size() <= index || index < 0) {
                 throw new RegexpSelectionException(String.format(
                         "Index of requested regexp is out of result size. Index=%d, size=%d",
                         index, collection.size()));
             }
-            selectionResult.add((ISelectorResult) get(collection, index));
-
+            ISelectorResult result = array[index];
+            selectionResult.add(result);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Selected name= {} value = {}", result.getName(), result.getValue());
+            }
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Selected number of records {}", selectionResult.size());
         }
         return selectionResult;
     }

@@ -16,9 +16,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
+import com.jdev.crawler.core.selector.ISelectUnit;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.exception.XPathSelectionException;
+import com.jdev.crawler.util.Assert;
 
 /**
  * @author Aleh
@@ -35,6 +37,20 @@ abstract class AbstractXPathSelector<T> implements ISelector<T> {
      * Node element.
      */
     private Node node;
+
+    /**
+     * Selection unit.
+     */
+    private final ISelectUnit selectUnit;
+
+    /**
+     * @param selectUnit
+     *            unit.
+     */
+    public AbstractXPathSelector(final ISelectUnit selectUnit) {
+        Assert.notNull(selectUnit);
+        this.selectUnit = selectUnit;
+    }
 
     /**
      * XPath processing.
@@ -77,5 +93,12 @@ abstract class AbstractXPathSelector<T> implements ISelector<T> {
      */
     public final Node getNode() {
         return node;
+    }
+
+    /**
+     * @return the selectUnit
+     */
+    protected final ISelectUnit getSelectUnit() {
+        return selectUnit;
     }
 }

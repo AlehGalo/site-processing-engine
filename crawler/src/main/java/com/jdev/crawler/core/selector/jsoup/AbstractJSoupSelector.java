@@ -3,6 +3,7 @@
  */
 package com.jdev.crawler.core.selector.jsoup;
 
+import com.jdev.crawler.core.selector.ISelectUnit;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.jsoup.extractor.IJSoupElementExtractor;
 import com.jdev.crawler.util.Assert;
@@ -14,14 +15,9 @@ import com.jdev.crawler.util.Assert;
 abstract class AbstractJSoupSelector<T> implements ISelector<T> {
 
     /**
-     * JSoup css selector selector style.
+     * Select unit.
      */
-    private final String selector;
-
-    /**
-     * JSoup css selector name.
-     */
-    private final String name;
+    private final ISelectUnit selectUnit;
 
     /**
      * Result of JSoup extractor.
@@ -29,28 +25,11 @@ abstract class AbstractJSoupSelector<T> implements ISelector<T> {
     private IJSoupElementExtractor extractor;
 
     /**
-     * @param selector
-     *            jsoup selector.
+     * @param selectUnit
      */
-    AbstractJSoupSelector(final String name, final String selector) {
-        Assert.hasLength(selector);
-        Assert.hasLength(name);
-        this.selector = selector;
-        this.name = name;
-    }
-
-    /**
-     * @return the selector
-     */
-    final String getSelector() {
-        return selector;
-    }
-
-    /**
-     * @return the name
-     */
-    final String getName() {
-        return name;
+    AbstractJSoupSelector(final ISelectUnit selectUnit) {
+        Assert.notNull(selectUnit);
+        this.selectUnit = selectUnit;
     }
 
     /**
@@ -68,4 +47,10 @@ abstract class AbstractJSoupSelector<T> implements ISelector<T> {
         this.extractor = extractor;
     }
 
+    /**
+     * @return the selectUnit
+     */
+    protected final ISelectUnit getSelectUnit() {
+        return selectUnit;
+    }
 }

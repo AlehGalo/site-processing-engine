@@ -13,6 +13,7 @@ import org.apache.http.cookie.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jdev.crawler.core.selector.ISelectUnit;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.SelectorResult;
@@ -40,6 +41,15 @@ public class CookieSelector implements ISelector<CookieStore> {
     public CookieSelector(final String name) {
         Assert.hasLength(name);
         this.name = name;
+    }
+
+    /**
+     * @param selectUnit
+     */
+    public CookieSelector(final ISelectUnit selectUnit) {
+        Assert.notNull(selectUnit);
+        Assert.hasLength(selectUnit.getName());
+        this.name = selectUnit.getName();
     }
 
     /*

@@ -11,11 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jdev.crawler.config.dom.TagSoupDomNormaliser;
+import com.jdev.crawler.core.selector.ISelectUnit;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.SelectorResult;
 import com.jdev.crawler.exception.SelectionException;
 import com.jdev.crawler.exception.XPathSelectionException;
-import com.jdev.crawler.util.Assert;
 
 /**
  * @author Aleh
@@ -27,26 +27,12 @@ public class XpathMultiSelector extends AbstractXPathSelector<String> {
      * Logger.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(XpathMultiSelector.class);
-    /**
-     * 
-     */
-    private final String name;
 
     /**
-     * 
+     * @param unit
      */
-    private final String selector;
-
-    /**
-     * @param nameSelector
-     * @param valueSelector
-     */
-    public XpathMultiSelector(final String nameSelector, final String valueSelector) {
-        Assert.hasLength(nameSelector);
-        Assert.hasLength(valueSelector);
-        this.name = nameSelector;
-        this.selector = valueSelector;
-
+    public XpathMultiSelector(final ISelectUnit unit) {
+        super(unit);
     }
 
     /*
@@ -64,7 +50,8 @@ public class XpathMultiSelector extends AbstractXPathSelector<String> {
         if (names.size() == 0 || names.size() != values.size()) {
             LOGGER.error("[XpathMultiSelector] Names size {} and values size {} are incorrect.",
                     names.size(), values.size());
-            throw new XPathSelectionException(name, selector);
+            throw new XPathSelectionException(getSelectUnit().getName(), getSelectUnit()
+                    .getSelector());
         }
         for (int i = 0; i < names.size(); i++) {
             result.add(new SelectorResult(names.get(i).getValue(), values.get(i).getValue()));
@@ -77,7 +64,7 @@ public class XpathMultiSelector extends AbstractXPathSelector<String> {
      * @throws XPathSelectionException
      */
     private List<ISelectorResult> selectNames() throws XPathSelectionException {
-        return evaluateXPath("name", name);
+        return evaluateXPath("name", getSelectUnit().getName());
     }
 
     /**
@@ -85,7 +72,7 @@ public class XpathMultiSelector extends AbstractXPathSelector<String> {
      * @throws XPathSelectionException
      */
     private List<ISelectorResult> selectValues() throws XPathSelectionException {
-        return evaluateXPath("value", selector);
+        return evaluateXPath("value", getSelectUnit().getSelector());
     }
 
 }

@@ -3,7 +3,11 @@
  */
 package com.jdev.crawler.core.process;
 
+import static java.lang.String.format;
+
 import java.util.List;
+
+import org.apache.http.client.methods.HttpRequestBase;
 
 import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.process.model.IEntity;
@@ -52,14 +56,15 @@ public class LoginStepProcess extends AssembledStepProcess {
             throw e;
         }
         try {
-            createRequest(session.getSessionContext(),
+            HttpRequestBase request = createRequest(session.getSessionContext(),
                     extractSelectors(session.getSessionContext(), selectorExtractStrategy, cont));
+            // TODO: change validation of this step.
         } catch (final SelectionException se) {
             // All if fine. Input elements are absent as a result login screen
             // is ok.
             return cont;
         }
-        throw new LoginException(String.format("Logging in failed. For user=[%s].", session
+        throw new LoginException(format("Logging in failed. For user=[%s].", session
                 .getSessionContext().getUserData().getLogin()));
     }
 

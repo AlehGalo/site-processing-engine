@@ -16,7 +16,9 @@ import java.util.Collection;
 import com.jdev.crawler.builder.CrawlerBuilder;
 import com.jdev.crawler.core.request.BasicRequestBuilder;
 import com.jdev.crawler.core.selector.ISelector;
+import com.jdev.crawler.core.selector.SelectUnit;
 import com.jdev.crawler.core.selector.simple.StaticTextSelector;
+import com.jdev.crawler.core.selector.xpath.XPathSelector;
 import com.jdev.crawler.core.step.HTTPMethod;
 import com.jdev.crawler.core.step.StepConfigAdapter;
 import com.jdev.crawler.core.user.ICompany;
@@ -65,7 +67,8 @@ public class FLRUCollector {
                 @Override
                 public Collection<ISelector<?>> getParameters() {
                     Collection<ISelector<?>> collection = new ArrayList<>();
-                    collection.add(new StaticTextSelector("login", "informer-fl-ru"));
+                    collection.add(new XPathSelector(new SelectUnit(
+                            "//input[@id='b-login__text']/@name", "informer-fl-ru")));
                     collection.add(new StaticTextSelector("passwd", "aFGgR5435"));
                     collection.add(new StaticTextSelector("action", "login"));
                     return collection;

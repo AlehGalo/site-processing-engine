@@ -11,6 +11,7 @@ import org.jsoup.nodes.Element;
 import org.junit.runners.Parameterized.Parameters;
 
 import com.jdev.crawler.core.selector.ISelector;
+import com.jdev.crawler.core.selector.SelectUnit;
 import com.jdev.crawler.core.selector.TestAbstractResourcableSelector;
 import com.jdev.crawler.core.selector.jsoup.extractor.IJSoupElementExtractor;
 
@@ -48,8 +49,8 @@ public class TestJSoupSelector extends TestAbstractResourcableSelector<String> {
 
     @Override
     public ISelector<String> createSelector() {
-        StringSourceJSoupSelector selector = new StringSourceJSoupSelector("seletor",
-                getSelectorString());
+        StringSourceJSoupSelector selector = new StringSourceJSoupSelector(new SelectUnit(
+                "seletor", getSelectorString()));
         selector.setExtractor(new IJSoupElementExtractor() {
 
             @Override

@@ -30,7 +30,6 @@ class CookieContentOfSelectorValidator implements IContentValidator {
      */
     void initRegistry() {
         setOfNames.add("com.jdev.crawler.core.selector.cookie.CookieSelector");
-        setOfNames.add("com.jdev.crawler.core.selector.cookie.CookieSelectorUnion");
     }
 
     /*

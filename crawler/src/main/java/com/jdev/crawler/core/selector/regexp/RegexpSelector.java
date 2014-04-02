@@ -13,9 +13,9 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jdev.crawler.core.selector.ISelectUnit;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.ISelectorResult;
-import com.jdev.crawler.core.selector.RequestReservedWord;
 import com.jdev.crawler.core.selector.SelectorResult;
 import com.jdev.crawler.exception.RegexpSelectionException;
 import com.jdev.crawler.util.Assert;
@@ -33,33 +33,14 @@ public class RegexpSelector implements ISelector<String> {
     /**
      * String that contains Regexp for selection.
      */
-    private final String selector;
+    private final ISelectUnit selectUnit;
 
     /**
-     * Name of the parameter.
+     * @param unit
      */
-    private final String name;
-
-    /**
-     * @param name
-     * @param selector
-     */
-    public RegexpSelector(final String name, final String selector) {
-        Assert.hasLength(selector);
-        Assert.hasLength(name);
-        this.selector = selector;
-        this.name = name;
-    }
-
-    /**
-     * @param word
-     * @param selector
-     */
-    public RegexpSelector(final RequestReservedWord word, final String selector) {
-        Assert.hasLength(selector);
-        Assert.notNull(word);
-        this.selector = selector;
-        this.name = word.getWord();
+    public RegexpSelector(final ISelectUnit unit) {
+        Assert.notNull(unit);
+        this.selectUnit = unit;
     }
 
     /**
@@ -73,8 +54,9 @@ public class RegexpSelector implements ISelector<String> {
             throw new RegexpSelectionException("Content cannot be null or empty for selector");
         }
         final List<ISelectorResult> list = new ArrayList<>();
-        final Pattern pattern = Pattern.compile(selector);
+        final Pattern pattern = Pattern.compile(getSelectUnit().getSelector());
         final Matcher m = pattern.matcher(cont);
+        final String name = getSelectUnit().getName();
         while (m.find()) {
             if (m.groupCount() < 1) {
                 throw new RegexpSelectionException(
@@ -82,9 +64,9 @@ public class RegexpSelector implements ISelector<String> {
             }
             final String value = m.group(1);
             if (isEmpty(value)) {
-                throw new RegexpSelectionException(name, selector);
+                throw new RegexpSelectionException(name, getSelectUnit().getSelector());
             }
-            LOGGER.debug("Found item name = {} value = {}" + name, value);
+            LOGGER.debug("Found item name = {} value = {}", name, value);
             list.add(new SelectorResult(name, value));
         }
         if (LOGGER.isDebugEnabled()) {
@@ -94,16 +76,9 @@ public class RegexpSelector implements ISelector<String> {
     }
 
     /**
-     * @return the selector.
+     * @return select unit.
      */
-    protected final String getSelector() {
-        return selector;
-    }
-
-    /**
-     * @return the name.
-     */
-    protected final String getName() {
-        return name;
+    protected ISelectUnit getSelectUnit() {
+        return this.selectUnit;
     }
 }
