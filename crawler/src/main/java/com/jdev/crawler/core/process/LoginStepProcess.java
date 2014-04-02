@@ -57,7 +57,7 @@ public class LoginStepProcess extends AssembledStepProcess {
         }
         int size = extractSelectors(session.getSessionContext(), selectorExtractStrategy, cont)
                 .size();
-        if (size != sizeBefore) {
+        if (size == sizeBefore) {
             throw new LoginException(format("Logging in failed. For user=[%s].", session
                     .getSessionContext().getUserData().getLogin()));
         }
