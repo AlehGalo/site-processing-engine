@@ -5,6 +5,10 @@ package com.jdev.crawler.core.process.model;
 
 import java.nio.charset.Charset;
 
+import com.jdev.crawler.core.process.handler.MimeType;
+import com.jdev.crawler.core.process.handler.MimeTypeUtil;
+import com.jdev.crawler.util.Assert;
+
 /**
  * @author Aleh
  * 
@@ -14,7 +18,12 @@ public class TransferEntity implements IEntity {
     /**
      * 
      */
-    private String mimeType, contentFileRef;
+    private MimeType mimeType;
+
+    /**
+     * 
+     */
+    private String contentFileRef;
 
     /**
      * 
@@ -43,7 +52,7 @@ public class TransferEntity implements IEntity {
      * @see com.jdev.crawler.core.process.model.IEntity#getMimeType()
      */
     @Override
-    public String getMimeType() {
+    public MimeType getMimeType() {
         return mimeType;
     }
 
@@ -81,7 +90,7 @@ public class TransferEntity implements IEntity {
      * @param charset
      *            the charset to set
      */
-    public void setCharset(Charset charset) {
+    public void setCharset(final Charset charset) {
         this.charset = charset;
     }
 
@@ -89,15 +98,24 @@ public class TransferEntity implements IEntity {
      * @param mimeType
      *            the mimeType to set
      */
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
+    public void setMimeType(final String mimeType) {
+        MimeType type = MimeTypeUtil.findMime(mimeType);
+        Assert.notNull(type);
+        this.mimeType = type;
+    }
+
+    /**
+     * @param type
+     */
+    public void setMimeType(final MimeType type) {
+        this.mimeType = type;
     }
 
     /**
      * @param contentFileRef
      *            the contentFileRef to set
      */
-    public void setContentFileRef(String contentFileRef) {
+    public void setContentFileRef(final String contentFileRef) {
         this.contentFileRef = contentFileRef;
     }
 
@@ -105,7 +123,7 @@ public class TransferEntity implements IEntity {
      * @param content
      *            the content to set
      */
-    public void setContent(byte[] content) {
+    public void setContent(final byte[] content) {
         this.content = content;
     }
 
@@ -118,7 +136,7 @@ public class TransferEntity implements IEntity {
      * @param statusCode
      *            the statusCode to set
      */
-    public void setStatusCode(int statusCode) {
+    public void setStatusCode(final int statusCode) {
         this.statusCode = statusCode;
     }
 }

@@ -7,11 +7,11 @@ import com.jdev.crawler.core.process.handler.MimeType;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.RequestReservedWord;
-import com.jdev.crawler.core.step.DummyValidator;
 import com.jdev.crawler.core.step.HTTPMethod;
 import com.jdev.crawler.core.step.IStepConfig;
-import com.jdev.crawler.core.step.IValidator;
 import com.jdev.crawler.core.step.StepConfigAdapter;
+import com.jdev.crawler.core.step.validator.DummyValidator;
+import com.jdev.crawler.core.step.validator.IValidator;
 
 public final class ProcessUtils {
     private ProcessUtils() {
@@ -30,20 +30,13 @@ public final class ProcessUtils {
         return new AssembledStepProcess(config, Collections.<IProcessResultHandler> emptyList());
     }
 
-    public static IProcess login(final IStepConfig config) {
-        return new LoginStepProcess(config, Collections.<IProcessResultHandler> emptyList());
-    }
-
-    public static IProcess login(final IStepConfig config, final IProcessResultHandler... handlers) {
-        return new LoginStepProcess(config, Arrays.asList(handlers));
-    }
-
     public static IProcess assemble(final IStepConfig config, final IRequestBuilder requestBuilder) {
         return new AssembledStepProcess(config, Collections.<IProcessResultHandler> emptyList(),
                 requestBuilder);
     }
 
-    public static IProcess assemble(final IStepConfig config, final IValidator validator) {
+    public static IProcess waitUntilValidatoIsTrue(final IStepConfig config,
+            final IValidator validator) {
         final AssembledStepProcess process = new AssembledStepProcess(config,
                 Collections.<IProcessResultHandler> emptyList());
         process.setValidator(validator);
@@ -203,6 +196,7 @@ public final class ProcessUtils {
 
     public static IProcess doPost(final String url) {
         return new SimpleStepProcess(new StepConfigAdapter() {
+
             @Override
             public String getUrl() {
                 return url;

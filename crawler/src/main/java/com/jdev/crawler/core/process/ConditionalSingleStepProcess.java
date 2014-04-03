@@ -4,7 +4,7 @@ import java.util.Collections;
 
 import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.step.IStepConfig;
-import com.jdev.crawler.core.step.IValidator;
+import com.jdev.crawler.core.step.validator.IValidator;
 
 public class ConditionalSingleStepProcess extends SimpleStepProcess implements IConditionalProcess {
 

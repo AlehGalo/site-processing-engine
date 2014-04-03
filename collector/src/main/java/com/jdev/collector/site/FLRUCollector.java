@@ -8,12 +8,12 @@ import static com.jdev.crawler.core.HttpClientFactory.createHttpClient;
 import static com.jdev.crawler.core.HttpClientFactory.getCookieStore;
 import static com.jdev.crawler.core.process.ProcessUtils.chain;
 import static com.jdev.crawler.core.process.ProcessUtils.doGet;
-import static com.jdev.crawler.core.process.ProcessUtils.login;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import com.jdev.crawler.builder.CrawlerBuilder;
+import com.jdev.crawler.core.process.ProcessUtils;
 import com.jdev.crawler.core.request.BasicRequestBuilder;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.SelectUnit;
@@ -21,6 +21,7 @@ import com.jdev.crawler.core.selector.simple.StaticTextSelector;
 import com.jdev.crawler.core.selector.xpath.XPathSelector;
 import com.jdev.crawler.core.step.HTTPMethod;
 import com.jdev.crawler.core.step.StepConfigAdapter;
+import com.jdev.crawler.core.step.validator.SelectorValidator;
 import com.jdev.crawler.core.user.ICompany;
 import com.jdev.crawler.core.user.UserData;
 import com.jdev.crawler.exception.CrawlerException;
@@ -63,29 +64,37 @@ public class FLRUCollector {
                     return 1;
                 }
             });
-            new CrawlerBuilder(chain(doGet("https://www.fl.ru/"), login(new StepConfigAdapter() {
-                @Override
-                public Collection<ISelector<?>> getParameters() {
-                    Collection<ISelector<?>> collection = new ArrayList<>();
-                    collection.add(new XPathSelector(new SelectUnit(
-                            "//input[@id='b-login__text']/@name", "informer-fl-ru")));
-                    collection.add(new StaticTextSelector("passwd", "aFGgR5435"));
-                    collection.add(new StaticTextSelector("action", "login"));
-                    return collection;
-                }
+            try {
+                new CrawlerBuilder(chain(doGet("https://www.fl.ru/"),
+                        ProcessUtils.waitUntilValidatoIsTrue(new StepConfigAdapter() {
+                            @Override
+                            public Collection<ISelector<?>> getParameters() {
+                                Collection<ISelector<?>> collection = new ArrayList<>();
+                                collection.add(new XPathSelector(new SelectUnit("login",
+                                        "informer-fl-ru")));
+                                collection.add(new StaticTextSelector("passwd", "aFGgR5435"));
+                                collection.add(new StaticTextSelector("action", "login"));
+                                return collection;
+                            }
 
-                @Override
-                public HTTPMethod getMethod() {
-                    return HTTPMethod.POST;
-                }
+                            @Override
+                            public HTTPMethod getMethod() {
+                                return HTTPMethod.POST;
+                            }
 
-                @Override
-                public String getUrl() {
-                    return "https://www.fl.ru/";
-                }
-            })), userData).buildClient(createHttpClient(FIREFOX_USER_AGENT))
-                    .buildCookieStore(getCookieStore())
-                    .buildRequestBuilder(new BasicRequestBuilder()).getResult().collect();
+                            @Override
+                            public String getUrl() {
+                                return "https://www.fl.ru/";
+                            }
+                        }, new SelectorValidator(new XPathSelector(new SelectUnit(
+                                "loginPasswordInput", "//a[@class='b-bar__name']/@href"))))),
+                        userData).buildClient(createHttpClient(FIREFOX_USER_AGENT))
+                        .buildCookieStore(getCookieStore())
+                        .buildRequestBuilder(new BasicRequestBuilder()).getResult().collect();
+            } catch (CrawlerException e) {
+                throw e;
+            }
+            System.out.println("Logged in");
         } catch (CrawlerException e) {
             e.printStackTrace();
         }

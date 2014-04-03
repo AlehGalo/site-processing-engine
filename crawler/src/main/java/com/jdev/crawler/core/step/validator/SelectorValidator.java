@@ -1,4 +1,4 @@
-package com.jdev.crawler.core.step;
+package com.jdev.crawler.core.step.validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +11,12 @@ import com.jdev.crawler.exception.SelectionException;
  * @author Aleh Default validator implementation. Validation will be accepted as
  *         far as all selectors will accepted.
  */
-public class DefaultValidator implements IValidator {
+public class SelectorValidator implements IValidator {
 
     /**
      * Logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultValidator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SelectorValidator.class);
 
     /**
      * String selectors.
@@ -27,7 +27,8 @@ public class DefaultValidator implements IValidator {
      * @param selector
      *            elements that should be all ok for validation pass.
      */
-    public DefaultValidator(final ISelector<String>[] selector) {
+    @SafeVarargs
+    public SelectorValidator(final ISelector<String>... selector) {
         this.selector = selector;
     }
 

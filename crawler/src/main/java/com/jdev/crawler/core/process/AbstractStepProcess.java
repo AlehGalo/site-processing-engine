@@ -1,9 +1,14 @@
 package com.jdev.crawler.core.process;
 
+import static com.jdev.crawler.core.process.HttpClientUtils.download;
+import static com.jdev.crawler.core.process.HttpClientUtils.storeMarkup;
 import static java.text.MessageFormat.format;
+import static org.apache.commons.collections.CollectionUtils.isEmpty;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.http.HttpEntity;
@@ -15,6 +20,9 @@ import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.process.handler.MimeType;
 import com.jdev.crawler.core.process.handler.MimeTypeUtil;
 import com.jdev.crawler.core.process.model.IEntity;
+import com.jdev.crawler.core.process.route.IRoute;
+import com.jdev.crawler.core.process.route.MimeTypeRoute;
+import com.jdev.crawler.core.process.route.ResponseCodeRoute;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.ISelectorResult;
@@ -24,9 +32,9 @@ import com.jdev.crawler.core.selector.entity.HeaderEntityContentEncodingSelector
 import com.jdev.crawler.core.selector.entity.HeaderEntityContentTypeSelector;
 import com.jdev.crawler.core.settings.CrawlerSettings;
 import com.jdev.crawler.core.settings.ISettings;
-import com.jdev.crawler.core.step.DummyValidator;
 import com.jdev.crawler.core.step.IStepConfig;
-import com.jdev.crawler.core.step.IValidator;
+import com.jdev.crawler.core.step.validator.DummyValidator;
+import com.jdev.crawler.core.step.validator.IValidator;
 import com.jdev.crawler.exception.CrawlerException;
 import com.jdev.crawler.exception.SelectionException;
 
@@ -87,6 +95,11 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
     private final ISelector<HttpEntity> entitySelector;
 
     /**
+     * 
+     */
+    private final Set<IRoute> setOfRoutes;
+
+    /**
      * @param handlers
      * @param config
      * @param description
@@ -99,6 +112,9 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
         SelectUnit selectUnit = new SelectUnit("charset", "charset");
         entitySelector = new ChainSelector<HttpEntity>(new HeaderEntityContentEncodingSelector(
                 selectUnit), new HeaderEntityContentTypeSelector(selectUnit));
+        setOfRoutes = new HashSet<>();
+        setOfRoutes.add(new MimeTypeRoute(new MimeType[] { MimeType.HTML }));
+        setOfRoutes.add(new ResponseCodeRoute());
     }
 
     /*
@@ -118,6 +134,9 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
                     content);
             HttpRequestBase request = createRequest(context, selectors);
             IEntity result = executeRequest(context, request);
+            for (IRoute route : setOfRoutes) {
+                route.route(result);
+            }
             return handle(session, result);
         } catch (final IOException | InterruptedException ex) {
             throw new CrawlerException(ex.getMessage(), ex);
@@ -153,24 +172,14 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
         int count = 0;
         boolean valid = false;
         IEntity entity;
-        final boolean isEmpty = CollectionUtils.isEmpty(handlers);
+        final boolean isEmpty = isEmpty(handlers);
         do {
             if (count > 0) {
                 Thread.sleep(settings.getWaitInterval());
             }
-            entity = com.jdev.crawler.core.process.HttpClientUtils.download(
-                    context.getHttpClient(), request, entitySelector);
-
-            // TODO: add support.
-            // if ((response.getStatusLine().getStatusCode() / 100) == 4) {
-            // throw new
-            // InvalidPageException("Page you are requested is not valid error code: "
-            // + response.getStatusLine());
-            // }
-
-            // TODO: add support for mime type
+            entity = download(context.getHttpClient(), request, entitySelector);
             if (settings.isStoremarkup() && isEmpty) {
-                com.jdev.crawler.core.process.HttpClientUtils.storeMarkup(context, entity, this);
+                storeMarkup(context, entity, this);
             }
         } while (++count < settings.getRepeatTime() && !(valid = getValidator().validate(entity)));
         if (!valid) {
@@ -193,10 +202,17 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
         return extractStrategy.extractSelectors(context, config, content);
     }
 
+    /**
+     * @return validation of the step.
+     */
     public IValidator getValidator() {
         return validator;
     }
 
+    /**
+     * @param validator
+     *            of the step processor.
+     */
     public void setValidator(final IValidator validator) {
         this.validator = validator;
     }

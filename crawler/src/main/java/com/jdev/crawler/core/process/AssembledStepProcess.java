@@ -82,6 +82,10 @@ public class AssembledStepProcess extends AbstractStepProcess {
         return requestBuilder.buildRequest(method, extractUrl(params), list);
     }
 
+    /**
+     * @param name
+     * @param value
+     */
     private void log(final String name, final String value) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(" > {}  {}", name, value);

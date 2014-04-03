@@ -5,6 +5,8 @@ package com.jdev.crawler.core.process.model;
 
 import java.nio.charset.Charset;
 
+import com.jdev.crawler.core.process.handler.MimeType;
+
 /**
  * @author Aleh
  * 
@@ -14,7 +16,7 @@ public interface IEntity {
     /**
      * @return
      */
-    String getMimeType();
+    MimeType getMimeType();
 
     /**
      * @return

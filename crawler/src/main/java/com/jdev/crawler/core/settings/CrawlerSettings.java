@@ -12,12 +12,12 @@ public final class CrawlerSettings implements ISettings {
     /**
      * Repeat time for evey page.
      */
-    private final int repeatTime = 5;
+    private final int repeatTime = 3;
 
     /**
      * Waiting before retry.
      */
-    private final int waitInterval = 10000;
+    private final int waitInterval = 1000;
 
     /**
      * By default all html files are save at a hard drive.

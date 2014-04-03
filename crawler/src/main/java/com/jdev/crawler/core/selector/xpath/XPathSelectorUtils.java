@@ -30,8 +30,7 @@ public final class XPathSelectorUtils {
     /**
      * Logger.
      */
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(XPathSelectorUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XPathSelectorUtils.class);
 
     /**
      * @param name
@@ -60,7 +59,7 @@ public final class XPathSelectorUtils {
                 LOGGER.debug("Selected {} {}", name, nodeValue);
             }
         } else {
-            LOGGER.debug("Evaluation is not a node list for [name={}] [selector={}]");
+            LOGGER.debug("No selection from nodeList for[name={}] [selector={}]");
         }
         return resultList;
     }
@@ -83,7 +82,7 @@ public final class XPathSelectorUtils {
             }
             LOGGER.debug("Selected {} {}", name, value);
         } else {
-            LOGGER.debug("Evaluation is not a node for [name={}] [selector={}]", name, xPath);
+            LOGGER.debug("No selection result from node for [name={}] [selector={}]", name, xPath);
         }
         return resultList;
     }
@@ -102,8 +101,11 @@ public final class XPathSelectorUtils {
         final String stringSelected = new StringXPathEvaluator(xPath, node).evaluate();
         if (StringUtils.isNotBlank(stringSelected)) {
             resultList.add(new SelectorResult(name, stringSelected));
+            LOGGER.debug("Selected {} {}", name, stringSelected);
+        } else {
+            LOGGER.debug("No selection result from node-string for [name={}] [selector={}]", name,
+                    xPath);
         }
-        LOGGER.debug("Selected {} {}", name, stringSelected);
         return resultList;
     }
 }

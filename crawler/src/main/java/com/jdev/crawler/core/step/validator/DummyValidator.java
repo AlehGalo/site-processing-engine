@@ -1,4 +1,4 @@
-package com.jdev.crawler.core.step;
+package com.jdev.crawler.core.step.validator;
 
 import com.jdev.crawler.core.process.model.IEntity;
 
