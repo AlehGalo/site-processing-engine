@@ -58,20 +58,22 @@ abstract class AbstractXPathSelector<T> implements ISelector<T> {
      * @return
      * @throws XPathSelectionException
      */
-    protected final List<ISelectorResult> evaluateXPath(final String name, final String xPath)
+    protected final List<ISelectorResult> evaluateXPath(final ISelectUnit selectionUnit)
             throws XPathSelectionException {
+        Assert.notNull(selectionUnit);
         final List<ISelectorResult> resultList = new ArrayList<>();
         if (node != null) {
             try {
-                resultList.addAll(selectFromNodeList(name, xPath, node));
+                resultList.addAll(selectFromNodeList(selectionUnit, node));
                 if (resultList.isEmpty()) {
-                    resultList.addAll(selectFromNode(name, xPath, node));
+                    resultList.addAll(selectFromNode(selectionUnit, node));
                 }
                 if (resultList.isEmpty()) {
-                    resultList.addAll(selectFromString(name, xPath, node));
+                    resultList.addAll(selectFromString(selectionUnit, node));
                 }
             } catch (final XPathExpressionException e) {
-                throw new XPathSelectionException(name, xPath, e);
+                throw new XPathSelectionException(selectionUnit.getName(),
+                        selectionUnit.getSelector(), e);
             }
         }
         if (LOGGER.isDebugEnabled()) {

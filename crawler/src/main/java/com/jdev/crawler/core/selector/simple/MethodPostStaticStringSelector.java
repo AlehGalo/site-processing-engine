@@ -10,12 +10,12 @@ import org.jsoup.Connection;
 /**
  * @author Aleh
  */
-public class StaticTextMethodGetSelector extends StaticTextSelector {
+public class MethodPostStaticStringSelector extends StaticStringSelector {
 
     /**
-     * Get method.
+     * Post text.
      */
-    public StaticTextMethodGetSelector() {
-        super(METHOD, Connection.Method.GET.name());
+    public MethodPostStaticStringSelector() {
+        super(METHOD, Connection.Method.POST.name());
     }
 }

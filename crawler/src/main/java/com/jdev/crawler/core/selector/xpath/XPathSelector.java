@@ -39,6 +39,6 @@ public class XPathSelector extends AbstractXPathSelector<String> {
             throw new XPathSelectionException("Content cannot be null or empty for selector");
         }
         setNode(TagSoupDomNormaliser.convertToNormalisedNode(content));
-        return evaluateXPath(getSelectUnit().getName(), getSelectUnit().getSelector());
+        return evaluateXPath(getSelectUnit());
     }
 }

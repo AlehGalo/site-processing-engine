@@ -9,13 +9,13 @@ import com.jdev.crawler.core.selector.RequestReservedWord;
  * @author Aleh
  * 
  */
-public class StaticTextSelector extends StaticSelector<String> {
+public class StaticStringSelector extends SimpleStaticSelector<String> {
 
     /**
      * @param name
      * @param value
      */
-    public StaticTextSelector(final String name, final String value) {
+    public StaticStringSelector(final String name, final String value) {
         super(name, value);
     }
 
@@ -23,7 +23,7 @@ public class StaticTextSelector extends StaticSelector<String> {
      * @param word
      * @param value
      */
-    public StaticTextSelector(final RequestReservedWord word, final String value) {
+    public StaticStringSelector(final RequestReservedWord word, final String value) {
         super(word, value);
     }
 }

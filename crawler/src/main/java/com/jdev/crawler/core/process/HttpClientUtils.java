@@ -59,7 +59,6 @@ final class HttpClientUtils {
         try {
             Collection<ISelectorResult> collection = entitySelector.select(entity);
             if (!collection.isEmpty()) {
-
                 for (ISelectorResult iSelectorResult : collection) {
                     String valueResult = iSelectorResult.getValue();
                     try {
@@ -75,9 +74,7 @@ final class HttpClientUtils {
 
         // TODO: add logging
         resultEntity.setCharset(charset == null ? Charset.forName("UTF-8") : charset);
-
         resultEntity.setStatusCode(response.getStatusLine().getStatusCode());
-
         try {
             final InputStream is = entity.getContent();
             try {
@@ -91,6 +88,11 @@ final class HttpClientUtils {
         return resultEntity;
     }
 
+    /**
+     * @param context
+     * @param entity
+     * @param desc
+     */
     public static final void storeMarkup(final IProcessContext context, final IEntity entity,
             final IDescription desc) {
         try {

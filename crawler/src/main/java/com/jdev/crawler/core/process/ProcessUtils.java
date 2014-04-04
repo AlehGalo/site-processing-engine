@@ -3,6 +3,10 @@ package com.jdev.crawler.core.process;
 import java.util.Arrays;
 import java.util.Collections;
 
+import com.jdev.crawler.core.process.container.ProcessChain;
+import com.jdev.crawler.core.process.container.ProcessChoice;
+import com.jdev.crawler.core.process.container.ProcessDoWhile;
+import com.jdev.crawler.core.process.container.ProcessParallel;
 import com.jdev.crawler.core.process.handler.MimeType;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.ISelector;
@@ -13,7 +17,12 @@ import com.jdev.crawler.core.step.StepConfigAdapter;
 import com.jdev.crawler.core.step.validator.DummyValidator;
 import com.jdev.crawler.core.step.validator.IValidator;
 
+/**
+ * @author Aleh
+ * 
+ */
 public final class ProcessUtils {
+
     private ProcessUtils() {
     }
 
@@ -67,7 +76,7 @@ public final class ProcessUtils {
     }
 
     public static IProcess chain(final IProcess... elements) {
-        return new ProcessChain(Arrays.asList(elements));
+        return new ProcessChain<IProcess>(Arrays.asList(elements));
     }
 
     public static IProcess chain(final IStepConfig... elements) {
@@ -84,11 +93,11 @@ public final class ProcessUtils {
     }
 
     public static IProcess parallel(final IProcess... elements) {
-        return new ProcessParallel(Arrays.asList(elements));
+        return new ProcessParallel<IProcess>(Arrays.asList(elements));
     }
 
     public static IProcess choice(final IConditionalProcess... elements) {
-        return new ProcessChoice(Arrays.asList(elements));
+        return new ProcessChoice<IConditionalProcess>(Arrays.asList(elements));
     }
 
     public static IProcess multi(final RequestReservedWord word, final IStepConfig stepConfig,
@@ -207,5 +216,9 @@ public final class ProcessUtils {
                 return HTTPMethod.POST;
             }
         }, Collections.<IProcessResultHandler> emptyList());
+    }
+
+    public static IProcess doWhile(final IConditionalProcess process) {
+        return new ProcessDoWhile<IConditionalProcess>(Arrays.asList(process));
     }
 }

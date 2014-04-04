@@ -20,6 +20,7 @@ import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.RequestReservedWord;
+import com.jdev.crawler.core.selector.SelectorResult;
 import com.jdev.crawler.core.step.IStepConfig;
 import com.jdev.crawler.exception.CrawlerException;
 import com.jdev.crawler.exception.SelectionException;
@@ -41,11 +42,6 @@ public class LimitedMultiStepProcess extends AssembledStepProcess {
      * Logger.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(LimitedMultiStepProcess.class);
-
-    /**
-     * Step config.
-     */
-    private final IStepConfig config;
 
     /**
      * Multiple result list.
@@ -76,7 +72,6 @@ public class LimitedMultiStepProcess extends AssembledStepProcess {
             final List<IProcessResultHandler> handlers, final IRequestBuilder requestBuilder,
             final IProcess process, final int limit, final RequestReservedWord word) {
         super(config, handlers, requestBuilder);
-        this.config = config;
         resultMultipleList = new ArrayList<ISelectorResult>();
         this.process = process;
         limitForRequests = limit;
@@ -105,7 +100,7 @@ public class LimitedMultiStepProcess extends AssembledStepProcess {
     public IEntity process(final IProcessSession session, final IEntity content,
             final ISelectorExtractStrategy selectorExtractStrategy) throws CrawlerException {
         final Map<String, List<ISelectorResult>> allParameters = organizeParamsRequests(
-                session.getSessionContext(), config, content, selectorExtractStrategy);
+                session.getSessionContext(), getConfig(), content, selectorExtractStrategy);
         checkMap(allParameters);
         final List<HttpRequestBase> listOfRequests = buildRequests(session.getSessionContext(),
                 allParameters);
@@ -122,19 +117,7 @@ public class LimitedMultiStepProcess extends AssembledStepProcess {
                     final String name = word.getWord(), value = resultMultipleList.get(i)
                             .getValue();
                     final SessionPopulateHandlerSelectionResult populateHandler = new SessionPopulateHandlerSelectionResult(
-                            new ISelectorResult() {
-
-                                @Override
-                                public String getName() {
-                                    return name;
-                                }
-
-                                @Override
-                                public String getValue() {
-                                    return value;
-                                }
-
-                            });
+                            new SelectorResult(name, value));
                     populateHandler.handle(session, content);
                 }
                 final IEntity cont = handle(session,
@@ -142,9 +125,7 @@ public class LimitedMultiStepProcess extends AssembledStepProcess {
                 if (process != null) {
                     process.process(session, cont, selectorExtractStrategy);
                 }
-            } catch (final IOException ex) {
-                throw new CrawlerException(ex.getMessage(), ex);
-            } catch (final InterruptedException ex) {
+            } catch (final IOException | InterruptedException ex) {
                 throw new CrawlerException(ex.getMessage(), ex);
             }
         }

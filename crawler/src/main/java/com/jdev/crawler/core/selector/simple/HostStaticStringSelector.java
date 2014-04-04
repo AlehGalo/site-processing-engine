@@ -8,13 +8,13 @@ import static com.jdev.crawler.core.selector.RequestReservedWord.HOST;
 /**
  * @author Aleh
  */
-public class StaticTextHostSelector extends StaticTextSelector {
+public class HostStaticStringSelector extends StaticStringSelector {
 
     /**
      * @param value
      *            host value.
      */
-    public StaticTextHostSelector(final String value) {
+    public HostStaticStringSelector(final String value) {
         super(HOST, value);
     }
 }

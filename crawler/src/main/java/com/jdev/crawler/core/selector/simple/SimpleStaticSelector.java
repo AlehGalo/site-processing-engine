@@ -18,12 +18,12 @@ import com.jdev.crawler.core.selector.SelectorResult;
 /**
  * @author Aleh
  */
-public class StaticSelector<T> implements ISelector<T> {
+public class SimpleStaticSelector<T> implements ISelector<T> {
 
     /**
      * Logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(StaticSelector.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleStaticSelector.class);
 
     /**
      * 
@@ -36,7 +36,7 @@ public class StaticSelector<T> implements ISelector<T> {
      * @param value
      *            of selector.
      */
-    public StaticSelector(final String name, final String value) {
+    public SimpleStaticSelector(final String name, final String value) {
         result = new SelectorResult(name, value);
     }
 
@@ -46,7 +46,7 @@ public class StaticSelector<T> implements ISelector<T> {
      * @param value
      *            value.
      */
-    public StaticSelector(final RequestReservedWord word, final String value) {
+    public SimpleStaticSelector(final RequestReservedWord word, final String value) {
         if (word != null) {
             result = new SelectorResult(word.getWord(), value);
         } else {

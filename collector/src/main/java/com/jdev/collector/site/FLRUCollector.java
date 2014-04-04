@@ -6,18 +6,28 @@ package com.jdev.collector.site;
 import static com.jdev.crawler.core.AgentEnum.FIREFOX_USER_AGENT;
 import static com.jdev.crawler.core.HttpClientFactory.createHttpClient;
 import static com.jdev.crawler.core.HttpClientFactory.getCookieStore;
+import static com.jdev.crawler.core.process.ProcessUtils.assemble;
 import static com.jdev.crawler.core.process.ProcessUtils.chain;
 import static com.jdev.crawler.core.process.ProcessUtils.doGet;
+import static com.jdev.crawler.core.process.ProcessUtils.doWhile;
+import static com.jdev.crawler.core.process.ProcessUtils.waitUntilValidatoIsTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import com.jdev.crawler.builder.CrawlerBuilder;
-import com.jdev.crawler.core.process.ProcessUtils;
+import com.jdev.crawler.core.process.ConditionalProcess;
+import com.jdev.crawler.core.process.IProcessResultHandler;
+import com.jdev.crawler.core.process.IProcessSession;
+import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.request.BasicRequestBuilder;
 import com.jdev.crawler.core.selector.ISelector;
+import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.SelectUnit;
-import com.jdev.crawler.core.selector.simple.StaticTextSelector;
+import com.jdev.crawler.core.selector.regexp.ActionRegexpSelector;
+import com.jdev.crawler.core.selector.regexp.RegexpSelector;
+import com.jdev.crawler.core.selector.simple.HostStaticStringSelector;
+import com.jdev.crawler.core.selector.simple.StaticStringSelector;
 import com.jdev.crawler.core.selector.xpath.XPathSelector;
 import com.jdev.crawler.core.step.HTTPMethod;
 import com.jdev.crawler.core.step.StepConfigAdapter;
@@ -65,15 +75,15 @@ public class FLRUCollector {
                 }
             });
             try {
-                new CrawlerBuilder(chain(doGet("https://www.fl.ru/"),
-                        ProcessUtils.waitUntilValidatoIsTrue(new StepConfigAdapter() {
+                new CrawlerBuilder(chain(
+                        doGet("https://www.fl.ru/"),
+                        waitUntilValidatoIsTrue(new StepConfigAdapter() {
                             @Override
                             public Collection<ISelector<?>> getParameters() {
                                 Collection<ISelector<?>> collection = new ArrayList<>();
-                                collection.add(new XPathSelector(new SelectUnit("login",
-                                        "informer-fl-ru")));
-                                collection.add(new StaticTextSelector("passwd", "aFGgR5435"));
-                                collection.add(new StaticTextSelector("action", "login"));
+                                collection.add(new StaticStringSelector("login", "informer-fl-ru"));
+                                collection.add(new StaticStringSelector("passwd", "aFGgR5435"));
+                                collection.add(new StaticStringSelector("action", "login"));
                                 return collection;
                             }
 
@@ -87,8 +97,41 @@ public class FLRUCollector {
                                 return "https://www.fl.ru/";
                             }
                         }, new SelectorValidator(new XPathSelector(new SelectUnit(
-                                "loginPasswordInput", "//a[@class='b-bar__name']/@href"))))),
-                        userData).buildClient(createHttpClient(FIREFOX_USER_AGENT))
+                                "loginPasswordInput", "//a[@class='b-bar__name']/@href")))),
+                        doWhile(new ConditionalProcess(
+                                new SelectorValidator(
+                                        new RegexpSelector(
+                                                new SelectUnit("selectorValidator",
+                                                        "<li class=\"b-pager__next\"><a href=\"(.*)\" id=\"PrevLink\""))),
+                                assemble(new StepConfigAdapter() {
+                                    @Override
+                                    public Collection<ISelector<?>> getParameters() {
+                                        Collection<ISelector<?>> collection = new ArrayList<>();
+                                        collection.add(new HostStaticStringSelector(
+                                                "https://www.fl.ru/"));
+                                        collection
+                                                .add(new ActionRegexpSelector(
+                                                // //?page=2&kind=5
+                                                        "<li class=\"b-pager__next\"><a href=\"(.*)\" id=\"PrevLink\""));
+                                        return collection;
+                                    }
+                                }, new IProcessResultHandler() {
+                                    @Override
+                                    public void handle(final IProcessSession session,
+                                            final IEntity entity) throws CrawlerException {
+                                        ISelector<String> selector = new XPathSelector(
+                                                new SelectUnit("Headers",
+                                                        "//h2[contains(@class,'b-post__title b-post__title_inline')]/a/text()"));
+                                        Collection<ISelectorResult> collection = selector
+                                                .select(new String(entity.getContent(), entity
+                                                        .getCharset()));
+                                        for (ISelectorResult res : collection) {
+                                            System.out.println("###      >      " + res.getValue());
+                                        }
+                                    }
+                                }))
+
+                        )), userData).buildClient(createHttpClient(FIREFOX_USER_AGENT))
                         .buildCookieStore(getCookieStore())
                         .buildRequestBuilder(new BasicRequestBuilder()).getResult().collect();
             } catch (CrawlerException e) {
@@ -100,3 +143,17 @@ public class FLRUCollector {
         }
     }
 }
+
+/*
+ * new StepConfigAdapter() {
+ * 
+ * @Override public Collection<ISelector<?>> getParameters() {
+ * List<ISelector<?>> listOfSelectors = new ArrayList<>(); listOfSelectors
+ * .add(new ActionXPathSelector(
+ * "//a[span[@class='b-menu__b1' and text()='Проекты']]/@href"));
+ * listOfSelectors.add(new HostStaticStringSelector( "https://www.fl.ru/"));
+ * return listOfSelectors; }
+ * 
+ * @Override public HTTPMethod getMethod() { return HTTPMethod.GET; } },
+ * checkCondition, handlers)
+ */

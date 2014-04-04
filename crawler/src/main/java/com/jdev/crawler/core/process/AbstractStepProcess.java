@@ -3,7 +3,6 @@ package com.jdev.crawler.core.process;
 import static com.jdev.crawler.core.process.HttpClientUtils.download;
 import static com.jdev.crawler.core.process.HttpClientUtils.storeMarkup;
 import static java.text.MessageFormat.format;
-import static org.apache.commons.collections.CollectionUtils.isEmpty;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
 
 import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.process.handler.MimeType;
-import com.jdev.crawler.core.process.handler.MimeTypeUtil;
 import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.process.route.IRoute;
 import com.jdev.crawler.core.process.route.MimeTypeRoute;
@@ -36,6 +34,7 @@ import com.jdev.crawler.core.step.IStepConfig;
 import com.jdev.crawler.core.step.validator.DummyValidator;
 import com.jdev.crawler.core.step.validator.IValidator;
 import com.jdev.crawler.exception.CrawlerException;
+import com.jdev.crawler.exception.InvalidPageException;
 import com.jdev.crawler.exception.SelectionException;
 
 /**
@@ -80,7 +79,7 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
     private final String description;
 
     /**
-     * 
+     * Do requests until validation pass.
      */
     private IValidator validator = new DummyValidator();
 
@@ -134,12 +133,20 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
                     content);
             HttpRequestBase request = createRequest(context, selectors);
             IEntity result = executeRequest(context, request);
-            for (IRoute route : setOfRoutes) {
-                route.route(result);
-            }
+            checkIEntityProperties(result);
             return handle(session, result);
         } catch (final IOException | InterruptedException ex) {
             throw new CrawlerException(ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * @param entity
+     * @throws CrawlerException
+     */
+    private void checkIEntityProperties(final IEntity entity) throws CrawlerException {
+        for (IRoute route : setOfRoutes) {
+            route.route(entity);
         }
     }
 
@@ -172,18 +179,17 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
         int count = 0;
         boolean valid = false;
         IEntity entity;
-        final boolean isEmpty = isEmpty(handlers);
         do {
             if (count > 0) {
                 Thread.sleep(settings.getWaitInterval());
             }
             entity = download(context.getHttpClient(), request, entitySelector);
-            if (settings.isStoremarkup() && isEmpty) {
+            if (settings.isStoremarkup()) {
                 storeMarkup(context, entity, this);
             }
         } while (++count < settings.getRepeatTime() && !(valid = getValidator().validate(entity)));
         if (!valid) {
-            throw new CrawlerException(format(
+            throw new InvalidPageException(format(
                     "Waiting {0} ms for a page {1} is failed. Operator is {2}",
                     settings.getWaitInterval() * settings.getRepeatTime(), request.getURI()
                             .toASCIIString(), context.getUserData().getCompany().getCompanyName()));
@@ -226,14 +232,6 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
     protected abstract HttpRequestBase createRequest(final IProcessContext context,
             List<ISelectorResult> list) throws CrawlerException;
 
-    /**
-     * @param mimeType
-     * @return
-     */
-    private boolean isMimeTypeAccepted(final String mimeType) {
-        return MimeTypeUtil.findMime(mimeType, acceptedTypes) != null;
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -272,5 +270,12 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
      */
     public final void setAcceptedTypes(final MimeType[] acceptedTypes) {
         this.acceptedTypes = acceptedTypes;
+    }
+
+    /**
+     * @return the config
+     */
+    protected final IStepConfig getConfig() {
+        return config;
     }
 }

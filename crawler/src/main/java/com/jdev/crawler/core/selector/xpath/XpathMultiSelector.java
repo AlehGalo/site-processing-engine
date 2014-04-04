@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.jdev.crawler.config.dom.TagSoupDomNormaliser;
 import com.jdev.crawler.core.selector.ISelectUnit;
 import com.jdev.crawler.core.selector.ISelectorResult;
+import com.jdev.crawler.core.selector.SelectUnit;
 import com.jdev.crawler.core.selector.SelectorResult;
 import com.jdev.crawler.exception.SelectionException;
 import com.jdev.crawler.exception.XPathSelectionException;
@@ -64,7 +65,7 @@ public class XpathMultiSelector extends AbstractXPathSelector<String> {
      * @throws XPathSelectionException
      */
     private List<ISelectorResult> selectNames() throws XPathSelectionException {
-        return evaluateXPath("name", getSelectUnit().getName());
+        return evaluateXPath(new SelectUnit("name", getSelectUnit().getName()));
     }
 
     /**
@@ -72,7 +73,7 @@ public class XpathMultiSelector extends AbstractXPathSelector<String> {
      * @throws XPathSelectionException
      */
     private List<ISelectorResult> selectValues() throws XPathSelectionException {
-        return evaluateXPath("value", getSelectUnit().getSelector());
+        return evaluateXPath(new SelectUnit("value", getSelectUnit().getSelector()));
     }
 
 }

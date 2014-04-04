@@ -28,8 +28,15 @@ public class AssembledStepProcess extends AbstractStepProcess {
      */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleStepProcess.class);
 
+    /**
+     * @param config
+     * @param handlers
+     */
     public AssembledStepProcess(final IStepConfig config, final List<IProcessResultHandler> handlers) {
         super(handlers, config, "AssembledStepProcess");
     }
@@ -114,7 +121,7 @@ public class AssembledStepProcess extends AbstractStepProcess {
             throw new SelectionException(String.format(
                     "Error creating URL with host[%s] and action[%s]", args[0], args[1]));
         }
-        AssembledStepProcess.LOGGER.debug("URL >> " + result);
+        LOGGER.debug("URL >> " + result);
         return result;
     }
 }

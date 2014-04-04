@@ -24,12 +24,24 @@ public class SelectUnit implements ISelectUnit, Serializable {
     private final String name, selector;
 
     /**
-     * 
+     * @param name
+     * @param selector
      */
     public SelectUnit(final String name, final String selector) {
         Assert.hasLength(name);
         Assert.hasLength(selector);
         this.name = name;
+        this.selector = selector;
+    }
+
+    /**
+     * @param word
+     * @param selector
+     */
+    public SelectUnit(final RequestReservedWord word, final String selector) {
+        Assert.notNull(word);
+        Assert.hasLength(selector);
+        this.name = word.getWord();
         this.selector = selector;
     }
 

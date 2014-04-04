@@ -13,15 +13,22 @@ public class ConditionalSingleStepProcess extends SimpleStepProcess implements I
      */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 
+     */
     private final IValidator validator;
 
-    public ConditionalSingleStepProcess(IValidator validator, IStepConfig config) {
+    /**
+     * @param validator
+     * @param config
+     */
+    public ConditionalSingleStepProcess(final IValidator validator, final IStepConfig config) {
         super(config, Collections.<IProcessResultHandler> emptyList());
         this.validator = validator;
     }
 
     @Override
-    public boolean match(IEntity content) {
+    public boolean match(final IEntity content) {
         return validator.validate(content);
     }
 }

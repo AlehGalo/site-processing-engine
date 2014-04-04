@@ -17,9 +17,11 @@ import org.w3c.dom.NodeList;
 import com.jdev.crawler.core.evaluator.NodeListXPathEvaluator;
 import com.jdev.crawler.core.evaluator.NodeXPathEvaluator;
 import com.jdev.crawler.core.evaluator.StringXPathEvaluator;
+import com.jdev.crawler.core.selector.ISelectUnit;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.SelectorResult;
 import com.jdev.crawler.exception.XPathSelectionException;
+import com.jdev.crawler.util.Assert;
 
 /**
  * @author Aleh
@@ -40,14 +42,18 @@ public final class XPathSelectorUtils {
      * @throws XPathSelectionException
      * @throws XPathExpressionException
      */
-    public static final List<ISelectorResult> selectFromNodeList(final String name,
-            final String xPath, final Node node) throws XPathExpressionException {
+    public static final List<ISelectorResult> selectFromNodeList(final ISelectUnit selectionUnit,
+            final Node node) throws XPathExpressionException {
+        Assert.notNull(selectionUnit);
         final List<ISelectorResult> resultList = new ArrayList<ISelectorResult>();
-        final NodeList nodes = new NodeListXPathEvaluator(xPath, node).evaluate();
+        final NodeList nodes = new NodeListXPathEvaluator(selectionUnit.getSelector(), node)
+                .evaluate();
+        String name = selectionUnit.getName();
         if (nodes != null) {
             final int length = nodes.getLength();
             if (length == 0) {
-                LOGGER.debug("NodeList is empty for [name={}] [selector={}]", name, xPath);
+                LOGGER.debug("NodeList is empty for [name={}] [selector={}]", name,
+                        selectionUnit.getSelector());
                 return resultList;
             }
             for (int i = 0; i < length; i++) {
@@ -71,10 +77,13 @@ public final class XPathSelectorUtils {
      * @return
      * @throws XPathExpressionException
      */
-    public static final List<ISelectorResult> selectFromNode(final String name, final String xPath,
+    public static final List<ISelectorResult> selectFromNode(final ISelectUnit selectionUnit,
             final Node node) throws XPathExpressionException {
+        Assert.notNull(selectionUnit);
+        final String name = selectionUnit.getName();
         final List<ISelectorResult> resultList = new ArrayList<ISelectorResult>();
-        final Node nodeSelected = new NodeXPathEvaluator(xPath, node).evaluate();
+        final Node nodeSelected = new NodeXPathEvaluator(selectionUnit.getSelector(), node)
+                .evaluate();
         if (nodeSelected != null) {
             final String value = nodeSelected.getNodeValue();
             if (StringUtils.isNotBlank(value)) {
@@ -82,7 +91,8 @@ public final class XPathSelectorUtils {
             }
             LOGGER.debug("Selected {} {}", name, value);
         } else {
-            LOGGER.debug("No selection result from node for [name={}] [selector={}]", name, xPath);
+            LOGGER.debug("No selection result from node for [name={}] [selector={}]", name,
+                    selectionUnit.getSelector());
         }
         return resultList;
     }
@@ -94,17 +104,19 @@ public final class XPathSelectorUtils {
      * @return
      * @throws XPathExpressionException
      */
-    public static final List<ISelectorResult> selectFromString(final String name,
-            final String xPath, final Node node) throws XPathExpressionException,
-            XPathSelectionException {
+    public static final List<ISelectorResult> selectFromString(final ISelectUnit selectionUnit,
+            final Node node) throws XPathExpressionException, XPathSelectionException {
+        Assert.notNull(selectionUnit);
+        String name = selectionUnit.getName();
         final List<ISelectorResult> resultList = new ArrayList<ISelectorResult>();
-        final String stringSelected = new StringXPathEvaluator(xPath, node).evaluate();
+        final String stringSelected = new StringXPathEvaluator(selectionUnit.getSelector(), node)
+                .evaluate();
         if (StringUtils.isNotBlank(stringSelected)) {
             resultList.add(new SelectorResult(name, stringSelected));
             LOGGER.debug("Selected {} {}", name, stringSelected);
         } else {
             LOGGER.debug("No selection result from node-string for [name={}] [selector={}]", name,
-                    xPath);
+                    selectionUnit.getSelector());
         }
         return resultList;
     }
