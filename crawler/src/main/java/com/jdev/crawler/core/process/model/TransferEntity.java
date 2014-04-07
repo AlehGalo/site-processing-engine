@@ -46,6 +46,22 @@ public class TransferEntity implements IEntity {
     public TransferEntity() {
     }
 
+    /**
+     * @param mimeType
+     * @param contentFileRef
+     * @param charset
+     * @param content
+     * @param statusCode
+     */
+    public TransferEntity(final MimeType mimeType, final String contentFileRef,
+            final Charset charset, final byte[] content, final int statusCode) {
+        this.mimeType = mimeType;
+        this.contentFileRef = contentFileRef;
+        this.charset = charset;
+        this.content = content;
+        this.statusCode = statusCode;
+    }
+
     /*
      * (non-Javadoc)
      * 

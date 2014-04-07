@@ -47,7 +47,9 @@ public class SessionPopulateHandler implements IProcessResultHandler {
         Assert.notNull(content);
         final Collection<ISelectorResult> result = selector.select(new String(content.getContent(),
                 content.getCharset()));
-        Assert.isTrue(result.size() == 1);
+        if (result.size() != 1) {
+            throw new SelectionException("No items were selected by selector");
+        }
         final ISelectorResult selRes = (ISelectorResult) result.toArray()[0];
         session.putValue(selRes.getName(), selRes.getValue());
     }

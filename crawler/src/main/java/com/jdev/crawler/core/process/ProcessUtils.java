@@ -3,9 +3,11 @@ package com.jdev.crawler.core.process;
 import java.util.Arrays;
 import java.util.Collections;
 
+import com.jdev.crawler.core.process.container.ConditionalProcess;
 import com.jdev.crawler.core.process.container.ProcessChain;
 import com.jdev.crawler.core.process.container.ProcessChoice;
 import com.jdev.crawler.core.process.container.ProcessDoWhile;
+import com.jdev.crawler.core.process.container.ProcessForEach;
 import com.jdev.crawler.core.process.container.ProcessParallel;
 import com.jdev.crawler.core.process.handler.MimeType;
 import com.jdev.crawler.core.request.IRequestBuilder;
@@ -86,10 +88,6 @@ public final class ProcessUtils {
                     Collections.<IProcessResultHandler> emptyList());
         }
         return chain(va);
-    }
-
-    public static IProcess forEach(final ISelector<String> selector, final IProcess process) {
-        return new ForEachProcess(selector, process);
     }
 
     public static IProcess parallel(final IProcess... elements) {
@@ -218,7 +216,20 @@ public final class ProcessUtils {
         }, Collections.<IProcessResultHandler> emptyList());
     }
 
+    /**
+     * @param process
+     * @return process for work with.
+     */
     public static IProcess doWhile(final IConditionalProcess process) {
         return new ProcessDoWhile<IConditionalProcess>(Arrays.asList(process));
+    }
+
+    /**
+     * @param selector
+     * @param elements
+     * @return
+     */
+    public static IProcess forEach(final ISelector<String> selector, final IProcess... elements) {
+        return new ProcessForEach<IProcess>(Arrays.asList(elements), selector);
     }
 }

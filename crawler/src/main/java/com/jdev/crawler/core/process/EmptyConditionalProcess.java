@@ -3,6 +3,7 @@
  */
 package com.jdev.crawler.core.process;
 
+import com.jdev.crawler.core.process.container.ConditionalProcess;
 import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.step.validator.IValidator;

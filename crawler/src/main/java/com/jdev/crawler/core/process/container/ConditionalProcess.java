@@ -1,5 +1,8 @@
-package com.jdev.crawler.core.process;
+package com.jdev.crawler.core.process.container;
 
+import com.jdev.crawler.core.process.IConditionalProcess;
+import com.jdev.crawler.core.process.IProcess;
+import com.jdev.crawler.core.process.IProcessSession;
 import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.step.validator.IValidator;
