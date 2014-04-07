@@ -14,6 +14,7 @@ import static com.jdev.crawler.core.process.ProcessUtils.waitUntilValidatoIsTrue
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.jdev.crawler.builder.CrawlerBuilder;
 import com.jdev.crawler.core.process.ConditionalProcess;
@@ -75,6 +76,9 @@ public class FLRUCollector {
                 }
             });
             try {
+                LocalProcessResultHandler handler = new LocalProcessResultHandler();
+                final SelectUnit nextPageSelectUnit = new SelectUnit("nextPageSelectUnit",
+                        "<li class=\\\\\"b-pager__next\\\\\"><a href=\\\\\"(.*)\\\\\" id=\\\\\"PrevLink");
                 new CrawlerBuilder(chain(
                         doGet("https://www.fl.ru/"),
                         waitUntilValidatoIsTrue(new StepConfigAdapter() {
@@ -98,40 +102,17 @@ public class FLRUCollector {
                             }
                         }, new SelectorValidator(new XPathSelector(new SelectUnit(
                                 "loginPasswordInput", "//a[@class='b-bar__name']/@href")))),
-                        doWhile(new ConditionalProcess(
-                                new SelectorValidator(
-                                        new RegexpSelector(
-                                                new SelectUnit("selectorValidator",
-                                                        "<li class=\"b-pager__next\"><a href=\"(.*)\" id=\"PrevLink\""))),
-                                assemble(new StepConfigAdapter() {
-                                    @Override
-                                    public Collection<ISelector<?>> getParameters() {
-                                        Collection<ISelector<?>> collection = new ArrayList<>();
-                                        collection.add(new HostStaticStringSelector(
-                                                "https://www.fl.ru/"));
-                                        collection
-                                                .add(new ActionRegexpSelector(
-                                                // //?page=2&kind=5
-                                                        "<li class=\"b-pager__next\"><a href=\"(.*)\" id=\"PrevLink\""));
-                                        return collection;
-                                    }
-                                }, new IProcessResultHandler() {
-                                    @Override
-                                    public void handle(final IProcessSession session,
-                                            final IEntity entity) throws CrawlerException {
-                                        ISelector<String> selector = new XPathSelector(
-                                                new SelectUnit("Headers",
-                                                        "//h2[contains(@class,'b-post__title b-post__title_inline')]/a/text()"));
-                                        Collection<ISelectorResult> collection = selector
-                                                .select(new String(entity.getContent(), entity
-                                                        .getCharset()));
-                                        for (ISelectorResult res : collection) {
-                                            System.out.println("###      >      " + res.getValue());
-                                        }
-                                    }
-                                }))
-
-                        )), userData).buildClient(createHttpClient(FIREFOX_USER_AGENT))
+                        doWhile(new ConditionalProcess(new SelectorValidator(new RegexpSelector(
+                                nextPageSelectUnit)), assemble(new StepConfigAdapter() {
+                            @Override
+                            public Collection<ISelector<?>> getParameters() {
+                                Collection<ISelector<?>> collection = new ArrayList<>();
+                                collection.add(new HostStaticStringSelector("https://www.fl.ru/"));
+                                collection.add(new ActionRegexpSelector(nextPageSelectUnit
+                                        .getSelector()));
+                                return collection;
+                            }
+                        }, handler)))), userData).buildClient(createHttpClient(FIREFOX_USER_AGENT))
                         .buildCookieStore(getCookieStore())
                         .buildRequestBuilder(new BasicRequestBuilder()).getResult().collect();
             } catch (CrawlerException e) {
@@ -142,6 +123,29 @@ public class FLRUCollector {
             e.printStackTrace();
         }
     }
+
+    private static class LocalProcessResultHandler implements IProcessResultHandler {
+        final AtomicInteger counter = new AtomicInteger(1);
+        long timer = System.currentTimeMillis();
+        ISelector<String> selector = new XPathSelector(new SelectUnit("Headers",
+                "//h2[contains(@class,'b-post__title b-post__title_inline')]/a/text()"));
+
+        @Override
+        public void handle(final IProcessSession session, final IEntity entity)
+                throws CrawlerException {
+            System.out.println((System.currentTimeMillis() - timer) + "ms. Number of records: ");
+            int counterInt = 0;
+            Collection<ISelectorResult> collection = selector.select(new String(
+                    entity.getContent(), entity.getCharset()));
+            for (ISelectorResult res : collection) {
+                System.out.println(counter.getAndAdd(1) + "      >      " + res.getValue());
+                ++counterInt;
+            }
+            System.out.println(counterInt);
+            timer = System.currentTimeMillis();
+        }
+    }
+
 }
 
 /*

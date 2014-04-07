@@ -18,7 +18,8 @@ public class TestRegexpSelector extends TestAbstractResourcableSelector<String> 
     public static Iterable<String[]> data() {
         return Arrays.<String[]> asList(new String[] { "input1.html", "input1.html.selector",
                 "input1.html.result" }, new String[] { "input1.html", "input2.html.selector",
-                "input2.html.result" });
+                "input2.html.result" }, new String[] { "input2.html", "input2_1.html.selector",
+                "input2_1.html.result" });
     }
 
     /**
