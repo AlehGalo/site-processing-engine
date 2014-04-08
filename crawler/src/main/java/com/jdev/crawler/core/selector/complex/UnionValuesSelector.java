@@ -50,9 +50,7 @@ public class UnionValuesSelector<T> implements ISelector<T> {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * com.sswf.crawler.core.conf.selector.ISelector#selectValues(java.lang.
-     * Object )
+     * @see com.jdev.crawler.core.selector.ISelector#select(java.lang.Object)
      */
     @Override
     public Collection<ISelectorResult> select(final T content) throws SelectionException {

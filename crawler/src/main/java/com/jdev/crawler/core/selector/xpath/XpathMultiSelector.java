@@ -39,8 +39,7 @@ public class XpathMultiSelector extends AbstractXPathSelector<String> {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * com.sswf.crawler.core.selector.ISelector#selectValues(java.lang.Object)
+     * @see com.jdev.crawler.core.selector.ISelector#select(java.lang.Object)
      */
     @Override
     public Collection<ISelectorResult> select(final String content) throws SelectionException {

@@ -9,6 +9,7 @@
 	<modules>
 		<module>crawler</module>
 		<module>collector</module>
+		<module>domain</module>
 	</modules>
 	<properties>
 		<external.resources.version>1.0</external.resources.version>
@@ -29,6 +30,14 @@
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
 		<maven.surefire.plugin.version>2.16</maven.surefire.plugin.version>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<commons-lang3.version>3.1</commons-lang3.version>
+		<commons.collections.version>3.2.1</commons.collections.version>
+		<google.guava.version>15.0</google.guava.version>
+		<org.springframework.version>4.0.0.RELEASE</org.springframework.version>
+		<mysql.version>5.1.13</mysql.version>
+		<org.hibernate.version>4.1.10.Final</org.hibernate.version>
+		<hibernate.jpa.version>1.0.1.Final</hibernate.jpa.version>
+		<ehcache.version>1.6.2</ehcache.version>
 		<source.version>1.7</source.version>
 	</properties>
 	<repositories>
@@ -179,28 +188,6 @@
 				<configuration>
 					<argLine>-Dfile.encoding=${project.reporting.outputEncoding}</argLine>
 				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>com.jdev.crawl.MapPages</mainClass>
-						</manifest>
-					</archive>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

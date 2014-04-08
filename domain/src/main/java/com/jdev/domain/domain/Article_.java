@@ -1,0 +1,20 @@
+package com.jdev.domain.domain;
+
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SetAttribute;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+
+@Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
+@StaticMetamodel(Article.class)
+public abstract class Article_ extends com.jdev.domain.domain.AbstractIdentifiable_ {
+
+	public static volatile SingularAttribute<Article, Site> site;
+	public static volatile SingularAttribute<Article, String> content;
+	public static volatile SingularAttribute<Article, Title> title;
+	public static volatile SingularAttribute<Article, String> originalArticleUrl;
+	public static volatile SingularAttribute<Article, Image> image;
+	public static volatile SetAttribute<Article, Recommendation> recommendationSet;
+
+}
+

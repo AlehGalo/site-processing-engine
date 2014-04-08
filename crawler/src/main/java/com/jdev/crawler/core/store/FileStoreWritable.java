@@ -150,8 +150,9 @@ public class FileStoreWritable implements IFileStoreWritable {
     /*
      * (non-Javadoc)
      * 
-     * @see com.jdev.crawler.core.store.IFileStoreWritable#remove(com.sswf.
-     * desti.crawler.core.store.IIndexedItem)
+     * @see
+     * com.jdev.crawler.core.store.IFileStoreWritable#remove(com.jdev.crawler
+     * .core.store.IIndexedItem)
      */
     @Override
     public void remove(final IIndexedItem item) {

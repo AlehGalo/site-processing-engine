@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+	<changeSet id="1" author="aleh">
+		<sqlFile relativeToChangelogFile="true"
+			path="install/20140408_create_database_tables.sql" encoding="UTF-8" />
+	</changeSet>
+
+	<changeSet id="2" author="aleh">
+		<sqlFile relativeToChangelogFile="true"
+			path="install/20140408_increase_max_file_size.sql" encoding="UTF-8" />
+	</changeSet>
+
+	<changeSet id="3" author="aleh">
+		<sqlFile relativeToChangelogFile="true"
+			path="install/20140408_increase_preview_length.sql" encoding="UTF-8" />
+	</changeSet>
+
+	<changeSet id="4" author="aleh">
+		<sqlFile relativeToChangelogFile="true"
+			path="install/20140408_create_databases_for_recomendations.sql"
+			encoding="UTF-8" />
+	</changeSet>
+	
+</databaseChangeLog>
