@@ -144,7 +144,7 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
      * @param entity
      * @throws CrawlerException
      */
-    private void checkIEntityProperties(final IEntity entity) throws CrawlerException {
+    protected final void checkIEntityProperties(final IEntity entity) throws CrawlerException {
         for (IRoute route : setOfRoutes) {
             route.route(entity);
         }

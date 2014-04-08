@@ -22,7 +22,7 @@ import com.jdev.crawler.exception.CrawlerException;
  * @author Aleh
  * 
  */
-public class ProcessForEach<T extends IProcess> extends AbstractBaseProcessContainer<T> {
+public class ProcessForEachBlock<T extends IProcess> extends AbstractBaseProcessContainer<T> {
 
     /**
      * Selection of items.
@@ -33,7 +33,7 @@ public class ProcessForEach<T extends IProcess> extends AbstractBaseProcessConta
      * @param elements
      * @param selector
      */
-    public ProcessForEach(final List<T> elements, final ISelector<String> selector) {
+    public ProcessForEachBlock(final List<T> elements, final ISelector<String> selector) {
         super(elements);
         notNull(selector);
         this.selector = selector;

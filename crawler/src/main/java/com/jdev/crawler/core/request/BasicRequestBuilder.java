@@ -3,6 +3,8 @@
  */
 package com.jdev.crawler.core.request;
 
+import static java.lang.String.format;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ import com.jdev.crawler.exception.SelectionException;
 public class BasicRequestBuilder implements IRequestBuilder {
 
     /**
-     *
+     * Logger.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(BasicRequestBuilder.class);
 
@@ -41,8 +43,8 @@ public class BasicRequestBuilder implements IRequestBuilder {
     public HttpRequestBase buildRequest(final HTTPMethod method, final String url,
             final List<ISelectorResult> list) throws SelectionException {
         if (method == null || StringUtils.isEmpty(url)) {
-            throw new SelectionException(String.format(
-                    "Method[%s] or url[%s] cannot be null or empty", method, url));
+            throw new SelectionException(format("Method[%s] or url[%s] cannot be null or empty",
+                    method, url));
         }
         HttpRequestBase request = null;
         switch (method) {
@@ -57,7 +59,7 @@ public class BasicRequestBuilder implements IRequestBuilder {
         case HEAD:
         case OPTIONS:
         case TRACE:
-            throw new SelectionException(String.format("Method [%s] is not supported", method));
+            throw new SelectionException(format("Method [%s] is not supported", method));
         }
         debugUrl(request);
         return request;
@@ -123,7 +125,7 @@ public class BasicRequestBuilder implements IRequestBuilder {
      */
     protected void debugUrl(final HttpRequestBase request) {
         if (request != null && LOGGER.isDebugEnabled()) {
-            LOGGER.debug(" >> " + request.getURI().toASCIIString());
+            LOGGER.debug(request.getURI().toASCIIString());
         }
     }
 }

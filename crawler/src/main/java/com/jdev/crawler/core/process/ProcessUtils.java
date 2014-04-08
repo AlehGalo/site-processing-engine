@@ -1,5 +1,7 @@
 package com.jdev.crawler.core.process;
 
+import static java.util.Arrays.asList;
+
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -7,7 +9,7 @@ import com.jdev.crawler.core.process.container.ConditionalProcess;
 import com.jdev.crawler.core.process.container.ProcessChain;
 import com.jdev.crawler.core.process.container.ProcessChoice;
 import com.jdev.crawler.core.process.container.ProcessDoWhile;
-import com.jdev.crawler.core.process.container.ProcessForEach;
+import com.jdev.crawler.core.process.container.ProcessForEachBlock;
 import com.jdev.crawler.core.process.container.ProcessParallel;
 import com.jdev.crawler.core.process.handler.MimeType;
 import com.jdev.crawler.core.request.IRequestBuilder;
@@ -26,6 +28,52 @@ import com.jdev.crawler.core.step.validator.IValidator;
 public final class ProcessUtils {
 
     private ProcessUtils() {
+    }
+
+    // Simple get/post methods
+    public static IProcess doGet(final String url) {
+        return new SimpleStepProcess(new StepConfigAdapter() {
+            @Override
+            public String getUrl() {
+                return url;
+            }
+        }, Collections.<IProcessResultHandler> emptyList());
+    }
+
+    public static IProcess doGet(final String url, final IProcessResultHandler... handlers) {
+        return new SimpleStepProcess(new StepConfigAdapter() {
+            @Override
+            public String getUrl() {
+                return url;
+            }
+        }, Arrays.asList(handlers));
+    }
+
+    public static IProcess doGet(final String url, final MimeType[] acceMimeTypes,
+            final IProcessResultHandler... handlers) {
+        SimpleStepProcess process = new SimpleStepProcess(new StepConfigAdapter() {
+            @Override
+            public String getUrl() {
+                return url;
+            }
+        }, Arrays.asList(handlers));
+        process.setAcceptedTypes(acceMimeTypes);
+        return process;
+    }
+
+    public static IProcess doPost(final String url) {
+        return new SimpleStepProcess(new StepConfigAdapter() {
+
+            @Override
+            public String getUrl() {
+                return url;
+            }
+
+            @Override
+            public HTTPMethod getMethod() {
+                return HTTPMethod.POST;
+            }
+        }, Collections.<IProcessResultHandler> emptyList());
     }
 
     public static IProcess process(final IStepConfig config) {
@@ -98,53 +146,10 @@ public final class ProcessUtils {
         return new ProcessChoice<IConditionalProcess>(Arrays.asList(elements));
     }
 
-    public static IProcess multi(final RequestReservedWord word, final IStepConfig stepConfig,
-            final IProcess process) {
-        return new UnlimitedMultiStepProcess(stepConfig,
-                Collections.<IProcessResultHandler> emptyList(), process, word);
-    }
-
-    public static IProcess multi(final RequestReservedWord word, final IStepConfig stepConfig) {
-        return new UnlimitedMultiStepProcess(stepConfig,
-                Collections.<IProcessResultHandler> emptyList(), null, word);
-    }
-
-    public static IProcess multi(final RequestReservedWord word, final IStepConfig stepConfig,
-            final IProcess process, final IProcessResultHandler... handlers) {
-        return new UnlimitedMultiStepProcess(stepConfig, Arrays.asList(handlers), process, word);
-    }
-
-    public static IProcess multi(final RequestReservedWord word, final IStepConfig stepConfig,
-            final IProcessResultHandler... handlers) {
-        return new UnlimitedMultiStepProcess(stepConfig, Arrays.asList(handlers), null, word);
-    }
-
-    public static IProcess multi(final IStepConfig stepConfig, final IProcess process,
-            final IProcessResultHandler... handlers) {
-        return new UnlimitedMultiStepProcess(stepConfig, Arrays.asList(handlers), process);
-    }
-
-    public static IProcess multi(final IStepConfig stepConfig,
-            final IProcessResultHandler... handlers) {
-        return new UnlimitedMultiStepProcess(stepConfig, Arrays.asList(handlers), null);
-    }
-
-    public static IProcess multi(final IStepConfig stepConfig, final IProcess process) {
-        return new UnlimitedMultiStepProcess(stepConfig,
-                Collections.<IProcessResultHandler> emptyList(), process);
-    }
-
     public static IProcess multiLimited(final RequestReservedWord word,
             final IStepConfig stepConfig, final IProcess process, final int limit,
             final IProcessResultHandler... handlers) {
-        return new LimitedMultiStepProcess(stepConfig, Arrays.asList(handlers), null, process,
-                limit, word);
-    }
-
-    public static IProcess multiLimited(final RequestReservedWord word,
-            final IStepConfig stepConfig, final IProcess process, final int limit) {
-        return new LimitedMultiStepProcess(stepConfig,
-                Collections.<IProcessResultHandler> emptyList(), null, process, limit, word);
+        return new AssembledMultiLimitedStepProcess(stepConfig, Arrays.asList(handlers), limit);
     }
 
     public static IProcess multiLimitedToThree(final RequestReservedWord word,
@@ -171,51 +176,6 @@ public final class ProcessUtils {
         return new ConditionalProcess(validator, process);
     }
 
-    public static IProcess doGet(final String url) {
-        return new SimpleStepProcess(new StepConfigAdapter() {
-            @Override
-            public String getUrl() {
-                return url;
-            }
-        }, Collections.<IProcessResultHandler> emptyList());
-    }
-
-    public static IProcess doGet(final String url, final IProcessResultHandler... handlers) {
-        return new SimpleStepProcess(new StepConfigAdapter() {
-            @Override
-            public String getUrl() {
-                return url;
-            }
-        }, Arrays.asList(handlers));
-    }
-
-    public static IProcess doGet(final String url, final MimeType[] acceMimeTypes,
-            final IProcessResultHandler... handlers) {
-        SimpleStepProcess process = new SimpleStepProcess(new StepConfigAdapter() {
-            @Override
-            public String getUrl() {
-                return url;
-            }
-        }, Arrays.asList(handlers));
-        process.setAcceptedTypes(acceMimeTypes);
-        return process;
-    }
-
-    public static IProcess doPost(final String url) {
-        return new SimpleStepProcess(new StepConfigAdapter() {
-
-            @Override
-            public String getUrl() {
-                return url;
-            }
-
-            @Override
-            public HTTPMethod getMethod() {
-                return HTTPMethod.POST;
-            }
-        }, Collections.<IProcessResultHandler> emptyList());
-    }
-
     /**
      * @param process
      * @return process for work with.
@@ -229,7 +189,17 @@ public final class ProcessUtils {
      * @param elements
      * @return
      */
-    public static IProcess forEach(final ISelector<String> selector, final IProcess... elements) {
-        return new ProcessForEach<IProcess>(Arrays.asList(elements), selector);
+    public static IProcess forEachBlock(final ISelector<String> selector,
+            final IProcess... elements) {
+        return new ProcessForEachBlock<IProcess>(asList(elements), selector);
+    }
+
+    /**
+     * @param selector
+     * @param elements
+     * @return
+     */
+    public static IProcess multi(final IStepConfig config, final IProcessResultHandler... handlers) {
+        return new AssembledMultiStepProcess(config, Arrays.asList(handlers));
     }
 }

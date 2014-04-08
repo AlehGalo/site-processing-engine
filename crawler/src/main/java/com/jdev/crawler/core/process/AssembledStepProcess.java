@@ -1,5 +1,10 @@
 package com.jdev.crawler.core.process;
 
+import static com.jdev.crawler.core.selector.RequestReservedWord.ACTION;
+import static com.jdev.crawler.core.selector.RequestReservedWord.HOST;
+import static com.jdev.crawler.core.selector.RequestReservedWord.METHOD;
+import static com.jdev.crawler.core.step.HTTPMethod.valueOf;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,13 +19,16 @@ import org.slf4j.LoggerFactory;
 
 import com.jdev.crawler.core.request.IRequestBuilder;
 import com.jdev.crawler.core.selector.ISelectorResult;
-import com.jdev.crawler.core.selector.RequestReservedWord;
 import com.jdev.crawler.core.step.HTTPMethod;
 import com.jdev.crawler.core.step.IStepConfig;
 import com.jdev.crawler.exception.CrawlerException;
 import com.jdev.crawler.exception.SelectionException;
 import com.jdev.crawler.util.Assert;
 
+/**
+ * @author Aleh
+ * 
+ */
 public class AssembledStepProcess extends AbstractStepProcess {
 
     /**
@@ -66,14 +74,14 @@ public class AssembledStepProcess extends AbstractStepProcess {
         final Map<String, ISelectorResult> map = new HashMap<String, ISelectorResult>();
         for (final ISelectorResult iSelectorResult : list) {
             final String name = iSelectorResult.getName(), value = iSelectorResult.getValue();
-            if (RequestReservedWord.HOST.getWord().equalsIgnoreCase(name)) {
+            if (HOST.getWord().equalsIgnoreCase(name)) {
                 params[0] = value;
-            } else if (RequestReservedWord.ACTION.getWord().equalsIgnoreCase(name)) {
+            } else if (ACTION.getWord().equalsIgnoreCase(name)) {
                 params[1] = value;
-            } else if (RequestReservedWord.METHOD.getWord().equalsIgnoreCase(name)) {
+            } else if (METHOD.getWord().equalsIgnoreCase(name)) {
                 String valueFromSelector = iSelectorResult.getValue();
                 try {
-                    method = HTTPMethod.valueOf(valueFromSelector);
+                    method = valueOf(valueFromSelector);
                 } catch (IllegalArgumentException | NullPointerException e) {
                     throw new SelectionException(MessageFormat.format(
                             "Invalid value for method name {0}", valueFromSelector), e);

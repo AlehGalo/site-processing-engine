@@ -39,20 +39,20 @@ public class DefaultSelectorExtractStrategy implements ISelectorExtractStrategy 
     @Override
     public List<ISelectorResult> extractSelectors(final IProcessContext context,
             final IStepConfig config, final IEntity content) throws SelectionException {
-        final Set<ISelectorResult> set = new HashSet<ISelectorResult>();
+        final List<ISelectorResult> list = new ArrayList<ISelectorResult>();
         if (content != null) {
             final Collection<ISelector<?>> selectorsList = config.getParameters();
             Collection<ISelectorResult> collection = populateHostMethod(config);
             if (collection != null) {
-                set.addAll(collection);
+                list.addAll(collection);
             }
             if (!CollectionUtils.isEmpty(selectorsList)) {
                 for (final ISelector<?> iSelector : selectorsList) {
-                    set.addAll(adapter.extractSelectors(iSelector, context, content));
+                    list.addAll(adapter.extractSelectors(iSelector, context, content));
                 }
             }
         }
-        return new ArrayList<>(set);
+        return list;
     }
 
     /**
