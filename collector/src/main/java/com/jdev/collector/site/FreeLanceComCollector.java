@@ -1,17 +1,12 @@
-/**
- * 
- */
 package com.jdev.collector.site;
 
 import static com.jdev.crawler.core.AgentEnum.FIREFOX_USER_AGENT;
 import static com.jdev.crawler.core.HttpClientFactory.createHttpClient;
 import static com.jdev.crawler.core.HttpClientFactory.getCookieStore;
-import static com.jdev.crawler.core.process.ProcessUtils.assemble;
 import static com.jdev.crawler.core.process.ProcessUtils.chain;
 import static com.jdev.crawler.core.process.ProcessUtils.doGet;
 import static com.jdev.crawler.core.process.ProcessUtils.doWhile;
 import static com.jdev.crawler.core.process.ProcessUtils.multi;
-import static com.jdev.crawler.core.process.ProcessUtils.waitUntilValidatoIsTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,13 +28,9 @@ import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.SelectUnit;
 import com.jdev.crawler.core.selector.jsoup.StringSourceJSoupSelector;
 import com.jdev.crawler.core.selector.jsoup.extractor.IJSoupElementExtractor;
-import com.jdev.crawler.core.selector.regexp.ActionRegexpSelector;
-import com.jdev.crawler.core.selector.regexp.RegexpSelector;
 import com.jdev.crawler.core.selector.simple.HostStaticStringSelector;
-import com.jdev.crawler.core.selector.simple.StaticStringSelector;
 import com.jdev.crawler.core.selector.xpath.ActionXPathSelector;
 import com.jdev.crawler.core.selector.xpath.XPathSelector;
-import com.jdev.crawler.core.step.HTTPMethod;
 import com.jdev.crawler.core.step.StepConfigAdapter;
 import com.jdev.crawler.core.step.validator.SelectorValidator;
 import com.jdev.crawler.core.user.ICompany;
@@ -47,16 +38,16 @@ import com.jdev.crawler.core.user.UserData;
 import com.jdev.crawler.exception.CrawlerException;
 
 /**
- * @author Aleh https://www.fl.ru/
+ * @author Aleh http://www.freelance.com/
  */
-public class FLRUCollector {
+public class FreeLanceComCollector {
+
+    // informer-fl-com
+    // aFSsSR5435
 
     // Mail account
     // informer.email@yandex.ru
     // AdfdGG#r%$#@$55345
-
-    // informer-fl-ru
-    // aFGgR5435
 
     private IProcess process;
 
@@ -64,68 +55,34 @@ public class FLRUCollector {
 
     private ICrawler crawler;
 
-    /**
-     * 
-     */
-    public FLRUCollector() {
-        userData = new UserData("informer-fl-ru", "aFGgR5435");
+    public FreeLanceComCollector() {
+        userData = new UserData("informer-fl-com", "aFSsSR5435");
         userData.setCompany(new ICompany() {
 
             @Override
             public String getCompanyName() {
-                return "flru";
+                return "freelance_com";
             }
 
             @Override
             public Integer getCompanyId() {
-                return 1;
+                return 2;
             }
         });
-
-        final LocalProcessResultHandler handler = new LocalProcessResultHandler();
-        final SelectUnit nextPageSelectUnit = new SelectUnit("nextPageSelectUnit",
-                "<li class=\\\\\"b-pager__next\\\\\"><a href=\\\\\"(.*)\\\\\" id=\\\\\"PrevLink");
-        process = chain(
-                doGet("https://www.fl.ru/"),
-                waitUntilValidatoIsTrue(new StepConfigAdapter() {
+        LocalProcessResultHandler handler = new LocalProcessResultHandler();
+        process = chain(doGet("http://www.freelance.com/en/search/mission"),
+                doWhile(new ConditionalProcess(new SelectorValidator(new ActionXPathSelector(
+                        "//a[contains(text(), 'Next')]/@href")), multi(new StepConfigAdapter() {
                     @Override
                     public Collection<ISelector<?>> getParameters() {
-                        Collection<ISelector<?>> collection = new ArrayList<>();
-                        collection.add(new StaticStringSelector("login", "informer-fl-ru"));
-                        collection.add(new StaticStringSelector("passwd", "aFGgR5435"));
-                        collection.add(new StaticStringSelector("action", "login"));
-                        return collection;
-                    }
-
-                    @Override
-                    public HTTPMethod getMethod() {
-                        return HTTPMethod.POST;
-                    }
-
-                    @Override
-                    public String getUrl() {
-                        return "https://www.fl.ru/";
-                    }
-                }, new SelectorValidator(new XPathSelector(new SelectUnit("loginPasswordInput",
-                        "//a[@class='b-bar__name']/@href")))),
-                doWhile(new ConditionalProcess(new SelectorValidator(new RegexpSelector(
-                        nextPageSelectUnit)), chain(assemble(new StepConfigAdapter() {
-                    @Override
-                    public Collection<ISelector<?>> getParameters() {
-                        Collection<ISelector<?>> collection = new ArrayList<>();
-                        collection.add(new HostStaticStringSelector("https://www.fl.ru/"));
-                        collection.add(new ActionRegexpSelector(nextPageSelectUnit.getSelector()));
-                        return collection;
-                    }
-                }), multi(new StepConfigAdapter() {
-                    @Override
-                    public java.util.Collection<com.jdev.crawler.core.selector.ISelector<?>> getParameters() {
                         Collection<com.jdev.crawler.core.selector.ISelector<?>> parameters = new ArrayList<>();
-                        parameters.add(new HostStaticStringSelector("https://www.fl.ru/"));
-                        parameters.add(new ActionXPathSelector("//a[@class='b-post__link']/@href"));
+                        parameters.add(new HostStaticStringSelector(
+                                "http://www.freelance.com/en/search/mission"));
+                        parameters.add(new ActionXPathSelector(
+                                "//table[@id='result']/tbody//a/@href"));
                         return parameters;
                     }
-                }, handler)))));
+                }, handler))));
 
         crawler = new CrawlerBuilder(process, userData)
                 .buildClient(createHttpClient(FIREFOX_USER_AGENT))
@@ -133,19 +90,7 @@ public class FLRUCollector {
                 .getResult();
     }
 
-    // action:login
-    // login:informer-fl-ru
-    // passwd:aFGgR5435
-
-    public void doIt() throws CrawlerException {
-        crawler.collect();
-    }
-
-    public static void main(final String args[]) {
-        System.out.println("Empty");
-    }
-
-    private static class LocalProcessResultHandler implements IProcessResultHandler {
+    private class LocalProcessResultHandler implements IProcessResultHandler {
         final AtomicInteger counter = new AtomicInteger(1);
         long timer = System.currentTimeMillis();
 
@@ -153,13 +98,13 @@ public class FLRUCollector {
          * 
          */
         private final ISelector<String> titleSelector = new XPathSelector(new SelectUnit("Headers",
-                "//h1[contains(@class,'b-page__title b-page__title_ellipsis')]/text()"));
+                "//span[contains(@class,'highlightable')]/text()"));
 
         /**
          * 
          */
         private final StringSourceJSoupSelector contentSelector = new StringSourceJSoupSelector(
-                new SelectUnit("Content", "div.prj_text"));
+                new SelectUnit("Content", "div.wysiwygWrapper"));
 
         /**
          * 
@@ -195,6 +140,21 @@ public class FLRUCollector {
                 ISelectorResult result = (ISelectorResult) obj;
                 System.out.println(result.getValue());
             }
+        }
+    }
+
+    public void doIt() throws CrawlerException {
+        crawler.collect();
+    }
+
+    /**
+     * @param args
+     */
+    public static void main(final String[] args) {
+        try {
+            new FreeLanceComCollector().doIt();
+        } catch (CrawlerException e) {
+            e.printStackTrace();
         }
     }
 }

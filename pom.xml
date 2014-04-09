@@ -10,6 +10,7 @@
 		<module>crawler</module>
 		<module>collector</module>
 		<module>domain</module>
+		<module>ui</module>
 	</modules>
 	<properties>
 		<external.resources.version>1.0</external.resources.version>
