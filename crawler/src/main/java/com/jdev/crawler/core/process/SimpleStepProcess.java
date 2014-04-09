@@ -29,7 +29,7 @@ public class SimpleStepProcess extends AbstractStepProcess {
      * @param handlers
      */
     public SimpleStepProcess(final IStepConfig config, final List<IProcessResultHandler> handlers) {
-        super(handlers, config, "");
+        super(handlers, config, "SimpleStepProcess");
         this.config = config;
     }
 

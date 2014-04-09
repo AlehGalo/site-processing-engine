@@ -76,8 +76,7 @@ public class FreeLanceComCollector {
                     @Override
                     public Collection<ISelector<?>> getParameters() {
                         Collection<com.jdev.crawler.core.selector.ISelector<?>> parameters = new ArrayList<>();
-                        parameters.add(new HostStaticStringSelector(
-                                "http://www.freelance.com/en/search/mission"));
+                        parameters.add(new HostStaticStringSelector("http://www.freelance.com"));
                         parameters.add(new ActionXPathSelector(
                                 "//table[@id='result']/tbody//a/@href"));
                         return parameters;
@@ -98,7 +97,7 @@ public class FreeLanceComCollector {
          * 
          */
         private final ISelector<String> titleSelector = new XPathSelector(new SelectUnit("Headers",
-                "//span[contains(@class,'highlightable')]/text()"));
+                "normalize-space(//span[contains(@class,'highlightable')]/text())"));
 
         /**
          * 
