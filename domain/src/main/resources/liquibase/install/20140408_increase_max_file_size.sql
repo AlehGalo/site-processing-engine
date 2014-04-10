@@ -1,0 +1,1 @@
+SET GLOBAL max_allowed_packet=15728640;

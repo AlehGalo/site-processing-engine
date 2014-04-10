@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -34,12 +33,12 @@ public class Recommendation extends AbstractIdentifiable {
     @JoinColumn(name = "FK_ARTICLE_ID")
     private Article article;
 
-    /**
-     * Address of the user.
-     */
-    @OneToOne
-    @JoinColumn(name = "FK_NETWORK_ADDRESS_ID")
-    private InetAddress ipAddress;
+    // /**
+    // * Address of the user.
+    // */
+    // @OneToOne
+    // @JoinColumn(name = "FK_NETWORK_ADDRESS_ID")
+    // private InetAddress ipAddress;
 
     /**
      * Cannot be null
@@ -66,21 +65,6 @@ public class Recommendation extends AbstractIdentifiable {
      */
     public void setArticle(final Article article) {
         this.article = article;
-    }
-
-    /**
-     * @return the ipAddress
-     */
-    public InetAddress getIpAddress() {
-        return ipAddress;
-    }
-
-    /**
-     * @param ipAddress
-     *            the ipAddress to set
-     */
-    public void setIpAddress(final InetAddress ipAddress) {
-        this.ipAddress = ipAddress;
     }
 
     /**

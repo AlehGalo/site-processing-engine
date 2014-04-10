@@ -10,7 +10,6 @@ public abstract class Recommendation_ extends com.jdev.domain.domain.AbstractIde
 
 	public static volatile SingularAttribute<Recommendation, Article> article;
 	public static volatile SingularAttribute<Recommendation, Boolean> vote;
-	public static volatile SingularAttribute<Recommendation, InetAddress> ipAddress;
 
 }
 

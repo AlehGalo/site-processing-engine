@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
@@ -57,26 +56,14 @@ public class Article extends AbstractIdentifiable {
     @Column(name = "ORIGINAL_ARTICLE_URL", nullable = false, columnDefinition = "VARCHAR(256)")
     private String originalArticleUrl;
 
+    @Column(name = "TITLE", nullable = false, columnDefinition = "VARCHAR(256)")
+    private String title;
     /**
      * Resource source.
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FK_SITE_ID")
     private Site site;
-
-    /**
-     * Resource source.
-     */
-    @ManyToOne(optional = true, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "FK_IMAGE_ID")
-    private Image image;
-
-    /**
-     * Resource source.
-     */
-    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "FK_TITLE_ID")
-    private Title title;
 
     /**
      * Recommendation.
@@ -137,36 +124,6 @@ public class Article extends AbstractIdentifiable {
     }
 
     /**
-     * @return the image
-     */
-    public Image getImage() {
-        return image;
-    }
-
-    /**
-     * @param image
-     *            the image to set
-     */
-    public void setImage(final Image image) {
-        this.image = image;
-    }
-
-    /**
-     * @return the title
-     */
-    public Title getTitle() {
-        return title;
-    }
-
-    /**
-     * @param title
-     *            the title to set
-     */
-    public void setTitle(final Title title) {
-        this.title = title;
-    }
-
-    /**
      * @return the originalArticleUrl
      */
     public final String getOriginalArticleUrl() {
@@ -194,6 +151,21 @@ public class Article extends AbstractIdentifiable {
      */
     public void setRecommendationSet(final Set<Recommendation> recommendationSet) {
         this.recommendationSet = recommendationSet;
+    }
+
+    /**
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title
+     *            the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
     }
 
 }
