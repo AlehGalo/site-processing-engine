@@ -6,10 +6,7 @@ import static com.jdev.crawler.core.HttpClientFactory.getCookieStore;
 import static com.jdev.crawler.core.process.ProcessUtils.chain;
 import static com.jdev.crawler.core.process.ProcessUtils.doGet;
 import static com.jdev.crawler.core.process.ProcessUtils.doWhile;
-import static com.jdev.crawler.core.process.ProcessUtils.multi;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -20,7 +17,6 @@ import com.jdev.crawler.core.ICrawler;
 import com.jdev.crawler.core.process.IProcess;
 import com.jdev.crawler.core.process.IProcessResultHandler;
 import com.jdev.crawler.core.process.IProcessSession;
-import com.jdev.crawler.core.process.container.ConditionalProcess;
 import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.request.BasicRequestBuilder;
 import com.jdev.crawler.core.selector.ISelector;
@@ -28,26 +24,16 @@ import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.SelectUnit;
 import com.jdev.crawler.core.selector.jsoup.StringSourceJSoupSelector;
 import com.jdev.crawler.core.selector.jsoup.extractor.IJSoupElementExtractor;
-import com.jdev.crawler.core.selector.simple.HostStaticStringSelector;
-import com.jdev.crawler.core.selector.xpath.ActionXPathSelector;
 import com.jdev.crawler.core.selector.xpath.XPathSelector;
-import com.jdev.crawler.core.step.StepConfigAdapter;
-import com.jdev.crawler.core.step.validator.SelectorValidator;
 import com.jdev.crawler.core.user.ICompany;
 import com.jdev.crawler.core.user.UserData;
 import com.jdev.crawler.exception.CrawlerException;
 
 /**
- * @author Aleh http://www.freelance.com/
+ * @author Aleh
+ * 
  */
-public class FreelanceComCollector {
-
-    // informer-fl-com
-    // aFSsSR5435
-
-    // Mail account
-    // informer.email@yandex.ru
-    // AdfdGG#r%$#@$55345
+public class FreelancerComCollector {
 
     private IProcess process;
 
@@ -55,33 +41,22 @@ public class FreelanceComCollector {
 
     private ICrawler crawler;
 
-    public FreelanceComCollector() {
-        userData = new UserData("informer-fl-com", "aFSsSR5435");
+    public FreelancerComCollector() {
+        userData = new UserData("informer-freelancer-com", "EMPTY");
         userData.setCompany(new ICompany() {
 
             @Override
             public String getCompanyName() {
-                return "freelance_com";
+                return "freelancer_com";
             }
 
             @Override
             public Integer getCompanyId() {
-                return 2;
+                return 3;
             }
         });
         LocalProcessResultHandler handler = new LocalProcessResultHandler();
-        process = chain(doGet("http://www.freelance.com/en/search/mission"),
-                doWhile(new ConditionalProcess(new SelectorValidator(new ActionXPathSelector(
-                        "//a[contains(text(), 'Next')]/@href")), multi(new StepConfigAdapter() {
-                    @Override
-                    public Collection<ISelector<?>> getParameters() {
-                        Collection<com.jdev.crawler.core.selector.ISelector<?>> parameters = new ArrayList<>();
-                        parameters.add(new HostStaticStringSelector("http://www.freelance.com"));
-                        parameters.add(new ActionXPathSelector(
-                                "//table[@id='result']/tbody//a/@href"));
-                        return parameters;
-                    }
-                }, handler))));
+        process = chain(doGet("http://www.freelancer.com/job/"), doWhile(null));
 
         crawler = new CrawlerBuilder(process, userData)
                 .buildClient(createHttpClient(FIREFOX_USER_AGENT))
@@ -122,6 +97,7 @@ public class FreelanceComCollector {
         @Override
         public void handle(final IProcessSession session, final IEntity entity)
                 throws CrawlerException {
+            // TODO: change it
             long time = System.currentTimeMillis() - timer;
             String content = new String(entity.getContent(), entity.getCharset());
             contentSelector.select(content);
@@ -156,4 +132,5 @@ public class FreelanceComCollector {
             e.printStackTrace();
         }
     }
+
 }

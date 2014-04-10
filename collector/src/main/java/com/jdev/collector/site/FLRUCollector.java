@@ -49,7 +49,7 @@ import com.jdev.crawler.exception.CrawlerException;
 /**
  * @author Aleh https://www.fl.ru/
  */
-public class FLRUCollector {
+public class FlRuCollector {
 
     // Mail account
     // informer.email@yandex.ru
@@ -67,7 +67,7 @@ public class FLRUCollector {
     /**
      * 
      */
-    public FLRUCollector() {
+    public FlRuCollector() {
         userData = new UserData("informer-fl-ru", "aFGgR5435");
         userData.setCompany(new ICompany() {
 
