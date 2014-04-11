@@ -139,10 +139,11 @@ public class FlRuCollector {
 
     public void doIt() throws CrawlerException {
         crawler.collect();
+        System.out.println("Done");
     }
 
-    public static void main(final String args[]) {
-        System.out.println("Empty");
+    public static void main(final String args[]) throws CrawlerException {
+        new FlRuCollector().doIt();
     }
 
     private static class LocalProcessResultHandler implements IProcessResultHandler {
@@ -180,7 +181,6 @@ public class FlRuCollector {
                 throws CrawlerException {
             long time = System.currentTimeMillis() - timer;
             String content = new String(entity.getContent(), entity.getCharset());
-            contentSelector.select(content);
             printValueOfIselectorResult(CollectionUtils.get(titleSelector.select(content), 0));
             printValueOfIselectorResult(CollectionUtils.get(contentSelector.select(content), 0));
             System.out.println(time + " ms. Number of records: " + counter.getAndAdd(1));

@@ -124,7 +124,6 @@ public class FreelanceComCollector {
                 throws CrawlerException {
             long time = System.currentTimeMillis() - timer;
             String content = new String(entity.getContent(), entity.getCharset());
-            contentSelector.select(content);
             printValueOfIselectorResult(CollectionUtils.get(titleSelector.select(content), 0));
             printValueOfIselectorResult(CollectionUtils.get(contentSelector.select(content), 0));
             System.out.println(time + " ms. Number of records: " + counter.getAndAdd(1));
@@ -144,6 +143,7 @@ public class FreelanceComCollector {
 
     public void doIt() throws CrawlerException {
         crawler.collect();
+        System.out.println("Done");
     }
 
     /**

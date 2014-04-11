@@ -202,4 +202,13 @@ public final class ProcessUtils {
     public static IProcess multi(final IStepConfig config, final IProcessResultHandler... handlers) {
         return new AssembledMultiStepProcess(config, Arrays.asList(handlers));
     }
+
+    /**
+     * @param selector
+     * @param elements
+     * @return
+     */
+    public static IProcess skipKnownError(final IProcess process, final String message) {
+        return new SkipErrorStepProcess(process, message);
+    }
 }

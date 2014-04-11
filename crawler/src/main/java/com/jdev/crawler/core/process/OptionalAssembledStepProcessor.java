@@ -3,6 +3,8 @@
  */
 package com.jdev.crawler.core.process;
 
+import static org.apache.commons.collections.CollectionUtils.isEmpty;
+
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,7 +14,6 @@ import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.step.IStepConfig;
 import com.jdev.crawler.exception.CrawlerException;
-import com.jdev.crawler.exception.SelectionException;
 
 /**
  * @author Aleh
@@ -51,13 +52,10 @@ class OptionalAssembledStepProcessor extends AssembledStepProcess {
     @Override
     public IEntity process(final IProcessSession session, final IEntity content,
             final ISelectorExtractStrategy extractStrategy) throws CrawlerException {
-        try {
-            extractStrategy.extractSelectors(session.getSessionContext(), config, content);
-            return super.process(session, content, extractStrategy);
-        } catch (SelectionException se) {
-            LOGGER.error("Page seems to be missed. As it's an optional processor - will skip it."
-                    + se.getMessage());
+        if (isEmpty(extractStrategy.extractSelectors(session.getSessionContext(), config, content))) {
+            LOGGER.info("Page seems to be missed. As it's an optional processor - will skip it.");
             return content;
         }
+        return super.process(session, content, extractStrategy);
     }
 }

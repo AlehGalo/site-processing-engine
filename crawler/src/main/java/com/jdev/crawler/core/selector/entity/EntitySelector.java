@@ -49,7 +49,9 @@ public abstract class EntitySelector implements ISelector<HttpEntity> {
             String name = getUnit().getName();
             for (HeaderElement headerElement : elements) {
                 NameValuePair pair = headerElement.getParameterByName(name);
-                set.add(new SelectorResult(pair.getName(), pair.getValue()));
+                if (pair != null) {
+                    set.add(new SelectorResult(pair.getName(), pair.getValue()));
+                }
             }
         }
         return set;

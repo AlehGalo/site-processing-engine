@@ -57,6 +57,9 @@ public class RegexpSelector implements ISelector<String> {
         final Pattern pattern = Pattern.compile(getSelectUnit().getSelector());
         final Matcher m = pattern.matcher(cont);
         final String name = getSelectUnit().getName();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Selector name = {} selector = {}", name, getSelectUnit().getSelector());
+        }
         while (m.find()) {
             if (m.groupCount() < 1) {
                 throw new RegexpSelectionException(
