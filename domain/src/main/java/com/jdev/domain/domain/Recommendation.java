@@ -33,13 +33,6 @@ public class Recommendation extends AbstractIdentifiable {
     @JoinColumn(name = "FK_ARTICLE_ID")
     private Article article;
 
-    // /**
-    // * Address of the user.
-    // */
-    // @OneToOne
-    // @JoinColumn(name = "FK_NETWORK_ADDRESS_ID")
-    // private InetAddress ipAddress;
-
     /**
      * Cannot be null
      */

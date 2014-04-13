@@ -24,8 +24,9 @@ public class DaoConfiguration {
      * @return dao bean.
      */
     @Bean
-    public IReadDao<Site> siteDao() {
-        return new AbstractCommonGenericReadDao<Site>() {
+    @Scope
+    public IWriteDao<Site> siteDao() {
+        return new AbstractCommonGenericWriteDao<Site>() {
             @Override
             public Class<Site> getPersistentClass() {
                 return Site.class;

@@ -62,7 +62,7 @@ public class Site extends AbstractIdentifiable {
      *            any description.
      */
     public Site(final String url, final String description) {
-        this(url, description, null);
+        this(url, url, description);
     }
 
     /**
@@ -122,5 +122,4 @@ public class Site extends AbstractIdentifiable {
     public void setResourceUrl(final String resourceUrl) {
         this.resourceUrl = resourceUrl;
     }
-
 }

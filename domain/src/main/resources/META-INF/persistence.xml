@@ -7,12 +7,6 @@
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>com.jdev.domain.domain.Article</class>
-		<class>com.jdev.domain.domain.Image</class>
-		<class>com.jdev.domain.domain.ScaledImage</class>
 		<class>com.jdev.domain.domain.Site</class>
-		<class>com.jdev.domain.domain.Preview</class>
-		<class>com.jdev.domain.domain.Title</class>
-		<class>com.jdev.domain.domain.InetAddress</class>
-		<class>com.jdev.domain.domain.Recommendation</class>
 	</persistence-unit>
 </persistence>
