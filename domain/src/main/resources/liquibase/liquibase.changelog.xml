@@ -12,11 +12,6 @@
 
 	<changeSet id="2" author="aleh">
 		<sqlFile relativeToChangelogFile="true"
-			path="install/20140408_increase_max_file_size.sql" encoding="UTF-8" />
-	</changeSet>
-
-	<changeSet id="3" author="aleh">
-		<sqlFile relativeToChangelogFile="true"
 			path="install/20140408_create_databases_for_recomendations.sql"
 			encoding="UTF-8" />
 	</changeSet>
