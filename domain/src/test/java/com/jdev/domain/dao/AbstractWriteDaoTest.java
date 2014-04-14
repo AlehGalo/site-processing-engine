@@ -3,22 +3,6 @@
  */
 package com.jdev.domain.dao;
 
-import static com.jdev.domain.dao.ReflectionUtils.compareObjects;
-import static com.jdev.domain.dao.ReflectionUtils.copyValuesExceptGetId;
-
-import org.junit.Assert;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Timed;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.jdev.domain.domain.IIdentifiable;
 
 /**
  * @author Aleh Super class for dao tests with annotations.
@@ -58,7 +42,7 @@ public abstract class AbstractWriteDaoTest<T extends IIdentifiable> {
      * Test insertion of the record in db.
      */
     @Test
-    @Timed(millis = 2000)
+    // @Timed(millis = 2000)
     public void testInsert() {
         T mainEntity = createEntity();
         long beforeSaveCounter = daoService.countAll();
@@ -74,7 +58,7 @@ public abstract class AbstractWriteDaoTest<T extends IIdentifiable> {
      * Test update of the record in db.
      */
     @Test
-    @Timed(millis = 3000)
+    // @Timed(millis = 3000)
     public void testUpdate() {
         T mainEntity = createEntity();
         daoService.save(mainEntity);
@@ -88,7 +72,7 @@ public abstract class AbstractWriteDaoTest<T extends IIdentifiable> {
      * Test deletion of the record in db.
      */
     @Test
-    @Timed(millis = 2000)
+    // @Timed(millis = 2000)
     public void testDelete() {
         T mainEntity = createEntity();
         daoService.save(mainEntity);
@@ -102,7 +86,7 @@ public abstract class AbstractWriteDaoTest<T extends IIdentifiable> {
     }
 
     @Test
-    @Timed(millis = 2000)
+    // @Timed(millis = 2000)
     public void testCleanInsert() {
         daoService.save(createEntity());
     }
