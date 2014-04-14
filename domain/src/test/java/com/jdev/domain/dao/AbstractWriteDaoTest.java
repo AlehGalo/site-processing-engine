@@ -3,6 +3,18 @@
  */
 package com.jdev.domain.dao;
 
+import org.junit.Assert;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jdev.domain.domain.IIdentifiable;
 
 /**
  * @author Aleh Super class for dao tests with annotations.
@@ -51,7 +63,8 @@ public abstract class AbstractWriteDaoTest<T extends IIdentifiable> {
         Assert.assertEquals("Records number is not correct. It should be increased by 1",
                 beforeSaveCounter, afterSaveCounter - 1);
         T databaseEntity = daoService.find(mainEntity.getId());
-        Assert.assertTrue("Entity was not correct", compareObjects(databaseEntity, mainEntity));
+        Assert.assertTrue("Entity was not correct",
+                ReflectionUtils.compareObjects(databaseEntity, mainEntity));
     }
 
     /**
@@ -63,9 +76,9 @@ public abstract class AbstractWriteDaoTest<T extends IIdentifiable> {
         T mainEntity = createEntity();
         daoService.save(mainEntity);
         T updateEntity = createUpdateEntity();
-        copyValuesExceptGetId(updateEntity, mainEntity);
+        ReflectionUtils.copyValuesExceptGetId(updateEntity, mainEntity);
         T foundEntity = daoService.find(mainEntity.getId());
-        Assert.assertTrue(compareObjects(foundEntity, updateEntity));
+        Assert.assertTrue(ReflectionUtils.compareObjects(foundEntity, updateEntity));
     }
 
     /**
