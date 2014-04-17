@@ -14,6 +14,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.jsoup.nodes.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.jdev.crawler.builder.CrawlerBuilder;
 import com.jdev.crawler.core.ICrawler;
@@ -40,7 +42,7 @@ import com.jdev.crawler.exception.CrawlerException;
 /**
  * @author Aleh http://www.freelance.com/
  */
-public class FreelanceComCollector {
+public class FreelanceComCollector implements ICollector {
 
     // informer-fl-com
     // aFSsSR5435
@@ -49,10 +51,24 @@ public class FreelanceComCollector {
     // informer.email@yandex.ru
     // AdfdGG#r%$#@$55345
 
+    /**
+     * Logger.
+     */
+    private final Logger LOGGER = LoggerFactory.getLogger(FreelanceComCollector.class);
+
+    /**
+     * 
+     */
     private IProcess process;
 
+    /**
+     * 
+     */
     private UserData userData;
 
+    /**
+     * 
+     */
     private ICrawler crawler;
 
     public FreelanceComCollector() {
@@ -141,19 +157,12 @@ public class FreelanceComCollector {
         }
     }
 
-    public void doIt() throws CrawlerException {
-        crawler.collect();
-        System.out.println("Done");
-    }
-
-    /**
-     * @param args
-     */
-    public static void main(final String[] args) {
+    @Override
+    public void congregate() {
         try {
-            new FreelanceComCollector().doIt();
+            crawler.collect();
         } catch (CrawlerException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 }

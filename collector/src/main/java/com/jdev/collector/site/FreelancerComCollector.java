@@ -15,6 +15,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.jsoup.nodes.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.jdev.crawler.builder.CrawlerBuilder;
 import com.jdev.crawler.core.ICrawler;
@@ -44,12 +46,26 @@ import com.jdev.crawler.exception.CrawlerException;
  * @author Aleh
  * 
  */
-public class FreelancerComCollector {
+public class FreelancerComCollector implements ICollector {
 
+    /**
+     * Logger.
+     */
+    private final Logger LOGGER = LoggerFactory.getLogger(FreelancerComCollector.class);
+
+    /**
+     * 
+     */
     private IProcess process;
 
+    /**
+     * 
+     */
     private UserData userData;
 
+    /**
+     * 
+     */
     private ICrawler crawler;
 
     public FreelancerComCollector() {
@@ -69,20 +85,7 @@ public class FreelancerComCollector {
         LocalProcessResultHandler handler = new LocalProcessResultHandler();
         process = ProcessUtils.chain(
                 doGet("http://www.freelancer.com/jobs/"),
-                /*
-                 * assemble(new StepConfigAdapter() {
-                 * 
-                 * @Override public Collection<ISelector<?>> getParameters() {
-                 * Collection<ISelector<?>> selectorCollection = new
-                 * ArrayList<>(); selectorCollection .add(new
-                 * ActionXPathSelector(
-                 * "//div[@id='latest_jobs_table']//a[contains(text(), 'View All')]/@href"
-                 * )); return selectorCollection; }
-                 * 
-                 * @Override public String getUrl() { return
-                 * "http://www.freelancer.com/job/"; } }),
-                 */doWhile(new ConditionalProcess(new SelectorValidator(new ActionRegexpSelector(
-                // "//span[@id='project_table_next']/a/@href"
+                doWhile(new ConditionalProcess(new SelectorValidator(new ActionRegexpSelector(
                         "<link rel=\"next\" href=\"(.*)\"/>")), chain(
                         ProcessUtils.skipKnownError(multi(new StepConfigAdapter() {
                             @Override
@@ -160,22 +163,6 @@ public class FreelancerComCollector {
                 ISelectorResult result = (ISelectorResult) obj;
                 System.out.println(result.getValue());
             }
-        }
-    }
-
-    public void doIt() throws CrawlerException {
-        crawler.collect();
-        System.out.println("Done");
-    }
-
-    /**
-     * @param args
-     */
-    public static void main(final String[] args) {
-        try {
-            new FreelancerComCollector().doIt();
-        } catch (CrawlerException e) {
-            e.printStackTrace();
         }
     }
 
