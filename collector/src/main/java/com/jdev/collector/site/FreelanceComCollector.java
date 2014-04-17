@@ -43,7 +43,7 @@ public class FreelanceComCollector extends AbstractCollector {
      * @see com.jdev.collector.site.AbstractCollector#initProcess()
      */
     @Override
-    IProcess initProcess() {
+    IProcess createProcess() {
         return chain(doGet("http://www.freelance.com/en/search/mission"),
                 doWhile(new ConditionalProcess(new SelectorValidator(new ActionXPathSelector(
                         "//a[contains(text(), 'Next')]/@href")), multi(new StepConfigAdapter() {

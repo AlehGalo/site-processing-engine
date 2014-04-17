@@ -33,7 +33,6 @@ public class CollectorFactory implements ICollectorFactory {
      * 
      */
     private void initStorage() {
-
         UserData userData = new UserData("informer-fl-ru", "aFGgR5435");
         userData.setCompany(new ICompany() {
 

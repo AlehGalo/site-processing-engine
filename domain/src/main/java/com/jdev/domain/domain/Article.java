@@ -9,16 +9,8 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityResult;
 import javax.persistence.FetchType;
-import javax.persistence.FieldResult;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SqlResultSetMapping;
-import javax.persistence.SqlResultSetMappings;
 import javax.persistence.Table;
 
 /**
@@ -28,15 +20,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ARTICLE")
 @AttributeOverrides(value = { @AttributeOverride(name = "id", column = @Column(name = "ARTICLE_ID")) })
-@SqlResultSetMappings(value = {
-        @SqlResultSetMapping(name = "implicitArticle", entities = @EntityResult(entityClass = Article.class)),
-        @SqlResultSetMapping(name = "previewArticle", entities = @EntityResult(entityClass = Article.class, fields = {
-                @FieldResult(name = "title", column = "TITLE"),
-                @FieldResult(name = "preview", column = "PREVIEW") })) })
-@NamedNativeQueries(value = {
-        @NamedNativeQuery(name = "findAllArticles", query = "select * from article a", resultSetMapping = "implicitArticle"),
-        @NamedNativeQuery(name = "findByTitle", query = "select * from article a where a.title=:title", resultClass = Article.class),
-        @NamedNativeQuery(name = "findAllArticlePreviews", query = "select a.ARTICLE_ID, a.PREVIEW, a.TITLE, a.FK_IMAGE_ID from article a", resultClass = Article.class) })
 public class Article extends AbstractIdentifiable {
 
     /**
@@ -61,9 +44,9 @@ public class Article extends AbstractIdentifiable {
     /**
      * Resource source.
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FK_SITE_ID")
-    private Site site;
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "FK_SITE_ID")
+    // private Site site;
 
     /**
      * Recommendation.
@@ -108,20 +91,21 @@ public class Article extends AbstractIdentifiable {
         this.content = content;
     }
 
-    /**
-     * @return the site
-     */
-    public Site getSite() {
-        return site;
-    }
-
-    /**
-     * @param site
-     *            the site to set
-     */
-    public void setSite(final Site site) {
-        this.site = site;
-    }
+    //
+    // /**
+    // * @return the site
+    // */
+    // public Site getSite() {
+    // return site;
+    // }
+    //
+    // /**
+    // * @param site
+    // * the site to set
+    // */
+    // public void setSite(final Site site) {
+    // this.site = site;
+    // }
 
     /**
      * @return the originalArticleUrl
@@ -164,7 +148,7 @@ public class Article extends AbstractIdentifiable {
      * @param title
      *            the title to set
      */
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 

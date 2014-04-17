@@ -3,8 +3,6 @@
  */
 package com.jdev.collector.site.handler;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.jsoup.nodes.Element;
 
@@ -12,28 +10,18 @@ import com.jdev.crawler.core.process.IProcessResultHandler;
 import com.jdev.crawler.core.process.IProcessSession;
 import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.selector.ISelector;
-import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.core.selector.SelectUnit;
 import com.jdev.crawler.core.selector.jsoup.StringSourceJSoupSelector;
 import com.jdev.crawler.core.selector.jsoup.extractor.IJSoupElementExtractor;
 import com.jdev.crawler.core.selector.xpath.XPathSelector;
 import com.jdev.crawler.exception.CrawlerException;
+import com.jdev.domain.domain.Article;
 
 /**
  * @author Aleh
  * 
  */
-public class FlRuHandler implements IProcessResultHandler {
-
-    /**
-     * 
-     */
-    final AtomicInteger counter = new AtomicInteger(1);
-
-    /**
-     * 
-     */
-    long timer = System.currentTimeMillis();
+public class FlRuHandler extends ArticleWatcher implements IProcessResultHandler {
 
     /**
      * 
@@ -58,27 +46,15 @@ public class FlRuHandler implements IProcessResultHandler {
                 return element.text();
             }
         });
-
     }
 
     @Override
     public void handle(final IProcessSession session, final IEntity entity) throws CrawlerException {
-        long time = System.currentTimeMillis() - timer;
         String content = new String(entity.getContent(), entity.getCharset());
-        printValueOfIselectorResult(CollectionUtils.get(titleSelector.select(content), 0));
-        printValueOfIselectorResult(CollectionUtils.get(contentSelector.select(content), 0));
-        System.out.println(time + " ms. Number of records: " + counter.getAndAdd(1));
-        timer = System.currentTimeMillis();
+        Article article = new Article((String) CollectionUtils.get(contentSelector.select(content),
+                0));
+        article.setTitle((String) CollectionUtils.get(titleSelector.select(content), 0));
+        setArticle(article);
+        notifyListeners();
     }
-
-    /**
-     * @param obj
-     */
-    private void printValueOfIselectorResult(final Object obj) {
-        if (obj instanceof ISelectorResult) {
-            ISelectorResult result = (ISelectorResult) obj;
-            System.out.println(result.getValue());
-        }
-    }
-
 }

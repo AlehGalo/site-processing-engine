@@ -48,7 +48,6 @@ abstract class AbstractCollector implements ICollector {
     public AbstractCollector(final UserData userData) {
         Assert.notNull(userData);
         this.userData = userData;
-        initCrawler();
     }
 
     /**
@@ -56,7 +55,7 @@ abstract class AbstractCollector implements ICollector {
      */
     private void initCrawler() {
         if (crawler == null) {
-            this.process = initProcess();
+            this.process = createProcess();
             Assert.notNull(process);
             crawler = new CrawlerBuilder(process, userData)
                     .buildClient(HttpClientFactory.createHttpClient(AgentEnum.FIREFOX_USER_AGENT))
@@ -68,7 +67,7 @@ abstract class AbstractCollector implements ICollector {
     /**
      * @return
      */
-    abstract IProcess initProcess();
+    abstract IProcess createProcess();
 
     @Override
     public void congregate() {

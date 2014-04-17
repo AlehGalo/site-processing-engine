@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.jdev.collector.site.handler.FlRuHandler;
+import com.jdev.collector.site.handler.IObserver;
 import com.jdev.crawler.core.process.IProcess;
 import com.jdev.crawler.core.process.ProcessUtils;
 import com.jdev.crawler.core.process.container.ConditionalProcess;
@@ -35,7 +36,10 @@ public class FlRuCollector extends AbstractCollector {
     // informer-fl-ru
     // aFGgR5435
 
-    // private IWrite
+    /**
+     * 
+     */
+    private IObserver objserver;
 
     /**
      * @param userData
@@ -50,7 +54,9 @@ public class FlRuCollector extends AbstractCollector {
      * @see com.jdev.collector.site.AbstractCollector#initProcess()
      */
     @Override
-    IProcess initProcess() {
+    IProcess createProcess() {
+        FlRuHandler handler = new FlRuHandler();
+        handler.addListener(getObjserver());
         final SelectUnit nextPageSelectUnit = new SelectUnit("nextPageSelectUnit",
                 "<li class=\\\\\"b-pager__next\\\\\"><a href=\\\\\"(.*)\\\\\" id=\\\\\"PrevLink");
         return ProcessUtils.chain(ProcessUtils.doGet("https://www.fl.ru/"), ProcessUtils
@@ -95,7 +101,22 @@ public class FlRuCollector extends AbstractCollector {
                                         "//a[@class='b-post__link']/@href"));
                                 return parameters;
                             }
-                        }, new FlRuHandler())))));
+                        }, handler)))));
+    }
+
+    /**
+     * @return the objserver
+     */
+    public IObserver getObjserver() {
+        return objserver;
+    }
+
+    /**
+     * @param objserver
+     *            the objserver to set
+     */
+    public void setObjserver(final IObserver objserver) {
+        this.objserver = objserver;
     }
 
 }

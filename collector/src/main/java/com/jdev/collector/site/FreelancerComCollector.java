@@ -40,7 +40,7 @@ public class FreelancerComCollector extends AbstractCollector {
      * @see com.jdev.collector.site.AbstractCollector#initProcess()
      */
     @Override
-    IProcess initProcess() {
+    IProcess createProcess() {
         return ProcessUtils.chain(
                 doGet("http://www.freelancer.com/jobs/"),
                 doWhile(new ConditionalProcess(new SelectorValidator(new ActionRegexpSelector(
