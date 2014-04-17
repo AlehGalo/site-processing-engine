@@ -16,5 +16,10 @@
 			<artifactId>crawler</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.jdev.crawl</groupId>
+			<artifactId>domain</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

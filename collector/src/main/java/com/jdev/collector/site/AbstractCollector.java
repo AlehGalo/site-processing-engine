@@ -20,7 +20,7 @@ import com.jdev.crawler.util.Assert;
  * @author Aleh
  * 
  */
-public abstract class AbstractCollector implements ICollector {
+abstract class AbstractCollector implements ICollector {
 
     /**
      * Logger.
@@ -30,7 +30,7 @@ public abstract class AbstractCollector implements ICollector {
     /**
      * 
      */
-    private final IProcess process;
+    private IProcess process;
 
     /**
      * 
@@ -45,11 +45,9 @@ public abstract class AbstractCollector implements ICollector {
     /**
      * 
      */
-    public AbstractCollector(final UserData userData, final IProcess process) {
+    public AbstractCollector(final UserData userData) {
         Assert.notNull(userData);
-        Assert.notNull(process);
         this.userData = userData;
-        this.process = process;
         initCrawler();
     }
 
@@ -57,15 +55,24 @@ public abstract class AbstractCollector implements ICollector {
      * 
      */
     private void initCrawler() {
-        crawler = new CrawlerBuilder(process, userData)
-                .buildClient(HttpClientFactory.createHttpClient(AgentEnum.FIREFOX_USER_AGENT))
-                .buildCookieStore(HttpClientFactory.getCookieStore())
-                .buildRequestBuilder(new BasicRequestBuilder()).getResult();
-
+        if (crawler == null) {
+            this.process = initProcess();
+            Assert.notNull(process);
+            crawler = new CrawlerBuilder(process, userData)
+                    .buildClient(HttpClientFactory.createHttpClient(AgentEnum.FIREFOX_USER_AGENT))
+                    .buildCookieStore(HttpClientFactory.getCookieStore())
+                    .buildRequestBuilder(new BasicRequestBuilder()).getResult();
+        }
     }
+
+    /**
+     * @return
+     */
+    abstract IProcess initProcess();
 
     @Override
     public void congregate() {
+        initCrawler();
         try {
             crawler.collect();
         } catch (CrawlerException e) {
