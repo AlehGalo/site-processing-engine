@@ -49,6 +49,9 @@ public class Crawler implements ICrawler, IProcessContext {
             final ProcessSession session = new ProcessSession(this);
             session.putValue(RequestReservedWord.UUID.getWord(), userData.getUniqueKey());
             flowProcess.process(session, null, new DefaultSelectorExtractStrategy());
+        } catch (CrawlerException ce) {
+            ce.printStackTrace();
+            throw ce;
         } finally {
             client.getConnectionManager().shutdown();
         }

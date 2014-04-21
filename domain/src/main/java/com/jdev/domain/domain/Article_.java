@@ -1,7 +1,6 @@
 package com.jdev.domain.domain;
 
 import javax.annotation.Generated;
-import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -11,7 +10,6 @@ public abstract class Article_ extends com.jdev.domain.domain.AbstractIdentifiab
 
 	public static volatile SingularAttribute<Article, String> content;
 	public static volatile SingularAttribute<Article, String> title;
-	public static volatile SetAttribute<Article, Recommendation> recommendationSet;
 
 }
 

@@ -21,7 +21,7 @@ import com.jdev.crawler.util.Assert;
  * @author Aleh
  * 
  */
-abstract class AbstractCollector implements ICollector {
+public abstract class AbstractCollector implements ICollector {
 
     /**
      * Logger.

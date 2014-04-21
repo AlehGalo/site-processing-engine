@@ -9,8 +9,6 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -54,7 +52,8 @@ public class Article extends AbstractIdentifiable {
     /**
      * Recommendation.
      */
-    @OneToMany(mappedBy = "article", fetch = FetchType.EAGER)
+    // @OneToMany(mappedBy = "article", fetch = FetchType.EAGER)
+    @Transient
     private Set<Recommendation> recommendationSet;
 
     /**

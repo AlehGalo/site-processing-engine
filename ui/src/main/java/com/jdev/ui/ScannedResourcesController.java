@@ -30,12 +30,14 @@ public class ScannedResourcesController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/results")
     public ModelAndView get() {
-        List<Article> listOfArticles = articleReadDao.findAll(0, (int) articleReadDao.countAll());
+        int count = (int) articleReadDao.countAll();
+        List<Article> listOfArticles = articleReadDao.findAll(0, count);
         List<String> list = new LinkedList<>();
         for (Article article : listOfArticles) {
             list.add(article.getTitle());
         }
         ModelAndView modelAndView = new ModelAndView("results");
+        modelAndView.addObject("count", count);
         modelAndView.addObject("lists", list);
         return modelAndView;
     }
