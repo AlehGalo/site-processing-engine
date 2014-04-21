@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.jdev.collector.site.handler.FreelancerComHandler;
+import com.jdev.collector.site.handler.IObserver;
 import com.jdev.crawler.core.process.IProcess;
 import com.jdev.crawler.core.process.ProcessUtils;
 import com.jdev.crawler.core.process.container.ConditionalProcess;
@@ -41,6 +42,11 @@ public class FreelancerComCollector extends AbstractCollector {
      */
     @Override
     IProcess createProcess() {
+        FreelancerComHandler handler = new FreelancerComHandler();
+        IObserver observer = getEventHandlerDelegate();
+        if (observer != null) {
+            handler.addListener(observer);
+        }
         return ProcessUtils.chain(
                 doGet("http://www.freelancer.com/jobs/"),
                 doWhile(new ConditionalProcess(new SelectorValidator(new ActionRegexpSelector(
@@ -54,8 +60,7 @@ public class FreelancerComCollector extends AbstractCollector {
                                                 "//table[@id='project_table_static']//tbody/tr[contains(@class,'project-details')]/td[1]/a/@href"));
                                 return selectorCollection;
                             }
-                        }, new FreelancerComHandler()), "No HOST specified"),
-                        assemble(new StepConfigAdapter() {
+                        }, handler), "No HOST specified"), assemble(new StepConfigAdapter() {
                             @Override
                             public Collection<ISelector<?>> getParameters() {
                                 Collection<ISelector<?>> collection = new ArrayList<>();

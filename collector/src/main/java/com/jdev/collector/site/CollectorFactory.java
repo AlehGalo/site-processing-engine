@@ -6,6 +6,7 @@ package com.jdev.collector.site;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.jdev.collector.site.handler.IObserver;
 import com.jdev.crawler.core.user.ICompany;
 import com.jdev.crawler.core.user.UserData;
 import com.jdev.crawler.util.Assert;
@@ -87,11 +88,11 @@ public class CollectorFactory implements ICollectorFactory {
      * .core.user.UserData)
      */
     @Override
-    public ICollector getCollector(final String loginName) {
+    public ICollector getCollector(final String loginName, final IObserver delegate) {
         Assert.hasLength(loginName);
         UserData data = storage.get(loginName);
         Assert.notNull(data);
-        return getCollector(data.getCompany().getCompanyId(), data);
+        return getCollector(data.getCompany().getCompanyId(), data, delegate);
     }
 
     /**
@@ -99,16 +100,34 @@ public class CollectorFactory implements ICollectorFactory {
      * @param userData
      * @return
      */
-    private ICollector getCollector(final int companyId, final UserData userData) {
+    private ICollector getCollector(final int companyId, final UserData userData,
+            final IObserver delegate) {
+        AbstractCollector collector;
         switch (companyId) {
         case 1:
-            return new FlRuCollector(userData);
+            collector = new FlRuCollector(userData);
+            break;
         case 2:
-            return new FreelanceComCollector(userData);
+            collector = new FreelanceComCollector(userData);
+            break;
         case 3:
-            return new FreelancerComCollector(userData);
+            collector = new FreelancerComCollector(userData);
+            break;
         default:
             return new NullCollector();
         }
+        setHandler(collector, delegate);
+        return collector;
+    }
+
+    /**
+     * @param collector
+     * @param delegate
+     */
+    private void setHandler(final AbstractCollector collector, final IObserver delegate) {
+        if (collector == null || delegate == null) {
+            return;
+        }
+        collector.setEventHandlerDelegate(delegate);
     }
 }

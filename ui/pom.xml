@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>ui</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<parent>
 		<artifactId>informer</artifactId>
 		<groupId>com.jdev.crawl</groupId>
@@ -35,12 +35,32 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jdev.crawl</groupId>
+			<artifactId>domain</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jdev.crawl</groupId>
+			<artifactId>collector</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
 		</dependency>
 	</dependencies>
 </project>

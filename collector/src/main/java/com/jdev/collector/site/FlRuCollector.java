@@ -37,11 +37,6 @@ public class FlRuCollector extends AbstractCollector {
     // aFGgR5435
 
     /**
-     * 
-     */
-    private IObserver objserver;
-
-    /**
      * @param userData
      */
     public FlRuCollector(final UserData userData) {
@@ -56,7 +51,10 @@ public class FlRuCollector extends AbstractCollector {
     @Override
     IProcess createProcess() {
         FlRuHandler handler = new FlRuHandler();
-        handler.addListener(getObjserver());
+        IObserver observer = getEventHandlerDelegate();
+        if (observer != null) {
+            handler.addListener(observer);
+        }
         final SelectUnit nextPageSelectUnit = new SelectUnit("nextPageSelectUnit",
                 "<li class=\\\\\"b-pager__next\\\\\"><a href=\\\\\"(.*)\\\\\" id=\\\\\"PrevLink");
         return ProcessUtils.chain(ProcessUtils.doGet("https://www.fl.ru/"), ProcessUtils
@@ -103,20 +101,4 @@ public class FlRuCollector extends AbstractCollector {
                             }
                         }, handler)))));
     }
-
-    /**
-     * @return the objserver
-     */
-    public IObserver getObjserver() {
-        return objserver;
-    }
-
-    /**
-     * @param objserver
-     *            the objserver to set
-     */
-    public void setObjserver(final IObserver objserver) {
-        this.objserver = objserver;
-    }
-
 }

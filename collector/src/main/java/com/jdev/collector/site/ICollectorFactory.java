@@ -3,6 +3,7 @@
  */
 package com.jdev.collector.site;
 
+import com.jdev.collector.site.handler.IObserver;
 
 /**
  * @author Aleh
@@ -11,9 +12,10 @@ package com.jdev.collector.site;
 public interface ICollectorFactory {
 
     /**
-     * @param userData
+     * @param loginName
+     * @param delegate
      * @return
      */
-    ICollector getCollector(String userData);
+    ICollector getCollector(final String loginName, final IObserver delegate);
 
 }

@@ -6,6 +6,7 @@ package com.jdev.collector.site;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jdev.collector.site.handler.IObserver;
 import com.jdev.crawler.builder.CrawlerBuilder;
 import com.jdev.crawler.core.AgentEnum;
 import com.jdev.crawler.core.HttpClientFactory;
@@ -31,6 +32,11 @@ abstract class AbstractCollector implements ICollector {
      * 
      */
     private IProcess process;
+
+    /**
+     * Delegate for handling events.
+     */
+    private IObserver eventHandlerDelegate;
 
     /**
      * 
@@ -77,5 +83,20 @@ abstract class AbstractCollector implements ICollector {
         } catch (CrawlerException e) {
             LOGGER.error(e.getMessage(), e);
         }
+    }
+
+    /**
+     * @return the eventHandlerDelegate
+     */
+    public final IObserver getEventHandlerDelegate() {
+        return eventHandlerDelegate;
+    }
+
+    /**
+     * @param eventHandlerDelegate
+     *            the eventHandlerDelegate to set
+     */
+    public final void setEventHandlerDelegate(final IObserver eventHandlerDelegate) {
+        this.eventHandlerDelegate = eventHandlerDelegate;
     }
 }

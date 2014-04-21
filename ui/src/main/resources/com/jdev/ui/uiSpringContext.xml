@@ -10,18 +10,22 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
-	<import
-		resource="classpath:/com/jdev/domain/data/daoSpringApplicationContext.xml" />
+	<import resource="classpath:/com/jdev/collector/site/collectorSpringContext.xml" />
 
 	<context:annotation-config />
-	<context:component-scan annotation-config="true"
-		base-package="com.jdev.collector" />
 
-	<bean id="taskScheduler"
-		class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
-		<property name="poolSize" value="10" />
-		<property name="waitForTasksToCompleteOnShutdown" value="false" />
+	<context:component-scan annotation-config="true"
+		base-package="com.jdev.ui" />
+	<mvc:annotation-driven />
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/pages/" />
+		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<task:scheduler id="taskScheduler" />
 </beans>
+
+

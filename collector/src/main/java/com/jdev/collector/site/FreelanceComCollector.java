@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.jdev.collector.site.handler.FreelanceComHandler;
+import com.jdev.collector.site.handler.IObserver;
 import com.jdev.crawler.core.process.IProcess;
 import com.jdev.crawler.core.process.container.ConditionalProcess;
 import com.jdev.crawler.core.selector.ISelector;
@@ -44,6 +45,11 @@ public class FreelanceComCollector extends AbstractCollector {
      */
     @Override
     IProcess createProcess() {
+        FreelanceComHandler fcHandler = new FreelanceComHandler();
+        IObserver observer = getEventHandlerDelegate();
+        if (observer != null) {
+            fcHandler.addListener(getEventHandlerDelegate());
+        }
         return chain(doGet("http://www.freelance.com/en/search/mission"),
                 doWhile(new ConditionalProcess(new SelectorValidator(new ActionXPathSelector(
                         "//a[contains(text(), 'Next')]/@href")), multi(new StepConfigAdapter() {
@@ -55,6 +61,6 @@ public class FreelanceComCollector extends AbstractCollector {
                                 "//table[@id='result']/tbody//a/@href"));
                         return parameters;
                     }
-                }, new FreelanceComHandler()))));
+                }, fcHandler))));
     }
 }

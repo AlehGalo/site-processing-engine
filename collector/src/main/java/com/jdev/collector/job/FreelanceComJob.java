@@ -3,33 +3,23 @@
  */
 package com.jdev.collector.job;
 
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Aleh
  * 
  */
-@Component
-public class FreelanceComJob implements IScanResourceJob {
+@Service
+@EnableAsync
+@EnableScheduling
+public class FreelanceComJob extends AbstractScanResourceJob {
 
     /**
      * 
      */
     public FreelanceComJob() {
-        // TODO Auto-generated constructor stub
+        super("informer-fl-com");
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.jdev.collector.job.IScanResourceJob#scan()
-     */
-    @Override
-    @Scheduled(fixedDelay = 3600000)
-    public void scan() {
-        // TODO Auto-generated method stub
-
-    }
-
 }
