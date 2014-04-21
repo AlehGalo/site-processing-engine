@@ -9,10 +9,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Article.class)
 public abstract class Article_ extends com.jdev.domain.domain.AbstractIdentifiable_ {
 
-	public static volatile SingularAttribute<Article, Site> site;
 	public static volatile SingularAttribute<Article, String> content;
 	public static volatile SingularAttribute<Article, String> title;
-	public static volatile SingularAttribute<Article, String> originalArticleUrl;
 	public static volatile SetAttribute<Article, Recommendation> recommendationSet;
 
 }

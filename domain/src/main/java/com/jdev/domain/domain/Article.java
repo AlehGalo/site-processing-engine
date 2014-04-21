@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * @author Aleh
@@ -36,7 +37,9 @@ public class Article extends AbstractIdentifiable {
     /**
      * Article's content.
      */
-    @Column(name = "ORIGINAL_ARTICLE_URL", nullable = false, columnDefinition = "VARCHAR(256)")
+    // @Column(name = "ORIGINAL_ARTICLE_URL", nullable = false, columnDefinition
+    // = "VARCHAR(256)")
+    @Transient
     private String originalArticleUrl;
 
     @Column(name = "TITLE", nullable = false, columnDefinition = "VARCHAR(256)")

@@ -26,7 +26,7 @@ public class ArticleDaoTest extends AbstractWriteDaoTest<Article> {
         siteDao.save(site);
         Article article = new Article("Article content");
         article.setOriginalArticleUrl("Original article url");
-        article.setSite(site);
+        // article.setSite(site);
         article.setTitle("Title");
         return article;
     }
@@ -37,7 +37,7 @@ public class ArticleDaoTest extends AbstractWriteDaoTest<Article> {
         siteDao.save(site);
         Article article = new Article("Article content2");
         article.setOriginalArticleUrl("Original article url2");
-        article.setSite(site);
+        // article.setSite(site);
         article.setTitle("Title1");
         return article;
     }
