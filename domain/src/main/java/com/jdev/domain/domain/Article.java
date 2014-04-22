@@ -9,6 +9,9 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -42,12 +45,13 @@ public class Article extends AbstractIdentifiable {
 
     @Column(name = "TITLE", nullable = false, columnDefinition = "VARCHAR(256)")
     private String title;
+
     /**
      * Resource source.
      */
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "FK_SITE_ID")
-    // private Site site;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FK_JOB_ID")
+    private Job job;
 
     /**
      * Recommendation.
@@ -152,6 +156,21 @@ public class Article extends AbstractIdentifiable {
      */
     public void setTitle(final String title) {
         this.title = title;
+    }
+
+    /**
+     * @return the job
+     */
+    public final Job getJob() {
+        return job;
+    }
+
+    /**
+     * @param job
+     *            the job to set
+     */
+    public final void setJob(final Job job) {
+        this.job = job;
     }
 
 }

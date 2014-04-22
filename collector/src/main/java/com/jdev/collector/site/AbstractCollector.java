@@ -76,13 +76,9 @@ public abstract class AbstractCollector implements ICollector {
     abstract IProcess createProcess();
 
     @Override
-    public void congregate() {
+    public void congregate() throws CrawlerException {
         initCrawler();
-        try {
-            crawler.collect();
-        } catch (CrawlerException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
+        crawler.collect();
     }
 
     /**

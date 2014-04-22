@@ -8,5 +8,7 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>com.jdev.domain.domain.Article</class>
 		<class>com.jdev.domain.domain.Site</class>
+		<class>com.jdev.domain.domain.Recommendation</class>
+		<class>com.jdev.domain.domain.Job</class>
 	</persistence-unit>
 </persistence>

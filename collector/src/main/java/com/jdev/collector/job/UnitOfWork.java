@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jdev.domain.dao.IWriteDao;
 import com.jdev.domain.domain.Article;
+import com.jdev.domain.domain.Job;
 
 /**
  * @author Aleh
@@ -17,16 +18,33 @@ import com.jdev.domain.domain.Article;
 @Repository
 @Transactional
 public class UnitOfWork implements IUnitOfWork {
+
     /**
      * 
      */
     @Autowired
-    IWriteDao<Article> writeArticleDao;
+    private IWriteDao<Article> writeArticleDao;
+
+    /**
+     * 
+     */
+    @Autowired
+    private IWriteDao<Job> jobDao;
 
     @Override
     public void saveArticle(final Article article) {
         writeArticleDao.save(article);
-        System.out.println(article.getTitle());
+    }
+
+    @Override
+    public void saveJob(final Job job) {
+        jobDao.save(job);
+        System.out.println(job.getId());
+    }
+
+    @Override
+    public void updateJob(final Job job) {
+        jobDao.update(job);
     }
 
 }

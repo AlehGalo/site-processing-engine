@@ -16,4 +16,14 @@
 			encoding="UTF-8" />
 	</changeSet>
 
+	<changeSet id="3" author="aleh">
+		<sqlFile relativeToChangelogFile="true"
+			path="install/20140422_create_job_table.sql" encoding="UTF-8" />
+	</changeSet>
+
+	<changeSet id="4" author="aleh">
+		<sqlFile relativeToChangelogFile="true"
+			path="install/20140422_alter_article_table.sql" encoding="UTF-8" />
+	</changeSet>
+
 </databaseChangeLog>
