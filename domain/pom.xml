@@ -141,6 +141,7 @@
 					<execution>
 						<phase>process-resources</phase>
 						<configuration>
+							<propertyFileWillOverride>true</propertyFileWillOverride>
 							<propertyFile>src/main/resources/database.properties</propertyFile>
 							<logging>debug</logging>
 							<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>

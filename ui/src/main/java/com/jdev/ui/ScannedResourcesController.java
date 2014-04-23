@@ -26,12 +26,12 @@ public class ScannedResourcesController {
      * 
      */
     @Autowired
-    private IWriteDao<Article> articleReadDao;
+    private IWriteDao<Article> articleDao;
 
     @RequestMapping(method = RequestMethod.GET, value = "/results")
     public ModelAndView get() {
-        int count = (int) articleReadDao.countAll();
-        List<Article> listOfArticles = articleReadDao.findAll(0, count);
+        int count = (int) articleDao.countAll();
+        List<Article> listOfArticles = articleDao.findAll(0, count);
         List<String> list = new LinkedList<>();
         for (Article article : listOfArticles) {
             list.add(article.getTitle());
