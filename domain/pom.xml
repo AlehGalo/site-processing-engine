@@ -52,7 +52,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
 			<version>${hibernate.jpa.version}</version>
 		</dependency>
 		<dependency>
@@ -136,7 +136,7 @@
 			<plugin>
 				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>2.0.5</version>
+				<version>3.1.0</version>
 				<executions>
 					<execution>
 						<phase>process-resources</phase>

@@ -3,7 +3,6 @@
  */
 package com.jdev.collector.job;
 
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,6 @@ import com.jdev.crawler.core.user.UserData;
  * 
  */
 @Service
-@EnableAsync
 @EnableScheduling
 public class FreelanceComJob extends AbstractScanResourceJob {
 

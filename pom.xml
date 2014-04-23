@@ -25,7 +25,7 @@
 		<org.sl4j.version>1.7.0</org.sl4j.version>
 		<log4j.version>1.2.17</log4j.version>
 		<apache.poi.version>3.9</apache.poi.version>
-		<org.springframework.spring.web.version>4.0.0.RELEASE</org.springframework.spring.web.version>
+		<org.springframework.version>4.1.0.BUILD-SNAPSHOT</org.springframework.version>
 		<junit.version>4.11</junit.version>
 		<xmlunit.version>1.5</xmlunit.version>
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
@@ -34,23 +34,24 @@
 		<commons-lang3.version>3.1</commons-lang3.version>
 		<commons.collections.version>3.2.1</commons.collections.version>
 		<google.guava.version>15.0</google.guava.version>
-		<org.springframework.version>4.0.0.RELEASE</org.springframework.version>
 		<mysql.version>5.1.13</mysql.version>
-		<org.hibernate.version>4.1.10.Final</org.hibernate.version>
-		<hibernate.jpa.version>1.0.1.Final</hibernate.jpa.version>
+		<org.hibernate.version>4.3.5.Final</org.hibernate.version>
+		<hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
 		<ehcache.version>1.6.2</ehcache.version>
 		<source.version>1.7</source.version>
 	</properties>
 	<repositories>
 		<repository>
-			<id>JBoss</id>
-			<name>JBoss Repsitory</name>
-			<layout>default</layout>
-			<url>http://repository.jboss.org/maven2</url>
-		</repository>
-		<repository>
 			<id>com.springsource.repository.maven.snapshot</id>
 			<url>http://maven.springframework.org/snapshot/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>http://repo.spring.io/snapshot</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -126,7 +127,7 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-web</artifactId>
-				<version>${org.springframework.spring.web.version}</version>
+				<version>${org.springframework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
