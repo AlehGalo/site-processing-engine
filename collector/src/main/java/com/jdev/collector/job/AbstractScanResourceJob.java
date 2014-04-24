@@ -121,7 +121,7 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      */
     private void processError(final Exception e) {
         job.setEndTime(new Date());
-        job.setReasonOfStopping(e.getMessage());
+        job.setReasonOfStopping(e.getMessage() + " = " + e.getCause().getMessage());
         job.setStatus("ERROR");
         unitOfWork.updateJob(job);
         ReflectionUtils.rethrowRuntimeException(e);
