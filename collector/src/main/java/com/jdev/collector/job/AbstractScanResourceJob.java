@@ -7,7 +7,9 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.util.Assert;
+import org.springframework.util.ReflectionUtils;
 
 import com.jdev.collector.site.AbstractCollector;
 import com.jdev.collector.site.ICollector;
@@ -33,6 +35,17 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      */
     private final ICollector collector;
 
+    // /**
+    // *
+    // */
+    // private IExceptionalCaseHandler<Exception> handler;
+
+    /**
+     * 
+     */
+    @Autowired
+    private ThreadPoolTaskScheduler taskScheduler;
+
     /**
      * 
      */
@@ -45,6 +58,16 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
         Assert.notNull(collector);
         this.collector = collector;
         collector.setEventHandlerDelegate(this);
+        // setHandler(new StopAtFirstErrorExceptionalHandler<Exception>());
+    }
+
+    /**
+     * Do scheduled taks. Spring bug if annotation is placed with @Override
+     * annotation.
+     */
+    @Scheduled(fixedDelay = 3600000, initialDelay = 100)
+    private void doJobScheduled() {
+        scan();
     }
 
     /*
@@ -53,18 +76,21 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      * @see com.jdev.collector.job.IScanResourceJob#scan()
      */
     @Override
-    @Scheduled(fixedDelay = 3600000, initialDelay = 100)
     public void scan() {
         job = createInitiatedJob();
         unitOfWork.saveJob(job);
+        boolean error = false;
         try {
             collector.congregate();
         } catch (CrawlerException e) {
-            e.printStackTrace();
-            job.setReasonOfStopping(e.getMessage());
+            processError(e);
+            error = true;
         }
-        job.setEndTime(new Date());
-        unitOfWork.updateJob(job);
+        if (!error) {
+            job.setEndTime(new Date());
+            job.setStatus("FINISHED");
+            unitOfWork.updateJob(job);
+        }
     }
 
     /**
@@ -76,6 +102,7 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
         job.setStartTime(date);
         job.setEndTime(date);
         job.setReasonOfStopping("NONE");
+        job.setStatus("STARTED");
         return job;
     }
 
@@ -85,9 +112,34 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
         try {
             unitOfWork.saveArticle(article);
         } catch (Exception e) {
-            job.setEndTime(new Date());
-            job.setReasonOfStopping(e.getMessage());
-            unitOfWork.updateJob(job);
+            processError(e);
         }
     }
+
+    /**
+     * @param e
+     */
+    private void processError(final Exception e) {
+        job.setEndTime(new Date());
+        job.setReasonOfStopping(e.getMessage());
+        job.setStatus("ERROR");
+        unitOfWork.updateJob(job);
+        ReflectionUtils.rethrowRuntimeException(e);
+    }
+
+    // /**
+    // * @return the handler
+    // */
+    // public final IExceptionalCaseHandler<Exception> getHandler() {
+    // return handler;
+    // }
+    //
+    // /**
+    // * @param handler
+    // * the handler to set
+    // */
+    // public final void setHandler(final IExceptionalCaseHandler<Exception>
+    // handler) {
+    // this.handler = handler;
+    // }
 }

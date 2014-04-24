@@ -44,6 +44,12 @@ public class Job extends AbstractIdentifiable {
     private String reasonOfStopping;
 
     /**
+     * 
+     */
+    @Column(name = "STATUS", nullable = false, columnDefinition = "VARCHAR(16)")
+    private String status;
+
+    /**
      * @return the startTime
      */
     public final Date getStartTime() {
@@ -86,6 +92,21 @@ public class Job extends AbstractIdentifiable {
      */
     public final void setReasonOfStopping(final String reasonOfStopping) {
         this.reasonOfStopping = reasonOfStopping;
+    }
+
+    /**
+     * @return the status
+     */
+    public final String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status
+     *            the status to set
+     */
+    public final void setStatus(final String status) {
+        this.status = status;
     }
 
 }

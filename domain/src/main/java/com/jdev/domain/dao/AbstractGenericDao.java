@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 import com.jdev.domain.dao.criteria.CriteriaComposer;
 import com.jdev.domain.dao.criteria.ICriteriaComposer;
@@ -27,9 +28,23 @@ abstract class AbstractGenericDao<T extends IIdentifiable> {
     private EntityManager entityManager;
 
     /**
+     * Generic type class.
+     */
+    private final Class<T> clazz;
+
+    /**
      * Composer.
      */
     private ICriteriaComposer<T> criteriaComposer;
+
+    /**
+     * @param clazz
+     *            Generic class.
+     */
+    public AbstractGenericDao(final Class<T> clazz) {
+        Assert.notNull(clazz);
+        this.clazz = clazz;
+    }
 
     /**
      * @param entityManager
@@ -44,7 +59,9 @@ abstract class AbstractGenericDao<T extends IIdentifiable> {
     /**
      * @return persistent class from generic
      */
-    public abstract Class<T> getPersistentClass();
+    public Class<T> getPersistentClass() {
+        return clazz;
+    }
 
     /**
      * @return the criteriaComposer

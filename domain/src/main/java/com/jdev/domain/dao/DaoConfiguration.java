@@ -14,57 +14,30 @@ import com.jdev.domain.domain.Recommendation;
 import com.jdev.domain.domain.Site;
 
 /**
- * @author Aleh
- * 
+ * @author Aleh Dao beans configuration.
  */
 @Configuration
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class DaoConfiguration {
 
-    /**
-     * @return dao bean.
-     */
     @Bean
     public IWriteDao<Site> siteDao() {
-        return new AbstractCommonGenericWriteDao<Site>() {
-            @Override
-            public Class<Site> getPersistentClass() {
-                return Site.class;
-            }
-        };
+        return new CommonGenericWriteDao<Site>(Site.class);
     }
 
-    /**
-     * @return
-     */
     @Bean
     public IWriteDao<Article> articleDao() {
-        return new AbstractCommonGenericWriteDao<Article>() {
-            @Override
-            public Class<Article> getPersistentClass() {
-                return Article.class;
-            }
-        };
+        return new CommonGenericWriteDao<Article>(Article.class);
     }
 
     @Bean
     public IWriteDao<Recommendation> recommendationDao() {
-        return new AbstractCommonGenericWriteDao<Recommendation>() {
-            @Override
-            public Class<Recommendation> getPersistentClass() {
-                return Recommendation.class;
-            }
-        };
+        return new CommonGenericWriteDao<Recommendation>(Recommendation.class);
     }
 
     @Bean
     public IWriteDao<Job> jobDao() {
-        return new AbstractCommonGenericWriteDao<Job>() {
-            @Override
-            public Class<Job> getPersistentClass() {
-                return Job.class;
-            }
-        };
+        return new CommonGenericWriteDao<Job>(Job.class);
     }
 
 }

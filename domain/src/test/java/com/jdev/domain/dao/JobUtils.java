@@ -27,6 +27,7 @@ final class JobUtils {
         Job job = new Job();
         job.setStartTime(new Date());
         job.setEndTime(new Date());
+        job.setStatus("IN PROGRESS");
         job.setReasonOfStopping(reason);
         return job;
     }

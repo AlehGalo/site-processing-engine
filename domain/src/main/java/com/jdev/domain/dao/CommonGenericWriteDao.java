@@ -9,8 +9,16 @@ import com.jdev.domain.domain.IIdentifiable;
  * @author Aleh
  * @param <T>
  */
-abstract class AbstractCommonGenericWriteDao<T extends IIdentifiable> extends
-        AbstractCommonGenericReadDao<T> implements IWriteDao<T> {
+class CommonGenericWriteDao<T extends IIdentifiable> extends
+        CommonGenericReadDao<T> implements IWriteDao<T> {
+
+    /**
+     * @param clazz
+     *            Generic class.
+     */
+    public CommonGenericWriteDao(final Class<T> clazz) {
+        super(clazz);
+    }
 
     @Override
     public void save(final T t) {

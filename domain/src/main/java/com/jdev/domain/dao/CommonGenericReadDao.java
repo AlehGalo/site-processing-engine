@@ -20,8 +20,16 @@ import com.jdev.domain.domain.IIdentifiable;
  * 
  * @param <T>
  */
-abstract class AbstractCommonGenericReadDao<T extends IIdentifiable> extends AbstractGenericDao<T>
-        implements IReadDao<T> {
+class CommonGenericReadDao<T extends IIdentifiable> extends AbstractGenericDao<T> implements
+        IReadDao<T> {
+
+    /**
+     * @param clazz
+     *            Generic class.
+     */
+    public CommonGenericReadDao(final Class<T> clazz) {
+        super(clazz);
+    }
 
     @Override
     public T find(final Long id) {

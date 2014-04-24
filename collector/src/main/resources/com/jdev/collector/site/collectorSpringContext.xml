@@ -17,11 +17,11 @@
 	<context:component-scan annotation-config="true"
 		base-package="com.jdev.collector" />
 
-
 	<bean id="taskScheduler"
 		class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
 		<property name="poolSize" value="10" />
 		<property name="waitForTasksToCompleteOnShutdown" value="false" />
+		<property name="errorHandler" ref="errorHandler" />
 	</bean>
 
 	<task:annotation-driven scheduler="taskScheduler" />

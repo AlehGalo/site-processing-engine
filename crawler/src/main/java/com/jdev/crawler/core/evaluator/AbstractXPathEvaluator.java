@@ -64,7 +64,7 @@ public abstract class AbstractXPathEvaluator<T> implements IEvaluator<T> {
         try {
             return (T) FACTORY.newXPath().compile(expression).evaluate(node, returnType);
         } catch (XPathExpressionException ex) {
-            LOGGER.error(ex.getMessage());
+            LOGGER.info(ex.getCause().getMessage());
             return null;
         }
     }
