@@ -3,12 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:batch="http://www.springframework.org/schema/batch"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
-		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.2.xsd">
 
 	<import
 		resource="classpath:/com/jdev/domain/data/daoSpringApplicationContext.xml" />
@@ -25,5 +27,20 @@
 	</bean>
 
 	<task:annotation-driven scheduler="taskScheduler" />
+
+	<!-- <batch:job-repository id="jobRepository" data-source="dataSource" transaction-manager="transactionManager" 
+		isolation-level-for-create="SERIALIZABLE" table-prefix="BATCH_" max-varchar-length="1000" 
+		/> -->
+
+	<!-- <batch:step id="crawlerStep"> <batch:description>Step for crawling 
+		resource</batch:description> <batch:tasklet transaction-manager="transactionManager" 
+		allow-start-if-complete="true"> </batch:tasklet> </batch:step> -->
+
+	<!-- <bean id="itemReader" class="com.jdev.collector.job.StepReader" /> 
+		<bean id="itemWriter" class="com.jdev.collector.job.StepWriter" /> -->
+
+	<!-- <batch:job id="sampleJob"> <batch:step id="step1"> <batch:tasklet ref="freelancerCom"> 
+		<batch:chunk reader="itemReader" writer="itemWriter" /> </batch:tasklet> 
+		</batch:step> </batch:job> -->
 
 </beans>

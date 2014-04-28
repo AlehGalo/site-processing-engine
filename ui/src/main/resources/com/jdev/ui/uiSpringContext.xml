@@ -18,18 +18,16 @@
 		base-package="com.jdev.ui" />
 	<mvc:annotation-driven />
 
-	<bean id="viewResolver"
+	<!-- <bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/pages/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	<!-- <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"> 
-		<property name="paramName" value="lang" /> </bean> <bean id="localeResolver" 
-		class="org.springframework.web.servlet.i18n.CookieLocaleResolver"> <property 
-		name="defaultLocale" value="ru" /> </bean> <bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"> 
-		<property name="interceptors"> <ref bean="localeChangeInterceptor" /> </property> 
-		</bean> -->
 
+	<bean id="resourceService"
+		class="org.springframework.batch.admin.web.resources.DefaultResourceService">
+		<property name="servletPath" value="/batch" />
+	</bean> -->
 </beans>

@@ -20,12 +20,12 @@
 	</bean>
 	<context:annotation-config />
 	<context:component-scan base-package="com.jdev.domain" />
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="informerTransactionManager" />
 
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
-	<bean id="dataSource"
+	<bean id="informerDataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${driver}" />
 		<property name="url" value="${url}" />
@@ -33,9 +33,9 @@
 		<property name="password" value="${password}" />
 	</bean>
 
-	<bean id="entityManagerFactory"
+	<bean id="informerEntityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="informerDataSource" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<property name="databasePlatform" value="${hibernate.dialect}" />
@@ -78,7 +78,7 @@
 		</property>
 	</bean>
 
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	<bean id="informerTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="informerEntityManagerFactory" />
 	</bean>
 </beans>

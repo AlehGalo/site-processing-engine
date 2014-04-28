@@ -22,10 +22,12 @@
 		<jsoup.version>1.7.3</jsoup.version>
 		<tagsoup.version>1.2.1</tagsoup.version>
 		<json.simple.version>1.1.1</json.simple.version>
-		<org.sl4j.version>1.7.0</org.sl4j.version>
+		<org.sl4j.version>1.7.7</org.sl4j.version>
 		<log4j.version>1.2.17</log4j.version>
 		<apache.poi.version>3.9</apache.poi.version>
 		<org.springframework.version>4.1.0.BUILD-SNAPSHOT</org.springframework.version>
+		<spring.batch.version>2.2.6.RELEASE</spring.batch.version>
+		<spring.batch.admin.manager.version>1.2.2.BUILD-SNAPSHOT</spring.batch.admin.manager.version>
 		<junit.version>4.11</junit.version>
 		<xmlunit.version>1.5</xmlunit.version>
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
@@ -54,6 +56,14 @@
 			<url>http://repo.spring.io/snapshot</url>
 			<snapshots>
 				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>http://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
 			</snapshots>
 		</repository>
 	</repositories>

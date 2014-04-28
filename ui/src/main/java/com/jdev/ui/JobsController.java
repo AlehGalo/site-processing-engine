@@ -6,10 +6,6 @@ package com.jdev.ui;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jdev.domain.dao.IWriteDao;
@@ -19,16 +15,16 @@ import com.jdev.domain.domain.Job;
  * @author Aleh
  * 
  */
-@Controller
+// @Controller
 public class JobsController {
 
     /**
      * 
      */
-    @Autowired
+    // @Autowired
     private IWriteDao<Job> jobDao;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/jobs")
+    // @RequestMapping(method = RequestMethod.GET, value = "/jobs")
     public ModelAndView get() {
         int count = (int) jobDao.countAll();
         List<Job> listOfJobs = jobDao.findAll(0, count);

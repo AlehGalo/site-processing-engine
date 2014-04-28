@@ -3,7 +3,10 @@
  */
 package com.jdev.collector.job;
 
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.stereotype.Service;
 
 import com.jdev.collector.site.FreelancerComCollector;
@@ -14,9 +17,8 @@ import com.jdev.crawler.core.user.UserData;
  * @author Aleh
  * 
  */
-@Service
-@EnableScheduling
-public class FreelancerComJob extends AbstractScanResourceJob {
+@Service(value = "freelancerCom")
+public class FreelancerComJob extends AbstractScanResourceJob implements Tasklet {
 
     /**
      * 
@@ -43,5 +45,12 @@ public class FreelancerComJob extends AbstractScanResourceJob {
      */
     public FreelancerComJob() {
         super(new FreelancerComCollector(userData));
+    }
+
+    @Override
+    public RepeatStatus execute(final StepContribution contribution, final ChunkContext chunkContext)
+            throws Exception {
+        scan();
+        return RepeatStatus.FINISHED;
     }
 }
