@@ -12,6 +12,7 @@ public abstract class Job_ extends com.jdev.domain.domain.AbstractIdentifiable_ 
 	public static volatile SingularAttribute<Job, Date> startTime;
 	public static volatile SingularAttribute<Job, String> status;
 	public static volatile SingularAttribute<Job, String> reasonOfStopping;
+	public static volatile SingularAttribute<Job, Integer> errorsCount;
 	public static volatile SingularAttribute<Job, Date> endTime;
 
 }

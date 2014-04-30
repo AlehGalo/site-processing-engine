@@ -50,6 +50,12 @@ public class Job extends AbstractIdentifiable {
     private String status;
 
     /**
+     * 
+     */
+    @Column(name = "ERRORS_COUNT", nullable = false, columnDefinition = "INTEGER")
+    private Integer errorsCount;
+
+    /**
      * @return the startTime
      */
     public final Date getStartTime() {
@@ -107,6 +113,21 @@ public class Job extends AbstractIdentifiable {
      */
     public final void setStatus(final String status) {
         this.status = status;
+    }
+
+    /**
+     * @return the errorsCount
+     */
+    public final Integer getErrorsCount() {
+        return errorsCount;
+    }
+
+    /**
+     * @param errorsCount
+     *            the errorsCount to set
+     */
+    public final void setErrorsCount(Integer errorsCount) {
+        this.errorsCount = errorsCount;
     }
 
 }

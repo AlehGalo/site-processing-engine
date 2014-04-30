@@ -10,7 +10,9 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
-	<import resource="classpath:/com/jdev/collector/site/collectorSpringContext.xml" />
+	<import
+		resource="classpath:/com/jdev/domain/data/daoSpringApplicationContext.xml" />
+
 
 	<context:annotation-config />
 
