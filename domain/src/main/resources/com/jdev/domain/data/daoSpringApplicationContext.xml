@@ -16,7 +16,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<context:annotation-config />
 	<context:component-scan base-package="com.jdev.domain" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
@@ -27,7 +27,8 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${driver}" />
-		<property name="url" value="jdbc:mysql://${database.host}:3306/${database.db.name}?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf8" />
+		<property name="url"
+			value="jdbc:mysql://${database.host}:3306/${database.db.name}?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf8" />
 		<property name="username" value="${database.username}" />
 		<property name="password" value="${database.password}" />
 	</bean>
@@ -59,6 +60,7 @@
 				<prop key="hibernate.connection.is-connection-validation-required">${hibernate.is-connection-validation-required}</prop>
 				<prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
 				<prop key="hibernate.enable_lazy_load_no_trans">${hibernate.enable_lazy_load_no_trans}</prop>
+				<prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
 				<prop key="hibernate.c3p0.acquire_increment">
 					${hibernate.c3p0.acquire_increment}
 				</prop>

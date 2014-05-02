@@ -38,6 +38,7 @@
 		<org.hibernate.version>4.3.5.Final</org.hibernate.version>
 		<hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
 		<ehcache.version>1.6.2</ehcache.version>
+		<hibernate.ehcache.version>4.3.5.Final</hibernate.ehcache.version>
 		<source.version>1.7</source.version>
 	</properties>
 	<repositories>
@@ -54,6 +55,16 @@
 			<url>http://repo.spring.io/snapshot</url>
 			<snapshots>
 				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>terracotta-releases</id>
+			<url>http://www.terracotta.org/download/reflector/releases</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
 			</snapshots>
 		</repository>
 	</repositories>
