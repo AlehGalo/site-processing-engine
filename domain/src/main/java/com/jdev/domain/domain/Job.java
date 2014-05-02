@@ -52,8 +52,14 @@ public class Job extends AbstractIdentifiable {
     /**
      * 
      */
-    @Column(name = "ERRORS_COUNT", nullable = false, columnDefinition = "INTEGER")
-    private Integer errorsCount;
+    @Column(name = "CRAWLER_ERRORS_COUNT", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private int crawlerErrorsCount;
+
+    /**
+     * 
+     */
+    @Column(name = "DATABASE_ERRORS_COUNT", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private int databaseErrorsCount;
 
     /**
      * @return the startTime
@@ -116,18 +122,33 @@ public class Job extends AbstractIdentifiable {
     }
 
     /**
-     * @return the errorsCount
+     * @return the crawlerErrorsCount
      */
-    public final Integer getErrorsCount() {
-        return errorsCount;
+    public final Integer getCrawlerErrorsCount() {
+        return crawlerErrorsCount;
     }
 
     /**
-     * @param errorsCount
-     *            the errorsCount to set
+     * @param crawlerErrorsCount
+     *            the crawlerErrorsCount to set
      */
-    public final void setErrorsCount(Integer errorsCount) {
-        this.errorsCount = errorsCount;
+    public final void setCrawlerErrorsCount(Integer crawlerErrorsCount) {
+        this.crawlerErrorsCount = crawlerErrorsCount;
+    }
+
+    /**
+     * @return the databaseErrorsCount
+     */
+    public final Integer getDatabaseErrorsCount() {
+        return databaseErrorsCount;
+    }
+
+    /**
+     * @param databaseErrorsCount
+     *            the databaseErrorsCount to set
+     */
+    public final void setDatabaseErrorsCount(Integer databaseErrorsCount) {
+        this.databaseErrorsCount = databaseErrorsCount;
     }
 
 }

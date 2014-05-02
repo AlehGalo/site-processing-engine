@@ -3,10 +3,8 @@
  */
 package com.jdev.collector.job;
 
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.stereotype.Service;
+import org.springframework.scheduling.annotation.Scheduled;
 
-import com.jdev.collector.job.strategy.IncreaseErrorCounterExceptionalHandler;
 import com.jdev.collector.site.FlRuCollector;
 import com.jdev.crawler.core.user.ICompany;
 import com.jdev.crawler.core.user.UserData;
@@ -15,8 +13,6 @@ import com.jdev.crawler.core.user.UserData;
  * @author Aleh
  * 
  */
-@Service
-@EnableScheduling
 public class FlRuJob extends AbstractScanResourceJob {
 
     /**
@@ -45,11 +41,10 @@ public class FlRuJob extends AbstractScanResourceJob {
      */
     public FlRuJob() {
         super(new FlRuCollector(userData));
-        setExceptionHandler(new IncreaseErrorCounterExceptionalHandler<Exception>() {
-            @Override
-            public void increaseErrors() {
-                unitOfWork.increaseJobError(job);
-            }
-        });
+    }
+
+    @Scheduled(fixedDelay = 3600000, initialDelay = 100)
+    public void doTheJob() {
+        scan();
     }
 }

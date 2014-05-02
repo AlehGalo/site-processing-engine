@@ -26,9 +26,4 @@ public interface IUnitOfWork {
      * @param job
      */
     void updateJob(Job job);
-
-    /**
-     * 
-     */
-    void increaseJobError(Job job);
 }

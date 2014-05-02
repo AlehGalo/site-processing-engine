@@ -10,7 +10,9 @@ java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	</session-config>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath*:com/jdev/collector/site/collectorSpringContext.xml
+		<param-value>
+			classpath:com/jdev/domain/data/daoSpringApplicationContext.xml
+			classpath:com/jdev/collector/site/collectorSpringContext.xml
 		</param-value>
 	</context-param>
 	<listener>
@@ -23,7 +25,8 @@ java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath*:com/jdev/ui/uiSpringContext.xml </param-value>
+			<param-value>classpath:com/jdev/ui/uiSpringContext.xml
+			</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>

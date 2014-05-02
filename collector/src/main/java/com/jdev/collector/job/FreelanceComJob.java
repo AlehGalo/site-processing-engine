@@ -3,10 +3,8 @@
  */
 package com.jdev.collector.job;
 
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.stereotype.Service;
+import org.springframework.scheduling.annotation.Scheduled;
 
-import com.jdev.collector.job.strategy.IncreaseErrorCounterExceptionalHandler;
 import com.jdev.collector.site.FreelanceComCollector;
 import com.jdev.crawler.core.user.ICompany;
 import com.jdev.crawler.core.user.UserData;
@@ -15,8 +13,6 @@ import com.jdev.crawler.core.user.UserData;
  * @author Aleh
  * 
  */
-@Service
-@EnableScheduling
 public class FreelanceComJob extends AbstractScanResourceJob {
 
     /**
@@ -39,16 +35,15 @@ public class FreelanceComJob extends AbstractScanResourceJob {
         });
     }
 
+    @Scheduled(fixedDelay = 3600000, initialDelay = 100)
+    public void doTheJob() {
+        scan();
+    }
+
     /**
      * 
      */
     public FreelanceComJob() {
         super(new FreelanceComCollector(userData));
-        setExceptionHandler(new IncreaseErrorCounterExceptionalHandler<Exception>() {
-            @Override
-            public void increaseErrors() {
-                unitOfWork.increaseJobError(job);
-            }
-        });
     }
 }

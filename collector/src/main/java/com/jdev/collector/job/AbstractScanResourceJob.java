@@ -4,11 +4,11 @@
 package com.jdev.collector.job;
 
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.Assert;
-import org.springframework.util.ReflectionUtils;
 
 import com.jdev.collector.job.strategy.IExceptionalCaseHandler;
 import com.jdev.collector.site.AbstractCollector;
@@ -28,7 +28,7 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      * 
      */
     @Autowired
-    IUnitOfWork unitOfWork;
+    private IUnitOfWork unitOfWork;
 
     /**
      * 
@@ -40,6 +40,17 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      */
     private IExceptionalCaseHandler<Exception> exceptionHandler;
 
+    /**
+     * Counters.
+     */
+    private final AtomicInteger crawlerExceptions = new AtomicInteger(0),
+            databaseExceptions = new AtomicInteger(0);
+
+    /**
+     * 
+     */
+    private final AtomicInteger transactionCounter = new AtomicInteger(0);
+
     // /**
     // *
     // */
@@ -49,7 +60,7 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
     /**
      * 
      */
-    Job job;
+    private Job job;
 
     /**
      * @param userName
@@ -66,7 +77,6 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      * @see com.jdev.collector.job.IScanResourceJob#scan()
      */
     @Override
-    @Scheduled(fixedDelay = 3600000, initialDelay = 100)
     public void scan() {
         job = createInitiatedJob();
         unitOfWork.saveJob(job);
@@ -75,7 +85,7 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
         } catch (CrawlerException e) {
             processError(e);
         }
-        job.setEndTime(new Date());
+        updateJobState();
         job.setStatus("FINISHED");
         unitOfWork.updateJob(job);
     }
@@ -107,12 +117,35 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      * @param e
      */
     private void processError(final Exception e) {
-        if (!getExceptionHandler().handle(e)) {
-            job.setReasonOfStopping(e.getMessage() + " = " + e.getCause().getMessage());
-            job.setEndTime(new Date());
-            unitOfWork.updateJob(job);
-            ReflectionUtils.rethrowRuntimeException(e);
+        // if (!getExceptionHandler().handle(e)) {
+        // job.setReasonOfStopping(e.getMessage() + " = " +
+        // e.getCause().getMessage());
+        // job.setEndTime(new Date());
+        // unitOfWork.updateJob(job);
+        // ReflectionUtils.rethrowRuntimeException(e);
+        // }
+        if (e instanceof CrawlerException) {
+            crawlerExceptions.incrementAndGet();
+            transactionCounter.incrementAndGet();
         }
+        if (e instanceof HibernateException) {
+            databaseExceptions.incrementAndGet();
+            transactionCounter.incrementAndGet();
+        }
+        if (transactionCounter.intValue() >= 10) {
+            updateJobState();
+            unitOfWork.updateJob(job);
+            transactionCounter.set(0);
+        }
+    }
+
+    /**
+     * 
+     */
+    private void updateJobState() {
+        job.setCrawlerErrorsCount(crawlerExceptions.intValue());
+        job.setDatabaseErrorsCount(databaseExceptions.intValue());
+        job.setEndTime(new Date());
     }
 
     /**
