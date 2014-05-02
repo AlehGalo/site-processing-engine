@@ -135,7 +135,7 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      */
     private void processError(final Exception e) {
         if (e instanceof HibernateException || e instanceof PersistenceException) {
-            builder.append(e.getCause().getMessage());
+            builder.append(e.getMessage());
             ++databaseExceptions;
             if (databaseExceptions >= 10) {
                 updateJobState();

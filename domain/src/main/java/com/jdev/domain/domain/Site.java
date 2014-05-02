@@ -13,6 +13,8 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Cache;
+
 /**
  * @author Aleh
  * 
@@ -22,6 +24,7 @@ import javax.persistence.UniqueConstraint;
 @AttributeOverrides(value = { @AttributeOverride(name = "id", column = @Column(name = "SITE_ID")) })
 @SqlResultSetMapping(name = "implicitSite", entities = @EntityResult(entityClass = Site.class))
 @NamedNativeQuery(name = "findAllSite", query = "select * from site", resultSetMapping = "implicitSite")
+@Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_ONLY)
 public class Site extends AbstractIdentifiable {
 
     /**

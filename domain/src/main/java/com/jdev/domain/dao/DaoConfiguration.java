@@ -21,8 +21,8 @@ import com.jdev.domain.domain.Site;
 public class DaoConfiguration {
 
     @Bean
-    public IWriteDao<Site> siteDao() {
-        return new CommonGenericWriteDao<Site>(Site.class);
+    public IReadDao<Site> siteDao() {
+        return new CommonGenericReadDao<Site>(Site.class);
     }
 
     @Bean
