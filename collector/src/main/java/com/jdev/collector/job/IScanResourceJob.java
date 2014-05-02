@@ -3,6 +3,8 @@
  */
 package com.jdev.collector.job;
 
+import com.jdev.crawler.exception.CrawlerException;
+
 /**
  * @author Aleh
  * 
@@ -11,7 +13,7 @@ package com.jdev.collector.job;
 public interface IScanResourceJob {
 
     /**
-     * 
+     * @throws CrawlerException
      */
-    void scan();
+    void scan() throws CrawlerException;
 }

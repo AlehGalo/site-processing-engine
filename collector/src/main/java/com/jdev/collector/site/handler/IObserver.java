@@ -15,4 +15,5 @@ public interface IObserver {
      * @param article
      */
     void articleCollected(Article article);
+
 }

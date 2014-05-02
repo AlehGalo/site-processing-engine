@@ -4,11 +4,13 @@
 package com.jdev.collector.job;
 
 import java.util.Date;
-import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.persistence.PersistenceException;
 
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+import org.springframework.util.ReflectionUtils;
 
 import com.jdev.collector.job.strategy.IExceptionalCaseHandler;
 import com.jdev.collector.site.AbstractCollector;
@@ -41,15 +43,24 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
     private IExceptionalCaseHandler<Exception> exceptionHandler;
 
     /**
+     * 
+     */
+    private final StringBuilder builder = new StringBuilder();
+
+    /**
      * Counters.
      */
-    private final AtomicInteger crawlerExceptions = new AtomicInteger(0),
-            databaseExceptions = new AtomicInteger(0);
+    private int crawlerExceptions = 0;
 
     /**
      * 
      */
-    private final AtomicInteger transactionCounter = new AtomicInteger(0);
+    private int databaseExceptions = 0;
+
+    /**
+     * 
+     */
+    private int transactionCounter = 0;
 
     // /**
     // *
@@ -77,13 +88,18 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      * @see com.jdev.collector.job.IScanResourceJob#scan()
      */
     @Override
-    public void scan() {
+    public void scan() throws CrawlerException {
         job = createInitiatedJob();
         unitOfWork.saveJob(job);
         try {
             collector.congregate();
-        } catch (CrawlerException e) {
-            processError(e);
+        } catch (CrawlerException ce) {
+            ++crawlerExceptions;
+            updateJobState();
+            job.setStatus("FAILED_CRAWLER");
+            job.setReasonOfStopping(ce.getCause().getMessage());
+            unitOfWork.updateJob(job);
+            throw ce;
         }
         updateJobState();
         job.setStatus("FINISHED");
@@ -107,6 +123,7 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
     public void articleCollected(final Article article) {
         article.setJob(job);
         try {
+            ++transactionCounter;
             unitOfWork.saveArticle(article);
         } catch (Exception e) {
             processError(e);
@@ -117,25 +134,23 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      * @param e
      */
     private void processError(final Exception e) {
-        // if (!getExceptionHandler().handle(e)) {
-        // job.setReasonOfStopping(e.getMessage() + " = " +
-        // e.getCause().getMessage());
-        // job.setEndTime(new Date());
-        // unitOfWork.updateJob(job);
-        // ReflectionUtils.rethrowRuntimeException(e);
-        // }
-        if (e instanceof CrawlerException) {
-            crawlerExceptions.incrementAndGet();
-            transactionCounter.incrementAndGet();
+        if (e instanceof HibernateException || e instanceof PersistenceException) {
+            builder.append(e.getCause().getMessage());
+            ++databaseExceptions;
+            if (databaseExceptions >= 10) {
+                updateJobState();
+                job.setStatus("DB_ERRORS_MUCH");
+                job.setReasonOfStopping(builder.toString());
+                unitOfWork.updateJob(job);
+                ReflectionUtils.rethrowRuntimeException(e);
+            }
+        } else {
+            ReflectionUtils.rethrowRuntimeException(e);
         }
-        if (e instanceof HibernateException) {
-            databaseExceptions.incrementAndGet();
-            transactionCounter.incrementAndGet();
-        }
-        if (transactionCounter.intValue() >= 10) {
+        if (transactionCounter >= 10) {
             updateJobState();
             unitOfWork.updateJob(job);
-            transactionCounter.set(0);
+            transactionCounter = 0;
         }
     }
 
@@ -143,8 +158,8 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      * 
      */
     private void updateJobState() {
-        job.setCrawlerErrorsCount(crawlerExceptions.intValue());
-        job.setDatabaseErrorsCount(databaseExceptions.intValue());
+        job.setCrawlerErrorsCount(crawlerExceptions);
+        job.setDatabaseErrorsCount(databaseExceptions);
         job.setEndTime(new Date());
     }
 
@@ -159,8 +174,9 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      * @param exceptionHandler
      *            the exceptionHandler to set
      */
-    public final void setExceptionHandler(IExceptionalCaseHandler<Exception> exceptionHandler) {
+    public final void setExceptionHandler(final IExceptionalCaseHandler<Exception> exceptionHandler) {
         Assert.notNull(exceptionHandler);
         this.exceptionHandler = exceptionHandler;
     }
+
 }

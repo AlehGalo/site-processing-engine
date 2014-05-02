@@ -3,6 +3,8 @@
  */
 package com.jdev.collector.site.handler;
 
+import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -96,8 +98,7 @@ public class ArticleWatcher implements IObservable, IProcessResultHandler {
         String content = new String(entity.getContent(), entity.getCharset());
         Collection<ISelectorResult> contentSelectorResult = contentSelector.select(content);
         Collection<ISelectorResult> titleSelectorResult = headerSelector.select(content);
-        if (CollectionUtils.isNotEmpty(contentSelectorResult)
-                && CollectionUtils.isNotEmpty(titleSelectorResult)) {
+        if (isNotEmpty(contentSelectorResult) && isNotEmpty(titleSelectorResult)) {
             Article article = new Article(getValueFromTheFirtSelectorResult(contentSelectorResult));
             article.setTitle(getValueFromTheFirtSelectorResult(titleSelectorResult));
             setArticle(article);

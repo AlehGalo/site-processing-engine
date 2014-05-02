@@ -39,7 +39,6 @@ public class UnitOfWork implements IUnitOfWork {
     @Override
     public void saveJob(final Job job) {
         jobDao.save(job);
-        System.out.println(job.getId());
     }
 
     @Override

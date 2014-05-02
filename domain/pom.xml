@@ -145,6 +145,9 @@
 							<propertyFile>src/main/resources/database.properties</propertyFile>
 							<logging>debug</logging>
 							<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+							<password>${database.password}</password>
+							<username>${database.username}</username>
+							<url>jdbc:mysql://${database.host}:3306/${database.db.name}?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf8</url>
 						</configuration>
 						<goals>
 							<goal>update</goal>

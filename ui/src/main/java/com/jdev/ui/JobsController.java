@@ -36,7 +36,8 @@ public class JobsController {
         for (Job job : listOfJobs) {
             list.add(job.getStartTime() + " - " + job.getEndTime() + ": crawler errors "
                     + job.getCrawlerErrorsCount() + ", database errors "
-                    + job.getDatabaseErrorsCount() + " status " + job.getStatus());
+                    + job.getDatabaseErrorsCount() + " status " + job.getStatus() + " cause "
+                    + job.getReasonOfStopping());
         }
         ModelAndView modelAndView = new ModelAndView("results");
         modelAndView.addObject("count", count);

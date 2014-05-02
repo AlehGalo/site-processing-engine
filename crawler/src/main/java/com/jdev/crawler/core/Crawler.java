@@ -29,7 +29,7 @@ public class Crawler implements ICrawler, IProcessContext {
     private IFileStorage fileStorage;
     private CookieStore cookieStorage;
     private final IUserData userData;
-    private IProcess flowProcess;
+    private final IProcess flowProcess;
     private final ISettings settings;
 
     /**
@@ -83,11 +83,6 @@ public class Crawler implements ICrawler, IProcessContext {
     @Override
     public IUserData getUserData() {
         return userData;
-    }
-
-    @Override
-    public void setProcess(final IProcess process) {
-        this.flowProcess = process;
     }
 
     public final void setFileStorage(final IFileStorage fileStorage) {

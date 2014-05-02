@@ -3,7 +3,6 @@
  */
 package com.jdev.crawler.core;
 
-import com.jdev.crawler.core.process.IProcess;
 import com.jdev.crawler.core.store.IFileStorage;
 import com.jdev.crawler.exception.CrawlerException;
 
@@ -20,13 +19,6 @@ public interface ICrawler {
      * @throws CrawlerException
      */
     void collect() throws CrawlerException;
-
-    /**
-     * @param process
-     *            process.
-     */
-    @Deprecated
-    void setProcess(IProcess process);
 
     /**
      * @return file store.

@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import com.jdev.collector.site.FreelancerComCollector;
 import com.jdev.crawler.core.user.ICompany;
 import com.jdev.crawler.core.user.UserData;
+import com.jdev.crawler.exception.CrawlerException;
 
 /**
  * @author Aleh
@@ -43,7 +44,7 @@ public class FreelancerComJob extends AbstractScanResourceJob {
     }
 
     @Scheduled(fixedDelay = 3600000, initialDelay = 100)
-    public void doTheJob() {
+    public void doTheJob() throws CrawlerException {
         scan();
     }
 
