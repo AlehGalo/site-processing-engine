@@ -43,7 +43,7 @@ public class Article extends AbstractIdentifiable {
     @Transient
     private String originalArticleUrl;
 
-    @Column(name = "TITLE", nullable = false, columnDefinition = "VARCHAR(256)")
+    @Column(name = "TITLE", nullable = false, columnDefinition = "VARCHAR(255)")
     private String title;
 
     /**

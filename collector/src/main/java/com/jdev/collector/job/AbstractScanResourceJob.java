@@ -4,11 +4,13 @@
 package com.jdev.collector.job;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.PersistenceException;
 
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
 
@@ -17,6 +19,7 @@ import com.jdev.collector.site.AbstractCollector;
 import com.jdev.collector.site.ICollector;
 import com.jdev.collector.site.handler.IObserver;
 import com.jdev.crawler.exception.CrawlerException;
+import com.jdev.domain.dao.IWriteDao;
 import com.jdev.domain.domain.Article;
 import com.jdev.domain.domain.Job;
 
@@ -24,6 +27,7 @@ import com.jdev.domain.domain.Job;
  * @author Aleh
  * 
  */
+@Component
 abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
 
     /**
@@ -72,6 +76,12 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      * 
      */
     private Job job;
+
+    /**
+     * 
+     */
+    @Autowired
+    private IWriteDao<Job> jobDao;
 
     /**
      * @param userName
@@ -123,10 +133,27 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
     public void articleCollected(final Article article) {
         article.setJob(job);
         try {
-            ++transactionCounter;
-            unitOfWork.saveArticle(article);
-        } catch (Exception e) {
-            processError(e);
+            List<Job> jobList = jobDao.findByStringProperty("TITLE", article.getTitle());
+            if (!jobList.isEmpty()) {
+                processError(new PersistenceException("Duplicate " + article.getTitle()));
+            } else {
+                saveArticle(article);
+            }
+        } catch (IllegalArgumentException e) {
+            saveArticle(article);
+        }
+    }
+
+    /**
+     * @param article
+     */
+    private void saveArticle(final Article article) {
+        ++transactionCounter;
+        unitOfWork.saveArticle(article);
+        if (transactionCounter >= 10) {
+            updateJobState();
+            unitOfWork.updateJob(job);
+            transactionCounter = 0;
         }
     }
 
@@ -146,11 +173,6 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
             }
         } else {
             ReflectionUtils.rethrowRuntimeException(e);
-        }
-        if (transactionCounter >= 10) {
-            updateJobState();
-            unitOfWork.updateJob(job);
-            transactionCounter = 0;
         }
     }
 

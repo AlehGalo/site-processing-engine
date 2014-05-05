@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jdev.domain.dao.IWriteDao;
+import com.jdev.domain.domain.Article;
 import com.jdev.domain.domain.Job;
 
 /**
@@ -27,6 +28,12 @@ public class JobsController {
      */
     @Autowired
     private IWriteDao<Job> jobDao;
+
+    /**
+     * 
+     */
+    @Autowired
+    private IWriteDao<Article> articleDao;
 
     @RequestMapping(method = RequestMethod.GET, value = "/jobs")
     public ModelAndView get() {

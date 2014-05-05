@@ -29,10 +29,10 @@ public class ArticleDaoTest extends AbstractWriteDaoTest<Article> {
 
     @Override
     Article createEntity() {
-        Site site = new Site("http://site.com", "description");
+        // Site site = new Site("http://site.com", "description");
         Job job = JobUtils.createJob("Reason1");
         jobDao.save(job);
-        siteDao.save(site);
+        // siteDao.save(site);
         Article article = new Article("Article content");
         article.setOriginalArticleUrl("Original article url");
         article.setJob(job);
@@ -43,8 +43,8 @@ public class ArticleDaoTest extends AbstractWriteDaoTest<Article> {
 
     @Override
     Article createUpdateEntity() {
-        Site site = new Site("http://sites.com", "descriptions");
-        siteDao.save(site);
+        // Site site = new Site("http://sites.com", "descriptions");
+        // siteDao.save(site);
         Job job = JobUtils.createJob("Reason2");
         jobDao.save(job);
         Article article = new Article("Article content2");

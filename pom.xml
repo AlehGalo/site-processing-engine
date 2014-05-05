@@ -37,7 +37,7 @@
 		<mysql.version>5.1.13</mysql.version>
 		<org.hibernate.version>4.3.5.Final</org.hibernate.version>
 		<hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
-		<ehcache.version>1.6.2</ehcache.version>
+		<ehcache.version>2.8.2</ehcache.version>
 		<hibernate.ehcache.version>4.3.5.Final</hibernate.ehcache.version>
 		<source.version>1.7</source.version>
 	</properties>

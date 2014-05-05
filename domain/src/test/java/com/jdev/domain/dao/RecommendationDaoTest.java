@@ -36,8 +36,8 @@ public class RecommendationDaoTest extends AbstractWriteDaoTest<Recommendation> 
 
     @Override
     Recommendation createEntity() {
-        Site site = new Site("http://site.com", "description");
-        siteDao.save(site);
+        // Site site = new Site("http://site.com", "description");
+        // siteDao.save(site);
         Job job = JobUtils.createJob("Reason1");
         jobDao.save(job);
         Recommendation recommendation = new Recommendation();
@@ -54,8 +54,8 @@ public class RecommendationDaoTest extends AbstractWriteDaoTest<Recommendation> 
 
     @Override
     Recommendation createUpdateEntity() {
-        Site site = new Site("http://sites.com", "descriptions");
-        siteDao.save(site);
+        // Site site = new Site("http://sites.com", "descriptions");
+        // siteDao.save(site);
         Job job = JobUtils.createJob("Reason2");
         jobDao.save(job);
         Recommendation recommendation = new Recommendation();
