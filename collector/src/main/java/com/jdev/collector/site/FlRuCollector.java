@@ -13,8 +13,6 @@ import com.jdev.crawler.core.process.ProcessUtils;
 import com.jdev.crawler.core.process.container.ConditionalProcess;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.SelectUnit;
-import com.jdev.crawler.core.selector.regexp.ActionRegexpSelector;
-import com.jdev.crawler.core.selector.regexp.RegexpSelector;
 import com.jdev.crawler.core.selector.simple.HostStaticStringSelector;
 import com.jdev.crawler.core.selector.simple.StaticStringSelector;
 import com.jdev.crawler.core.selector.xpath.ActionXPathSelector;
@@ -56,7 +54,9 @@ public class FlRuCollector extends AbstractCollector {
             handler.addListener(observer);
         }
         final SelectUnit nextPageSelectUnit = new SelectUnit("nextPageSelectUnit",
-                "<li class=\\\\\"b-pager__next\\\\\"><a href=\\\\\"(.*)\\\\\" id=\\\\\"PrevLink");
+                "//li[@class='b-pager__item b-pager__item_active']/following-sibling::li[1]/a/@href"
+        // "<li class=\\\\\"b-pager__next\\\\\"><a href=\\\\\"(.*)\\\\\" id=\\\\\"PrevLink"
+        );
         return ProcessUtils.chain(ProcessUtils.doGet("https://www.fl.ru/"), ProcessUtils
                 .waitUntilValidatoIsTrue(new StepConfigAdapter() {
                     @Override
@@ -79,14 +79,14 @@ public class FlRuCollector extends AbstractCollector {
                     }
                 }, new SelectorValidator(new XPathSelector(new SelectUnit("loginPasswordInput",
                         "//a[@class='b-bar__name']/@href")))), ProcessUtils
-                .doWhile(new ConditionalProcess(new SelectorValidator(new RegexpSelector(
+                .doWhile(new ConditionalProcess(new SelectorValidator(new XPathSelector(
                         nextPageSelectUnit)), ProcessUtils.chain(
                         ProcessUtils.assemble(new StepConfigAdapter() {
                             @Override
                             public Collection<ISelector<?>> getParameters() {
                                 Collection<ISelector<?>> collection = new ArrayList<>();
                                 collection.add(new HostStaticStringSelector("https://www.fl.ru/"));
-                                collection.add(new ActionRegexpSelector(nextPageSelectUnit
+                                collection.add(new ActionXPathSelector(nextPageSelectUnit
                                         .getSelector()));
                                 return collection;
                             }

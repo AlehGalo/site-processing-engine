@@ -4,7 +4,6 @@
 package com.jdev.collector.job;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.PersistenceException;
 
@@ -19,7 +18,6 @@ import com.jdev.collector.site.AbstractCollector;
 import com.jdev.collector.site.ICollector;
 import com.jdev.collector.site.handler.IObserver;
 import com.jdev.crawler.exception.CrawlerException;
-import com.jdev.domain.dao.IWriteDao;
 import com.jdev.domain.domain.Article;
 import com.jdev.domain.domain.Job;
 
@@ -66,22 +64,15 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      */
     private int transactionCounter = 0;
 
-    // /**
-    // *
-    // */
-    // @Autowired
-    // private ThreadPoolTaskScheduler taskScheduler;
+    /**
+     * 
+     */
+    private int dbQueueErrorsCounter = 0;
 
     /**
      * 
      */
     private Job job;
-
-    /**
-     * 
-     */
-    @Autowired
-    private IWriteDao<Job> jobDao;
 
     /**
      * @param userName
@@ -133,14 +124,10 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
     public void articleCollected(final Article article) {
         article.setJob(job);
         try {
-            List<Job> jobList = jobDao.findByStringProperty("TITLE", article.getTitle());
-            if (!jobList.isEmpty()) {
-                processError(new PersistenceException("Duplicate " + article.getTitle()));
-            } else {
-                saveArticle(article);
-            }
-        } catch (IllegalArgumentException e) {
             saveArticle(article);
+            dbQueueErrorsCounter = 0;
+        } catch (Exception e) {
+            processError(e);
         }
     }
 
@@ -164,7 +151,8 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
         if (e instanceof HibernateException || e instanceof PersistenceException) {
             builder.append(e.getMessage());
             ++databaseExceptions;
-            if (databaseExceptions >= 10) {
+            ++dbQueueErrorsCounter;
+            if (dbQueueErrorsCounter >= 10) {
                 updateJobState();
                 job.setStatus("DB_ERRORS_MUCH");
                 job.setReasonOfStopping(builder.toString());
