@@ -28,6 +28,10 @@ import com.jdev.crawler.core.user.UserData;
  */
 public class FreelancerComCollector extends AbstractCollector {
 
+    // informer.mail@yandex.ru
+    // AfeDFe332Fef33fdd
+    // name: InformerFL
+
     /**
      * @param userData
      */
