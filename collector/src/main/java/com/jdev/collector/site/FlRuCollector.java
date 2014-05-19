@@ -20,7 +20,7 @@ import com.jdev.crawler.core.selector.xpath.XPathSelector;
 import com.jdev.crawler.core.step.HTTPMethod;
 import com.jdev.crawler.core.step.StepConfigAdapter;
 import com.jdev.crawler.core.step.validator.SelectorValidator;
-import com.jdev.crawler.core.user.UserData;
+import com.jdev.crawler.core.user.IUserData;
 
 /**
  * @author Aleh https://www.fl.ru/
@@ -37,7 +37,7 @@ public class FlRuCollector extends AbstractCollector {
     /**
      * @param userData
      */
-    public FlRuCollector(final UserData userData) {
+    public FlRuCollector(final IUserData userData) {
         super(userData);
     }
 

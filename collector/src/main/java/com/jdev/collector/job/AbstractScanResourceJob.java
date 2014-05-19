@@ -17,8 +17,12 @@ import com.jdev.collector.job.strategy.IExceptionalCaseHandler;
 import com.jdev.collector.site.AbstractCollector;
 import com.jdev.collector.site.ICollector;
 import com.jdev.collector.site.handler.IObserver;
+import com.jdev.crawler.core.user.ICompany;
+import com.jdev.crawler.core.user.IUserData;
+import com.jdev.crawler.core.user.UserData;
 import com.jdev.crawler.exception.CrawlerException;
 import com.jdev.domain.domain.Article;
+import com.jdev.domain.domain.Credential;
 import com.jdev.domain.domain.Job;
 
 /**
@@ -189,4 +193,29 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
         this.exceptionHandler = exceptionHandler;
     }
 
+    /**
+     * Constant name.
+     */
+    private static final String NAME = "Name";
+
+    /**
+     * @param credentials
+     * @return
+     */
+    static IUserData createUserData(final Credential credentials) {
+        Assert.notNull(credentials);
+        final Integer companyId = credentials.getSite().getId().intValue();
+        return new UserData(credentials.getUsername(), credentials.getPassword(), new ICompany() {
+
+            @Override
+            public String getCompanyName() {
+                return NAME + companyId;
+            }
+
+            @Override
+            public Integer getCompanyId() {
+                return companyId;
+            }
+        });
+    }
 }

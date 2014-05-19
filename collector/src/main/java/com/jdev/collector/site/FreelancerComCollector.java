@@ -20,7 +20,7 @@ import com.jdev.crawler.core.selector.simple.HostStaticStringSelector;
 import com.jdev.crawler.core.selector.xpath.ActionXPathSelector;
 import com.jdev.crawler.core.step.StepConfigAdapter;
 import com.jdev.crawler.core.step.validator.SelectorValidator;
-import com.jdev.crawler.core.user.UserData;
+import com.jdev.crawler.core.user.IUserData;
 
 /**
  * @author Aleh
@@ -28,14 +28,10 @@ import com.jdev.crawler.core.user.UserData;
  */
 public class FreelancerComCollector extends AbstractCollector {
 
-    // informer.mail@yandex.ru
-    // AfeDFe332Fef33fdd
-    // name: InformerFL
-
     /**
      * @param userData
      */
-    public FreelancerComCollector(final UserData userData) {
+    public FreelancerComCollector(final IUserData userData) {
         super(userData);
     }
 

@@ -25,16 +25,25 @@
 		<sqlFile relativeToChangelogFile="true"
 			path="install/20140422_alter_article_table.sql" encoding="UTF-8" />
 	</changeSet>
-	
+
 	<changeSet id="5" author="aleh">
 		<sqlFile relativeToChangelogFile="true"
 			path="install/20140424_alter_job_talbe.sql" encoding="UTF-8" />
 	</changeSet>
-	
+
 	<changeSet id="6" author="aleh">
 		<sqlFile relativeToChangelogFile="true"
 			path="install/20140502_insert_site_table.sql" encoding="UTF-8" />
 	</changeSet>
-	
+
+	<changeSet id="7" author="aleh">
+		<sqlFile relativeToChangelogFile="true"
+			path="install/20140519_create_credentials_for_sites.sql" encoding="UTF-8" />
+	</changeSet>
+
+	<changeSet id="8" author="aleh">
+		<sqlFile relativeToChangelogFile="true"
+			path="install/20140519_insert_credentials_for_sites.sql" encoding="UTF-8" />
+	</changeSet>
 
 </databaseChangeLog>

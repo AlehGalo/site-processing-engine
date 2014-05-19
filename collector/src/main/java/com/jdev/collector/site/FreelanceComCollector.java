@@ -17,7 +17,7 @@ import com.jdev.crawler.core.selector.simple.HostStaticStringSelector;
 import com.jdev.crawler.core.selector.xpath.ActionXPathSelector;
 import com.jdev.crawler.core.step.StepConfigAdapter;
 import com.jdev.crawler.core.step.validator.SelectorValidator;
-import com.jdev.crawler.core.user.UserData;
+import com.jdev.crawler.core.user.IUserData;
 
 /**
  * @author Aleh http://www.freelance.com/
@@ -34,7 +34,7 @@ public class FreelanceComCollector extends AbstractCollector {
     /**
      * @param userData
      */
-    public FreelanceComCollector(final UserData userData) {
+    public FreelanceComCollector(final IUserData userData) {
         super(userData);
     }
 

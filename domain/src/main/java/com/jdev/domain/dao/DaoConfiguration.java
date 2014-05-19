@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 import com.jdev.domain.domain.Article;
+import com.jdev.domain.domain.Credential;
 import com.jdev.domain.domain.Job;
 import com.jdev.domain.domain.Recommendation;
 import com.jdev.domain.domain.Site;
@@ -38,6 +39,11 @@ public class DaoConfiguration {
     @Bean
     public IWriteDao<Job> jobDao() {
         return new CommonGenericWriteDao<Job>(Job.class);
+    }
+
+    @Bean
+    public IWriteDao<Credential> credentialDao() {
+        return new CommonGenericWriteDao<Credential>(Credential.class);
     }
 
 }

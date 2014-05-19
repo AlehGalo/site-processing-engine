@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import com.jdev.crawler.core.process.IProcessResultHandler;
@@ -25,6 +27,11 @@ import com.jdev.domain.domain.Article;
  * 
  */
 public class ArticleWatcher implements IObservable, IProcessResultHandler {
+
+    /**
+     * 
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(ArticleWatcher.class);
 
     /**
      * 
@@ -104,7 +111,7 @@ public class ArticleWatcher implements IObservable, IProcessResultHandler {
             setArticle(article);
             notifyListeners();
         } else {
-            // TODO: add processing
+            LOGGER.info("No title or content found");
         }
     }
 

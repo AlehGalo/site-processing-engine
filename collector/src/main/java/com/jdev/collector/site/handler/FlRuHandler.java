@@ -22,7 +22,7 @@ public class FlRuHandler extends ArticleWatcher implements IProcessResultHandler
      * 
      */
     private static final ISelector<String> titleSelector = new XPathSelector(new SelectUnit(
-            "Headers", "//h1[contains(@class,'b-page__title b-page__title_ellipsis')]/text()"));
+            "Headers", "//h1[contains(@class,'b-page__title_ellipsis')]/text()"));
 
     /**
      * 

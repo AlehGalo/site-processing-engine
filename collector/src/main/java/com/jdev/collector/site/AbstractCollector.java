@@ -13,7 +13,7 @@ import com.jdev.crawler.core.HttpClientFactory;
 import com.jdev.crawler.core.ICrawler;
 import com.jdev.crawler.core.process.IProcess;
 import com.jdev.crawler.core.request.BasicRequestBuilder;
-import com.jdev.crawler.core.user.UserData;
+import com.jdev.crawler.core.user.IUserData;
 import com.jdev.crawler.exception.CrawlerException;
 import com.jdev.crawler.util.Assert;
 
@@ -41,7 +41,7 @@ public abstract class AbstractCollector implements ICollector {
     /**
      * 
      */
-    private final UserData userData;
+    private final IUserData userData;
 
     /**
      * 
@@ -51,7 +51,7 @@ public abstract class AbstractCollector implements ICollector {
     /**
      * 
      */
-    public AbstractCollector(final UserData userData) {
+    public AbstractCollector(final IUserData userData) {
         Assert.notNull(userData);
         this.userData = userData;
     }

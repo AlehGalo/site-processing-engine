@@ -6,9 +6,8 @@ package com.jdev.collector.job;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import com.jdev.collector.site.FlRuCollector;
-import com.jdev.crawler.core.user.ICompany;
-import com.jdev.crawler.core.user.UserData;
 import com.jdev.crawler.exception.CrawlerException;
+import com.jdev.domain.domain.Credential;
 
 /**
  * @author Aleh
@@ -17,32 +16,16 @@ import com.jdev.crawler.exception.CrawlerException;
 public class FlRuJob extends AbstractScanResourceJob {
 
     /**
-     * 
+     * @param credential
+     *            credentials.
      */
-    private static UserData userData = new UserData("informer-fl-ru", "aFGgR5435");
-
-    static {
-        userData.setCompany(new ICompany() {
-
-            @Override
-            public String getCompanyName() {
-                return "flru";
-            }
-
-            @Override
-            public Integer getCompanyId() {
-                return 1;
-            }
-        });
+    public FlRuJob(final Credential credential) {
+        super(new FlRuCollector(createUserData(credential)));
     }
 
     /**
-     * 
+     * @throws CrawlerException
      */
-    public FlRuJob() {
-        super(new FlRuCollector(userData));
-    }
-
     @Scheduled(fixedDelay = 3600000, initialDelay = 100)
     public void doTheJob() throws CrawlerException {
         scan();

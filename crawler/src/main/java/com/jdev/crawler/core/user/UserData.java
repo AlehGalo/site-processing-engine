@@ -55,8 +55,16 @@ public class UserData implements IUserData {
      *            password.
      */
     public UserData(final String name, final String pass) {
-        setLogin(name);
-        setPassword(pass);
+        this(name, pass, null, null, null);
+    }
+
+    /**
+     * @param name
+     * @param pass
+     * @param company
+     */
+    public UserData(final String name, final String pass, final ICompany company) {
+        this(name, pass, null, null, company);
     }
 
     /**
@@ -64,7 +72,7 @@ public class UserData implements IUserData {
      *            user's login.
      * @param password
      *            user's password.
-     * @param uniqueKey
+     * @param key
      *            user's phone number.
      * @param securityCode
      *            user's security code.
