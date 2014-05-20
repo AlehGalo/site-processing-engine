@@ -163,11 +163,6 @@ public class FileStoreWritable implements IFileStoreWritable {
         }
     }
 
-    @Override
-    public List<IIndexedItem> getItems(final FileTypeEnum fileType, final String jobId) {
-        return null;
-    }
-
     /**
      * @return set implementation.
      */

@@ -41,11 +41,11 @@ public class AssembledMultiStepProcess extends AssembledStepProcess {
 
     /**
      * @param config
-     * @param handlers
+     * @param handler
      * @param requestBuilder
      */
-    public AssembledMultiStepProcess(final IStepConfig config, final List<IProcessResultHandler> handlers,
-            final IRequestBuilder requestBuilder) {
+    public AssembledMultiStepProcess(final IStepConfig config,
+            final IProcessResultHandler handlers, final IRequestBuilder requestBuilder) {
         super(config, handlers, requestBuilder);
     }
 
@@ -53,8 +53,8 @@ public class AssembledMultiStepProcess extends AssembledStepProcess {
      * @param config
      * @param handlers
      */
-    public AssembledMultiStepProcess(final IStepConfig config, final List<IProcessResultHandler> handlers) {
-        super(config, handlers);
+    public AssembledMultiStepProcess(final IStepConfig config, final IProcessResultHandler handler) {
+        super(config, handler);
     }
 
     /*

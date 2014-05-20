@@ -20,15 +20,6 @@ public interface IFileStore {
     List<IIndexedItem> getItems(final FileTypeEnum fileType);
 
     /**
-     * @param fileType
-     *            HTML, PDF, CSV or any supported.
-     * @param jobId
-     *            unique id for the job.
-     * @return list of items.
-     */
-    List<IIndexedItem> getItems(final FileTypeEnum fileType, final String jobId);
-
-    /**
      * @return All items.
      */
     List<IIndexedItem> getAllItems();

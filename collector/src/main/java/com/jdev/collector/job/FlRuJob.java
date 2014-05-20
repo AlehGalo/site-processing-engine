@@ -20,7 +20,7 @@ public class FlRuJob extends AbstractScanResourceJob {
      *            credentials.
      */
     public FlRuJob(final Credential credential) {
-        super(new FlRuCollector(createUserData(credential)));
+        super(new FlRuCollector(createUserData(credential)), credential);
     }
 
     /**

@@ -9,6 +9,9 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -60,6 +63,13 @@ public class Job extends AbstractIdentifiable {
      */
     @Column(name = "DATABASE_ERRORS_COUNT", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
     private int databaseErrorsCount;
+
+    /**
+     * 
+     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "FK_CREDENTIAL_ID")
+    private Credential credential;
 
     /**
      * @return the startTime
@@ -132,7 +142,7 @@ public class Job extends AbstractIdentifiable {
      * @param crawlerErrorsCount
      *            the crawlerErrorsCount to set
      */
-    public final void setCrawlerErrorsCount(Integer crawlerErrorsCount) {
+    public final void setCrawlerErrorsCount(final Integer crawlerErrorsCount) {
         this.crawlerErrorsCount = crawlerErrorsCount;
     }
 
@@ -147,8 +157,23 @@ public class Job extends AbstractIdentifiable {
      * @param databaseErrorsCount
      *            the databaseErrorsCount to set
      */
-    public final void setDatabaseErrorsCount(Integer databaseErrorsCount) {
+    public final void setDatabaseErrorsCount(final Integer databaseErrorsCount) {
         this.databaseErrorsCount = databaseErrorsCount;
+    }
+
+    /**
+     * @return the credential
+     */
+    public final Credential getCredential() {
+        return credential;
+    }
+
+    /**
+     * @param credential
+     *            the credential to set
+     */
+    public final void setCredential(final Credential credential) {
+        this.credential = credential;
     }
 
 }

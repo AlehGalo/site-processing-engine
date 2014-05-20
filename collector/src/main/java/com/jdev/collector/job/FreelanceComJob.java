@@ -19,7 +19,7 @@ public class FreelanceComJob extends AbstractScanResourceJob {
      * @param credential
      */
     public FreelanceComJob(final Credential credential) {
-        super(new FreelanceComCollector(createUserData(credential)));
+        super(new FreelanceComCollector(createUserData(credential)), credential);
     }
 
     @Scheduled(fixedDelay = 3600000, initialDelay = 100)

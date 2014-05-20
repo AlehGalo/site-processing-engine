@@ -30,8 +30,8 @@ public class TestCookiesSelector extends TestAbstractResourcableSelector<CookieS
      *             exception.
      */
     public TestCookiesSelector(final String resourceFileName, final String selectorFileName,
-            final String resultFileName) throws IOException {
-        super(resourceFileName, selectorFileName, resultFileName);
+            final String resultFileName, final String charset) throws IOException {
+        super(resourceFileName, selectorFileName, resultFileName, charset);
     }
 
     @Override

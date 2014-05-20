@@ -24,13 +24,6 @@ import com.jdev.crawler.core.user.IUserData;
  */
 public class FreelanceComCollector extends AbstractCollector {
 
-    // informer-fl-com
-    // aFSsSR5435
-
-    // Mail account
-    // informer.email@yandex.ru
-    // AdfdGG#r%$#@$55345
-
     /**
      * @param userData
      */

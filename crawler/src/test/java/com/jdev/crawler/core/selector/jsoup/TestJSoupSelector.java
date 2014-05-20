@@ -24,12 +24,17 @@ public class TestJSoupSelector extends TestAbstractResourcableSelector<String> {
     /**
      * @return Iterable resources.
      */
-    @Parameters(name = "{index}: file name - {0}, selector file name - {1}, result file name - {2}")
+    @Parameters(name = "{index}: file name - {0}, selector file name - {1}, result file name - {2}, encoding - {3}")
     public static Iterable<String[]> data() {
         return Arrays.<String[]> asList(new String[] { "input1.html", "input1.html.selector",
-                "input1.html.result" }, new String[] { "input1.html", "input2.html.selector",
-                "input2.html.result" }, new String[] { "input1.html", "input3.html.selector",
-                "input3.html.result" });
+                "input1.html.result", null }, new String[] { "input1.html", "input2.html.selector",
+                "input2.html.result", null }, new String[] { "input1.html", "input3.html.selector",
+                "input3.html.result", null }, new String[] { "input4.html", "input4.html.selector",
+                "input4.html.result", "windows-1251" }, new String[] { "input4.html",
+                "input5.html.selector", "input4.html.result", "windows-1251" }, new String[] {
+                "input6.html", "input6.html.selector", "input6.html.result", "windows-1251" },
+                new String[] { "input4.html", "input6.html.selector", "input4.html.result",
+                        "windows-1251" });
     }
 
     /**
@@ -39,12 +44,14 @@ public class TestJSoupSelector extends TestAbstractResourcableSelector<String> {
      *            selector for resource.
      * @param resultFileName
      *            result of selector.
+     * @param charsetName
+     *            charset name different from UTF-8.
      * @throws IOException
      *             exception.
      */
     public TestJSoupSelector(final String resourceFileName, final String selectorFileName,
-            final String resultFileName) throws IOException {
-        super(resourceFileName, selectorFileName, resultFileName);
+            final String resultFileName, final String charsetName) throws IOException {
+        super(resourceFileName, selectorFileName, resultFileName, charsetName);
     }
 
     @Override

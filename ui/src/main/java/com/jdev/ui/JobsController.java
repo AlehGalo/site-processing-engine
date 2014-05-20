@@ -41,10 +41,10 @@ public class JobsController {
         List<Job> listOfJobs = jobDao.findAll(0, count);
         List<String> list = new LinkedList<>();
         for (Job job : listOfJobs) {
-            list.add(job.getStartTime() + " - " + job.getEndTime() + ": crawler errors "
-                    + job.getCrawlerErrorsCount() + ", database errors "
-                    + job.getDatabaseErrorsCount() + " status " + job.getStatus() + " cause "
-                    + job.getReasonOfStopping());
+            list.add(job.getCredential().getSite().getUrl() + " " + job.getStartTime() + " - "
+                    + job.getEndTime() + ": crawler errors " + job.getCrawlerErrorsCount()
+                    + ", database errors " + job.getDatabaseErrorsCount() + " status "
+                    + job.getStatus() + " cause " + job.getReasonOfStopping());
         }
         ModelAndView modelAndView = new ModelAndView("results");
         modelAndView.addObject("count", count);

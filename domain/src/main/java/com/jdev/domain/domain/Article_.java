@@ -10,6 +10,7 @@ public abstract class Article_ extends com.jdev.domain.domain.AbstractIdentifiab
 
 	public static volatile SingularAttribute<Article, String> content;
 	public static volatile SingularAttribute<Article, String> title;
+	public static volatile SingularAttribute<Article, String> originalArticleUrl;
 	public static volatile SingularAttribute<Article, Job> job;
 
 }

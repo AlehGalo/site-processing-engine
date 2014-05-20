@@ -20,6 +20,7 @@ import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.exception.CrawlerException;
+import com.jdev.crawler.exception.SelectionException;
 import com.jdev.domain.domain.Article;
 
 /**
@@ -108,10 +109,13 @@ public class ArticleWatcher implements IObservable, IProcessResultHandler {
         if (isNotEmpty(contentSelectorResult) && isNotEmpty(titleSelectorResult)) {
             Article article = new Article(getValueFromTheFirtSelectorResult(contentSelectorResult));
             article.setTitle(getValueFromTheFirtSelectorResult(titleSelectorResult));
+            article.setOriginalArticleUrl(entity.getEntityUri().toString());
             setArticle(article);
             notifyListeners();
         } else {
-            LOGGER.info("No title or content found");
+            LOGGER.info("No title or content found for " + entity.getEntityUri().toString() + " "
+                    + entity.getContentFileRef());
+            throw new SelectionException("Content or title was not found");
         }
     }
 

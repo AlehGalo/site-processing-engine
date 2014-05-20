@@ -3,6 +3,7 @@
  */
 package com.jdev.crawler.core.process.model;
 
+import java.net.URI;
 import java.nio.charset.Charset;
 
 import com.jdev.crawler.core.process.handler.MimeType;
@@ -39,6 +40,11 @@ public class TransferEntity implements IEntity {
      * 
      */
     private int statusCode;
+
+    /**
+     * 
+     */
+    private URI entityUri;
 
     /**
      * 
@@ -154,5 +160,18 @@ public class TransferEntity implements IEntity {
      */
     public void setStatusCode(final int statusCode) {
         this.statusCode = statusCode;
+    }
+
+    @Override
+    public URI getEntityUri() {
+        return entityUri;
+    }
+
+    /**
+     * @param entityUri
+     *            the entityUri to set
+     */
+    public final void setEntityUri(final URI entityUri) {
+        this.entityUri = entityUri;
     }
 }

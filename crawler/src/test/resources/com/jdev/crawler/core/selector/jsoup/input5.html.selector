@@ -1,0 +1,1 @@
+div.b-layout_margright_270 > div.b-layout > div:first-of-type:not(:has(a))

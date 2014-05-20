@@ -9,10 +9,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 
@@ -94,11 +94,11 @@ public final class TestUtils {
      *            relative object.
      * @return contentString of the file if found.
      */
-    public static String getFileContent(final String name, final Object obj) {
+    public static String getFileContent(final String name, final Object obj, final Charset charset) {
         try {
             InputStream is = obj.getClass().getResourceAsStream(name);
             assertFile(is, name);
-            return IOUtils.toString(is, Charsets.UTF_8);
+            return IOUtils.toString(is, charset);
         } catch (IOException e) {
             Assert.fail(e.getMessage());
             return null;

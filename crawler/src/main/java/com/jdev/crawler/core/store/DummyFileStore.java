@@ -36,11 +36,6 @@ class DummyFileStore implements IFileStoreWritable {
     }
 
     @Override
-    public List<IIndexedItem> getItems(final FileTypeEnum fileType, final String jobId) {
-        return DEFAULT_LIST;
-    }
-
-    @Override
     public void add(final IIndexedItem item) {
         throw new UnsupportedOperationException();
     }

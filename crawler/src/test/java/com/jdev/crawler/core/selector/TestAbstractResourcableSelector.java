@@ -4,11 +4,15 @@
 package com.jdev.crawler.core.selector;
 
 import static com.jdev.crawler.core.selector.TestUtils.getFileContent;
+import static java.nio.charset.Charset.forName;
 import static org.apache.commons.collections.ListUtils.subtract;
+import static org.apache.commons.io.Charsets.UTF_8;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -46,10 +50,12 @@ public abstract class TestAbstractResourcableSelector<T> {
      *             stream exception.
      */
     public TestAbstractResourcableSelector(final String resourceFileName,
-            final String selectorFileName, final String resultFileName) throws IOException {
+            final String selectorFileName, final String resultFileName, final String charsetStr)
+            throws IOException {
         resultFileContent = getFileResultContent(resultFileName);
-        contentString = getContentString(resourceFileName);
-        selectorString = getSelectorString(selectorFileName);
+        contentString = getContentString(resourceFileName, isEmpty(charsetStr) ? UTF_8
+                : forName(charsetStr));
+        selectorString = getSelectorString(selectorFileName, UTF_8);
         validateInput(contentString);
         validateInput(selectorString);
     }
@@ -68,19 +74,21 @@ public abstract class TestAbstractResourcableSelector<T> {
     /**
      * @param resourceFileName
      *            file name.
+     * @param charset
      * @return content.
      */
-    protected String getContentString(final String resourceFileName) {
-        return getFileContent(resourceFileName, this);
+    protected String getContentString(final String resourceFileName, final Charset charset) {
+        return getFileContent(resourceFileName, this, charset);
     }
 
     /**
      * @param resourceFileName
      *            resource file name.
-     * @return string.
+     * @param charset
+     * @return
      */
-    protected String getSelectorString(final String resourceFileName) {
-        return getContentString(resourceFileName);
+    protected String getSelectorString(final String resourceFileName, final Charset charset) {
+        return getContentString(resourceFileName, charset);
     }
 
     /**

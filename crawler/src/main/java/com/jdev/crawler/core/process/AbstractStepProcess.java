@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.slf4j.Logger;
@@ -56,7 +55,7 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
     /**
      * List of handler to be applied.
      */
-    private final List<IProcessResultHandler> handlers;
+    private final IProcessResultHandler handler;
 
     /**
      * 
@@ -103,9 +102,9 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
      * @param config
      * @param description
      */
-    protected AbstractStepProcess(final List<IProcessResultHandler> handlers,
-            final IStepConfig config, final String description) {
-        this.handlers = handlers;
+    protected AbstractStepProcess(final IProcessResultHandler handler, final IStepConfig config,
+            final String description) {
+        this.handler = handler;
         this.config = config;
         this.description = description;
         SelectUnit selectUnit = new SelectUnit("charset", "charset");
@@ -158,10 +157,8 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
      */
     protected IEntity handle(final IProcessSession session, final IEntity entity)
             throws CrawlerException {
-        if (CollectionUtils.isNotEmpty(handlers)) {
-            for (final IProcessResultHandler handler : handlers) {
-                handler.handle(session, entity);
-            }
+        if (handler != null) {
+            handler.handle(session, entity);
         }
         return entity;
     }

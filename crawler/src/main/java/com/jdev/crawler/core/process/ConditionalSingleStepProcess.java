@@ -1,7 +1,5 @@
 package com.jdev.crawler.core.process;
 
-import java.util.Collections;
-
 import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.step.IStepConfig;
 import com.jdev.crawler.core.step.validator.IValidator;
@@ -23,7 +21,7 @@ public class ConditionalSingleStepProcess extends SimpleStepProcess implements I
      * @param config
      */
     public ConditionalSingleStepProcess(final IValidator validator, final IStepConfig config) {
-        super(config, Collections.<IProcessResultHandler> emptyList());
+        super(config, null);
         this.validator = validator;
     }
 

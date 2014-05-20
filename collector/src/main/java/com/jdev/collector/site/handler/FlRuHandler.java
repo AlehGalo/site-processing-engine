@@ -5,7 +5,6 @@ package com.jdev.collector.site.handler;
 
 import org.jsoup.nodes.Element;
 
-import com.jdev.crawler.core.process.IProcessResultHandler;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.SelectUnit;
 import com.jdev.crawler.core.selector.jsoup.StringSourceJSoupSelector;
@@ -16,7 +15,7 @@ import com.jdev.crawler.core.selector.xpath.XPathSelector;
  * @author Aleh
  * 
  */
-public class FlRuHandler extends ArticleWatcher implements IProcessResultHandler {
+public class FlRuHandler extends ArticleWatcher {
 
     /**
      * 
@@ -28,7 +27,7 @@ public class FlRuHandler extends ArticleWatcher implements IProcessResultHandler
      * 
      */
     private static final StringSourceJSoupSelector contentSelector = new StringSourceJSoupSelector(
-            new SelectUnit("Content", "div.prj_text"));
+            new SelectUnit("Content", "div.b-layout_margright_270 div[id^=projectp]"));
 
     static {
         contentSelector.setExtractor(new IJSoupElementExtractor() {

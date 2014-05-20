@@ -46,4 +46,9 @@
 			path="install/20140519_insert_credentials_for_sites.sql" encoding="UTF-8" />
 	</changeSet>
 
+	<changeSet id="9" author="aleh">
+		<sqlFile relativeToChangelogFile="true"
+			path="install/20140520_alter_job_table.sql" encoding="UTF-8" />
+	</changeSet>
+
 </databaseChangeLog>

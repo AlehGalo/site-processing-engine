@@ -1,0 +1,2482 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="windows-1251" /><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"UQUHVVNRGwEEU1NbDwE="};window.NREUM||(NREUM={}),__nr_require=function t(e,n,r){function o(i){if(!n[i]){var a=n[i]={exports:{}};e[i][0].call(a.exports,function(t){var n=e[i][1][t];return o(n?n:t)},a,a.exports,t,e,n,r)}return n[i].exports}for(var i=0;i<r.length;i++)o(r[i]);return o}({1:[function(t,e){function n(t,e,n){n||(n={});for(var r=i[t],o=r&&r.length||0,s=n[a]||(n[a]={}),d=0;o>d;d++)r[d].apply(s,e);return s}function r(t,e){var n=i[t]||(i[t]=[]);n.push(e)}function o(t){return delete t[a]}var i={},a="nr@context";e.exports={on:r,emit:n,clear:o}},{}],2:[function(t){function e(t,e,o,a,d){return s?s-=1:n("err",[d||new UncaughtException(t,e,o)]),"function"==typeof i?i.apply(this,r(arguments)):!1}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}var n=t("handle"),r=t(6),o=t(5),i=window.onerror,a=!1,s=0;t("loader").features.push("err"),window.onerror=e;try{throw new Error}catch(d){"stack"in d&&(t(1),t(2),"addEventListener"in window&&t(3),window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&t(4),a=!0)}o.on("fn-start",function(){a&&(s+=1)}),o.on("fn-err",function(t,e,r){a&&(this.thrown=!0,n("err",[r,(new Date).getTime()]))}),o.on("fn-end",function(){a&&!this.thrown&&s>0&&(s-=1)})},{1:5,2:4,3:3,4:6,5:1,6:14,handle:"D5DuLP",loader:"G9z0Bl"}],3:[function(t){function e(t){r.inPlace(t,["addEventListener","removeEventListener"],"-",n)}function n(t){return t[1]}var r=t(1),o=(t(3),t(2));if(e(window),"getPrototypeOf"in Object){for(var i=document;i&&!i.hasOwnProperty("addEventListener");)i=Object.getPrototypeOf(i);i&&e(i);for(var a=XMLHttpRequest.prototype;a&&!a.hasOwnProperty("addEventListener");)a=Object.getPrototypeOf(a);a&&e(a)}else XMLHttpRequest.prototype.hasOwnProperty("addEventListener")&&e(XMLHttpRequest.prototype);o.on("addEventListener-start",function(t){if(t[1]){var e=t[1];"function"==typeof e?this.wrapped=e["nr@wrapped"]?t[1]=e["nr@wrapped"]:e["nr@wrapped"]=t[1]=r(e,"fn-"):"function"==typeof e.handleEvent&&r.inPlace(e,["handleEvent"],"fn-")}}),o.on("removeEventListener-start",function(t){var e=this.wrapped;e&&(t[1]=e)})},{1:15,2:1,3:14}],4:[function(t){var e=(t(3),t(1)),n=t(2);e.inPlace(window,["requestAnimationFrame","mozRequestAnimationFrame","webkitRequestAnimationFrame","msRequestAnimationFrame"],"raf-"),n.on("raf-start",function(t){t[0]=e(t[0],"fn-")})},{1:15,2:1,3:14}],5:[function(t){function e(t){var e=t[0];"string"==typeof e&&(e=new Function(e)),t[0]=n(e,"fn-")}var n=(t(3),t(1)),r=t(2);n.inPlace(window,["setTimeout","setInterval","setImmediate"],"setTimer-"),r.on("setTimer-start",e)},{1:15,2:1,3:14}],6:[function(t){function e(){n.inPlace(this,i,"fn-")}var n=t(1),r=t(2),o=window.XMLHttpRequest,i=["onload","onerror","onabort","onloadstart","onloadend","onprogress","onreadystatechange","ontimeout"];window.XMLHttpRequest=function(t){var i=new o(t);return r.emit("new-xhr",[],i),n.inPlace(i,["addEventListener","removeEventListener"],"-",function(t,e){return e}),i.addEventListener("readystatechange",e,!1),i},window.XMLHttpRequest.prototype=o.prototype},{1:15,2:1}],7:[function(t){function e(){function e(t){if("string"==typeof t&&t.length)return t.length;if("object"!=typeof t)return void 0;if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if("undefined"!=typeof FormData&&t instanceof FormData)return void 0;try{return JSON.stringify(t).length}catch(e){return void 0}}function n(t){var n=this.params,r=this.metrics;if(!this.ended){this.ended=!0;for(var o=0;p>o;o++)t.removeEventListener(u[o],this.listener,!1);if(!n.aborted){if(r.duration=(new Date).getTime()-this.startTime,4===t.readyState){n.status=t.status;var a=t.responseType,s="arraybuffer"===a||"blob"===a||"json"===a?t.response:t.responseText,d=e(s);if(d&&(r.rxSize=d),this.sameOrigin){var f=t.getResponseHeader("X-NewRelic-App-Data");f&&(n.cat=f.split(", ").pop())}}else n.status=0;r.cbTime=this.cbTime,i("xhr",[n,r])}}}function r(t,e){var n=a(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.sameOrigin=n.sameOrigin}function o(t,e){return e}t("loader").features.push("xhr");var i=t("handle"),a=t(1),s=t(5),d=t(6),u=["load","error","abort","timeout"],p=u.length,f=t(2);t(3),t(4),d.on("new-xhr",function(){this.totalCbs=0,this.called=0,this.cbTime=0,this.end=n,this.ended=!1,this.xhrGuids={}}),s.inPlace(XMLHttpRequest.prototype,["open","send"],"-xhr-",o),d.on("open-xhr-start",function(t){this.params={method:t[0]},r(this,t[1]),this.metrics={}}),d.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),d.on("send-xhr-start",function(t,n){var r=this.metrics,o=t[0],i=this;if(r&&o){var a=e(o);a&&(r.txSize=a)}this.startTime=(new Date).getTime(),this.listener=function(t){try{"abort"===t.type&&(i.params.aborted=!0),("load"!==t.type||i.called===i.totalCbs&&(i.onloadCalled||"function"!=typeof n.onload))&&i.end(n)}catch(e){}};for(var s=0;p>s;s++)n.addEventListener(u[s],this.listener,!1)}),d.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),d.on("xhr-load-added",function(t,e){var n=""+f(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),d.on("xhr-load-removed",function(t,e){var n=""+f(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),d.on("addEventListener-end",function(t,e){e instanceof XMLHttpRequest&&"load"===t[0]&&d.emit("xhr-load-added",[t[1],t[2]],e)}),d.on("removeEventListener-end",function(t,e){e instanceof XMLHttpRequest&&"load"===t[0]&&d.emit("xhr-load-removed",[t[1],t[2]],e)}),d.on("fn-start",function(t,e,n){e instanceof XMLHttpRequest&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=(new Date).getTime()))}),d.on("fn-end",function(t,e){this.xhrCbStart&&d.emit("xhr-cb-time",[(new Date).getTime()-this.xhrCbStart,this.onload,e],e)})}window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent)&&e()},{1:8,2:11,3:3,4:6,5:15,6:1,handle:"D5DuLP",loader:"G9z0Bl"}],8:[function(t,e){e.exports=function(t){var e=document.createElement("a"),n=window.location,r={};e.href=t,r.port=e.port;var o=e.href.split("://");return!r.port&&o[1]&&(r.port=o[1].split("/")[0].split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=e.hostname||n.hostname,r.pathname=e.pathname,"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname),r.sameOrigin=!e.hostname||e.hostname===document.domain&&e.port===n.port&&e.protocol===n.protocol,r}},{}],handle:[function(t,e){e.exports=t("D5DuLP")},{}],D5DuLP:[function(t,e){function n(t,e){var n=r[t];return n?n.apply(this,e):(o[t]||(o[t]=[]),void o[t].push(e))}var r={},o={};e.exports=n,n.queues=o,n.handlers=r},{}],11:[function(t,e){function n(t){if(!t||"object"!=typeof t&&"function"!=typeof t)return-1;if(t===window)return 0;if(o.call(t,"__nr"))return t.__nr;try{return Object.defineProperty(t,"__nr",{value:r,writable:!0,enumerable:!1}),r}catch(e){return t.__nr=r,r}finally{r+=1}}var r=1,o=Object.prototype.hasOwnProperty;e.exports=n},{}],loader:[function(t,e){e.exports=t("G9z0Bl")},{}],G9z0Bl:[function(t,e){function n(){var t=c.info=NREUM.info;if(t&&t.agent&&t.licenseKey&&t.applicationID){c.proto="https"===f.split(":")[0]||t.sslForHttp?"https://":"http://",a("mark",["onload",i()]);var e=d.createElement("script");e.src=c.proto+t.agent,d.body.appendChild(e)}}function r(){"complete"===d.readyState&&o()}function o(){a("mark",["domContent",i()])}function i(){return(new Date).getTime()}var a=t("handle"),s=window,d=s.document,u="addEventListener",p="attachEvent",f=(""+location).split("?")[0],c=e.exports={offset:i(),origin:f,features:[]};d[u]?(d[u]("DOMContentLoaded",o,!1),s[u]("load",n,!1)):(d[p]("onreadystatechange",r),s[p]("onload",n)),a("mark",["firstbyte",i()])},{handle:"D5DuLP"}],14:[function(t,e){function n(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(0>o?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=n},{}],15:[function(t,e){function n(t,e,n,r){function nrWrapper(){try{var a,s=i(arguments),d=this,u=n&&n(s,d)||{};o.emit(e+"start",[s,d,r],u)}catch(p){}try{return a=t.apply(d,s)}catch(f){try{o.emit(e+"err",[s,d,f],u)}catch(p){}throw f}finally{try{o.emit(e+"end",[s,d,a],u)}catch(p){}}}return t&&"function"==typeof t&&t.apply&&!t._wrapped?(e||(e=""),nrWrapper._wrapped=!0,nrWrapper):t}function r(t,e,r,o){r||(r="");var i,a,s,d="-"===r.charAt(0);for(s=0;s<e.length;s++)a=e[s],i=t[a],i&&"function"==typeof i&&i.apply&&!i._wrapped&&(t[a]=n(i,d?a+r:r,o,a,t))}var o=t(1),i=t(2);e.exports=n,n.inPlace=r},{1:1,2:14}]},{},["G9z0Bl",2,7]);</script>
+        <meta name="description" lang="ru" content="Нужен Специалист для Обработки Фотографии Людей в Соц.Сетях! – FL.ru" />
+        <meta name="keywords" lang="ru" content="Нужен Специалист для Обработки Фотографии Людей в Соц.Сетях!, Оптимизация (SEO)" />
+                        <meta property="og:title" content="Нужен Специалист для Обработки Фотографии Людей в Соц.Сетях!" />
+<meta property="og:image" content="https://www.free-lance.ru/images/free-lance_logo.jpg" />
+                <title>Нужен Специалист для Обработки Фотографии Людей в Соц.Сетях! – Оптимизация (SEO) – FL.ru</title>
+        <script type="text/javascript">
+            var CKEDITOR_BASEPATH = '/scripts/ckedit/';
+            var _TOKEN_KEY = 'da92886504f7d80902ba23d15b93a8d5';
+            var _UID = 1835244;
+        </script>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+                                                                                                                                           
+                                                                                		                                              
+				
+				                                                        
+                                    
+                        <link type="text/css" href="https://st.fl.ru/wdstatic/dbbf51e04d53b01ccacab424e0c5f377_1400570367.css" rel="stylesheet" charset="windows-1251"/>
+<script type="text/javascript" src="https://st.fl.ru/wdstatic/a45d07bea36f27db10299ab48232311a_1400570367.js" charset="windows-1251"></script>
+<script type="text/javascript" src="https://st.fl.ru/wdstatic/c10e6af9fade16684be48dd6d918f72a_1400570367.js" charset="windows-1251"></script>
+        <link type="text/css" href="https://st.fl.ru/wdstatic/f8d50e0428b95215efa094a11c471a01_1400570367.css" rel="stylesheet" charset="windows-1251"/>
+<script type="text/javascript" src="https://st.fl.ru/wdstatic/16d3cc720393f6f4db40a4af09b6c3b9_1400570367.js" charset="windows-1251"></script>
+        
+        <script type="text/javascript">
+           var ___WDCPREFIX = 'https://st.fl.ru';
+           var _NEW_TEMPLATE = true;
+                      window.addEvent('domready', function() {
+               CSRF(_TOKEN_KEY);    
+           });
+                                 var _SHORT_CAROUSEL = true;
+                                      var _G_HELP_ID = 21;
+            var CUSTOM_TARGET = '';
+CUSTOM_TARGET = 'frl;unpro;unverif;f;26-30;user_yob=1983;user_gender=F;user_keywords=;user_geo_country=RUS';
+        </script>
+        
+                        
+        <script type='text/javascript'>
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount','UA-163162-1']);
+        _gaq.push(['_setDomainName', 'fl.ru']);
+        _gaq.push(['_setAllowAnchor', true]);
+        _gaq.push(['_addOrganic', 'images.yandex.ru','text']);
+        _gaq.push(['_addOrganic', 'adresa.yandex.ru','what']);
+        _gaq.push(['_addOrganic', 'adresa.yandex.ru','text']);
+        _gaq.push(['_addOrganic', 'blogs.yandex.ru','text']);
+        _gaq.push(['_addOrganic', 'video.yandex.ru','text']);
+        _gaq.push(['_addOrganic', 'yandex.ru','query']);
+        _gaq.push(['_addOrganic', 'yandex.ru','text']);
+        _gaq.push(['_addOrganic', 'mail.ru','q']);
+        _gaq.push(['_addOrganic', 'go.mail.ru','q']);
+        _gaq.push(['_addOrganic', 'images.google.ru','q']);
+        _gaq.push(['_addOrganic', 'maps.google.ru','q']);
+        _gaq.push(['_addOrganic', 'google.com.ua','q']);
+        _gaq.push(['_addOrganic', 'nova.rambler.ru','query']);
+        _gaq.push(['_addOrganic', 'nova.rambler.ru','words']);
+        _gaq.push(['_addOrganic', 'rambler.ru','words']);
+        _gaq.push(['_addOrganic', 'gogo.ru','q']);
+        _gaq.push(['_addOrganic', 'nigma.ru','s']);
+        _gaq.push(['_addOrganic', 'search.qip.ru','query']);
+        _gaq.push(['_addOrganic', 'webalta.ru','q']);
+        _gaq.push(['_addOrganic', 'sm.aport.ru','r']);
+        _gaq.push(['_addOrganic', 'akavita.by','z']);
+        _gaq.push(['_addOrganic', 'meta.ua','q']);
+        _gaq.push(['_addOrganic', 'search.bigmir.net','z']);
+        _gaq.push(['_addOrganic', 'search.tut.by','query']);
+        _gaq.push(['_addOrganic', 'all.by','query']);
+        _gaq.push(['_addOrganic', 'search.i.ua','q']);
+        _gaq.push(['_addOrganic', 'index.online.ua','q']);
+        _gaq.push(['_addOrganic', 'web20.a.ua','query']);
+        _gaq.push(['_addOrganic', 'search.ukr.net','search_query']);
+        _gaq.push(['_addOrganic', 'search.com.ua','q']);
+        _gaq.push(['_addOrganic', 'search.ua','q']);
+        _gaq.push(['_addOrganic', 'poisk.ru','text']);
+        _gaq.push(['_addOrganic', 'go.km.ru','sq']);
+        _gaq.push(['_addOrganic', 'liveinternet.ru','ask']);
+        _gaq.push(['_addOrganic', 'gde.ru','keywords']);
+        _gaq.push(['_addOrganic', 'affiliates.quintura.com','request']);
+        _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script>
+
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-163162-4', 'fl.ru');
+          ga('send', 'pageview');
+        </script>
+
+        <script type='text/javascript'>
+                        _gaq.push(['_setCustomVar', 1, 'age', '1983', 1]);
+                                _gaq.push(['_setCustomVar', 2, 'city_user', 'Санкт-Петербург', 1]);
+                            _gaq.push(['_setCustomVar', 3, 'auth_user', 'authorized', 2]);
+                            _gaq.push(['_setCustomVar', 4, 'type_user', 'freelance', 1]);
+                        </script>
+                       <meta content="initial-scale=1, width=device-width, user-scalable=no" name="viewport"> 
+		   <link charset="utf-8" href="/css/portable.css" type="text/css" rel="stylesheet">
+           <script src="/scripts/jquery.js"></script>
+           <script>jQuery.noConflict();</script>
+           <script charset="utf-8" src="/scripts/portable.js"></script>
+                      <script>
+			window.addEvent('domready', 
+			function() {
+			  var iAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+			  if(iAndroid) {
+				  $$('.b-page').addClass('android');
+				  }
+            })
+		   </script>
+
+            <script type='text/javascript'>
+            var googletag = googletag || {};
+            googletag.cmd = googletag.cmd || [];
+            (function() {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') + 
+            '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+            })();
+            </script>
+
+            <script type='text/javascript'>
+            googletag.cmd.push(function() {
+            googletag.pubads().setTargeting("acctype", ["frl"]);
+            var gadsSlotTopBar = googletag.defineSlot('/49966680/FL_TopBar', [1280, 40], 'div-gpt-ad-1397483810125-0').addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.pubads().addEventListener('slotRenderEnded', function(event) { 
+                if (event.slot == gadsSlotTopBar)
+                {
+                    var gadsIframe = document.getElementById('google_ads_iframe_' + event.slot.c + '_0');
+                    gadsIframe.width = '100%';
+                    
+                    var gadsWidthAdjustmentFn = function() {        
+                        var gadsFlashInlineDiv = gadsIframe.contentDocument.getElementById('google_flash_inline_div');
+                        if (gadsFlashInlineDiv)
+                        {
+                            gadsFlashInlineDiv.style.width = '100%';
+                            gadsIframe.contentDocument.getElementById('google_flash_div').style.right = '0px';
+                            gadsIframe.contentDocument.getElementById('google_flash_obj').style.width = '100%';
+                            gadsIframe.contentDocument.getElementById('google_flash_embed').style.width = '100%';
+                        }
+                    };
+                    
+                    var gadsIframeWindow = gadsIframe.contentWindow || gadsIframe.contentDocument.parentWindow;
+                    gadsIframeWindow.onload = gadsWidthAdjustmentFn;
+                    gadsWidthAdjustmentFn();
+                }
+            });
+            googletag.enableServices();
+            });
+            </script>
+            
+    </head>
+        <body  class="b-page u-nopro firefox  ">
+		        <script type="text/javascript">
+var notification_delay = '300000';
+var prj_check_delay = '600000';
+</script>
+<div class="b-bar b-bar_free b-bar_fixed b-layout">
+	<div class="b-bar__wrapper">
+		<div id="b-bar__inner" class="b-bar__inner">
+			<table class="b-layout__table b-layout__table_width_full" border="0" cellpadding="0" cellspacing="0"><tr class="b-layout__tr">
+				<td class="b-layout__left">
+					<ul class="b-bar__list b-bar__list_float_left">
+						<li class="b-bar__item b-bar__item_padright_10"><a class="b-bar__name" href="/users/informer-fl-ru">informer-fl-ru</a></li>
+												<li id="b-bar__tuning" class="b-bar__item b-bar__item_bordleft-light">
+							<div class="b-tooltip b-tooltip_small  b-tooltip_inline-block b-tooltip_hide">
+																					<div class="b-tooltip__body">
+            <span class="b-tooltip__right"></span>
+            <span class="b-tooltip__left"></span>
+            <span class="b-tooltip_nosikcenter"></span>
+											<div class="b-tooltip__txt">Настройки</div>
+										</div>
+							</div>
+							<a class="b-bar__btn" href="/users/informer-fl-ru/setup/"><span class="b-bar__icon b-bar__icon_tuning"></span></a>
+						</li>
+						<li id="b-bar__stat" class="b-bar__item b-bar__item_bordleft-light">
+							<a class="b-bar__btn" href="/promotion/"><span class="b-bar__icon b-bar__icon_stat"></span></a>
+							<div class="b-tooltip b-tooltip_small  b-tooltip_inline-block b-tooltip_hide">
+																					<div class="b-tooltip__body">
+            <span class="b-tooltip__right"></span>
+            <span class="b-tooltip__left"></span>
+            <span class="b-tooltip_nosikcenter"></span>
+											<div class="b-tooltip__txt">Статистика</div>
+										</div>
+							</div>
+						</li>
+                                                                              						<li id="b-bar__pro" class="b-bar__item b-bar__item_bordleft-light b-bar__item_padleft_10">
+                            <div class="b-tooltip b-tooltip_small b-tooltip_left_-20 b-tooltip_marg_null b-tooltip_inline-block b-tooltip_hide">
+																					<div class="b-tooltip__body">
+            <span class="b-tooltip__right"></span>
+            <span class="b-tooltip__left"></span>
+            <span class="b-tooltip_nosikleft"></span>
+											<div class="b-tooltip__txt"></div>
+										</div>
+							</div>
+                                                            <a id="b-bar__pro-btn" class="b-bar__link b-bar__link_underline  b-bar__link_margtop_8  b-bar__link_float_left" href="/payed/">Купить<span alt="Платный аккаунт" title="Платный аккаунт" class="b-icon__pro b-icon_margleft_5 b-icon__pro_f"></span></a>
+                            						</li>
+					</ul>
+				</td>
+				<td class="b-layout__middle b-layout__middle_align-center">
+					<ul class="b-bar__list b-bar__list_inline-block b-bar__list_bordright">
+                        						<li id="b-bar__mess" class="b-bar__item  b-bar__item_bordleft-light b-bar__item-messages">
+							<div class="b-tooltip b-tooltip_small  b-tooltip_inline-block b-tooltip_hide">
+																					<div class="b-tooltip__body">
+            <span class="b-tooltip__right"></span>
+            <span class="b-tooltip__left"></span>
+            <span class="b-tooltip_nosikcenter"></span>
+											<div class="b-tooltip__txt"></div>
+										</div>
+							</div>
+							<a class="b-bar__btn" href="/contacts/"><span class="b-bar__icon b-bar__icon_mess"></span> Сообщения</a>
+						</li>
+												<li id="b-bar__lenta" class="b-bar__item b-bar__item_bordleft-light">
+							<a class="b-bar__btn" href="/lenta/"><span class="b-bar__icon b-bar__icon_lenta"></span>Лента</a>
+						</li>
+                        						<li id="b-bar__sbr" class="b-bar__item  b-bar__item_bordleft-light b-bar__item-sbr i-shadow">
+							<div class="b-tooltip b-tooltip_small  b-tooltip_inline-block b-tooltip_hide">
+																					<div class="b-tooltip__body">
+            <span class="b-tooltip__right"></span>
+            <span class="b-tooltip__left"></span>
+            <span class="b-tooltip_nosikcenter"></span>
+											<div class="b-tooltip__txt"></div>
+										</div>
+							</div>
+                            <a href="/bezopasnaya-sdelka/" class="b-bar__btn" onclick=""><span class="b-bar__icon b-bar__icon_sbr"></span>Сделки</a>
+                            						</li>
+                        						<li id="b-bar__fm" class="b-bar__item b-bar__item_bordleft-light">
+						                                                    <div class="b-tooltip b-tooltip_small  b-tooltip_inline-block b-tooltip_hide">
+                                <div class="b-tooltip__body">
+                                    <span class="b-tooltip__right"></span>
+                                    <span class="b-tooltip__left"></span>
+                                    <span class="b-tooltip_nosikcenter"></span>
+                                    <div id="b-bar__fm_tooltip_txt" class="b-tooltip__txt"></div>
+                                </div>
+                            </div>
+                        							                            							<a class="b-bar__btn" href="/bill/"><span class="b-bar__icon b-bar__icon_fm"></span>Мои услуги</a>
+                            						</li>
+						<li id="b-bar__drop" class="b-bar__item b-bar__item_bordleft-light i-shadow b-bar__item_hide">
+							<a id="b-bar__drop_btn" class="b-bar__btn" data-menu-opener="true" data-menu-descriptor="main" href="javascript:void(0)"><span class="b-bar__icon b-bar__icon_arr"></span></a>
+							<div id="b-bar__drop_menu" class="b-shadow b-shadow_m b-shadow_width_150 b-shadow_left_-53 b-shadow_top_25 b-shadow_zindex_2 b-shadow_hide" data-menu="true" data-menu-descriptor="main">
+												<div class="b-shadow__body b-shadow__body_padtb_10 b-shadow__body_bg_fff">
+													<div id="b-bar__drop_stat" class="b-shadow__txt b-shadow__txt_hide b-shadow__txt_relative b-shadow__txt_pad_3_15">
+                                                        <div class="b-tooltip b-tooltip_small  b-tooltip_inline-block b-tooltip_top_20 b-tooltip_hide">
+                                                                    											<div class="b-tooltip__body">
+            <span class="b-tooltip__right"></span>
+            <span class="b-tooltip__left"></span>
+            <span class="b-tooltip_nosikcenter"></span>
+                                                                        <div class="b-tooltip__txt"></div>
+                                                                    </div>
+                                                        </div>
+                                                        <a class="b-shadow__link" href="/promotion/"><span class="b-bar__icon b-bar__icon_stat"></span>Статистика</a>
+                                                    </div>
+                                                                 
+                                                    
+                                                    <div id="b-bar__drop_tuning" class="b-shadow__txt b-shadow__txt_hide b-shadow__txt_relative b-shadow__txt_pad_3_15">
+                                                        <div class="b-tooltip b-tooltip_small  b-tooltip_inline-block b-tooltip_top_20 b-tooltip_hide">
+                                                                    											<div class="b-tooltip__body">
+            <span class="b-tooltip__right"></span>
+            <span class="b-tooltip__left"></span>
+            <span class="b-tooltip_nosikcenter"></span>
+                                                                        <div class="b-tooltip__txt"></div>
+                                                                    </div>
+                                                        </div>
+                                                        <a class="b-shadow__link" href="/users/informer-fl-ru/setup/"><span class="b-bar__icon b-bar__icon_tuning"></span>Настройки</a>
+                                                    </div>
+													<div id="b-bar__drop_lenta" class="b-shadow__txt b-shadow__txt_hide b-shadow__txt_relative b-shadow__txt_pad_3_15">
+                                                        <div class="b-tooltip b-tooltip_small  b-tooltip_inline-block b-tooltip_top_20 b-tooltip_hide">
+                                                                    											<div class="b-tooltip__body">
+            <span class="b-tooltip__right"></span>
+            <span class="b-tooltip__left"></span>
+            <span class="b-tooltip_nosikcenter"></span>
+                                                                        <div class="b-tooltip__txt"></div>
+                                                                    </div>
+                                                        </div>
+                                                        <a class="b-shadow__link" href="/lenta/"><span class="b-bar__icon b-bar__icon_lenta"></span>Лента</a>
+                                                    </div>
+													<div id="b-bar__drop_fm" class="b-shadow__txt b-shadow__txt_hide b-shadow__txt_relative b-shadow__txt_pad_3_15">
+                                                        <div class="b-tooltip b-tooltip_small  b-tooltip_inline-block b-tooltip_top_20 b-tooltip_hide">
+                                                                    											<div class="b-tooltip__body">
+            <span class="b-tooltip__right"></span>
+            <span class="b-tooltip__left"></span>
+            <span class="b-tooltip_nosikcenter"></span>
+                                                                        <div class="b-tooltip__txt"></div>
+                                                                    </div>
+                                                        </div>
+    													<a class="b-shadow__link" href="/bill/"><span class="b-bar__icon b-bar__icon_fm"></span>Мой счет</a>
+                                                    </div>
+													<div id="b-bar__drop_mess" class="b-shadow__txt b-shadow__txt_hide b-shadow__txt_relative b-shadow__txt_pad_3_15">
+                                                        <div class="b-tooltip b-tooltip_small  b-tooltip_inline-block b-tooltip_top_20 b-tooltip_hide">
+                                                                    											<div class="b-tooltip__body">
+            <span class="b-tooltip__right"></span>
+            <span class="b-tooltip__left"></span>
+            <span class="b-tooltip_nosikcenter"></span>
+                                                                        <div class="b-tooltip__txt"></div>
+                                                                    </div>
+                                                        </div>
+                                                        <a class="b-shadow__link" href="/contacts/"><span class="b-bar__icon b-bar__icon_mess"></span>Сообщения</a>
+                                                    </div>
+													<div id="b-bar__drop_prj" class="b-shadow__txt b-shadow__txt_hide b-shadow__txt_relative b-shadow__txt_pad_3_15">
+                                                        <div class="b-tooltip b-tooltip_small  b-tooltip_inline-block b-tooltip_top_20 b-tooltip_hide">
+                                                                    											<div class="b-tooltip__body">
+            <span class="b-tooltip__right"></span>
+            <span class="b-tooltip__left"></span>
+            <span class="b-tooltip_nosikcenter"></span>
+                                                                        <div class="b-tooltip__txt"></div>
+                                                                    </div>
+                                                        </div>
+                                                        <a class="b-shadow__link" href="/proj/?p=list"><span class="b-bar__icon b-bar__icon_prj"></span>Проекты и заказы</a>
+                                                    </div>
+													<div id="b-bar__drop_sbr" class="b-shadow__txt b-shadow__txt_hide b-shadow__txt_relative b-shadow__txt_pad_3_15">
+                                                        <div class="b-tooltip b-tooltip_small  b-tooltip_inline-block b-tooltip_top_20 b-tooltip_hide">
+                                                                    											<div class="b-tooltip__body">
+            <span class="b-tooltip__right"></span>
+            <span class="b-tooltip__left"></span>
+            <span class="b-tooltip_nosikcenter"></span>
+                                                                        <div class="b-tooltip__txt"></div>
+                                                                    </div>
+                                                        </div>
+                                                        <a class="b-shadow__link" href="/norisk2/"><span class="b-bar__icon b-bar__icon_sbr"></span>«Безопасные Сделки»</a>
+                                                    </div>
+												
+						                                    
+            </div>
+								<span class="b-shadow__icon b-shadow__icon_nosik"></span>
+							</div>
+                            <div class="b-shadow__overlay b-shadow_hide"></div>
+						</li>
+					</ul>
+				</td>
+				<td class="b-layout__right">
+					<ul class="b-bar__list b-bar__list_float_right">
+						<li class="b-bar__item b-bar__item_active b-bar__item_padright_10 b-bar__item_zindex_3 b-bar__item_relogin">
+							<a class="b-bar__link b-bar__link_bordbot_dot b-bar-alternative-login" href="#">Войти работодателем</a>
+							
+							<div class="b-shadow b-shadow__login b-shadow_margleft_-235 b-shadow_top_25 b-shadow_zindex_110 b-shadow_inline-block b-shadow_hide b-shadow__relogin">
+												<div class="b-shadow__body b-shadow__body_bg_fff b-shadow__body_pad_20">
+								<script type="text/javascript">
+								function change_au() {
+									qu = $("asw_form").toQueryString();
+									_action = 'switch';
+									_redirect = $('redirect_au').get('value');
+									login = $('asw_form').getElement('input[name=a_login]').value;
+									if(login != 'Логин') {
+									_action = 'change_au';
+									}
+									new Request.JSON({
+										url: "/",
+										data: qu + "&action=" + _action + "&redirect=" + _redirect,
+										onSuccess: function(resp){
+											if(resp) {
+												if($chk(resp.redir)) {
+													document.location.href = resp.redir;
+												} else if(resp.success) {
+													document.location.reload();
+												} else {
+													resp=null;
+												}
+											}
+											if(!resp)
+												$('asw_form').getElements('.b-combo__input').addClass('b-combo__input_error');
+										}
+									}).post();
+								}
+								</script>
+								<form id="asw_form" class="b-userbar__frmtransit" onsubmit="change_au(); return false" method="post" action="/">
+                                <div>
+									<input type="hidden" name="redirect" id="redirect_au" value="%2Fprojects%2F1940326%2Fnujen-spetsialist-dlya-obrabotki-fotografii-lyudey-v-sotssetyah.html" />
+													<div class="b-form ">
+															<label class="b-form__name b-form__name_width_110  b-layout__txt_lineheight_1 b-form__name_fontsize_13 b-page__desktop" for="a_login">Логин, e-mail,<br>телефон</label><label class="b-form__name b-form__name_width_110  b-layout__txt_lineheight_1 b-form__name_fontsize_13 b-page__ipad b-page__iphone b-form__name_padtop_12" for="a_login">Логин, e-mail, телефон</label><div
+																 class="b-combo b-combo_inline-block"><div
+																	 class="b-combo__input b-combo__input_width_210 b-combo__input_height_20"><input
+																		 id="a_login" class="b-combo__input-text" type="text" name="a_login" size="80" value="Логин" />
+																	</div>
+															</div>
+													</div>
+													<div class="b-form b-form_padbot_16">
+															<label class="b-form__name b-form__name_width_110 b-form__name_padtop_4 b-form__name_fontsize_13" for="passwd">Пароль</label><div
+																 class="b-combo b-combo_inline-block"><div
+																	 class="b-combo__input b-combo__input_width_210 b-combo__input_height_20"><input
+																		 id="passwd" class="b-combo__input-text" type="password" name="passwd" size="80" value="******" onfocus="if(this.value=='******') {this.value='';}" onblur="if(this.value==''){this.value='******';}" />
+																	</div>
+															</div>
+													</div>
+													<div class="b-buttons b-buttons_padleft_107">
+														<a href="javascript:void(0);" onclick="change_au();" class="b-button b-button_flat b-button_flat_grey">Перейти</a>		
+													</div>
+                                </div>
+								</form>
+												</div>
+								<span class="b-shadow__icon b-shadow__icon_close"></span>
+								<span class="b-shadow__icon b-shadow__icon_nosik b-shadow__icon_nosik_left_225"></span>
+								</form>
+							</div>
+                            <div id="asw_form_overlay" class="b-shadow__overlay b-shadow_hide"></div>
+						</li>
+                
+						<li id="b-bar__help" class="b-bar__item b-bar__bord-dark">
+							
+							<a href="javascript:void(0);" id="help_popup_open" class="b-bar__btn b-bar__btn_help" onclick="$('___logout_frm___').submit();"><span class="b-bar__icon b-bar__icon_ext"></span>&#160;&#160;Выход</a>
+						</li>
+					</ul>
+				</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+</div>
+							<form id="___logout_frm___" method="post" action="/">
+                            	<div>
+								<input type="hidden" value="logout" name="action" />
+                                </div>
+							</form>
+
+
+                <div class="b-page__wrapper">
+            <div class="b-page__inner">
+                <div class="b-page__page b-page__page_padtop_90">
+                    <div class="b-header b-layout">
+                        <script type="text/javascript">
+function writeClickStat(id){
+    var link = "/a_promo.php?type=" + id;
+    var req = new Request({
+		url: link, 
+		onSuccess: onBLinkSuccess,
+		onFailure: onBLinkFail
+	});	
+	req.post(/*"u_token_key=" + _TOKEN_KEY*/);
+	return false;
+}
+function onBLinkSuccess() {}
+function onBLinkFail() {}
+
+// обработка нажатия клавиши Enter в поле ввода поискового запроса (зеленый поиск и поиск на странице /search/)
+window.addEvent('domready', 
+function() {
+    var searchInput;
+    searchInput = $('search_across');
+    if (!searchInput) {
+        // для страницы /search/
+        searchInput = $('search_request');
+    }
+    if (searchInput) {
+        $('search_across').addEvent('keyup', function(e) {
+            if(e.key == 'enter') $('form-search').submit();
+        }); 
+    }
+});
+</script>
+    <table class="b-layout__table b-layout__table_width_full">
+       <tr class="b-layout__tr">
+          <td class="b-layout__td b-layout__td_width_90">
+                        <a class="b-header__logo" title="Fl.ru" href="/"></a>
+          </td>
+          <td class="b-layout__td">
+            <div class="b-menu b-menu_head b-menu_relative b-menu_zindex_6" data-accordion="true" data-accordion-descriptor="nav" data-accordion-opener="true">
+            	                <ul class="b-menu__list">
+                                            <script type="text/javascript">seo_print('<li class="b-menu__banner"> <a target="_blank" onclick="javascript:writeClickStat(19)" href="http://seopult.ru/ref/62ceeac0c4b6d44c/L2hlbGxvL3Byb21v" class="b-menu__link-pic"> <img src="https://st.fl.ru/users/im/images/f_612521790a723d59.png" style="margin:0px 3px 0 0;" class="b-menu__pic" alt="Раскрути сайт" title="Раскрути сайт" /> </a> <a target="_blank" onclick="javascript:writeClickStat(19)" href="http://seopult.ru/ref/62ceeac0c4b6d44c/L2hlbGxvL3Byb21v" class="b-menu__link-banner" style="color:#ff9900;margin-top:0 !important;" >Раскрути сайт</a> </li>');</script>
+                                        <li class="b-menu__item b-menu__item_first ">
+                        <a class="b-menu__link" href="/tu/">Услуги</a>
+                    </li>
+                    <li
+                     class="b-menu__item ">
+                                                <a class="b-menu__link" href="/">Работа</a>
+                                            </li><li
+                     class="b-menu__item ">
+                                                <a class="b-menu__link" href="/konkurs/">Конкурсы</a>
+                                            </li><li
+                     class="b-menu__item ">
+                                                <a class="b-menu__link" href="/freelancers/">Фрилансеры</a>
+                                            </li>
+                                               
+                        <li class="b-menu__item ">
+                                                            <a  class="b-menu__link" href="/commune/">Сообщества</a>
+                                                   </li>
+
+                       <li class="b-menu__item">
+                          <a  class="b-menu__link" target="_blank" href="https://feedback.fl.ru/?sso_token=GMJXG9Ki5fXZdwtTu9t76co%2FOXxxcHlmgfKuKMxlCIzHj4K26wHDj2%2BZKEAxCgO%2F%2FrpS9fnpbgNn8Z8rzLCkzD%2B418nh%2BE7%2BdYDMxQ4AFEzmW1V0RZlnUKtsO29mUyhBZLQylsDEVgg%2FC6e6zEesKC9IXXQMagkW9pRxbShXu4JQbf6v%2Fc6wVmkRWcztJCBQ">Помощь</a>
+                       </li>
+                        
+                       
+                       <li class="b-menu__item b-page__ipad b-page__iphone">
+                          <a  class="b-menu__link" target="_blank" href="/?full_site_version=1">Полная версия сайта</a>
+                       </li>
+                </ul>
+            </div><!--b-menu-->
+            
+                        
+            	 
+            <script type="text/javascript">	 
+            kword = search_kwords;	 
+            </script>	 
+                        
+              <div class="b-fon b-fon_bg_72bc4e b-fon__border_radius_3 b-fon_padtb_2">
+                  <form id="form-search" action="/search/">
+                                            <div class="b-search">
+                          <table class="b-search__table" cellspacing="0" cellpadding="0" border="0">
+                              <tbody>
+                                  <tr class="b-search__tr">
+                                      <td class="b-search__input">
+                                          <div class="b-input-hint">
+                                              <label class="b-input-hint__label" for="search_across">Поиск проекта. Например, поэт</label>
+                                              <div id="body_search_across" class="b-input b-input_height_23 b-input_border_none">
+                                                  <input id="search_across" class="b-input__text" type="text" name="search_string" autocomplete="off" />
+                                              </div>
+                                          </div>
+                                      </td>
+                                      <td class="b-search__button">
+                                          <a class="b-button b-button_rectangle_color_transparent" href="/search/" onclick="_gaq.push(['_trackEvent', 'User', 'Freelance', 'button_search']); ga('send', 'event', 'Freelance', 'button_search'); $('form-search').submit(); return false;">
+                                              <span class="b-button__b1">
+                                                  <span class="b-button__b2">
+                                                      <span class="b-button__txt">Найти</span>
+                                                  </span>
+                                              </span>
+                                          </a>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+        <input type="hidden" name="action" value="search" />
+                      </div>
+                  </form>
+              </div><!--b-fon -->	
+            
+                      </td>
+       </tr>
+    </table>
+<!--b-header -->                    </div>
+                                        <div class="b-layout b-layout__page" style="margin-top:0px">
+																							<div class="body"><div class="main">
+											                        <a name="top"></a>
+                        
+<script type="text/javascript" charset="UTF-8">
+/* <![CDATA[ */
+try { if (undefined == xajax.config) xajax.config = {}; } catch (e) { xajax = {}; xajax.config = {}; };
+xajax.config.requestURI = "/xajax/projects_ci.server.php?rnd=2008921014";
+xajax.config.statusMessages = false;
+xajax.config.waitCursor = true;
+xajax.config.version = "xajax 0.5 rc1";
+xajax.config.legacy = false;
+xajax.config.defaultMode = "asynchronous";
+xajax.config.defaultMethod = "POST";
+/* ]]> */
+</script>
+<script type="text/javascript" charset="UTF-8">
+var U_TOKEN_KEY = "da92886504f7d80902ba23d15b93a8d5";
+</script>
+<script type="text/javascript" src="/xajax/xajax_js/xajax_core.js?v=241013" charset="UTF-8"></script>
+<script type="text/javascript" charset="UTF-8">
+/* <![CDATA[ */
+window.setTimeout(
+ function() {
+  var scriptExists = false;
+  try { if (xajax.isLoaded) scriptExists = true; }
+  catch (e) {}
+  if (!scriptExists) {
+   alert("Error: the xajax Javascript component could not be included. Perhaps the URL is incorrect?\nURL: /xajax/xajax_js/xajax_core.js");
+  }
+ }, 40000);
+/* ]]> */
+</script>
+
+<script type='text/javascript' charset='UTF-8'>
+/* <![CDATA[ */
+xajax_SelectProjectExecutor = function() { return xajax.request( { xjxfun: 'SelectProjectExecutor' }, { parameters: arguments } ); };
+xajax_SelectProjectOffer = function() { return xajax.request( { xjxfun: 'SelectProjectOffer' }, { parameters: arguments } ); };
+xajax_RefuseProjectOffer = function() { return xajax.request( { xjxfun: 'RefuseProjectOffer' }, { parameters: arguments } ); };
+xajax_AddDialogueMessage = function() { return xajax.request( { xjxfun: 'AddDialogueMessage' }, { parameters: arguments } ); };
+xajax_ChangePortfByProf = function() { return xajax.request( { xjxfun: 'ChangePortfByProf' }, { parameters: arguments } ); };
+xajax_ReadOfferDialogue = function() { return xajax.request( { xjxfun: 'ReadOfferDialogue' }, { parameters: arguments } ); };
+xajax_ReadAllOffers = function() { return xajax.request( { xjxfun: 'ReadAllOffers' }, { parameters: arguments } ); };
+xajax_SendComplain = function() { return xajax.request( { xjxfun: 'SendComplain' }, { parameters: arguments } ); };
+xajax_FrlRefuse = function() { return xajax.request( { xjxfun: 'FrlRefuse' }, { parameters: arguments } ); };
+xajax_mass_Calc = function() { return xajax.request( { xjxfun: 'mass_Calc' }, { parameters: arguments } ); };
+xajax_setUserBanForm = function() { return xajax.request( { xjxfun: 'setUserBanForm' }, { parameters: arguments } ); };
+xajax_updateUserBan = function() { return xajax.request( { xjxfun: 'updateUserBan' }, { parameters: arguments } ); };
+xajax_setUserWarnForm = function() { return xajax.request( { xjxfun: 'setUserWarnForm' }, { parameters: arguments } ); };
+xajax_updateUserWarn = function() { return xajax.request( { xjxfun: 'updateUserWarn' }, { parameters: arguments } ); };
+xajax_BlockedProject = function() { return xajax.request( { xjxfun: 'BlockedProject' }, { parameters: arguments } ); };
+xajax_BlockedProjectOffer = function() { return xajax.request( { xjxfun: 'BlockedProjectOffer' }, { parameters: arguments } ); };
+xajax_BlockedDialogue = function() { return xajax.request( { xjxfun: 'BlockedDialogue' }, { parameters: arguments } ); };
+xajax_getAdminActionReasons = function() { return xajax.request( { xjxfun: 'getAdminActionReasons' }, { parameters: arguments } ); };
+xajax_getAdminActionReasonText = function() { return xajax.request( { xjxfun: 'getAdminActionReasonText' }, { parameters: arguments } ); };
+xajax_quickprjedit_save_budget = function() { return xajax.request( { xjxfun: 'quickprjedit_save_budget' }, { parameters: arguments } ); };
+xajax_quickprjedit_get_prj = function() { return xajax.request( { xjxfun: 'quickprjedit_get_prj' }, { parameters: arguments } ); };
+xajax_quickprjedit_save_prj = function() { return xajax.request( { xjxfun: 'quickprjedit_save_prj' }, { parameters: arguments } ); };
+xajax_GetCitysByCid = function() { return xajax.request( { xjxfun: 'GetCitysByCid' }, { parameters: arguments } ); };
+xajax_getStatProject = function() { return xajax.request( { xjxfun: 'getStatProject' }, { parameters: arguments } ); };
+xajax_getNotesForm = function() { return xajax.request( { xjxfun: 'getNotesForm' }, { parameters: arguments } ); };
+xajax_delNote = function() { return xajax.request( { xjxfun: 'delNote' }, { parameters: arguments } ); };
+xajax_addNotes = function() { return xajax.request( { xjxfun: 'addNotes' }, { parameters: arguments } ); };
+xajax_addFavorite = function() { return xajax.request( { xjxfun: 'addFavorite' }, { parameters: arguments } ); };
+xajax_delFavorite = function() { return xajax.request( { xjxfun: 'delFavorite' }, { parameters: arguments } ); };
+xajax_saveHeaderNoteFromProject = function() { return xajax.request( { xjxfun: 'saveHeaderNoteFromProject' }, { parameters: arguments } ); };
+xajax_checkWebmoneyCert = function() { return xajax.request( { xjxfun: 'checkWebmoneyCert' }, { parameters: arguments } ); };
+xajax_checkWebmoneyMsg = function() { return xajax.request( { xjxfun: 'checkWebmoneyMsg' }, { parameters: arguments } ); };
+xajax_resendWebmoneyMsg = function() { return xajax.request( { xjxfun: 'resendWebmoneyMsg' }, { parameters: arguments } ); };
+xajax_checkAlphaSum = function() { return xajax.request( { xjxfun: 'checkAlphaSum' }, { parameters: arguments } ); };
+xajax_checkIsVerify = function() { return xajax.request( { xjxfun: 'checkIsVerify' }, { parameters: arguments } ); };
+xajax_storeFIO = function() { return xajax.request( { xjxfun: 'storeFIO' }, { parameters: arguments } ); };
+xajax_quickVerCheckOrderWebMoney = function() { return xajax.request( { xjxfun: 'quickVerCheckOrderWebMoney' }, { parameters: arguments } ); };
+xajax_quickPROGetCardLink = function() { return xajax.request( { xjxfun: 'quickPROGetCardLink' }, { parameters: arguments } ); };
+xajax_quickPROGetYdLink = function() { return xajax.request( { xjxfun: 'quickPROGetYdLink' }, { parameters: arguments } ); };
+xajax_quickPROGetWebmoneyLink = function() { return xajax.request( { xjxfun: 'quickPROGetWebmoneyLink' }, { parameters: arguments } ); };
+xajax_quickPROCheckOrder = function() { return xajax.request( { xjxfun: 'quickPROCheckOrder' }, { parameters: arguments } ); };
+xajax_quickPROPayAccount = function() { return xajax.request( { xjxfun: 'quickPROPayAccount' }, { parameters: arguments } ); };
+xajax_quickPROPayMobile = function() { return xajax.request( { xjxfun: 'quickPROPayMobile' }, { parameters: arguments } ); };
+xajax_quickPROCheckPRO = function() { return xajax.request( { xjxfun: 'quickPROCheckPRO' }, { parameters: arguments } ); };
+xajax_quickPROCheckOrderWebMoney = function() { return xajax.request( { xjxfun: 'quickPROCheckOrderWebMoney' }, { parameters: arguments } ); };
+xajax_quickPROGetDOLCardLink = function() { return xajax.request( { xjxfun: 'quickPROGetDOLCardLink' }, { parameters: arguments } ); };
+xajax_quickMASGetDOLCardLink = function() { return xajax.request( { xjxfun: 'quickMASGetDOLCardLink' }, { parameters: arguments } ); };
+xajax_quickMASGetYdLink = function() { return xajax.request( { xjxfun: 'quickMASGetYdLink' }, { parameters: arguments } ); };
+xajax_quickMASGetWebmoneyLink = function() { return xajax.request( { xjxfun: 'quickMASGetWebmoneyLink' }, { parameters: arguments } ); };
+xajax_quickMASCheckOrder = function() { return xajax.request( { xjxfun: 'quickMASCheckOrder' }, { parameters: arguments } ); };
+xajax_quickMASPayAccount = function() { return xajax.request( { xjxfun: 'quickMASPayAccount' }, { parameters: arguments } ); };
+xajax_quickMASSetCats = function() { return xajax.request( { xjxfun: 'quickMASSetCats' }, { parameters: arguments } ); };
+xajax_changeProjectStatus = function() { return xajax.request( { xjxfun: 'changeProjectStatus' }, { parameters: arguments } ); };
+/* ]]> */
+</script>
+    <script type="text/javascript">
+        //window.addEvent("domready", function() {
+        //    var textarea = new resizableTextarea($$("div.b-textarea"), { handler: ".handler", modifiers: {x: false, y: true}, size: {y:[130, 1000]}});
+        //});
+    </script>
+
+<script type="text/javascript">
+<!--
+
+var in_office = '0';
+var ajaxFlag = 1;
+var old_num = 0;
+var inner = false;
+var cur_prof = 0;
+var dialogue_count = new Array(1);
+dialogue_count[0] = 0;
+
+var works_ids = new Array();
+var works_names = new Array();
+var works_prevs = new Array();
+var works_picts = new Array();
+var works_links = new Array();
+
+var show_types  = new Array('gif', 'png', 'jpg', 'jpeg', 'flv', 'mp3');
+
+
+
+function submitAddFileForm() {
+	xajax.$("ps_pict_add").disabled=true;
+	xajax.$("ps_pict_add").value="Файл загружается";
+	xajax_submitAddFileForm(xajax.getFormValues("form_add_pict"));
+	return false;
+}
+
+function GetForm(num, commentid){
+	if (!commentid) {commentid=0}
+
+	out = "<form action=\"javascript:void(null);\" method=\"post\" name=\"amfrm\" id=\"amfrm\" onKeyPress=\"if((event.ctrlKey) && ((event.keyCode==10)||(event.keyCode==13))) {submitDialogueForm()}\" onsubmit=\"submitDialogueForm()\">\
+<input type=\"hidden\" id=\"action\" name=\"action\" value=\"answer\">\
+<input type=\"hidden\" id=\"from_\" name=\"from\" value=\"frl\">\
+<input type=\"hidden\" id=\"po_id\" name=\"po_id\" value=\"" + num + "\">\
+<input type=\"hidden\" id=\"po_commentid\" name=\"po_commentid\" value=\"" + commentid + "\">\
+<input type=\"hidden\" id=\"prj_id\" name=\"prj_id\" value=\"1940326\">\
+<table width=\"96%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\
+<tr>\
+	<td colspan=\"2\" style=\"padding-bottom:4px;\">Сообщение:</td>\
+<\/tr>\
+<tr>\
+	<td colspan=\"2\" style=\"padding-bottom:4px;\"><div class=\"b-textarea\"><textarea class=\"b-textarea__textarea\" tabindex=\"1\" id=\"po_text\" name=\"po_text\" rows=\"4\" onkeydown=\"document.getElementById('po_text_msg').innerHTML = '';\"></textarea></div><div id=\"po_text_msg\"></div>\
+    \
+    </td>\
+<\/tr>\
+<tr>\
+	<td colspan=\"2\" ><input type=\"button\" name=\"resetbtn\" id=\"resetbtn\" value=\"Отменить\" onclick=\"resetfld('"+num+"');\" tabindex=\"3\">&#160;<input type=\"submit\" name=\"savebtn\" id=\"savebtn\" value=\"Публиковать\" tabindex=\"2\"></td>\
+<\/tr>\
+<tr>\
+	<td colspan=\"2\" id=\"po_id_error_" + num + "\"></td>\
+<\/tr>\
+<\/table>\
+<\/form>";
+	return(out);
+}
+
+function markRead(num) {
+  var nmbx=$('new_msgs_' + num);
+	if(nmbx) {
+	  nmbx.innerHTML = '';
+	  xajax_ReadOfferDialogue(num, 1940326);
+	}
+}
+
+function answer(num, commentid) {
+	setInterval("check_com_text()", 10);
+	$('po_dialogue_talk_' + num).style.display = 'block';
+	$('po_comments_' + num).className = 'po_comments';
+	td = $('po_dialogue_answer_'+num);
+	if ((old_num > 0) && (old_num != num)) {
+		resetfld(old_num)
+	}
+	td.innerHTML = GetForm(num, commentid);
+//    if($('count_' + num)) {
+//        if($('count_' + num).getProperty('need_change') >= 1) 
+//            $('confirm_messages_project').dispose();
+//    }
+    
+    if(in_office == 1) {
+        if($('confirm_messages_project')) $('confirm_messages_project').dispose();
+    }
+	old_num = num;
+	if (commentid) {
+		$('po_text').value = $('po_comment_original_' + commentid).innerHTML.replace(/&amp;/gi, '&').replace(/<.*?br.*?>/gi, '\n')
+		                     .replace(/&nbsp;/gi, ' ').replace(/&gt;/gi, '>').replace(/&lt;/gi, '<');
+		$('savebtn').value = "Сохранить";
+	}
+	$('po_text').focus();
+}
+
+var edit_block = new Array();
+var last_commentid = 0;
+
+function resetfld(num){
+	$('po_dialogue_talk_' + num).style.display = 'none';
+	$('po_comments_' + num).className = 'po_comments_hide';
+	td1 = $('po_dialogue_answer_'+num);
+    innerHTML = '';
+	if (dialogue_count[num] > 1) {
+		innerHTML = innerHTML + '<span style="float: right;"><a href="javascript:void(null)" onclick="dialogue_toggle(' + num + ');markRead(' + num + ');" class="internal" id="toggle_dialogue_' + num + '">Развернуть всю переписку</a> ' + dialogue_count[num] + '</span>';
+	}
+	innerHTML = innerHTML + '<span id="add_dialog_' + num + '" class="add_dialog_user"><a href="javascript:void(0);" onclick="answer(' + num + ');markRead(' + num + ');" class="internal">Написать ответ</a></span>';
+	if (edit_block[num]) innerHTML =  innerHTML + '<span class="add_dialog_user">'+ edit_block[num] + '</span>';
+
+	td1.innerHTML = innerHTML;
+}
+
+function submitDialogueForm()
+{
+	$('savebtn').disabled = true;
+	xajax_AddDialogueMessage(xajax.getFormValues("amfrm"));
+	return false;
+}
+
+function show_fpopup(img,num)
+{
+	$(img).blur();
+	$(num).style.display = 'block';
+}
+
+function hide_fpopup(num)
+{
+	if (!inner)
+	{
+		e = $(num);
+		e.style.display = 'none';
+	}
+}
+
+function mouseout(num)
+{
+	setTimeout("hide_fpopup('"+num+"')", 500);
+}
+
+function toggle_link_text(num)
+{
+	el_top = $('toggle_dialogue_' + num);
+	el_div = $('po_comments_'+num);
+	if (el_top.innerHTML == 'Свернуть переписку')
+	{
+		el_top.innerHTML = 'Развернуть всю переписку';
+		if(el_div) {
+		  if(el_div.get('class')) el_div.className = 'po_comments_hide';
+        }
+	}
+	else
+	{
+		el_top.innerHTML = 'Свернуть переписку';
+		if(el_div) {
+  		  if(el_div.get('class')) el_div.className = 'po_comments';
+        }
+	}
+}
+
+function add_work(num, pict, prev)
+{
+	work1 = $('td_pic_1');
+	work2 = $('td_pic_2');
+	work3 = $('td_pic_3');
+
+	work1_id = $('ps_work_1_id');
+	work2_id = $('ps_work_2_id');
+	work3_id = $('ps_work_3_id');
+
+	work1_pict = $('ps_work_1_pict');
+	work2_pict = $('ps_work_2_pict');
+	work3_pict = $('ps_work_3_pict');
+
+	work1_prev = $('ps_work_1_prev_pict');
+	work2_prev = $('ps_work_2_prev_pict');
+	work3_prev = $('ps_work_3_prev_pict');
+
+	work1_link = $('ps_work_1_link');
+	work2_link = $('ps_work_2_link');
+	work3_link = $('ps_work_3_link');
+
+	work1_name = $('ps_work_1_name');
+	work2_name = $('ps_work_2_name');
+	work3_name = $('ps_work_3_name');
+
+	work_sort_1 = $('td_pic_sort_1');
+	work_sort_2 = $('td_pic_sort_2');
+
+	if (num == 0)
+	{
+		work_portf = null;
+	}
+	else
+	{
+		work_portf = $('portfolio_work_' + num);
+	}
+
+	obj_works_select = $('works_select');
+	obj_works_add = $('works_add');
+	obj_works_no_select = $('works_no_select');
+
+	if (work1_id.value == '')
+	{
+		work1.className = 'pic';
+		work1_id.value = num;
+		if (num == 0) // загружен
+		{
+			if (prev != '') // есть превью
+			{
+				work1.innerHTML = '<a href="https://st.fl.ru/users/informer-fl-ru/upload/' + pict + '" target="_blank" class="blue" title=""  style="text-decoration:none"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + prev + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(1, 0);"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+			}
+			else
+			{
+				work1.innerHTML = '<div align="left" style="font-size:100%;"><a href="https://st.fl.ru/users/informer-fl-ru/upload/' + pict + '" target="_blank" class="blue" title="">' + pict + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(1, 0);"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+			}
+			work1_pict.value = pict;
+			work1_prev.value = prev;
+			work1_link.value = '';
+			work1_name.value = '';
+		}
+		else // из портфолио
+		{
+			if (works_prevs[num] != '') // есть превью
+			{
+				if (works_prevs[num] == undefined) {works_prevs[num] = prev};
+
+
+
+				work1.innerHTML = '<a href="/users/informer-fl-ru/viewproj.php?prjid=' + num + '" target="_blank" class="blue" title="' + works_names[num] + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + works_prevs[num] + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(1, ' + num + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+			}
+			else // превью нема
+			{
+				work1.innerHTML = '<div align="left" style="font-size:100%;"><a href="/users/informer-fl-ru/viewproj.php?prjid=' + num + '" target="_blank" class="blue" title="' + works_names[num] + '" class="blue">' + works_picts[num] + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(1, ' + num + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+			}
+			work1_pict.value = works_picts[num];
+			work1_prev.value = works_prevs[num];
+			work1_link.value = works_links[num];
+			work1_name.value = works_names[num];
+			if (work_portf != null)
+			{
+				work_portf.innerHTML = '<input type="checkbox" class="checkbox" id="ps_portfolio_work_' + num + '" name="ps_portfolio_work_' + num + '" value="' + num + '" onclick="javascript:clear_work(1, ' + num + ');" checked /><span style="margin-left:3px">' + works_names[num]+'</a>';
+			}
+		}
+	}
+	else
+	{
+		if (work2_id.value == '')
+		{
+			work2.className = 'pic';
+			work2_id.value = num;
+			work_sort_1.innerHTML = '<img id="ico_right_12" src="/images/ico_right.gif" alt="" width="9" height="9" border="0" onclick="change_work_pos(' + num + ", '12');\" /><br />" + '<img id="ico_left_12" src="/images/ico_left.gif" alt="" width="9" height="9" border="0" style="margin-top:2px;" onclick="change_work_pos(' + num + ", '12');\">";
+			if (num == 0) // загружено
+			{
+				if (prev != '') // есть превью
+				{
+					work2.innerHTML = '<a href="https://st.fl.ru/users/informer-fl-ru/upload/' + pict + '" target="_blank" class="blue" title=""><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + prev + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, 0);"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+				}
+				else
+				{
+					work2.innerHTML = '<div align="left" style="font-size:100%;"><a href="https://st.fl.ru/users/informer-fl-ru/upload/' + pict + '" target="_blank" class="blue" title="">' + pict + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, 0);"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+				}
+				work2_pict.value = pict;
+				work2_prev.value = prev;
+				work2_link.value = '';
+				work2_name.value = '';
+			}
+			else // из портфолио
+			{
+				if (works_prevs[num] != '') // превью есть
+				{
+					if (works_prevs[num] == undefined) {works_prevs[num] = prev};
+					work2.innerHTML = '<a href="/users/informer-fl-ru/viewproj.php?prjid=' + num + '" target="_blank" class="blue" title="' + works_names[num] + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + works_prevs[num] + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + num + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+				}
+				else // превью нема
+				{
+					work2.innerHTML = '<div align="left" style="font-size:100%;"><a href="/users/informer-fl-ru/viewproj.php?prjid=' + num + '" target="_blank" class="blue" title="' + works_names[num] + '">' + works_picts[num] + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + num + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+				}
+				work2_pict.value = works_picts[num];
+				work2_prev.value = works_prevs[num];
+				work2_link.value = works_links[num];
+				work2_name.value = works_names[num];
+				if (work_portf != null)
+				{
+					work_portf.innerHTML = '<input type="checkbox" class="checkbox" id="ps_portfolio_work_' + num + '" name="ps_portfolio_work_' + num + '" value="' + num + '" onclick="javascript:clear_work(2, ' + num + ');" checked /><span style="margin-left:3px">' + works_names[num]+'</a>';
+				}
+			}
+		}
+		else
+		{
+			if (work3_id.value == '')
+			{
+				work3.className = 'pic';
+				work3_id.value = num;
+				work_sort_2.innerHTML = '<img id="ico_right_23" src="/images/ico_right.gif" alt="" width="9" height="9" border="0" onclick="change_work_pos(' + num + ", '23');\" /><br />" + '<img id="ico_left_23" src="/images/ico_left.gif" alt="" width="9" height="9" border="0" style="margin-top:2px;" onclick="change_work_pos(' + num + ", '23');\">";
+				if (num == 0) // загружено
+				{
+					if (prev != '') // есть превью
+					{
+						work3.innerHTML = '<a href="https://st.fl.ru/users/informer-fl-ru/upload/' + pict + '" target="_blank" class="blue" title=""><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + prev + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(3, 0);"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+					}
+					else
+					{
+						work3.innerHTML = '<div align="left" style="font-size:100%;"><a href="https://st.fl.ru/users/informer-fl-ru/upload/' + pict + '" target="_blank" class="blue" title="">' + pict + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(3, 0);"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+					}
+					work3_pict.value = pict;
+					work3_prev.value = prev;
+					work3_link.value = '';
+					work3_name.value = '';
+				}
+				else // из портфолио
+				{
+					if (works_prevs[num] != '') // превью есть
+					{
+						if (works_prevs[num] == undefined) {works_prevs[num] = prev};
+						work3.innerHTML = '<a href="/users/informer-fl-ru/viewproj.php?prjid=' + num + '" target="_blank" class="blue" title="' + works_names[num] + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + works_prevs[num] + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(3, ' + num + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+					}
+					else // превью нема
+					{
+						work3.innerHTML = '<div align="left" style="font-size:100%;"><a href="/users/informer-fl-ru/viewproj.php?prjid=' + num + '" target="_blank" class="blue" title="' + works_names[num] + '">' + works_picts[num] + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(3, ' + num + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+					}
+					work3_pict.value = works_picts[num];
+					work3_prev.value = works_prevs[num];
+					work3_link.value = works_links[num];
+					work3_name.value = works_names[num];
+					if (work_portf != null)
+					{
+						work_portf.innerHTML = '<input type="checkbox" class="checkbox" id="ps_portfolio_work_' + num + '" name="ps_portfolio_work_' + num + '" value="' + num + '" onclick="javascript:clear_work(3, ' + num + ');" checked />' + works_names[num];
+					}
+				}
+				obj_works_select.style.display='none';
+				obj_works_add.style.display='none';
+				obj_works_no_select.style.display='block';
+			}
+		}
+	}
+}
+
+function clear_work(num, id)
+{
+	work1 = $('td_pic_1');
+	work2 = $('td_pic_2');
+	work3 = $('td_pic_3');
+
+	work1_id = $('ps_work_1_id');
+	work2_id = $('ps_work_2_id');
+	work3_id = $('ps_work_3_id');
+
+	work1_pict = $('ps_work_1_pict');
+	work2_pict = $('ps_work_2_pict');
+	work3_pict = $('ps_work_3_pict');
+
+	work1_prev = $('ps_work_1_prev_pict');
+	work2_prev = $('ps_work_2_prev_pict');
+	work3_prev = $('ps_work_3_prev_pict');
+
+	work1_link = $('ps_work_1_link');
+	work2_link = $('ps_work_2_link');
+	work3_link = $('ps_work_3_link');
+
+	work1_name = $('ps_work_1_name');
+	work2_name = $('ps_work_2_name');
+	work3_name = $('ps_work_3_name');
+
+	work_sort_1 = $('td_pic_sort_1');
+	work_sort_2 = $('td_pic_sort_2');
+
+	work_portf = $('portfolio_work_' + id);
+
+	obj_works_select = $('works_select');
+	obj_works_add = $('works_add');
+	obj_works_no_select = $('works_no_select');
+
+	if (num == 3)
+	{
+		work3.innerHTML  = '<div class="pic_blank_cnt">&nbsp;</div><div style="width:200px; margin-top:6px; font-size:100%;">&nbsp;</div>';
+		work3.className  = 'pic_blank';
+		work3_id.value   = '';
+		work3_pict.value = '';
+		work3_prev.value = '';
+		work3_link.value = '';
+		work3_name.value = '';
+
+		work_sort_2.innerHTML = '<img id="ico_right_23" src="/images/ico_right0.gif" alt="" width="9" height="9" border="0" /><br /><img id="ico_left_23" src="/images/ico_left0.gif" alt="" width="9" height="9" border="0" style="margin-top:2px;" />';
+	}
+	else
+	{
+		if (num == 2)
+		{
+			if (work3_id.value == '')
+			{
+				work2.innerHTML  = '<div class="pic_blank_cnt">&nbsp;</div><div style="width:200px; margin-top:6px; font-size:100%;">&nbsp;</div>';
+				work2.className  = 'pic_blank';
+				work2_id.value   = '';
+				work2_pict.value = '';
+				work2_prev.value = '';
+				work2_link.value = '';
+				work2_name.value = '';
+
+				work_sort_1.innerHTML = '<img id="ico_right_12" src="/images/ico_right0.gif" alt="" width="9" height="9" border="0" /><br /><img id="ico_left_12" src="/images/ico_left0.gif" alt="" width="9" height="9" border="0" style="margin-top:2px;" />';
+			}
+			else
+			{
+				if (work3_id.value == 0)
+				{
+					work2.innerHTML  = '<a href="https://st.fl.ru/users/informer-fl-ru/upload/' + work3_pict.value + '" target="_blank" class="blue" title="' + work3_name.value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work3_prev.value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + work3_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+				}
+				else {
+                    work2.innerHTML  = '<a href="/users/informer-fl-ru/viewproj.php?prjid=' + work3_id.value + '" target="_blank" class="blue" title="' + work3_name.value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work3_prev.value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + work3_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+					if (typeof document.getElementById('ps_portfolio_work_'+work3_id.value) != 'undefined' && document.getElementById('ps_portfolio_work_'+work3_id.value) != null) document.getElementById('ps_portfolio_work_'+work3_id.value).onclick = function() { clear_work(2, work2_id.value); }
+                }
+				work2_id.value   = work3_id.value;
+				work2_pict.value = work3_pict.value;
+				work2_prev.value = work3_prev.value;
+				work2_link.value = work3_link.value;
+				work2_name.value = work3_name.value;
+
+				work3.innerHTML  = '<div class="pic_blank_cnt">&nbsp;</div><div style="width:200px; margin-top:6px; font-size:100%;">&nbsp;</div>';
+				work3.className  = 'pic_blank';
+				work3_id.value   = '';
+				work3_pict.value = '';
+				work3_prev.value = '';
+				work3_link.value = '';
+				work3_name.value = '';
+
+				work_sort_2.innerHTML = '<img id="ico_right_23" src="/images/ico_right0.gif" alt="" width="9" height="9" border="0" /><br /><img id="ico_left_23" src="/images/ico_left0.gif" alt="" width="9" height="9" border="0" style="margin-top:2px;" />';
+            }
+		}
+		else
+		{
+			if (num == 1)
+			{
+				if (work2_id.value == '')
+				{
+					work1.innerHTML  = '<div class="pic_blank_cnt">&nbsp;</div><div style="width:200px; margin-top:6px; font-size:100%;">&nbsp;</div>';
+					work1.className  = 'pic_blank';
+					work1_id.value   = '';
+					work1_pict.value = '';
+					work1_prev.value = '';
+					work1_link.value = '';
+					work1_name.value = '';
+				}
+				else
+				{
+					if (work3_id.value == '')
+					{
+						if (work2_id.value == 0)
+						{
+							work1.innerHTML  = '<a href="https://st.fl.ru/users/informer-fl-ru/upload/' + work2_pict.value + '" target="_blank" class="blue" title="' + work2_name.value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work2_prev.value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(1, ' + work2_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+						}
+						else
+						{
+							work1.innerHTML  = '<a href="/users/informer-fl-ru/viewproj.php?prjid=' + work2_id.value + '" target="_blank" class="blue" title="' + work2_name.value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work2_prev.value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(1, ' + work2_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+                            if (typeof document.getElementById('ps_portfolio_work_'+work2_id.value) != 'undefined' && document.getElementById('ps_portfolio_work_'+work2_id.value) != null) document.getElementById('ps_portfolio_work_'+work2_id.value).onclick = function() { clear_work(1, work1_id.value); }
+                        }
+						work1_id.value   = work2_id.value;
+						work1_pict.value = work2_pict.value;
+						work1_prev.value = work2_prev.value;
+						work1_link.value = work2_link.value;
+						work1_name.value = work2_name.value;
+
+						work2.innerHTML  = '<div class="pic_blank_cnt">&nbsp;</div><div style="width:200px; margin-top:6px; font-size:100%;">&nbsp;</div>';
+						work2.className  = 'pic_blank';
+						work2_id.value   = '';
+						work2_pict.value = '';
+						work2_prev.value = '';
+						work2_link.value = '';
+						work2_name.value = '';
+
+						work_sort_1.innerHTML = '<img id="ico_right_12" src="/images/ico_right0.gif" alt="" width="9" height="9" border="0" /><br /><img id="ico_left_12" src="/images/ico_left0.gif" alt="" width="9" height="9" border="0" style="margin-top:2px;" />';
+					}
+					else
+					{
+						if (work2_id.value == 0)
+						{
+							work1.innerHTML  = '<a href="https://st.fl.ru/users/informer-fl-ru/upload/' + work2_pict.value + '" target="_blank" class="blue" title="' + work2_name.value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work2_prev.value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(1, ' + work2_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+						}
+						else
+						{
+							work1.innerHTML  = '<a href="/users/informer-fl-ru/viewproj.php?prjid=' + work2_id.value + '" target="_blank" class="blue" title="' + work2_name.value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work2_prev.value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(1, ' + work2_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+                            //if (typeof document.getElementById('ps_portfolio_work_'+work1_id.value) != 'undefined' && document.getElementById('ps_portfolio_work_'+work1_id.value) != null) document.getElementById('ps_portfolio_work_'+work2_id.value).onclick = function() { clear_work(1, work1_id.value); }
+                        }
+						work1_id.value   = work2_id.value;
+						work1_pict.value = work2_pict.value;
+						work1_prev.value = work2_prev.value;
+						work1_link.value = work2_link.value;
+						work1_name.value = work2_name.value;
+
+						if (work3_id.value == 0)
+						{
+							work2.innerHTML  = '<a href="https://st.fl.ru/users/informer-fl-ru/upload/' + work3_pict.value + '" target="_blank" class="blue" title="' + work3_name.value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work3_prev.value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + work3_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+						}
+						else {
+							work2.innerHTML  = '<a href="/users/informer-fl-ru/viewproj.php?prjid=' + work3_id.value + '" target="_blank" class="blue" title="' + work3_name.value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work3_prev.value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + work3_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+						}
+						work2_id.value   = work3_id.value;
+						work2_pict.value = work3_pict.value;
+						work2_prev.value = work3_prev.value;
+						work2_link.value = work3_link.value;
+						work2_name.value = work3_name.value;
+
+						work3.innerHTML  = '<div class="pic_blank_cnt">&nbsp;</div><div style="width:200px; margin-top:6px; font-size:100%;">&nbsp;</div>';
+						work3.className  = 'pic_blank';
+						work3_id.value   = '';
+						work3_pict.value = '';
+						work3_prev.value = '';
+						work3_link.value = '';
+						work3_name.value = '';
+
+						work_sort_2.innerHTML = '<img id="ico_right_23" src="/images/ico_right0.gif" alt="" width="9" height="9" border="0" /><br /><img id="ico_left_23" src="/images/ico_left0.gif" alt="" width="9" height="9" border="0" style="margin-top:2px;" />';
+					}
+				}
+			}
+		}
+	}
+
+	obj_works_select.style.display='block';
+	obj_works_add.style.display='block';
+	obj_works_no_select.style.display='none';
+
+	if (work_portf != null)
+	{
+		work_portf.innerHTML = '<input type="checkbox" class="checkbox" id="ps_portfolio_work_' + id + ' name="ps_portfolio_work_' + id + '" value="' + id + '" onclick="add_work(' + id + ');" /> <a href="javascript:void(null);" onclick="add_work(' + id + ');" class="blue">' + works_names[id] + '</a>';
+	}
+}
+
+function change_work_pos(id, num)
+{
+    var work_id_value;
+	var work_pict_value;
+	var work_prev_value;
+	var work_link_value;
+	var work_name_value;
+
+	work1 = $('td_pic_1');
+	work2 = $('td_pic_2');
+	work3 = $('td_pic_3');
+
+	work1_id = $('ps_work_1_id');
+	work2_id = $('ps_work_2_id');
+	work3_id = $('ps_work_3_id');
+
+	work1_pict = $('ps_work_1_pict');
+	work2_pict = $('ps_work_2_pict');
+	work3_pict = $('ps_work_3_pict');
+
+	work1_prev = $('ps_work_1_prev_pict');
+	work2_prev = $('ps_work_2_prev_pict');
+	work3_prev = $('ps_work_3_prev_pict');
+
+	work1_link = $('ps_work_1_link');
+	work2_link = $('ps_work_2_link');
+	work3_link = $('ps_work_3_link');
+
+	work1_name = $('ps_work_1_name');
+	work2_name = $('ps_work_2_name');
+	work3_name = $('ps_work_3_name');
+
+	work_sort_1 = $('td_pic_sort_1');
+	work_sort_2 = $('td_pic_sort_2');
+
+	work_portf = $('portfolio_work_' + id);
+
+	if (num == '12')
+	{
+		work_id_value = work1_id.value;
+		work_pict_value = work1_pict.value;
+		work_prev_value = work1_prev.value;
+		work_link_value = work1_link.value;
+		work_name_value = work1_name.value;
+
+        if (typeof document.getElementById('ps_portfolio_work_'+work1_id.value) != 'undefined' && document.getElementById('ps_portfolio_work_'+work1_id.value) != null) {
+            document.getElementById('ps_portfolio_work_'+work1_id.value).onclick = function() { clear_work(2, work2_id.value); }
+        }
+        if (typeof document.getElementById('ps_portfolio_work_'+work2_id.value) != 'undefined' && document.getElementById('ps_portfolio_work_'+work2_id.value) != null) {
+            document.getElementById('ps_portfolio_work_'+work2_id.value).onclick = function() { clear_work(1, work1_id.value); }
+        }
+        
+		if (work2_id.value == 0) // загружен
+		{
+			if (work2_prev.value != '') // превью есть
+			{
+				work1.innerHTML  = '<a href="https://st.fl.ru/users/informer-fl-ru/upload/' + work2_pict.value + '" target="_blank" class="blue" title="' + work2_name.value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work2_prev.value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(1, ' + work2_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+			}
+			else
+			{
+				work1.innerHTML  = '<div align="left" style="font-size:100%;"><a href="https://st.fl.ru/users/informer-fl-ru/upload/' + work2_pict.value + '" target="_blank" class="blue" title="' + work2_name.value + '">' + work2_pict.value + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(1, ' + work2_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+			}
+		}
+		else
+		{
+			if (work2_prev.value != '') // превью есть
+			{
+				work1.innerHTML  = '<a href="/users/informer-fl-ru/viewproj.php?prjid=' + work2_id.value + '" target="_blank" class="blue" title="' + work2_name.value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work2_prev.value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(1, ' + work2_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+			}
+			else
+			{
+				work1.innerHTML  = '<div align="left" style="font-size:100%;"><a href="/users/informer-fl-ru/viewproj.php?prjid=' + work2_id.value + '" target="_blank" class="blue" title="' + work2_name.value + '">' + work2_pict.value + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(1, ' + work2_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+			}
+		}
+		work1_id.value   = work2_id.value;
+		work1_pict.value = work2_pict.value;
+		work1_prev.value = work2_prev.value;
+		work1_link.value = work2_link.value;
+		work1_name.value = work2_name.value;
+
+		if (work_id_value == 0) // загружен
+		{
+			if (work_prev_value != '') // превью есть
+			{
+				work2.innerHTML  = '<a href="https://st.fl.ru/users/informer-fl-ru/upload/' + work_pict_value + '" target="_blank" class="blue" title="' + work_name_value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work_prev_value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + work_id_value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+			}
+			else
+			{
+				work2.innerHTML  = '<div align="left" style="font-size:100%;"><a href="https://st.fl.ru/users/informer-fl-ru/upload/' + work_pict_value + '" target="_blank" class="blue" title="' + work_name_value + '">' + work_pict_value + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + work_id_value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+			}
+		}
+		else
+		{
+			if (work_prev_value != '') // превью есть
+			{
+				work2.innerHTML  = '<a href="/users/informer-fl-ru/viewproj.php?prjid=' + work_id_value + '" target="_blank" class="blue" title="' + work_name_value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work_prev_value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + work_id_value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+			}
+			else
+			{
+				work2.innerHTML  = '<div align="left" style="font-size:100%;"><a href="/users/informer-fl-ru/viewproj.php?prjid=' + work_id_value + '" target="_blank" class="blue" title="' + work_name_value + '">' + work_pict_value + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + work_id_value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+			}
+		}
+		work2_id.value   = work_id_value;
+		work2_pict.value = work_pict_value;
+		work2_prev.value = work_prev_value;
+		work2_link.value = work_link_value;
+		work2_name.value = work_name_value;
+	}
+	else
+	{
+		if (num == '23')
+		{
+			work_id_value = work2_id.value;
+			work_pict_value = work2_pict.value;
+			work_prev_value = work2_prev.value;
+			work_link_value = work2_link.value;
+			work_name_value = work2_name.value;
+
+            if (typeof document.getElementById('ps_portfolio_work_'+work2_id.value) != 'undefined' && document.getElementById('ps_portfolio_work_'+work2_id.value) != null) {
+                document.getElementById('ps_portfolio_work_'+work2_id.value).onclick = function() { clear_work(3, work3_id.value); }
+            }
+            if (typeof document.getElementById('ps_portfolio_work_'+work3_id.value) != 'undefined' && document.getElementById('ps_portfolio_work_'+work3_id.value) != null) {
+                document.getElementById('ps_portfolio_work_'+work3_id.value).onclick = function() { clear_work(2, work2_id.value); }
+            }
+            
+			if (work2_id.value == 0) // загружен
+			{
+				if (work3_prev.value != '') // превью есть
+				{
+					work2.innerHTML  = '<a href="https://st.fl.ru/users/informer-fl-ru/upload/' + work3_pict.value + '" target="_blank" class="blue" title="' + work3_name.value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work3_prev.value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + work3_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+				}
+				else
+				{
+					work2.innerHTML  = '<div align="left" style="font-size:100%;"><a href="https://st.fl.ru/users/informer-fl-ru/upload/' + work3_pict.value + '" target="_blank" class="blue" title="' + work3_name.value + '">' + work3_pict.value + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + work3_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+				}
+			}
+			else
+			{
+				if (work3_prev.value != '') // превью есть
+				{
+					work2.innerHTML  = '<a href="/users/informer-fl-ru/viewproj.php?prjid=' + work3_id.value + '" target="_blank" class="blue" title="' + work3_name.value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work3_prev.value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + work3_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+				}
+				else
+				{
+					work2.innerHTML  = '<div align="left" style="font-size:100%;"><a href="/users/informer-fl-ru/viewproj.php?prjid=' + work3_id.value + '" target="_blank" class="blue" title="' + work3_name.value + '">' + work3_pict.value + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(2, ' + work3_id.value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+				}
+			}
+			work2_id.value   = work3_id.value;
+			work2_pict.value = work3_pict.value;
+			work2_prev.value = work3_prev.value;
+			work2_link.value = work3_link.value;
+			work2_name.value = work3_name.value;
+
+			if (work_id_value == 0) // загружен
+			{
+				if (work_prev_value != '') // превью есть
+				{
+					work3.innerHTML  = '<a href="https://st.fl.ru/users/informer-fl-ru/upload/' + work_pict_value + '" target="_blank" class="blue" title="' + work_name_value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work_prev_value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(3, ' + work_id_value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+				}
+				else
+				{
+					work3.innerHTML  = '<div align="left" style="font-size:100%;"><a href="https://st.fl.ru/users/informer-fl-ru/upload/' + work_pict_value + '" target="_blank" class="blue" title="' + work_name_value + '">' + work_pict_value + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(3, ' + work_id_value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+				}
+			}
+			else
+			{
+				if (work_prev_value != '') // превью есть
+				{
+					work3.innerHTML  = '<a href="/users/informer-fl-ru/viewproj.php?prjid=' + work_id_value + '" target="_blank" class="blue" title="' + work_name_value + '"><div align="left"><img src="https://st.fl.ru/users/informer-fl-ru/upload/' + work_prev_value + '" alt="" border="0"></div></a><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(3, ' + work_id_value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+				}
+				else
+				{
+					work3.innerHTML  = '<div align="left" style="font-size:100%;"><a href="/users/informer-fl-ru/viewproj.php?prjid=' + work_id_value + '" target="_blank" class="blue" title="' + work_name_value + '">' + work_pict_value + '</a></div><div style="margin-top:6px; font-size:100%;"><a href="javascript:clear_work(3, ' + work_id_value + ');"><img src="/images/ico_close.gif" alt="удалить" width="9" height="9" border="0" style="margin-right: 6px" />Удалить</a></div>';
+				}
+			}
+			work3_id.value   = work_id_value;
+			work3_pict.value = work_pict_value;
+			work3_prev.value = work_prev_value;
+			work3_link.value = work_link_value;
+			work3_name.value = work_name_value;
+		}
+	}
+}
+
+function dialogue_toggle(num) {
+	el_top = $('toggle_dialogue_' + num);
+	el_div = $('po_comments_' + num);
+	el_tlk = $('po_dialogue_talk_' + num);
+	if(el_div) {
+  	if (el_top.innerHTML == 'Свернуть диалог') {
+        if(el_div.get('class')) el_div.className = 'po_comments'; 
+  	} else {
+  		if(el_div.get('class')) el_div.className = 'po_comments_hide';
+    }
+	}
+	if (el_tlk.style.display == 'none')
+	{
+		el_tlk.style.display = 'block';
+	}
+	else
+	{
+		el_tlk.style.display = 'none';
+	}
+	toggle_link_text(num);
+}
+//-->
+</script>
+
+
+
+   
+                		     <div class="b-layout 
+    b-layout_margright_270    ">
+    <div class="b-free-share" style="height:25px; float:right; width:260px;">
+        <div class="b-free-share__icons b-free-share__icons_float_right"> 
+						  <span class="b-free-share__txt b-free-share__txt_top_7">Поделиться:</span>
+						  <span id="yashare" class="b-free-share__yashare" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,lj,gplus,blogger" data-yashareTitle="Добрый день товарищи.                                                 Задача:                  " data-yashareLink="https://www.fl.ru/projects/1940326/nujen-spetsialist-dlya-obrabotki-fotografii-lyudey-v-sotssetyah.html"></span><span
+						   class="b-free-share__pinterest"><a href="http://pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.fl.ru%2Fprojects%2F1940326%2Fnujen-spetsialist-dlya-obrabotki-fotografii-lyudey-v-sotssetyah.html&description=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9+%D0%B4%D0%B5%D0%BD%D1%8C+%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D0%B8%D1%89%D0%B8.+++++++++++++++++++++++++++++++++++++++++++++++++%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0%3A++++++++++++++++++" class="pin-it-button" count-layout="none" target="_blank"></a></span></div><div class="b-free-share__like b-free-share__like_padleft_10">
+						  <div id="fb-root"></div>
+						  <div class="fb-like" data-href="https%3A%2F%2Fwww.fl.ru%2Fprojects%2F1940326%2Fnujen-spetsialist-dlya-obrabotki-fotografii-lyudey-v-sotssetyah.html" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div><script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script><script type='text/javascript'>
+                var YaShareInstance = new Ya.share({
+                    element: 'yashare',
+                    link: 'https://www.fl.ru/projects/1940326/nujen-spetsialist-dlya-obrabotki-fotografii-lyudey-v-sotssetyah.html',
+                    /*description: 'Добрый день товарищи.                                                 Задача:                   - <a href=\"https://www.fl.ru/projects/1940326/nujen-spetsialist-dlya-obrabotki-fotografii-lyudey-v-sotssetyah.html\">читать дальше...</a>',*/
+                    serviceSpecific: {
+                        vkontakte: {
+                            /*title: 'Добрый день товарищи.                                                 Задача:                  ',*/
+                            title: 'Добрый день товарищи.                                                 Задача:                       '
+                        },
+                        blogger: {
+                            title: 'Добрый день товарищи.                                                 Задача:                   читать дальше...'
+                        },
+                        twitter: {
+                            title: 'Добрый день товарищи.                                                 Задача:                  ',
+                            link: 'https://www.fl.ru/projects/1940326'
+                        },
+                        yaru: {
+                            title: 'Добрый день товарищи.                                                 Задача:                        читать дальше...'
+                        },
+                        lj: {
+                            link: 'Добрый день товарищи.                                                 Задача:                   - <a href=\"https://www.fl.ru/projects/1940326/nujen-spetsialist-dlya-obrabotki-fotografii-lyudey-v-sotssetyah.html\">читать дальше...</a>'
+                        },
+                        blogger: {
+                            description: 'Добрый день товарищи.                                                 Задача:                       '
+                        }
+                    },
+                    elementStyle: {
+                        type: 'none',
+                        quickServices: ['yaru','vkontakte','facebook','twitter','lj','gplus','blogger','pinterest']
+                    }
+                });
+            </script></div>    </div>
+  </div>
+
+
+                <h1 class="b-layout__title b-page__title_ellipsis" id="prj_name_1940326">Нужен Специалист для Обработки Фотографии Людей в Соц.Сетях!</h1>
+                <div class="b-layout b-layout_float_right">  <div class="b-banner b-banner_layout_vert">
+    <script type="text/javascript">window.getBannerTargeting = function() { return CUSTOM_TARGET; }</script>
+
+    <div id="adriver_banner_806064813"></div>
+    <div class="b-layout__txt b-layout__txt_padbot_10 b-layout__txt_right"><a class="b-layout__link b-layout__link_fontsize_11 b-layout__link_color_0f71c8" href="https://www.adeasy.ru/website/fl.ru/2064" target="_blank">Реклама на этом месте</a></div>
+    <script type="text/javascript">
+    (function(){
+      new adriver("adriver_banner_806064813", {sid:194290, bt:52, bn:2, keyword: CUSTOM_TARGET});
+    })()
+    </script>
+  </div>
+
+<script type="text/javascript">document.write('');</script>
+</div>
+        
+        <div class="b-layout b-layout_margright_270">
+
+ 
+ 
+                        
+<table class="b-layout__table b-layout__table_width_full b-layout__table_bordbot_df b-layout__table_2bordtop_df b-layout__table_margbot_20">
+   <tr class="b-layout__tr">
+      <td class="b-layout__td b-layout__td_width_60 b-layout__td_padtb_10">
+                        <img src="/images/no_foto.gif" alt="" width="51" height="51" class="lpl-avatar">
+                </td>
+      <td class="b-layout__td b-layout__td_padtb_10  b-layout__td_width_270">
+          <div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_bold b-layout__txt_padbot_5">
+                                        <span class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_color_6db335">Заказчик</span>  
+                      
+              
+                                                </div>
+
+          
+                    <div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_padbot_5">
+              Отзывы фри-лансеров:
+              <span class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_color_6db335">+&nbsp;0</span>
+              <span class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_color_808080">0</span>
+              <span class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_color_c10600">-&nbsp;0</span>
+          </div>
+                    <div class="b-layout__txt b-layout__txt_fontsize_11">Зарегистрирован на сайте 2 года и 11 месяцев</div>
+      </td>
+      <td class="b-layout__td b-layout__td_padtb_10 b-layout__td_padleft_10">
+		        </td>
+      <td class="b-layout__td b-layout__td_padtb_10 b-layout__td_right">
+                       <div class="b-layout__txt b-layout__txt_fontsize_18">Бюджет:
+                                    <span class="b-layout__bold">
+                                             3200&nbsp;р./проект                                        </span>
+                </div>
+              		             <div class="b-layout__txt b-layout__txt_fontsize_11">92.11&nbsp;$&nbsp;—&nbsp;67.17&nbsp;&euro;</div>
+                   </td>
+   </tr>
+</table>
+                        
+                        
+                        
+                        
+
+
+                                <div id="project_info_1940326" class="b-layout b-layout_padleft_60 b-layout_2bordbot_dfdfdf0 b-layout_margbot_30 b-layout_overflow_hidden">
+                    
+                    
+                                                    
+                
+          		
+								
+				
+				                
+          			
+          			
+                 
+                 
+                 
+                        <script type="text/javascript">
+                            function updateFavorites(elm, pid) {
+                                var req = new Request({
+                                    url: '/projects/index.php?p=changePrjFavState&pid='+pid,
+                                    onSuccess: function(data) {
+                                        if (data == 2) {
+                                            $(elm).removeClass('b-icon__star_yellow');
+                                            $(elm).set('title', 'Добавить в Избранное');
+                                        } else if (data == 1) {
+                                            $(elm).addClass('b-icon__star_yellow');
+                                            $(elm).set('title', 'Убрать из Избранного');
+                                        }
+                                    }
+                                }).post('action=changePrjFavState&u_token_key=');
+                            }
+                        </script>
+            																															
+                
+            			<div id="projectp1940326" class="b-layout__txt b-layout__txt_padbot_20">
+                                                        Добрый день товарищи.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br /> <br />Задача:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br /> <br />- Нужен Специалист для Обработки Фотографии Людей в Соц.Сетях на Постоянной Основе!&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <br /> <br />Цель:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br /> <br />- Обрабатывать Фотографии Лиц Людей до Модельной Внешности (Чтобы Нравилось Всем) + Наложение Водного Знака Фирмы!&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <br /> <br />- Выбрасывать Обработанный Материал в Группу VK.&nbsp;&nbsp; <br /> <br />Условие:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br /> <br />- Работать с программами обработки фото на высшем уровне.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <br /> <br />- Оплата за обработку одного изображения &#150; 1,5р, Фотографий Много.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <br /> <br />- Работа и оплата только по факту или гаранта.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br /> <br />Жду ваших ответов.                        </div>
+                
+                
+
+                <div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_bold">Разделы:</div>
+                <div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_padbot_20">Оптимизация (SEO)</div>
+                
+				                    	
+                
+                
+                
+                
+                
+                
+                    <div class="b-layout__txt b-layout__txt_padbot_30">
+                        <div class="b-layout__txt b-layout__txt_bold b-layout__txt_fontsize_11">Опубликован:</div>
+                        <div class="b-layout__txt b-layout__txt_fontsize_11">
+                             20.05.2014 | 12:58                               
+                        </div>
+						                    </div>
+                    
+                    
+                                
+                                                        						                                                       <div class="b-buttons b-buttons_padbot_30">
+								                                     <div class="b-layout__txt b-layout__txt_padtop_10 b-layout__txt_float_right i-shadow">        <script>
+            var uploader = new qq.UploaderFactory({
+                template: '<div class="b-icon-layout qq-upload-error" style="display: none;">                                <table class="b-icon-layout__table b-icon-layout__table_margtop_10">                                        <tr>                                                <td class="b-icon-layout__icon">                <img class="b-fon__loader" src="/images/ico_error.gif" alt="" height="18" width="22">            </td>                                                <td class="b-icon-layout__files" colspan="2"><div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_padtop_3 b-layout__txt_padleft_10 qq-upload-error-text"></div></td>                                                <td class="b-icon-layout__operate b-icon-layout__operate_padleft_10" style="vertical-align:middle;"><a class="b-icon-layout__link b-icon-layout__link_dot_666 qq-upload-error-close" href="javascript:void(0)">Скрыть</a></td>        </tr>                                </table>                        </div><div class="qq-upload-list" style="overflow:auto; max-height:150px;"></div><div class="b-file b-file_padtop_5 b-file_padbot_10">    <input type="hidden" name="IDResource[]" value="{IDResource}" id="abuse_resource_file"/>    <table cellspacing="0" cellpadding="0" border="0" class="b-file_layout">        <tbody>            <tr>                <td class="b-file__button">                                <div class="b-file__wrap  b-file__wrap_margleft_-3">                        <a class="b-button b-button_rectangle_color_transparent qq-upload-button" href="javascript:void(0)">                            <span class="b-button__b1">                                <span class="b-button__b2">                                    <span class="b-button__txt">{uploadButtonText}</span>                                </span>                            </span>                        </a>                    </div>                </td>                <td class="b-file__text">                    <div class="b-filter" style="z-index: 10;">                        <div class="b-filter__body b-filter__body_padtop_10 qq-popup-info">                            <a class="b-filter__link b-filter__link_fontsize_11 b-filter__link_dot_41 b-fileinfo" href="javascript:void(0)">{infoButton}</a>                        </div>                    </div>                </td>            </tr>        </tbody>    </table>																			</div> ',
+                fileTemplate: '<div class="qq-progress-bar" id="uploader.progress{idFile}" style="display:none">    <div class="quiz-progress-num qq-progress-bar-percent" style="width:0%">0%</div>    <div class="quiz-progress-bar">        <div class="quiz-progress-bar qq-progress-bar-line" style="width:0%;background-color:#74bb54;"></div>    </div></div><div class="b-icon-layout qq-upload-spinner" id="uploader.spinner{idFile}" style="display: none;">        <table class="b-icon-layout__table b-icon-layout__table_margtop_10">                                           <tr>                                                   <td class="b-icon-layout__icon">                    <img class="b-fon__loader load-spinner" src="/images/loader-white.gif" alt="" height="24" width="24">                </td>                                                <td class="b-icon-layout__files qq-upload-spinner-text">Идет загрузка файла…</td>                                              <td class="b-icon-layout__size">&nbsp;</td>                                                   <td class="b-icon-layout__operate">&nbsp;</td>                                           </tr>                                </table>                       </div> <div class="b-icon-layout" id="uploader.file{idFile}" file="" style="display:none">    <table class="b-icon-layout__table b-icon-layout__table_margtop_10">                                                <tr>                                                        <td class="b-icon-layout__icon"><i class="b-icon qq-upload-ico"></i></td>                                                       <td class="b-icon-layout__files"><div class="b-layout__txt b-layout__txt_nowrap"><a class="b-layout__link  qq-upload-file" href="javascript:void(0)" target="_blank">{fileName}</a></div></td>                                                       <td class="b-layout__one b-layout__one_padright_10"><div class="b-layout__txt b-layout__txt_nowrap qq-upload-size"></div></td>                    <td class="b-icon-layout__operate"><div class="b-layout__txt"><a class="b-layout__link  b-layout__link_dot_c10600 qq-upload-delete" href="javascript:void(0)">Удалить</a></div></td>                                               </tr>    </table></div>',
+                popupTemplate: '<div class="b-shadow b-filter__toggle b-shadow__margleft_-110  b-shadow_top_30 hideForBodyClick">                    <div class="b-shadow__body b-shadow__body_pad_15 b-shadow_width_270 b-shadow__body_bg_fff">                        <div class="b-shadow__txt b-shadow__txt_fontsize_11 b-shadow__txt_padbot_5">Разрешается добавлять не более <span class="b-shadow__txt b-shadow__txt_bold">{maxCountFiles}</span> общим объемом не более {maxSizeFiles}.</div>                        <div class="b-shadow__txt b-shadow__txt_fontsize_11 qq-upload-allowedExtensions">Формат: {allowedExtensions}</div>                        <div class="b-shadow__txt b-shadow__txt_fontsize_11 qq-upload-restrictedExtensions">Запрещенные форматы: {restrictedExtensions}</div>                    </div>    <div class="b-shadow__icon_nosik"></div>    <div class="b-shadow__icon_close qq-popup-close"></div></div>',
+                WDCPREFIX: 'https://st.fl.ru',
+                umask: '00400-00600-1001001-'
+            });
+                        window.addEvent('domready', function() {
+                                uploader.create('abuse_uploader', {"umask":"00400-00600-1001001-prj_abuse","validation":{"allowedExtensions":["jpg","gif","png","jpeg"],"restrictedExtensions":[],"sizeLimit":5242880},"text":{"uploadButton":"\u041f\u0440\u0438\u043a\u0440\u0435\u043f\u0438\u0442\u044c \u0444\u0430\u0439\u043b\u044b"}});        
+                            });
+                    </script>    
+        <input type="hidden" name="project_id" id="project_id_abuse" value="1940326">
+<input type="hidden" name="prj_abuse_id" id="prj_abuse_id" value="0">
+<!-- окно для работодателей -->
+<div class="b-shadow b-shadow_hide b-shadow_bottom_20 b-shadow_width_400 b-shadow_zindex_11 b-shadow_left_-68" id="abuse_employer_project_popup">
+                    <div class="b-shadow__body b-shadow__body_bg_fff b-shadow__body_pad_20">
+
+                                                    <div class="b-layout__txt b-layout__txt_bold b-layout__txt_fontsize_15 b-layout__txt_padbot_5 abuse-cause-block " id="abuse6">
+                                <img class="b-layout__pic b-layout__pic_margleft_-15 abuse-check b-layout__txt_hide" src="/images/galka.png">
+                                <span class="abuse-check-name "></span>
+                                <a class="b-layout__link b-layout__link_bold b-layout__link_bordbot_dot_0f71c8 abuse-cause-link " href="javascript:void(0)" data-cause="6" data-textarea="0">Уточнить раздел</a>
+                            </div>
+                                                    <div class="b-layout__txt b-layout__txt_bold b-layout__txt_fontsize_15 b-layout__txt_padbot_5 abuse-cause-block " id="abuse7">
+                                <img class="b-layout__pic b-layout__pic_margleft_-15 abuse-check b-layout__txt_hide" src="/images/galka.png">
+                                <span class="abuse-check-name "></span>
+                                <a class="b-layout__link b-layout__link_bold b-layout__link_bordbot_dot_0f71c8 abuse-cause-link " href="javascript:void(0)" data-cause="7" data-textarea="0">Недостаточно информации</a>
+                            </div>
+                                                    <div class="b-layout__txt b-layout__txt_bold b-layout__txt_fontsize_15 b-layout__txt_padbot_5 abuse-cause-block " id="abuse8">
+                                <img class="b-layout__pic b-layout__pic_margleft_-15 abuse-check b-layout__txt_hide" src="/images/galka.png">
+                                <span class="abuse-check-name "></span>
+                                <a class="b-layout__link b-layout__link_bold b-layout__link_bordbot_dot_0f71c8 abuse-cause-link " href="javascript:void(0)" data-cause="8" data-textarea="0">Уточнить бюджет</a>
+                            </div>
+                        
+                    </div>
+    <span class="b-shadow__icon b-shadow__icon_close"></span>
+    <span class="b-shadow__icon  b-shadow__icon_nosik-bot" style=" left:270px"></span>
+</div>
+<!-- // окно для работодателей -->
+
+<!-- окно для модераторов -->                           
+<div class="b-shadow b-shadow_hide b-shadow_bottom_20 b-shadow_width_400 b-shadow_zindex_11 b-shadow_left_-68" id="abuse_moderator_project_popup">
+                    <div class="b-shadow__body b-shadow__body_bg_fff b-shadow__body_pad_20">
+
+                        <span id="form_abuse" style="display:none">
+                            <div class="b-textarea b-textarea_margbot_10">
+                                <textarea class="b-textarea__textarea b-textarea_noresize" name="prj_abuse_msg" id="prj_abuse_msg" cols="" rows=""></textarea>
+                            </div>
+                            <span id="abuse_uploader"></span>
+                            <div class="b-buttons b-buttons_padbot_20">   
+                                <a href="javascript:void(0)" class="b-button b-button_rectangle_color_green abuse-btn-send">
+                                    <span class="b-button__b1">
+                                        <span class="b-button__b2">
+                                            <span class="b-button__txt">Пожаловаться</span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        </span>
+                        
+                                                    <div class="b-layout__txt b-layout__txt_bold b-layout__txt_fontsize_15 b-layout__txt_padbot_5 abuse-cause-block " id="abuse3">
+                                <img class="b-layout__pic b-layout__pic_margleft_-15 abuse-check b-layout__txt_hide" src="/images/galka.png">
+                                <span class="abuse-check-name "></span>
+                                <a class="b-layout__link b-layout__link_bold b-layout__link_bordbot_dot_0f71c8 abuse-cause-link " href="javascript:void(0)" data-cause="3" data-textarea="1" data-required="0">Скрытый конкурс</a>
+                            </div>
+                                                    <div class="b-layout__txt b-layout__txt_bold b-layout__txt_fontsize_15 b-layout__txt_padbot_5 abuse-cause-block " id="abuse1">
+                                <img class="b-layout__pic b-layout__pic_margleft_-15 abuse-check b-layout__txt_hide" src="/images/galka.png">
+                                <span class="abuse-check-name "></span>
+                                <a class="b-layout__link b-layout__link_bold b-layout__link_bordbot_dot_0f71c8 abuse-cause-link " href="javascript:void(0)" data-cause="1" data-textarea="1" data-required="0">Реклама</a>
+                            </div>
+                                                    <div class="b-layout__txt b-layout__txt_bold b-layout__txt_fontsize_15 b-layout__txt_padbot_5 abuse-cause-block " id="abuse9">
+                                <img class="b-layout__pic b-layout__pic_margleft_-15 abuse-check b-layout__txt_hide" src="/images/galka.png">
+                                <span class="abuse-check-name "></span>
+                                <a class="b-layout__link b-layout__link_bold b-layout__link_bordbot_dot_0f71c8 abuse-cause-link " href="javascript:void(0)" data-cause="9" data-textarea="0" data-required="0">Дубль проекта</a>
+                            </div>
+                                                    <div class="b-layout__txt b-layout__txt_bold b-layout__txt_fontsize_15 b-layout__txt_padbot_5 abuse-cause-block " id="abuse10">
+                                <img class="b-layout__pic b-layout__pic_margleft_-15 abuse-check b-layout__txt_hide" src="/images/galka.png">
+                                <span class="abuse-check-name "></span>
+                                <a class="b-layout__link b-layout__link_bold b-layout__link_bordbot_dot_0f71c8 abuse-cause-link " href="javascript:void(0)" data-cause="10" data-textarea="1" data-required="0">Проект не предполагает оплаты</a>
+                            </div>
+                                                    <div class="b-layout__txt b-layout__txt_bold b-layout__txt_fontsize_15 b-layout__txt_padbot_5 abuse-cause-block " id="abuse11">
+                                <img class="b-layout__pic b-layout__pic_margleft_-15 abuse-check b-layout__txt_hide" src="/images/galka.png">
+                                <span class="abuse-check-name "></span>
+                                <a class="b-layout__link b-layout__link_bold b-layout__link_bordbot_dot_0f71c8 abuse-cause-link " href="javascript:void(0)" data-cause="11" data-textarea="0" data-required="0">Тестовое задание без оплаты</a>
+                            </div>
+                                                    <div class="b-layout__txt b-layout__txt_bold b-layout__txt_fontsize_15 b-layout__txt_padbot_5 abuse-cause-block " id="abuse12">
+                                <img class="b-layout__pic b-layout__pic_margleft_-15 abuse-check b-layout__txt_hide" src="/images/galka.png">
+                                <span class="abuse-check-name "></span>
+                                <a class="b-layout__link b-layout__link_bold b-layout__link_bordbot_dot_0f71c8 abuse-cause-link " href="javascript:void(0)" data-cause="12" data-textarea="0" data-required="0">Нарушение авторских прав</a>
+                            </div>
+                                                    <div class="b-layout__txt b-layout__txt_bold b-layout__txt_fontsize_15 b-layout__txt_padbot_5 abuse-cause-block " id="abuse14">
+                                <img class="b-layout__pic b-layout__pic_margleft_-15 abuse-check b-layout__txt_hide" src="/images/galka.png">
+                                <span class="abuse-check-name "></span>
+                                <a class="b-layout__link b-layout__link_bold b-layout__link_bordbot_dot_0f71c8 abuse-cause-link " href="javascript:void(0)" data-cause="14" data-textarea="0" data-required="0">Проект «Вакансия»</a>
+                            </div>
+                                                    <div class="b-layout__txt b-layout__txt_bold b-layout__txt_fontsize_15 b-layout__txt_padbot_5 abuse-cause-block " id="abuse5">
+                                <img class="b-layout__pic b-layout__pic_margleft_-15 abuse-check b-layout__txt_hide" src="/images/galka.png">
+                                <span class="abuse-check-name "></span>
+                                <a class="b-layout__link b-layout__link_bold b-layout__link_bordbot_dot_0f71c8 abuse-cause-link " href="javascript:void(0)" data-cause="5" data-textarea="1" data-required="1">Другое</a>
+                            </div>
+                        
+                    </div>
+    <span class="b-shadow__icon b-shadow__icon_close"></span>
+    <span class="b-shadow__icon b-shadow__icon_right_32 b-shadow__icon_nosik-bot"></span>
+</div>
+<!-- // окно для модераторов -->                                        
+                                        <span class="b-layout__txt_color_c10600">Пожаловаться на проект: 
+                                        &nbsp;&nbsp;&nbsp;<a class="b-layout__link b-layout__link_dot_c10600 abuse-employer-project-link" href="javascript:void(0)">Работодателю</a>
+                                        &nbsp;/&nbsp; <a class="b-layout__link b-layout__link_dot_c10600 abuse-moderator-project-link" href="javascript:void(0)">Модератору</a>
+                                        </span> 
+                                        &#160; <img class="b-layout__pic b-layout__pic_absolute b-layout__txt_hide" id="project_abuse_success" style="top:-8px; left:400px" src="/images/thanks.png" width="80" height="36">
+                                        
+                                         
+                                    </div>
+                                                                 
+                                 <a class="b-button b-button_flat b-button_flat_green" href="#new_offer" onClick="yaCounter6051055.reachGoal('get_answer_project');"  >Ответить на проект</a>&#160;&#160;&#160;
+                                 <span class="b-layout__txt b-layout__txt_valign_middle">
+                                                                        <a class='b-layout__link' href="/projects/">Посмотреть другие проекты</a>
+                                 </span>
+                             </div>
+						                                                     
+				 
+													
+                    <div id="warnreason-p1940326" style="display:none; margin-bottom: 5px;">&nbsp;</div>
+                    <div id="project-reason-1940326" style="margin-top: 10px;display: none">
+                        &nbsp;                    </div>
+                     
+                </div>
+
+
+		
+	<div id="note_user" class="b-shadow b-shadow_center b-shadow_width_450 b-shadow_hide b-shadow_zindex_11">
+					<div class="b-shadow__body b-shadow__body_bg_fff b-shadow__body_pad_15">
+
+			 <form class="b-popup__body " action="">
+			    <input type="hidden" name="rating" id="note_rating" value="0">
+                <input type="hidden" name="userid" id="note_userid" value="">
+                <input type="hidden" name="userid" id="note_action" value=""> 
+				<div class="b-textarea">
+					<textarea class="b-textarea__textarea b-textarea__textarea__height_140" id="notesTxt" name="" cols="80" onkeyup="checknote(this)" rows="5"></textarea>
+				</div>
+				 <div class="">
+					<div class="b-buttons">
+						<a class="b-buttons__link  b-popup__delete" href="javascript:void(0)" onclick="$(this).getParent('div.b-shadow').toggleClass('b-shadow_hide'); return false;">Отменить</a>
+						<a class="b-button b-button_rectangle_transparent" onclick="xajax_addNotes($('note_userid').get('value'), $('notesTxt').get('value'), $('note_rating').get('value'), $('note_action').get('value'), 101)" href="javascript:void(0)">
+							<span class="b-button__b1">
+								<span class="b-button__b2 b-button__b2_padlr_5">
+									<span class="b-button__txt">Сохранить</span>
+								</span>
+							</span>
+						</a>
+					</div>
+				 </div>
+			 </form>
+
+
+
+					</div>
+    </div>
+
+
+	
+		
+</div>
+        
+
+
+ 
+ <a name="offers"></a>
+    
+
+
+
+
+<div class="b-layout b-layout_margright_270">
+            
+                
+            <div class="answ-bord"></div><a name="new_offer"></a><h1 class="b-layout__title">Ваш ответ по проекту</h1><script type="text/javascript">
+var ac_sum = 0;
+var op = [];
+op[1] = 30;
+op[5] = 120;
+op[10] = 210;
+var is_disabled_button = -1;
+</script>
+
+<div class="b-pay-answer b-fon b-fon_bg_ffeda9 b-fon_padbot_10">
+	<b class="b-fon__b1"></b>
+	<b class="b-fon__b2"></b>
+	<div class="b-fon__body b-fon__body_pad_5_10">
+        <div class="b-pay-answer__txt"><span class="b-layout__txt b-layout__txt_bold">Осталось ответов на проекты: 5</span>&#160;&mdash;&#160;<a class="b-layout__link b-layout__link_inline-block b-layout__link_lineheight_1" href="/payed/">Купите аккаунт</a> <a class="b-layout__link  b-layout__link_inline-block b-layout__link_lineheight_1" href="/payed/"><span title="PRO" class="b-icon b-icon__pro b-icon__pro_f"></span></a> <a class="b-layout__link  b-layout__link_inline-block b-layout__link_lineheight_1" href="/payed/">и отвечайте без ограничений</a>
+			
+		</div>
+		
+	</div>
+	<b class="b-fon__b2"></b>
+	<b class="b-fon__b1"></b>
+</div>
+
+      			                 <div class="b-layout b-layout_padbot_30 b-layout_2bordbot_dfdfdf0 b-layout_margbot_30">
+                    <form id="form_add_offer" name="form_add_offer" action="/projects/1940326/nujen-spetsialist-dlya-obrabotki-fotografii-lyudey-v-sotssetyah.html" method="POST" onKeyPress="if((event.ctrlKey) && ((event.keyCode==10)||(event.keyCode==13))) {this.submit()}">
+                    <input id="ps_action" name="action" type="hidden" value="add" />
+                    <input id="ps_pid" name="pid" type="hidden" value="1940326" />
+                    <input name="f" type="hidden" value="" />
+                    <input name="u" type="hidden" value="" />
+                    <input name="edit" type="hidden" value="0" />
+                    
+                <div class="b-layout ">
+                    <table class="b-layout__table b-layout__table_width_full">
+                    <tr class="b-layout__tr">
+                        <td class="b-layout__td b-layout__td_width_110 b-layout__td_padbot_20" ><div class="b-layout__txt b-layout__txt_fontsize_11  b-layout__txt_bold">Стоимость</div></td>
+                        <td class="b-layout__td b-layout__td_padbot_20" >
+                        <input style="width:60px" name="ps_cost_from" id="ps_cost_from" value="" maxlength="8" />
+                                         <select name="ps_cost_type" id="prj_cost_type" style="position:relative; top:-1px">
+                          <option value="0" selected>USD</option>
+                          <option value="2" selected>Руб</option>
+                          <option value="1" >Euro</option>
+                      </select>
+                  &#160;&#160;&#160;&#160;&#160;
+                  <span class="this-little-block-wiil-act-like-a-divider"></span>
+               <span class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_bold">Срок</span> 
+                         <input style="width:60px;" name="ps_time_from" id="ps_time_from" value="" maxlength="3" /> 
+                                          <select name="ps_time_type" id="prj_time_type" style="position:relative; top:-1px">
+                            <option value="0" selected>в часах</option>
+                            <option value="1">в днях</option>
+                            <option value="2">в месяцах</option>
+                        </select>
+               </td>
+                    </tr>
+                                                            <tr class="b-layout__tr">
+                        <td class="b-layout__td b-layout__td_width_110 b-layout__td_padbot_10"><div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_bold b-layout__txt_nowrap">Текст ответа</div></td>
+                        <td class="b-layout__td b-layout__td_padbot_10">
+						                
+                            <div class="b-layout b-layout_width_240 b-layout_float_right b-page__desktop" style="margin-right:-270px;"> 
+                               <div class="b-promo__tooltip">                       
+                                   <div class="b-layout__txt b-layout__txt_color_6db335 b-layout__txt_fontsize_15 b-layout__txt_italic b-layout__txt_center">Хотите, чтобы ваш ответ<br>привлек внимание, и работа<br><span class="b-layout__bold">досталась именно вам</span>?</div>
+                                   <div class="b-buttons b-buttons_center"><a href="#" class="b-button b-button_flat b-button_flat_green b-button_margtop_10" onClick="yaCounter6051055.reachGoal('fnew_bill_pro'); quickPRO_show(); return false;">Да, хочу!</a></div>
+                               </div>
+                            </div>                    
+                                                
+                        <div class="b-textarea">
+                        <textarea class="b-textarea__textarea" cols="60" rows="7" id="ps_text" name="ps_text" style="resize: none;min-height:130px" placeholder="Кратко опишите суть вашего предложения, условия сотрудничества, вопросы и необходимые требования к заказчику перед началом работы."></textarea>
+                        </div>
+                        
+                                                </td>
+                    </tr>
+                  </table>
+                </div>
+                  
+                  <table class="b-layout__table b-layout__table_width_full">
+                    <tr class="b-layout__tr">
+                        <td class="b-layout__td b-layout__td_width_110 b-layout__td_padbot_15"></td>
+                        <td class="b-layout__td b-layout__td_padbot_15">
+                                                        <div class="b-check b-check_padbot_10">
+                                <input id="ps_for_customer_only" type="checkbox" class="b-check__input" name="ps_for_customer_only" value="1" > 
+                                <label class="b-check__label" for="ps_for_customer_only">Скрыть ответ, сделав его видимым только заказчику (автору проекта)</label>
+                            </div>
+                                                                                    <div class="b-check">
+                                <input id="prefer_sbr" name="prefer_sbr" class="b-check__input" type="checkbox" value="1"  />
+                                <label for="prefer_sbr" class="b-check__label">Предпочитаю сотрудничество через сервис <a href="/promo/bezopasnaya-sdelka/" target="_blank" class="b-layout__link">Безопасная Сделка</a> <a class="b-layout__link " href="/promo/bezopasnaya-sdelka/" target="_blank" title="Безопасная Сделка"><span class="b-icon b-icon__shield relative top_1 margleft_5"></span></a></label>
+                            </div>
+                                
+                        </td>
+                    </tr>
+              
+            <tr class="b-layout__tr">
+                <td class="b-layout__td b-layout__td_width_110 b-project-answer-editor-contacts-title">
+                    <div class="b-layout__txt b-layout__txt_bold b-layout__txt_padtop_5  b-layout__txt_fontsize_11">Контакты</div>
+                </td>
+                <td class="b-layout__td b-layout__td_padbot_20">
+                   <table class="b-layout__table b-project-answer-editor-contacts-collection">
+                                              <tr class="b-layout__tr">
+                            <td class="b-layout__one b-layout__one_width_80"><div class="b-layout__txt b-layout__txt_bold b-layout__txt_padtop_5 b-layout__txt_fontsize_11" >Телефон</div></td>
+                            <td class="b-layout__one b-layout__one_width_220 ">
+                                <div class="b-layout__txt b-layout__txt_padtop_5 b-layout__txt_fontsize_11 toggler-view " ></div>
+                                <div class="b-combo b-combo_hide toggler-edit">
+                                    <div class="b-combo__input">
+                                        <input class="b-combo__input-text contacts-input" name="contacts[phone]" type="text" size="80" value="" maxlength="100"/>
+                                    </div>
+                                </div>
+                                                            </td>
+                            <td class="b-layout__one b-layout__one_padleft_20"><div class="b-layout__txt b-layout__txt_padtop_5 b-layout__txt_fontsize_11" ><a class="b-layout__link b-layout__link_bordbot_dot_0f71c8 toggler-contacts" href="javascript:void(0)">изменить</a></div></td>
+                        </tr>
+                                              <tr class="b-layout__tr">
+                            <td class="b-layout__one b-layout__one_width_80"><div class="b-layout__txt b-layout__txt_bold b-layout__txt_padtop_5 b-layout__txt_fontsize_11" >Сайт</div></td>
+                            <td class="b-layout__one b-layout__one_width_220 ">
+                                <div class="b-layout__txt b-layout__txt_padtop_5 b-layout__txt_fontsize_11 toggler-view " ></div>
+                                <div class="b-combo b-combo_hide toggler-edit">
+                                    <div class="b-combo__input">
+                                        <input class="b-combo__input-text contacts-input" name="contacts[site]" type="text" size="80" value="" maxlength="100"/>
+                                    </div>
+                                </div>
+                                                            </td>
+                            <td class="b-layout__one b-layout__one_padleft_20"><div class="b-layout__txt b-layout__txt_padtop_5 b-layout__txt_fontsize_11" ><a class="b-layout__link b-layout__link_bordbot_dot_0f71c8 toggler-contacts" href="javascript:void(0)">изменить</a></div></td>
+                        </tr>
+                                              <tr class="b-layout__tr">
+                            <td class="b-layout__one b-layout__one_width_80"><div class="b-layout__txt b-layout__txt_bold b-layout__txt_padtop_5 b-layout__txt_fontsize_11" >ICQ</div></td>
+                            <td class="b-layout__one b-layout__one_width_220 ">
+                                <div class="b-layout__txt b-layout__txt_padtop_5 b-layout__txt_fontsize_11 toggler-view " ></div>
+                                <div class="b-combo b-combo_hide toggler-edit">
+                                    <div class="b-combo__input">
+                                        <input class="b-combo__input-text contacts-input" name="contacts[icq]" type="text" size="80" value="" maxlength="100"/>
+                                    </div>
+                                </div>
+                                                            </td>
+                            <td class="b-layout__one b-layout__one_padleft_20"><div class="b-layout__txt b-layout__txt_padtop_5 b-layout__txt_fontsize_11" ><a class="b-layout__link b-layout__link_bordbot_dot_0f71c8 toggler-contacts" href="javascript:void(0)">изменить</a></div></td>
+                        </tr>
+                                              <tr class="b-layout__tr">
+                            <td class="b-layout__one b-layout__one_width_80"><div class="b-layout__txt b-layout__txt_bold b-layout__txt_padtop_5 b-layout__txt_fontsize_11" >Skype</div></td>
+                            <td class="b-layout__one b-layout__one_width_220 ">
+                                <div class="b-layout__txt b-layout__txt_padtop_5 b-layout__txt_fontsize_11 toggler-view " ></div>
+                                <div class="b-combo b-combo_hide toggler-edit">
+                                    <div class="b-combo__input">
+                                        <input class="b-combo__input-text contacts-input" name="contacts[skype]" type="text" size="80" value="" maxlength="100"/>
+                                    </div>
+                                </div>
+                                                            </td>
+                            <td class="b-layout__one b-layout__one_padleft_20"><div class="b-layout__txt b-layout__txt_padtop_5 b-layout__txt_fontsize_11" ><a class="b-layout__link b-layout__link_bordbot_dot_0f71c8 toggler-contacts" href="javascript:void(0)">изменить</a></div></td>
+                        </tr>
+                                              <tr class="b-layout__tr">
+                            <td class="b-layout__one b-layout__one_width_80"><div class="b-layout__txt b-layout__txt_bold b-layout__txt_padtop_5 b-layout__txt_fontsize_11" >E-mail</div></td>
+                            <td class="b-layout__one b-layout__one_width_220 ">
+                                <div class="b-layout__txt b-layout__txt_padtop_5 b-layout__txt_fontsize_11 toggler-view " ></div>
+                                <div class="b-combo b-combo_hide toggler-edit">
+                                    <div class="b-combo__input">
+                                        <input class="b-combo__input-text contacts-input" name="contacts[email]" type="text" size="80" value="" maxlength="100"/>
+                                    </div>
+                                </div>
+                                                            </td>
+                            <td class="b-layout__one b-layout__one_padleft_20"><div class="b-layout__txt b-layout__txt_padtop_5 b-layout__txt_fontsize_11" ><a class="b-layout__link b-layout__link_bordbot_dot_0f71c8 toggler-contacts" href="javascript:void(0)">изменить</a></div></td>
+                        </tr>
+                                          </table>
+                </td>
+            </tr>
+                          
+              
+              
+              
+              
+                    </table>
+                                        
+                                                            <a name="is_color"></a>
+                        
+                    <div id="works_submit" class="b-buttons b-buttons_padleft_110 b-buttons_padtop_10">
+                       <a href="javascript:void(0);" class="b-button b-button_flat b-button_flat_green" onclick="this.disabled=true; yaCounter6051055.reachGoal('public_otvet'); _gaq.push(['_trackEvent', 'User', 'Freelance', 'button_project_create_offer']); ga('send', 'event', 'Freelance', 'button_project_create_offer'); $('form_add_offer').submit();"  >Опубликовать ответ</a>
+                       <span class="b-buttons__txt">&#160;&#160;&#160;<a class="b-buttons__link" href="#">Отменить публикацию</a></span>
+                    </div>
+                    </form>
+                 </div>
+                 
+						
+										                                            
+</div>
+
+<script  type="text/javascript">
+
+
+
+
+<!--
+if (document.getElementById('ps_text') != null) {
+	var msg  = document.getElementById('ps_text_msg');
+	var area = document.getElementById('ps_text');
+	setInterval("check_text()", 10);
+}
+
+function check_text()
+{
+	if(area.value.length > 1000)
+	{
+		area.value = area.value.substr(0, 1000);
+		msg.innerHTML = '<div class=\"errorBox\"><img src=\"/images/ico_error.png\" alt=\"\" width=\"22\" height=\"18\" /> &nbsp;Исчерпан лимит символов для поля (1000 символов)</div>';
+	}
+}
+
+function check_com_text() {
+	if((document.getElementById('po_text') != undefined) && document.getElementById('po_text').value.length > 1000) {
+		document.getElementById('po_text').value = document.getElementById('po_text').value.substr(0, 1000);
+		document.getElementById('po_text_msg').innerHTML = '<div class=\"errorBox\"><img src=\"/images/ico_error.png\" alt=\"\" width=\"22\" height=\"18\" /> &nbsp;Исчерпан лимит символов для поля (1000 символов)</div>';
+	}
+}
+//-->
+</script>
+<div id="debug"></div>
+
+
+
+<div id="quick_pro_win_main" class="b-shadow b-shadow_center b-shadow_width_520 b-shadow_hide b-shadow__quick" style="display:block;">
+    <div class="b-shadow__body b-shadow__body_pad_15_20">
+        <div class="b-fon b-fon_bg_fpro">
+            <div class="b-layout__title b-layout__title_padbot_5"><span class="b-icon b-page__desktop b-page__ipad b-icon__spro b-icon__spro_f b-icon_float_left b-icon_margtop_4 b-icon_margright_10"></span>Покупка&nbsp;аккаунта&nbsp;PRO <div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_lineheight_1 b-page__destop b-page__ipad">с неограниченными ответами в проектах и +20% к рейтингу</div></div>
+        </div>
+    
+        <div id="quick_pro_div_main">
+            <div class="b-layout__txt b-layout__txt_padbot_15 b-layout__txt_fontsize_15">Срок действия аккаунта</div>
+    
+            <div class="b-radio b-radio_padleft_20">
+                <input type="hidden" id="quick_pro_f_selected_item" value=""/>
+                <input type="hidden" id="quick_pro_f_account_sum" value="0"/>
+                                                    <div class="b-radio__item b-radio__item_padbot_10 b-radio__item_inline-block b-radio__item_width_200">
+                        <input type="radio" class="b-radio__input"  value="132" name="quick_pro_f_item" id="quick_pro_f_item_132" onClick="quickPRO_select(this);" sum="99" >
+                        <label for="quick_pro_f_item_132" class="b-radio__label b-radio__label_fontsize_13 b-radio__label_margtop_-2">
+                            <span class="b-layout__bold" id="quick_pro_div_main_type_132">
+                                                                    1 день                                                            </span>
+                            <div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_inline_iphone">99 руб.</div>
+                        </label>
+                    </div>
+                                    <div class="b-radio__item b-radio__item_padbot_10 b-radio__item_inline-block b-radio__item_width_200">
+                        <input type="radio" class="b-radio__input"  value="131" name="quick_pro_f_item" id="quick_pro_f_item_131" onClick="quickPRO_select(this);" sum="299" >
+                        <label for="quick_pro_f_item_131" class="b-radio__label b-radio__label_fontsize_13 b-radio__label_margtop_-2">
+                            <span class="b-layout__bold" id="quick_pro_div_main_type_131">
+                                                                    1 неделя                                                            </span>
+                            <div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_inline_iphone">299 руб.</div>
+                        </label>
+                    </div>
+                                    <div class="b-radio__item b-radio__item_padbot_10 b-radio__item_inline-block b-radio__item_width_200">
+                        <input type="radio" class="b-radio__input" checked value="48" name="quick_pro_f_item" id="quick_pro_f_item_48" onClick="quickPRO_select(this);" sum="780" >
+                        <label for="quick_pro_f_item_48" class="b-radio__label b-radio__label_fontsize_13 b-radio__label_margtop_-2">
+                            <span class="b-layout__bold" id="quick_pro_div_main_type_48">
+                                                                                                            1 месяц                                                                                                </span>
+                            <div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_inline_iphone">780 руб.</div>
+                        </label>
+                    </div>
+                                    <div class="b-radio__item b-radio__item_padbot_10 b-radio__item_inline-block b-radio__item_width_200">
+                        <input type="radio" class="b-radio__input"  value="49" name="quick_pro_f_item" id="quick_pro_f_item_49" onClick="quickPRO_select(this);" sum="2220" >
+                        <label for="quick_pro_f_item_49" class="b-radio__label b-radio__label_fontsize_13 b-radio__label_margtop_-2">
+                            <span class="b-layout__bold" id="quick_pro_div_main_type_49">
+                                                                                                            3 месяца                                                                                                </span>
+                            <div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_inline_iphone">2220 руб.</div>
+                        </label>
+                    </div>
+                                    <div class="b-radio__item b-radio__item_padbot_10 b-radio__item_inline-block b-radio__item_width_200">
+                        <input type="radio" class="b-radio__input"  value="50" name="quick_pro_f_item" id="quick_pro_f_item_50" onClick="quickPRO_select(this);" sum="4200" >
+                        <label for="quick_pro_f_item_50" class="b-radio__label b-radio__label_fontsize_13 b-radio__label_margtop_-2">
+                            <span class="b-layout__bold" id="quick_pro_div_main_type_50">
+                                                                                                            6 месяцев                                                                                                </span>
+                            <div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_inline_iphone">4200 руб.</div>
+                        </label>
+                    </div>
+                                    <div class="b-radio__item b-radio__item_padbot_10 b-radio__item_inline-block b-radio__item_width_200">
+                        <input type="radio" class="b-radio__input"  value="51" name="quick_pro_f_item" id="quick_pro_f_item_51" onClick="quickPRO_select(this);" sum="7500" >
+                        <label for="quick_pro_f_item_51" class="b-radio__label b-radio__label_fontsize_13 b-radio__label_margtop_-2">
+                            <span class="b-layout__bold" id="quick_pro_div_main_type_51">
+                                                                                                            1 год
+                                                                                                </span>
+                            <div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_inline_iphone">7500 руб.</div>
+                        </label>
+                    </div>
+                            </div>
+    
+            <div class="b-layout__txt b-layout__txt_padtb_10 b-layout__txt_fontsize_15">Сумма и способ оплаты</div>
+    
+            <div id="quick_pro_div_error" class="b-fon b-fon_margbot_20 b-fon_marglr_20 b-layout_hide">
+                <div class="b-fon__body b-fon__body_pad_10 b-fon__body_padleft_30 b-fon__body_fontsize_13 b-fon__body_bg_ffeeee"> 
+                    <span class="b-icon b-icon_sbr_rattent b-icon_margleft_-20"></span>
+                    <span id="quick_pro_div_error_txt">К сожалению, в процессе оплаты произошла ошибка, и платеж не был завершен. Попробуйте провести оплату еще раз.</span>
+                </div>
+            </div>
+    
+    
+            <div class="b-layout__txt b-layout__txt_padleft_20 b-layout__txt_fontsize_11">
+                Сумма к оплате: <span id="quick_pro_sum_pay"></span> руб.<br>
+            </div>
+    
+    
+            <div class="b-layout__txt b-layout__txt_padbot_20 b-layout__txt_padleft_20 b-layout__txt_fontsize_11">
+                <span id="quick_pro_sum_span_4">
+                <span id="quick_pro_sum_span_2">Часть суммы (<span id="quick_pro_sum_span_7"></span> руб.)</span><span id="quick_pro_sum_span_3">Она</span> будет списана с личного счета, на нем 
+                <span id="quick_pro_sum_account1" class="b-layout__bold">
+                                                                0
+                                    </span>
+                 руб.<br>
+                 <span id="quick_pro_sum_span_5">
+                Остаток (<span id="quick_pro_sum_span_6"></span> руб.) вам нужно оплатить одним из способов:
+                </span>
+                </span>
+                <span id="quick_pro_sum_span_1">Ее вы можете оплатить одним из способов:</span>
+                <span id="quick_pro_sum_account2"></span>
+            </div>
+    
+    
+            <div id="quick_pro_block_1">
+                <div class="b-buttons b-buttons_padleft_20 b-buttons_padbot_10"> 
+                    <a class="b-button b-button__pm  b-button__pm_card" href="#" onClick="quickPRO_process('dolcard', 1); return false;"><span class="b-button__txt">Пластиковые<br>карты</span></a> 
+                    <a class="b-button b-button__pm  b-button__pm_yd" href="#" onClick="quickPRO_process('ya', 1); return false;"><span class="b-button__txt">Яндекс.Деньги</span></a> 
+                    <a class="b-button b-button__pm  b-button__pm_wm" href="#" onClick="quickPRO_process('webmoney', 1); return false;"><span class="b-button__txt">WebMoney</span></a> 
+                </div>
+            </div>
+    
+            <div id="quick_pro_block_2" class="b-buttons">
+                <div class="b-buttons b-buttons_padleft_20 b-buttons_padbot_10"> <a id="quick_pro_block_2_btn" class="b-button b-button_flat b-button_flat_green" href="#" onClick="quickPRO_process('account', 1); return false;">Оплатить 3588 руб.</a> </div>
+            </div>
+    
+            <div id="quick_pro_div_wait" class="b-layout__wait b-layout__txt_fontsize_15 b-layout__txt_color_fd6c30 b-layout_hide">
+                <span id="quick_pro_div_wait_txt"></span> 
+                <div class="b-layout__txt b-layout__txt_center b-layout__txt_padtb_10"><img src="/images/Orange_timer.gif" width="80" height="20"></div>
+                <span id="timer"></span>
+            </div>
+    
+        </div>
+    </div>
+    <span class="b-shadow__icon b-shadow__icon_close"></span>
+</div>
+
+
+<div id="quick_pro_win_main_ok" class="b-shadow b-shadow_center b-shadow_width_520 b-shadow_zindex_11 b-shadow_bg_eeffe5 b-shadow__quick b-shadow_hide" style="display:block;">
+    <div class="b-shadow__body b-shadow__body_pad_15_20">
+        <div class="b-fon b-fon_bg_fpro">
+            <div class="b-layout__title b-layout__title_padbot_5"><span class="b-icon b-page__desktop b-page__ipad b-icon__spro b-icon__spro_f b-icon_float_left b-icon_margtop_4 b-icon_margright_10"></span>Вы успешно купили аккаунт PRO <div class="b-layout__txt b-layout__txt_fontsize_11 b-layout__txt_lineheight_1 b-page__desktop b-page__ipad">с неограниченными ответами в проектах и +20% к рейтингу</div></div>
+        </div>
+    
+		        <div class="b-layout__txt b-layout__txt_padbot_15">Срок действия аккаунта — <span class="b-layout__txt b-layout__txt_color_fd6c30">до 01.01.1970 03:00</span></div>
+        <div class="b-layout__txt b-layout__txt_padbot_20 b-layout__txt_fontsize_11">
+                                                                        Спасибо за покупку, теперь вы можете ответить на проект. <br>
+                        Желаем вам успешной работы на сайте и множества выгодных заказов!
+                                                        </div>
+        <div class="b-buttons b-buttons_padbot_10"> 
+                                                                        <a class="b-button b-button_flat b-button_flat_green" href="#" onClick="$('quick_pro_win_main_ok').addClass('b-shadow_hide'); window.location.hash = '#new_offer'; return false;">Закрыть и ответить на проект</a> 
+                                                            <span class="b-layout__txt b-layout__txt_fontsize_11">или <a class="b-layout__link" href="#" onClick="$('quick_pro_win_main_ok').addClass('b-shadow_hide'); quickPRO_show(); return false;">купить PRO на больший срок</a></span> 
+        </div>
+    </div>
+    <span class="b-shadow__icon b-shadow__icon_close"></span>
+</div>
+
+
+<script type="text/javascript">
+
+var quickPRO_selected = '';
+
+function quickPRO_Reset() {
+    $('quick_pro_div_main').removeClass('b-layout_hide');
+    //$('quick_pro_div_main_2').addClass('b-layout_hide');
+    $("quick_pro_div_wait").addClass("b-layout_hide");
+    $("quick_pro_div_main").removeClass("b-layout_waiting");
+    //$("quick_pro_div_wait_2").addClass("b-layout_hide");
+    //$("quick_pro_div_main_2").removeClass("b-layout_waiting");
+                        quickPRO_select($('quick_pro_f_item_48'));
+            }
+
+function quickPRO_show() {
+    quickPRO_Reset();
+                        quickPRO_select($('quick_pro_f_item_48'));
+                $('quick_pro_win_main').removeClass('b-shadow_hide');
+}
+
+function quickPRO_select(obj) {
+    switch(obj.get('value')) {
+        case 132:
+            quickPRO_selected = '1d';
+            break;
+        case 131:
+            quickPRO_selected = '1w';
+            break;
+        case 15:
+        case 48:
+            quickPRO_selected = '1m';
+            break;
+        case 118:
+        case 49:
+            quickPRO_selected = '3m';
+            break;
+        case 119:
+        case 50:
+            quickPRO_selected = '6m';
+            break;
+        case 120:
+        case 51:
+            quickPRO_selected = '12m';
+            break;
+    }
+    $('quick_pro_sum_pay').set('html', obj.get('sum'));
+    $('quick_pro_f_selected_item').set('value', obj.get('value'));
+    var ss = parseFloat($('quick_pro_f_account_sum').get('value'));
+    ss = Math.floor(ss);
+    if(parseFloat(obj.get('sum'))<=ss) {
+        $('quick_pro_block_1').hide();
+        $('quick_pro_block_2').show();
+        $('quick_pro_sum_account2').hide();
+        $('quick_pro_sum_span_1').hide();
+        $('quick_pro_sum_span_4').show();
+        $('quick_pro_sum_span_2').hide();
+        $('quick_pro_sum_span_3').show();
+        $('quick_pro_sum_span_5').hide();
+        // денег хватает
+    } else {
+        $('quick_pro_block_2').hide();
+        $('quick_pro_sum_span_1').hide();
+        $('quick_pro_sum_span_4').show();
+        $('quick_pro_sum_span_2').show();
+        $('quick_pro_sum_span_3').hide();
+        $('quick_pro_sum_span_5').show();
+
+        if(ss==0) {
+            $('quick_pro_sum_span_1').show();
+            $('quick_pro_sum_span_4').hide();
+            $('quick_pro_sum_span_2').hide();
+            $('quick_pro_sum_span_3').hide();
+            $('quick_pro_sum_span_5').hide();
+        } else {
+            var s = ss-parseFloat(obj.get('sum'));
+            s = -1*s;
+            s = Math.floor(s);
+            if(s<11) { s = 10; }
+            //$('quick_pro_div_main_2_pro').set('html', $('quick_pro_div_main_type_'+obj.get('value')).get('html'));
+            //$('quick_pro_div_main_2_sum').set('html', s);
+            $('quick_pro_block_1').show();
+            $('quick_pro_block_2').hide();
+            $('quick_pro_sum_span_6').set('html', s);
+            $('quick_pro_sum_span_7').set('html', ss);
+    //        $('quick_pro_sum_account2').show();
+    //        $('quick_pro_sum_account2').set('html', ', '+$('quick_pro_f_account_sum').get('value')+' руб. будет списано с него, а '+s+' руб. вы можете оплатить удобным вам способом');
+        }
+    }
+    $('quick_pro_block_2_btn').set('html', 'Купить за '+obj.get('sum')+' рублей');
+    obj.fireEvent('click');
+}
+
+function quickPRO_process(type, step) {
+    var u_type = 'f';
+    switch(type) {
+        case 'webmoney':
+            yaCounter6051055.reachGoal(u_type+'pro_bill_wm', quickPRO_selected); 
+            quickPRO_window = window.open("");
+            xajax_quickPROGetWebmoneyLink($('quick_pro_f_selected_item').get('value'), '/projects/1940326/nujen-spetsialist-dlya-obrabotki-fotografii-lyudey-v-sotssetyah.html');
+            break;
+        case 'ya':
+            yaCounter6051055.reachGoal(u_type+'pro_bill_yd', quickPRO_selected);
+            quickPRO_window = window.open("");
+            xajax_quickPROGetYdLink($('quick_pro_f_selected_item').get('value'), '/projects/1940326/nujen-spetsialist-dlya-obrabotki-fotografii-lyudey-v-sotssetyah.html');
+            break;
+        case 'account':
+            yaCounter6051055.reachGoal(u_type+'pro_bill_ls', quickPRO_selected);
+            xajax_quickPROPayAccount($('quick_pro_f_selected_item').get('value'), '/projects/1940326/nujen-spetsialist-dlya-obrabotki-fotografii-lyudey-v-sotssetyah.html');
+            break;
+        case 'card':
+            quickPRO_window = window.open("");
+            xajax_quickPROGetCardLink($('quick_pro_f_selected_item').get('value'), '/projects/1940326/nujen-spetsialist-dlya-obrabotki-fotografii-lyudey-v-sotssetyah.html');
+            break;
+        case 'dolcard':
+            yaCounter6051055.reachGoal(u_type+'pro_bill_card', quickPRO_selected);
+            quickPRO_window = window.open("");
+            xajax_quickPROGetDOLCardLink($('quick_pro_f_selected_item').get('value'), '/projects/1940326/nujen-spetsialist-dlya-obrabotki-fotografii-lyudey-v-sotssetyah.html');
+            break;
+        case 'mobile':
+            switch(step) {
+                case 1:
+                    //$('quick_pro_div_main').addClass('b-layout_hide');
+                    //$('quick_pro_div_main_2').removeClass('b-layout_hide');
+                    break;
+                case 2:
+                    xajax_quickPROPayMobile($('quick_pro_div_main_2_sum').get('html'), $('quick_pro_f_phone').get('value'));
+                    break;
+            }
+            break;
+    }
+}
+
+
+var limit = 1200; // в секундах
+var timeout_id = null;
+
+function resetTimer() {
+    limit = 1200;
+    clearTimeout(timeout_id);
+}
+
+function processTimer(id){
+
+  if (limit > 0) {
+    timeout_id = setTimeout("processTimer("+id+")",1000);
+    limit--;
+  } else {
+    $("quick_pro_div_error").removeClass("b-layout_hide");
+    $("quick_pro_div_wait").addClass("b-layout_hide");
+    $("quick_pro_div_main").removeClass("b-layout_waiting");
+  }
+
+  var limit_div = parseInt(limit/60); // минуты
+  var limit_mod = limit - limit_div*60; // секунды
+  
+  // строка с оставшимся временем
+  limit_str = "&nbsp;&nbsp;";
+  if (limit_div < 10) limit_str = limit_str + "0";
+  limit_str = limit_str + limit_div + ":";
+  if (limit_mod < 10) limit_str = limit_str + "0";
+  limit_str = limit_str + limit_mod + "&nbsp;&nbsp;";      
+  
+  // вывод времени
+  el_timer = document.getElementById("timer");
+  if (el_timer) el_timer.innerHTML = limit_str;
+}
+
+
+window.addEvent('domready', 
+    function() {
+        $('quick_pro_win_main').getElements('.b-radio__input').addEvent('click',function(){
+                   this.getParent('.b-radio__item').getParent('.b-radio').getElements('.b-radio__label').removeClass('b-radio__label_color_fd6c30').getElement('.b-layout__txt').removeClass('b-layout__txt_color_fd6c30');
+                   if(this.getProperty('checked')==true){
+                                this.getNext('.b-radio__label').addClass('b-radio__label_color_fd6c30').getElement('.b-layout__txt').addClass('b-layout__txt_color_fd6c30');
+                                }
+                                else{
+                                this.getNext('.b-radio__label').removeClass('b-radio__label_color_fd6c30').getElement('.b-layout__txt').removeClass('b-layout__txt_color_fd6c30');
+                                    }
+                })
+})
+</script>
+
+
+
+																							</div></div>
+											                    </div>
+                    <div class="i-footer">
+    <div class="b-footer">
+        <div class="b-footer__top" >
+            <div class="b-footer__col b-footer__col_copy">
+                <h4 class="b-footer__h4">© Free-lance.ru, 2005–2014</h4>
+                                <div class="b-footer__rambler"> 
+                    <!-- begin of Top100 logo --> 
+                    <p class="b-footer__txt">
+                        <script type="text/javascript">document.write('Участник <a class="b-footer__link" href="http://top100.rambler.ru/home?id=1367737" target="_blank">Rambler\'s Top100</a>');</script>
+                    </p>
+                    <!-- begin of Top100 logo --> 
+                    <!-- end of Top100 logo --> 
+                </div>
+                <div class="b-footer__18">18+</div>
+                
+                <!-- tns-counter.ru --> 
+                <script type="text/javascript">
+                        var img = new Image();
+                        img.src = '//www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/g,'%2a') + '*hh_ru/ru/CP1251/tmsec=hh_free-lance/';
+                </script>
+                <noscript>
+                <div><img class="b-footer__counter" src="//www.tns-counter.ru/V13a****hh_ru/ru/CP1251/tmsec=hh_free-lance/"  alt="" /></div>
+                </noscript>
+                <!--/ tns-counter.ru --> 
+                <!--LiveInternet counter--><script type="text/javascript"><!--	 
+                document.write("<a href='http://www.liveinternet.ru/click' "+	 
+                "target=_blank><img  class='b-footer__counter' src='//counter.yadro.ru/hit?t44.6;r"+	 
+                escape(document.referrer)+((typeof(screen)=="undefined")?"":	 
+                ";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?	 
+                screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+	 
+                ";h"+escape(document.title.substring(0,80))+";"+Math.random()+	 
+                "' alt='' title='LiveInternet' "+	 
+                " width='0' height='0'><\/a>")	 
+                //--></script><!--/LiveInternet-->
+                <!-- begin of Top100 code --> 
+                <a class="b-footer__link" style="position:absolute; left:-9999px;" href="http://top100.rambler.ru/top100/"><img class="b-footer__counter" src="//counter.rambler.ru/top100.cnt?1367737" alt="Rambler's Top100"   /></a> 
+                <!-- end of Top100 code --> 
+
+                
+                <!-- Yandex.Metrika counter -->
+                <script type="text/javascript">
+                var yaParams = {/*Здесь параметры визита электронной торговли*/};
+                </script>
+
+                <script type="text/javascript">
+                (function (d, w, c) {
+                    (w[c] = w[c] || []).push(function() {
+                        try {
+                            w.yaCounter6051055 = new Ya.Metrika({id:6051055,
+                                    webvisor:true,
+                                    clickmap:true,
+                                    trackLinks:true,
+                                    accurateTrackBounce:true,params:window.yaParams||{ }});
+                        } catch(e) { }
+                    });
+
+                    var n = d.getElementsByTagName("script")[0],
+                        s = d.createElement("script"),
+                        f = function () { n.parentNode.insertBefore(s, n); };
+                    s.type = "text/javascript";
+                    s.async = true;
+                    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+                    if (w.opera == "[object Opera]") {
+                        d.addEventListener("DOMContentLoaded", f, false);
+                    } else { f(); }
+                })(document, window, "yandex_metrika_callbacks");
+                </script>
+                <noscript><div><img src="//mc.yandex.ru/watch/6051055" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+                <!-- /Yandex.Metrika counter -->
+            </div>
+            
+                            <div class="b-footer__col b-footer__col_user" style="width:11%">
+                                    	                    <h4 class="b-footer__h4"><a class="b-footer__link" href="/users/informer-fl-ru"><!--  [-->informer-fl-ru<!--]--></a></h4>
+	                    <ul class="b-footer__list">
+	                        <li class="b-footer__item"><a class="b-footer__link" href="/contacts/">Сообщения</a></li>
+	                        <li class="b-footer__item"><a class="b-footer__link" href="/bill/">Мои услуги</a></li>
+	                        <li class="b-footer__item"><a class="b-footer__link" href="/projects/?p=list">Мои проекты</a></li>
+	                        <li class="b-footer__item"><a class="b-footer__link" href="/bezopasnaya-sdelka/">Мои сделки</a></li>
+	                        <li class="b-footer__item"><a class="b-footer__link" href="/promotion/">Моя статистика</a></li>
+	                        <li class="b-footer__item"><a class="b-footer__link" href="/users/informer-fl-ru/setup/">Мои настройки</a></li>
+	                        <li class="b-footer__item"><a class="b-footer__link logoutBtn" href="javascript:logout()">Выход</a></li>
+	                    </ul>
+	                
+                            </div>
+            
+                                    <div class="b-footer__col b-footer__col_project" style="width:20%">
+    				    <h4 class="b-footer__h4">Найти работу</h4>
+                        <ul class="b-footer__list">
+                                <li class="b-footer__item"><a class="b-footer__link" href="/users/informer-fl-ru/setup/portfolio/" target="_blank">Заполнить портфолио</a></li>
+                                <li class="b-footer__item"><a class="b-footer__link" href="/payed/" target="_blank">Профессиональный аккаунт</a></li>
+                                <li class="b-footer__item"><a class="b-footer__link" href="/firstpage/" target="_blank">Платное место на главной странице</a></li>
+                                <li class="b-footer__item"><a class="b-footer__link" href="/pay_place/top_payed.php" target="_blank">Платное место наверху<br>каталога услуг</a></li>
+                                <li class="b-footer__item"><a class="b-footer__link" href="/firstpage/" target="_blank">Платное место в каталоге</a></li>
+                                                                <li class="b-footer__item"><a class="b-footer__link" href="/bezopasnaya-sdelka/" target="_blank">«Безопасная Сделка»</a></li>
+                        </ul>
+                    </div>
+                            
+                        <div class="b-footer__col b-footer__col_project">
+                                    <h4 class="b-footer__h4"><a class="b-footer__link" href="/about/" target="_blank">О проекте</a></h4>
+                                <ul class="b-footer__list">
+                    <li class="b-footer__item"><a class="b-footer__link" href="https://st.fl.ru/about/documents/agreement_site.pdf" target="_blank">Пользовательское соглашение</a></li>
+                    <li class="b-footer__item"><a class="b-footer__link" href="https://st.fl.ru/about/documents/appendix_2_regulations.pdf" target="_blank">Правила сайта</a></li>
+                    <li class="b-footer__item"><a class="b-footer__link" href="https://st.fl.ru/about/documents/appendix_1_price.pdf" target="_blank">Перечень платных услуг</a></li>
+                    <li class="b-footer__item"><a class="b-footer__link" href="https://st.fl.ru/about/documents/appendix_4_service.pdf" target="_blank">Перечень бесплатных услуг</a></li>
+                    <li class="b-footer__item"><a class="b-footer__link" href="https://st.fl.ru/about/documents/appendix_3_software_requirements.pdf" target="_blank">Требования к ПО</a></li>
+                    <li class="b-footer__item"><a class="b-footer__link" href="/about/team/" target="_blank">Команда</a></li>
+                    <li class="b-footer__item"><a class="b-footer__link" href="/commune/drugoe/5100/free-lanceru/" target="_blank">Корпоративный блог</a></li>
+                    <li class="b-footer__item"><a class="b-footer__link" href="/commune/klanyi/1008/nash-nekorporativnyiy-blog/" target="_blank">Некорпоративный блог</a></li>
+                    <li class="b-footer__item"><a class="b-footer__link" href="/press/contacts/">Контакты</a></li>
+                                                                            </ul>
+            </div>
+            
+            <div class="b-footer__col b-footer__col_help">
+				<h4 class="b-footer__h4">
+                    <a class="b-footer__link" href="https://feedback.fl.ru/?sso_token=GMJXG9Ki5fXZdwtTu9t76co%2FOXxxcHlmgfKuKMxlCIzHj4K26wHDj2%2BZKEAxCgO%2F%2FrpS9fnpbgNn8Z8rzLCkzD%2B418nh%2BE7%2BdYDMxQ4AFEzmW1V0RZlnUKtsO29mUyhBZLQylsDEVgg%2FC6e6zEesKC9IXXQMagkW9pRxbShXu4JQbf6v%2Fc6wVmkRWcztJCBQ" target="_blank">Помощь</a>
+                </h4>
+
+                <ul class="b-footer__list">
+					<li class="b-footer__item">
+                        <a class="b-footer__link" onmouseover="UE.Popin.preload();" href="#" onclick="UE.Popin.show(); return false;">Написать нам в службу поддержки</a>                        
+                    </li>					
+  					<li class="b-footer__item">
+                        <a class="b-footer__link" href="/search/">Поиск по сайту</a>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript'>
+
+var _ues = {
+host:'fl.userecho.com',
+forum:'27456',
+lang:'ru',
+tab_show:false,
+};
+
+(function() {
+    var _ue = document.createElement('script'); _ue.type = 'text/javascript'; _ue.async = true;
+    _ue.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.userecho.com/js/widget-1.4.gz.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(_ue, s);
+  })();
+
+</script>
+
+<!-- 0  -->
+<!--  -->
+<!--  0.45891  -->
+                </div><!--b-page__page-->
+
+                                                
+                
+            </div>
+        </div>
+        
+                <div class="b-banner b-banner_top_0 b-banner_margtop_30 b-banner_layout_horiz">
+
+<!-- FL_TopBar -->
+<div id='div-gpt-ad-1397483810125-0' style='width:100%; height:40px; position:relative; z-index:2;'>
+<script type='text/javascript'>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1397483810125-0'); });
+</script>
+</div>
+
+<div class="b-banner__txt" style="text-align: right;"><div class="b-txt b-txt_lh_1 b-txt_relative b-txt_zindex_1 b-banner__inner"><a class="b-txt__lnk b-txt__lnk_color_0f71c8 b-txt__lnk_fs_11" href="https://www.adeasy.ru/website/fl.ru/2064" target="_blank">Реклама на этом месте</a></div></div>
+</div>
+        
+                
+                    <!-- begin: Customer.io -->
+            <script type="text/javascript">
+                var _cio = _cio || [];
+                (function() {
+                  var a,b,c;a=function(f){return function(){_cio.push([f].
+                  concat(Array.prototype.slice.call(arguments,0)))}};b=["load","identify",
+                  "sidentify","track","page"];for(c=0;c<b.length;c++){_cio[b[c]]=a(b[c])};
+                  var t = document.createElement('script'),
+                      s = document.getElementsByTagName('script')[0];
+                  t.async = true;
+                  t.id    = 'cio-tracker';
+                  t.setAttribute('data-site-id', '236d8fdf863b00ecfb63');
+                  t.src = 'https://assets.customer.io/assets/track.js';
+                  s.parentNode.insertBefore(t, s);
+                })();
+            </script>
+            
+                            <script type="text/javascript">
+                  _cio.identify({
+                    id: '1835244',
+                    email: 'informer.email@yandex.ru',
+                    created_at: 1395777600,
+                    acc_type: 'freelancer',
+                    is_pro: 0                  });
+                </script>
+                        <!-- end: Customer.io -->
+        
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+        var yaParams = {/*Здесь параметры визита электронной торговли*/};
+        </script>
+
+        <script type="text/javascript">
+        (function (d, w, c) {
+            (w[c] = w[c] || []).push(function() {
+                try {
+                    w.yaCounter6051055 = new Ya.Metrika({id:6051055,
+                            webvisor:true,
+                            clickmap:true,
+                            trackLinks:true,
+                            accurateTrackBounce:true,params:window.yaParams||{ }});
+                } catch(e) { }
+            });
+
+            var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () { n.parentNode.insertBefore(s, n); };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else { f(); }
+        })(document, window, "yandex_metrika_callbacks");
+
+        function yaCounter6051055reachGoal(p) {
+            try {
+                yaCounter6051055.reachGoal(p);
+            } catch(e) { }
+
+        }
+        </script>
+        <noscript><div><img src="//mc.yandex.ru/watch/6051055" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+        <!-- /Yandex.Metrika counter -->
+    <script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"beacon-2.newrelic.com","licenseKey":"52195390c3","applicationID":"2472980","transactionName":"ZQEHYERQV0sEUEcIXVxLMEZfHklKCllWAkZBSwxaUlRBFhVbQw==","queueTime":0,"applicationTime":459,"ttGuid":"","agentToken":"","userAttributes":"","errorBeacon":"jserror.newrelic.com","agent":"js-agent.newrelic.com\/nr-380.min.js"}</script></body>
+</html>

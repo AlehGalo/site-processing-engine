@@ -43,6 +43,11 @@ public class Crawler implements ICrawler, IProcessContext {
         this.settings = new CrawlerSettings();
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.jdev.crawler.core.ICrawler#collect()
+     */
     @Override
     public void collect() throws CrawlerException {
         try {
@@ -57,12 +62,30 @@ public class Crawler implements ICrawler, IProcessContext {
         }
     }
 
+    /**
+     * If there is not user required you have to create at least some dummy
+     * user.
+     * 
+     * @param data
+     *            to be validated.
+     * @return user data validated.
+     */
+    private IUserData verifyUserData(final IUserData data) {
+        Assert.notNull(data, "User data should be specified");
+        Assert.notNull(data.getCompany(), "Company should be specified for user datat");
+        return data;
+    }
+
     public void setStore(final CookieStore store) {
         this.cookieStorage = store;
     }
 
     public final void setRequestBuilder(final IRequestBuilder requestBuilder) {
         this.requestBuilder = requestBuilder;
+    }
+
+    public void setClient(final HttpClient client) {
+        this.client = client;
     }
 
     @Override
@@ -89,41 +112,13 @@ public class Crawler implements ICrawler, IProcessContext {
         this.fileStorage = fileStorage;
     }
 
-    /**
-     * If there is not user required you have to create at least some dummy
-     * user.
-     * 
-     * @param data
-     *            to be validated.
-     * @return user data validated.
-     */
-    private IUserData verifyUserData(final IUserData data) {
-        Assert.notNull(data, "User data should be specified");
-        Assert.notNull(data.getCompany(), "Company should be specified for user datat");
-        return data;
-    }
-
     @Override
     public ISettings getSettings() {
         return settings;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.jdev.crawler.core.process.IProcessContext#getHttpClient()
-     */
     @Override
     public HttpClient getHttpClient() {
         return this.client;
     }
-
-    /**
-     * @param client
-     *            any implementation of HttpClient.
-     */
-    public void setClient(final HttpClient client) {
-        this.client = client;
-    }
-
 }

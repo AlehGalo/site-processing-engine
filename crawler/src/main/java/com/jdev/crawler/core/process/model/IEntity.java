@@ -3,6 +3,7 @@
  */
 package com.jdev.crawler.core.process.model;
 
+import java.net.URI;
 import java.nio.charset.Charset;
 
 import com.jdev.crawler.core.process.handler.MimeType;
@@ -27,6 +28,11 @@ public interface IEntity {
      * @return
      */
     String getContentFileRef();
+
+    /**
+     * @return the url of the resource.
+     */
+    URI getEntityUri();
 
     /**
      * @return

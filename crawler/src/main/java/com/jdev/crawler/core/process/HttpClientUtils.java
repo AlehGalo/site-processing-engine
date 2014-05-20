@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.Collection;
 
+import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -73,8 +74,9 @@ final class HttpClientUtils {
         }
 
         // TODO: add logging
-        resultEntity.setCharset(charset == null ? Charset.forName("UTF-8") : charset);
+        resultEntity.setCharset(charset == null ? Charsets.UTF_8 : charset);
         resultEntity.setStatusCode(response.getStatusLine().getStatusCode());
+        resultEntity.setEntityUri(request.getURI());
         try {
             final InputStream is = entity.getContent();
             try {
@@ -101,7 +103,7 @@ final class HttpClientUtils {
                 org.apache.commons.io.FileUtils.write(
                         new File(parent, FileUtils.getFileName(desc)),
                         new String(entity.getContent() == null ? "".getBytes() : entity
-                                .getContent(), entity.getCharset()));
+                                .getContent(), entity.getCharset()), entity.getCharset());
             } else {
                 // TODO: implement logging
                 // AbstractStepProcess.LOGGER.warn("Failed to create " +

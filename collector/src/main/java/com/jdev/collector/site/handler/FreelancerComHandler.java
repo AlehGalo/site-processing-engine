@@ -5,7 +5,6 @@ package com.jdev.collector.site.handler;
 
 import org.jsoup.nodes.Element;
 
-import com.jdev.crawler.core.process.IProcessResultHandler;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.SelectUnit;
 import com.jdev.crawler.core.selector.jsoup.StringSourceJSoupSelector;
@@ -16,7 +15,7 @@ import com.jdev.crawler.core.selector.xpath.XPathSelector;
  * @author Aleh
  * 
  */
-public class FreelancerComHandler extends ArticleWatcher implements IProcessResultHandler {
+public class FreelancerComHandler extends ArticleWatcher {
 
     /**
      * 

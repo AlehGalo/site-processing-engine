@@ -38,9 +38,7 @@ public class Article extends AbstractIdentifiable {
     /**
      * Article's content.
      */
-    // @Column(name = "ORIGINAL_ARTICLE_URL", nullable = false, columnDefinition
-    // = "VARCHAR(256)")
-    @Transient
+    @Column(name = "ORIGINAL_ARTICLE_URL", nullable = false, columnDefinition = "VARCHAR(256)")
     private String originalArticleUrl;
 
     @Column(name = "TITLE", nullable = false, columnDefinition = "VARCHAR(255)")
@@ -96,22 +94,6 @@ public class Article extends AbstractIdentifiable {
     public void setContent(final String content) {
         this.content = content;
     }
-
-    //
-    // /**
-    // * @return the site
-    // */
-    // public Site getSite() {
-    // return site;
-    // }
-    //
-    // /**
-    // * @param site
-    // * the site to set
-    // */
-    // public void setSite(final Site site) {
-    // this.site = site;
-    // }
 
     /**
      * @return the originalArticleUrl

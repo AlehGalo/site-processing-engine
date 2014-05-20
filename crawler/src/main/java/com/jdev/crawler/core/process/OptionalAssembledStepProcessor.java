@@ -5,8 +5,6 @@ package com.jdev.crawler.core.process;
 
 import static org.apache.commons.collections.CollectionUtils.isEmpty;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,12 +38,19 @@ class OptionalAssembledStepProcessor extends AssembledStepProcess {
     private final IStepConfig config;
 
     /**
+     * @param config
+     */
+    public OptionalAssembledStepProcessor(final IStepConfig config) {
+        this(config, null);
+    }
+
+    /**
      * @param handlers
      * @param config
      */
     public OptionalAssembledStepProcessor(final IStepConfig config,
-            final List<IProcessResultHandler> handlers) {
-        super(config, handlers);
+            final IProcessResultHandler handler) {
+        super(config, handler);
         this.config = config;
     }
 

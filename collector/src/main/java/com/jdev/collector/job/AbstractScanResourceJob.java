@@ -79,11 +79,18 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
     private Job job;
 
     /**
+     * 
+     */
+    private final Credential credential;
+
+    /**
      * @param userName
      */
-    public AbstractScanResourceJob(final AbstractCollector collector) {
+    public AbstractScanResourceJob(final AbstractCollector collector, final Credential credential) {
         Assert.notNull(collector);
+        Assert.notNull(credential);
         this.collector = collector;
+        this.credential = credential;
         collector.setEventHandlerDelegate(this);
     }
 
@@ -95,6 +102,7 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
     @Override
     public void scan() throws CrawlerException {
         job = createInitiatedJob();
+        job.setCredential(this.credential);
         unitOfWork.saveJob(job);
         try {
             collector.congregate();

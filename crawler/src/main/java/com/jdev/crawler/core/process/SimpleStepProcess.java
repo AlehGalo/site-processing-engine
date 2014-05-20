@@ -26,10 +26,17 @@ public class SimpleStepProcess extends AbstractStepProcess {
 
     /**
      * @param config
+     */
+    public SimpleStepProcess(final IStepConfig config) {
+        this(config, null);
+    }
+
+    /**
+     * @param config
      * @param handlers
      */
-    public SimpleStepProcess(final IStepConfig config, final List<IProcessResultHandler> handlers) {
-        super(handlers, config, "SimpleStepProcess");
+    public SimpleStepProcess(final IStepConfig config, final IProcessResultHandler handler) {
+        super(handler, config, "SimpleStepProcess");
         this.config = config;
     }
 

@@ -27,25 +27,25 @@ public class AssembledMultiLimitedStepProcess extends AssembledMultiStepProcess 
 
     /**
      * @param config
-     * @param handlers
+     * @param handler
      * @param requestBuilder
      * @param limit
      */
     public AssembledMultiLimitedStepProcess(final IStepConfig config,
-            final List<IProcessResultHandler> handlers, final IRequestBuilder requestBuilder,
+            final IProcessResultHandler handler, final IRequestBuilder requestBuilder,
             final int limit) {
-        super(config, handlers, requestBuilder);
+        super(config, handler, requestBuilder);
         this.limit = limit;
     }
 
     /**
      * @param config
-     * @param handlers
+     * @param handler
      * @param limit
      */
     public AssembledMultiLimitedStepProcess(final IStepConfig config,
-            final List<IProcessResultHandler> handlers, final int limit) {
-        super(config, handlers);
+            final IProcessResultHandler handler, final int limit) {
+        super(config, handler);
         this.limit = limit;
     }
 

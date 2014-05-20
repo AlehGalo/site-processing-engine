@@ -43,25 +43,32 @@ public class AssembledStepProcess extends AbstractStepProcess {
 
     /**
      * @param config
+     */
+    public AssembledStepProcess(final IStepConfig config) {
+        this(config, null);
+    }
+
+    /**
+     * @param config
      * @param handlers
      */
-    public AssembledStepProcess(final IStepConfig config, final List<IProcessResultHandler> handlers) {
-        super(handlers, config, "AssembledStepProcess");
+    public AssembledStepProcess(final IStepConfig config, final IProcessResultHandler handler) {
+        super(handler, config, "AssembledStepProcess");
     }
 
     /**
      * @param config
      *            configuration for the run process.
-     * @param handlers
+     * @param handler
      *            processing result handlers. As usual PDF download, CSV
      *            download.
      * @param requestBuilder
      *            request builder can be used not only for the whole crawler
      *            context but for the step.
      */
-    public AssembledStepProcess(final IStepConfig config,
-            final List<IProcessResultHandler> handlers, final IRequestBuilder requestBuilder) {
-        super(handlers, config, "");
+    public AssembledStepProcess(final IStepConfig config, final IProcessResultHandler handler,
+            final IRequestBuilder requestBuilder) {
+        super(handler, config, "");
         setRequestBuilder(requestBuilder);
     }
 

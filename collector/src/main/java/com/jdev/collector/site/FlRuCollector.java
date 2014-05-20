@@ -27,13 +27,6 @@ import com.jdev.crawler.core.user.IUserData;
  */
 public class FlRuCollector extends AbstractCollector {
 
-    // Mail account
-    // informer.email@yandex.ru
-    // AdfdGG#r%$#@$55345
-
-    // informer-fl-ru
-    // aFGgR5435
-
     /**
      * @param userData
      */
@@ -54,9 +47,7 @@ public class FlRuCollector extends AbstractCollector {
             handler.addListener(observer);
         }
         final SelectUnit nextPageSelectUnit = new SelectUnit("nextPageSelectUnit",
-                "//li[@class='b-pager__item b-pager__item_active']/following-sibling::li[1]/a/@href"
-        // "<li class=\\\\\"b-pager__next\\\\\"><a href=\\\\\"(.*)\\\\\" id=\\\\\"PrevLink"
-        );
+                "//li[@class='b-pager__item b-pager__item_active']/following-sibling::li[1]/a/@href");
         return ProcessUtils.chain(ProcessUtils.doGet("https://www.fl.ru/"), ProcessUtils
                 .waitUntilValidatoIsTrue(new StepConfigAdapter() {
                     @Override
