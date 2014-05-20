@@ -38,7 +38,7 @@ public class RecommendationDaoTest extends AbstractWriteDaoTest<Recommendation> 
     Recommendation createEntity() {
         // Site site = new Site("http://site.com", "description");
         // siteDao.save(site);
-        Job job = JobUtils.createJob("Reason1");
+        Job job = EntityUtils.createJob("Reason1");
         jobDao.save(job);
         Recommendation recommendation = new Recommendation();
         Article article = new Article("ArticleContent");
@@ -56,7 +56,7 @@ public class RecommendationDaoTest extends AbstractWriteDaoTest<Recommendation> 
     Recommendation createUpdateEntity() {
         // Site site = new Site("http://sites.com", "descriptions");
         // siteDao.save(site);
-        Job job = JobUtils.createJob("Reason2");
+        Job job = EntityUtils.createJob("Reason2");
         jobDao.save(job);
         Recommendation recommendation = new Recommendation();
         Article article = new Article("ArticleContentABC");

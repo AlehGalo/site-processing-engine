@@ -13,12 +13,14 @@ public class JobDaoTest extends AbstractWriteDaoTest<Job> {
 
     @Override
     Job createEntity() {
-        return JobUtils.createJob("ReasonNone");
+        Job job = EntityUtils.createJob("ReasonNone");
+        return job;
     }
 
     @Override
     Job createUpdateEntity() {
-        return JobUtils.createJob("ReasonNone1");
+        Job job = EntityUtils.createJob("ReasonNone1");
+        return job;
     }
 
 }
