@@ -6,6 +6,7 @@ package com.jdev.domain.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jdev.domain.domain.Article;
+import com.jdev.domain.domain.Credential;
 import com.jdev.domain.domain.Job;
 import com.jdev.domain.domain.Recommendation;
 import com.jdev.domain.domain.Site;
@@ -34,17 +35,20 @@ public class RecommendationDaoTest extends AbstractWriteDaoTest<Recommendation> 
     @Autowired
     private IWriteDao<Job> jobDao;
 
+    /**
+     * 
+     */
+    @Autowired
+    private IWriteDao<Credential> credentialDao;
+
     @Override
     Recommendation createEntity() {
-        // Site site = new Site("http://site.com", "description");
-        // siteDao.save(site);
-        Job job = EntityUtils.createJob("Reason1");
+        Job job = EntityUtils.createJobWithDependencies("Reason1", siteDao, credentialDao);
         jobDao.save(job);
         Recommendation recommendation = new Recommendation();
         Article article = new Article("ArticleContent");
         article.setOriginalArticleUrl("URL");
         article.setJob(job);
-        // article.setSite(site);
         article.setTitle("TitleF");
         recommendation.setVote(false);
         articleWriteDao.save(article);
@@ -54,14 +58,11 @@ public class RecommendationDaoTest extends AbstractWriteDaoTest<Recommendation> 
 
     @Override
     Recommendation createUpdateEntity() {
-        // Site site = new Site("http://sites.com", "descriptions");
-        // siteDao.save(site);
-        Job job = EntityUtils.createJob("Reason2");
+        Job job = EntityUtils.createJobWithDependencies("Reason2", siteDao, credentialDao);
         jobDao.save(job);
         Recommendation recommendation = new Recommendation();
         Article article = new Article("ArticleContentABC");
         article.setOriginalArticleUrl("URLABC");
-        // article.setSite(site);
         article.setTitle("TitleABC");
         article.setJob(job);
         recommendation.setVote(false);
@@ -69,5 +70,4 @@ public class RecommendationDaoTest extends AbstractWriteDaoTest<Recommendation> 
         recommendation.setArticle(article);
         return recommendation;
     }
-
 }

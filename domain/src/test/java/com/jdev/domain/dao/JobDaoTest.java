@@ -3,7 +3,11 @@
  */
 package com.jdev.domain.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.jdev.domain.domain.Credential;
 import com.jdev.domain.domain.Job;
+import com.jdev.domain.domain.Site;
 
 /**
  * @author Aleh
@@ -11,16 +15,25 @@ import com.jdev.domain.domain.Job;
  */
 public class JobDaoTest extends AbstractWriteDaoTest<Job> {
 
+    /**
+     * 
+     */
+    @Autowired
+    private IWriteDao<Credential> credentialDao;
+
+    /**
+     * 
+     */
+    @Autowired
+    private IWriteDao<Site> siteDao;
+
     @Override
     Job createEntity() {
-        Job job = EntityUtils.createJob("ReasonNone");
-        return job;
+        return EntityUtils.createJobWithDependencies("ReasonNone", siteDao, credentialDao);
     }
 
     @Override
     Job createUpdateEntity() {
-        Job job = EntityUtils.createJob("ReasonNone1");
-        return job;
+        return EntityUtils.createJobWithDependencies("ReasonNone1", siteDao, credentialDao);
     }
-
 }

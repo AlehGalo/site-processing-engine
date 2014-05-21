@@ -36,38 +36,14 @@ public class ArticleDaoTest extends AbstractWriteDaoTest<Article> {
 
     @Override
     Article createEntity() {
-        Job job = EntityUtils.createJob("Reason1");
-        Site site = EntityUtils.createSite();
-        siteDao.save(site);
-        Credential cred = EntityUtils.createCredential();
-        cred.setSite(site);
-        credentialDao.save(cred);
-        job.setCredential(cred);
-        jobDao.save(job);
-        Article article = new Article("Article content");
-        article.setOriginalArticleUrl("Original article url");
-        article.setOriginalArticleUrl("Original Url");
-        article.setJob(job);
-        article.setTitle("Title");
-        return article;
+        return EntityUtils.createArticleWithDependencies("Article content", "Reason1", siteDao,
+                credentialDao, jobDao);
     }
 
     @Override
     Article createUpdateEntity() {
-        Job job = EntityUtils.createJob("Reason2");
-        Site site = EntityUtils.createSite();
-        siteDao.save(site);
-        Credential cred = EntityUtils.createCredential();
-        cred.setSite(site);
-        credentialDao.save(cred);
-        job.setCredential(cred);
-        jobDao.save(job);
-        Article article = new Article("Article content2");
-        article.setOriginalArticleUrl("Original article url2");
-        article.setOriginalArticleUrl("Original Url");
-        article.setJob(job);
-        article.setTitle("Title1");
-        return article;
+        return EntityUtils.createArticleWithDependencies("Article content2", "Reason2", siteDao,
+                credentialDao, jobDao);
     }
 
 }

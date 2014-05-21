@@ -13,12 +13,12 @@ public class SiteDaoTest extends AbstractWriteDaoTest<Site> {
 
     @Override
     Site createEntity() {
-        return new Site("domainUrl", "resourceUrl", "description");
+        return EntityUtils.createSite();
     }
 
     @Override
     Site createUpdateEntity() {
-        return new Site("domainUrl1", "resourceUrl1", "description1");
+        return EntityUtils.createSite();
     }
 
 }

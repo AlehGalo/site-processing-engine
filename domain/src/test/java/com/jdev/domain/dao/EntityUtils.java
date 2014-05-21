@@ -5,6 +5,7 @@ package com.jdev.domain.dao;
 
 import java.util.Date;
 
+import com.jdev.domain.domain.Article;
 import com.jdev.domain.domain.Credential;
 import com.jdev.domain.domain.Job;
 import com.jdev.domain.domain.Site;
@@ -39,8 +40,8 @@ final class EntityUtils {
      */
     public static Credential createCredential() {
         Credential credential = new Credential();
-        credential.setPassword(String.valueOf(System.currentTimeMillis()));
-        credential.setUsername(String.valueOf(System.currentTimeMillis()));
+        credential.setPassword(currentTimeAsString());
+        credential.setUsername(currentTimeAsString());
         return credential;
     }
 
@@ -48,8 +49,61 @@ final class EntityUtils {
      * @return
      */
     public static Site createSite() {
-        return new Site(String.valueOf(System.currentTimeMillis()), String.valueOf(System
-                .currentTimeMillis()), String.valueOf(System.currentTimeMillis()));
+        return new Site(currentTimeAsString(), currentTimeAsString(), currentTimeAsString());
+    }
+
+    /**
+     * @param reason
+     * @param siteDao
+     * @param credentialDao
+     * @return
+     */
+    public static Job createJobWithDependencies(final String reason, final IWriteDao<Site> siteDao,
+            final IWriteDao<Credential> credentialDao) {
+        Job job = EntityUtils.createJob(reason);
+        Credential cred = createCredentialWithDependencies(siteDao);
+        credentialDao.save(cred);
+        job.setCredential(cred);
+        return job;
+    }
+
+    /**
+     * @param reason
+     * @param siteDao
+     * @param credentialDao
+     * @return
+     */
+    public static Article createArticleWithDependencies(final String content, final String reason,
+            final IWriteDao<Site> siteDao, final IWriteDao<Credential> credentialDao,
+            final IWriteDao<Job> jobDao) {
+        Article article = new Article(content);
+        article.setOriginalArticleUrl(currentTimeAsString());
+        article.setTitle(currentTimeAsString());
+        Job job = EntityUtils.createJobWithDependencies(reason, siteDao, credentialDao);
+        jobDao.save(job);
+        article.setJob(job);
+        return article;
+    }
+
+    /**
+     * @param reason
+     * @param siteDao
+     * @param credentialDao
+     * @return
+     */
+    public static Credential createCredentialWithDependencies(final IWriteDao<Site> siteDao) {
+        Credential cred = EntityUtils.createCredential();
+        Site site = EntityUtils.createSite();
+        siteDao.save(site);
+        cred.setSite(site);
+        return cred;
+    }
+
+    /**
+     * @return string presentation of current time mills.
+     */
+    private static String currentTimeAsString() {
+        return String.valueOf(System.currentTimeMillis());
     }
 
 }
