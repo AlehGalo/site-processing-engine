@@ -34,7 +34,9 @@ public class TestJSoupSelector extends TestAbstractResourcableSelector<String> {
                 "input5.html.selector", "input4.html.result", "windows-1251" }, new String[] {
                 "input6.html", "input6.html.selector", "input6.html.result", "windows-1251" },
                 new String[] { "input4.html", "input6.html.selector", "input4.html.result",
-                        "windows-1251" });
+                        "windows-1251" }, new String[] { "input4.html", "input6_1.html.selector",
+                        "input4.html.result", "windows-1251" }, new String[] { "input6.html",
+                        "input6_1.html.selector", "input6.html.result", "windows-1251" });
     }
 
     /**

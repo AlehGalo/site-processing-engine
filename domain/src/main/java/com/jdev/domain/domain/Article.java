@@ -38,9 +38,12 @@ public class Article extends AbstractIdentifiable {
     /**
      * Article's content.
      */
-    @Column(name = "ORIGINAL_ARTICLE_URL", nullable = false, columnDefinition = "VARCHAR(256)")
+    @Column(name = "ORIGINAL_ARTICLE_URL", nullable = false, columnDefinition = "VARCHAR(256)", unique = true)
     private String originalArticleUrl;
 
+    /**
+     * Title.
+     */
     @Column(name = "TITLE", nullable = false, columnDefinition = "VARCHAR(255)")
     private String title;
 

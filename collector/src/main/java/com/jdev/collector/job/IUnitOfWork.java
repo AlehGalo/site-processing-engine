@@ -15,7 +15,7 @@ public interface IUnitOfWork {
     /**
      * @param article
      */
-    void saveArticle(Article article);
+    boolean saveArticle(Article article);
 
     /**
      * @param job

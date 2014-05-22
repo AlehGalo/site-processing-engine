@@ -3,6 +3,7 @@
  */
 package com.jdev.collector.job;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,8 +33,13 @@ public class UnitOfWork implements IUnitOfWork {
     private IWriteDao<Job> jobDao;
 
     @Override
-    public void saveArticle(final Article article) {
-        writeArticleDao.save(article);
+    public boolean saveArticle(final Article article) {
+        if (CollectionUtils.isEmpty(writeArticleDao.findByStringProperty("originalArticleUrl",
+                article.getOriginalArticleUrl()))) {
+            writeArticleDao.save(article);
+            return true;
+        }
+        return false;
     }
 
     @Override

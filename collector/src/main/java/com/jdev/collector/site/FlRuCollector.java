@@ -48,13 +48,16 @@ public class FlRuCollector extends AbstractCollector {
         }
         final SelectUnit nextPageSelectUnit = new SelectUnit("nextPageSelectUnit",
                 "//li[@class='b-pager__item b-pager__item_active']/following-sibling::li[1]/a/@href");
+        final SelectUnit projectsLink = new SelectUnit("projectsLink",
+                "//div[contains(@class, 'b-menu_tabs')]//ul[position()=2]/li[position()=2]/a/@href");
         return ProcessUtils.chain(ProcessUtils.doGet("https://www.fl.ru/"), ProcessUtils
                 .waitUntilValidatoIsTrue(new StepConfigAdapter() {
                     @Override
                     public Collection<ISelector<?>> getParameters() {
                         Collection<ISelector<?>> collection = new ArrayList<>();
-                        collection.add(new StaticStringSelector("login", "informer-fl-ru"));
-                        collection.add(new StaticStringSelector("passwd", "aFGgR5435"));
+                        IUserData userData = getUserData();
+                        collection.add(new StaticStringSelector("login", userData.getLogin()));
+                        collection.add(new StaticStringSelector("passwd", userData.getPassword()));
                         collection.add(new StaticStringSelector("action", "login"));
                         return collection;
                     }
@@ -70,26 +73,33 @@ public class FlRuCollector extends AbstractCollector {
                     }
                 }, new SelectorValidator(new XPathSelector(new SelectUnit("loginPasswordInput",
                         "//a[@class='b-bar__name']/@href")))), ProcessUtils
-                .doWhile(new ConditionalProcess(new SelectorValidator(new XPathSelector(
-                        nextPageSelectUnit)), ProcessUtils.chain(
-                        ProcessUtils.assemble(new StepConfigAdapter() {
-                            @Override
-                            public Collection<ISelector<?>> getParameters() {
-                                Collection<ISelector<?>> collection = new ArrayList<>();
-                                collection.add(new HostStaticStringSelector("https://www.fl.ru/"));
-                                collection.add(new ActionXPathSelector(nextPageSelectUnit
-                                        .getSelector()));
-                                return collection;
-                            }
-                        }), ProcessUtils.multi(new StepConfigAdapter() {
-                            @Override
-                            public java.util.Collection<com.jdev.crawler.core.selector.ISelector<?>> getParameters() {
-                                Collection<com.jdev.crawler.core.selector.ISelector<?>> parameters = new ArrayList<>();
-                                parameters.add(new HostStaticStringSelector("https://www.fl.ru/"));
-                                parameters.add(new ActionXPathSelector(
-                                        "//a[@class='b-post__link']/@href"));
-                                return parameters;
-                            }
-                        }, handler)))));
+                .assemble(new StepConfigAdapter() {
+
+                    @Override
+                    public Collection<ISelector<?>> getParameters() {
+                        Collection<ISelector<?>> collection = new ArrayList<>();
+                        collection.add(new HostStaticStringSelector("https://www.fl.ru/"));
+                        collection.add(new ActionXPathSelector(projectsLink.getSelector()));
+                        return collection;
+                    }
+                }), ProcessUtils.doWhile(new ConditionalProcess(new SelectorValidator(
+                new XPathSelector(nextPageSelectUnit)), ProcessUtils.chain(
+                ProcessUtils.assemble(new StepConfigAdapter() {
+                    @Override
+                    public Collection<ISelector<?>> getParameters() {
+                        Collection<ISelector<?>> collection = new ArrayList<>();
+                        collection.add(new HostStaticStringSelector("https://www.fl.ru/"));
+                        collection.add(new ActionXPathSelector(nextPageSelectUnit.getSelector()));
+                        return collection;
+                    }
+                }), ProcessUtils.multi(new StepConfigAdapter() {
+                    @Override
+                    public java.util.Collection<com.jdev.crawler.core.selector.ISelector<?>> getParameters() {
+                        Collection<com.jdev.crawler.core.selector.ISelector<?>> parameters = new ArrayList<>();
+                        parameters.add(new HostStaticStringSelector("https://www.fl.ru/"));
+                        parameters.add(new ActionXPathSelector("//a[@class='b-post__link']/@href"));
+                        return parameters;
+                    }
+                }, handler)))));
     }
 }

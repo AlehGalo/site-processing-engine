@@ -40,7 +40,8 @@ public class TestFlRuHandler {
      */
     @Parameters(name = "{index}: file name - {0}, result file name - {1}")
     public static Iterable<String[]> data() {
-        return Arrays.<String[]> asList(new String[] { "input.html", "input.html", null });
+        return Arrays
+                .<String[]> asList(new String[] { "input.html", "input.html", "windows-1251" });
     }
 
     /**
@@ -79,7 +80,7 @@ public class TestFlRuHandler {
         try {
             handler.handle(mock(IProcessSession.class), entity);
         } catch (CrawlerException e) {
-            Assert.fail();
+            Assert.fail("Content selection exception");
         }
         Article article = observer.article;
         Assert.assertTrue(isNotBlank(article.getContent()));

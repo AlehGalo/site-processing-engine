@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.persistence.PersistenceException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -148,11 +149,14 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
      */
     private void saveArticle(final Article article) {
         ++transactionCounter;
-        unitOfWork.saveArticle(article);
-        if (transactionCounter >= 10) {
-            updateJobState();
-            unitOfWork.updateJob(job);
-            transactionCounter = 0;
+        if (validateArticle(article) && unitOfWork.saveArticle(article)) {
+            if (transactionCounter >= 10) {
+                updateJobState();
+                unitOfWork.updateJob(job);
+                transactionCounter = 0;
+            }
+        } else {
+            processError(new PersistenceException());
         }
     }
 
@@ -225,5 +229,11 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
                 return companyId;
             }
         });
+    }
+
+    private boolean validateArticle(final Article article) {
+        return StringUtils.isNotBlank(article.getTitle())
+                && StringUtils.isNotBlank(article.getContent())
+                && StringUtils.isNotBlank(article.getOriginalArticleUrl());
     }
 }

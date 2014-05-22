@@ -15,6 +15,13 @@
 			<groupId>com.jdev.crawl</groupId>
 			<artifactId>crawler</artifactId>
 			<version>1.0</version>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+		<dependency>
+			<groupId>com.jdev.crawl</groupId>
+			<artifactId>crawler</artifactId>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.jdev.crawl</groupId>

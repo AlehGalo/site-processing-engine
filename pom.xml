@@ -25,7 +25,7 @@
 		<org.sl4j.version>1.7.0</org.sl4j.version>
 		<log4j.version>1.2.17</log4j.version>
 		<apache.poi.version>3.9</apache.poi.version>
-		<org.springframework.version>4.1.0.BUILD-SNAPSHOT</org.springframework.version>
+		<org.springframework.version>4.0.5.RELEASE</org.springframework.version>
 		<junit.version>4.11</junit.version>
 		<xmlunit.version>1.5</xmlunit.version>
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
@@ -34,6 +34,7 @@
 		<commons-lang3.version>3.1</commons-lang3.version>
 		<commons.collections.version>3.2.1</commons.collections.version>
 		<google.guava.version>15.0</google.guava.version>
+		<maven.jar.plugin.version>2.4</maven.jar.plugin.version>
 		<mysql.version>5.1.13</mysql.version>
 		<mockito.all.version>1.9.5</mockito.all.version>
 		<org.hibernate.version>4.3.5.Final</org.hibernate.version>

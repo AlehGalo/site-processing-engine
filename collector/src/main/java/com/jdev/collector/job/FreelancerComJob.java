@@ -26,5 +26,4 @@ public class FreelancerComJob extends AbstractScanResourceJob {
     public void doTheJob() throws CrawlerException {
         scan();
     }
-
 }

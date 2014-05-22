@@ -27,7 +27,7 @@ public class FlRuHandler extends ArticleWatcher {
      * 
      */
     private static final StringSourceJSoupSelector contentSelector = new StringSourceJSoupSelector(
-            new SelectUnit("Content", "div.b-layout_margright_270 div[id^=projectp]"));
+            new SelectUnit("Content", "div.b-layout div[id^=projectp]"));
 
     static {
         contentSelector.setExtractor(new IJSoupElementExtractor() {

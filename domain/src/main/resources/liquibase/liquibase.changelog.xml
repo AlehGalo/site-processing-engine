@@ -28,7 +28,7 @@
 
 	<changeSet id="5" author="aleh">
 		<sqlFile relativeToChangelogFile="true"
-			path="install/20140424_alter_job_talbe.sql" encoding="UTF-8" />
+			path="install/20140424_alter_job_table.sql" encoding="UTF-8" />
 	</changeSet>
 
 	<changeSet id="6" author="aleh">
@@ -51,4 +51,8 @@
 			path="install/20140520_alter_job_table.sql" encoding="UTF-8" />
 	</changeSet>
 
+	<changeSet id="10" author="aleh">
+		<sqlFile relativeToChangelogFile="true"
+			path="install/20140522_create_tables_for_errors.sql" encoding="UTF-8" />
+	</changeSet>
 </databaseChangeLog>

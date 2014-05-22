@@ -95,4 +95,11 @@ public abstract class AbstractCollector implements ICollector {
     public final void setEventHandlerDelegate(final IObserver eventHandlerDelegate) {
         this.eventHandlerDelegate = eventHandlerDelegate;
     }
+
+    /**
+     * @return the userData
+     */
+    final IUserData getUserData() {
+        return userData;
+    }
 }

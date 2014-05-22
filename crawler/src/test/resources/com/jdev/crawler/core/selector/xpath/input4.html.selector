@@ -1,0 +1,1 @@
+//span[@class='b-menu__b1' and contains(text(), 'Проекты')]/ancestor::a/@href

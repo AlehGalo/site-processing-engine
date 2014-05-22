@@ -11,6 +11,7 @@ import java.util.Collection;
 import com.jdev.collector.site.handler.FreelanceComHandler;
 import com.jdev.collector.site.handler.IObserver;
 import com.jdev.crawler.core.process.IProcess;
+import com.jdev.crawler.core.process.ProcessUtils;
 import com.jdev.crawler.core.process.container.ConditionalProcess;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.simple.HostStaticStringSelector;
@@ -43,17 +44,30 @@ public class FreelanceComCollector extends AbstractCollector {
         if (observer != null) {
             fcHandler.addListener(getEventHandlerDelegate());
         }
-        return chain(doGet("http://www.freelance.com/en/search/mission"),
+        return chain(
+                doGet("http://www.freelance.com/en/search/mission"),
                 doWhile(new ConditionalProcess(new SelectorValidator(new ActionXPathSelector(
-                        "//a[contains(text(), 'Next')]/@href")), multi(new StepConfigAdapter() {
-                    @Override
-                    public Collection<ISelector<?>> getParameters() {
-                        Collection<com.jdev.crawler.core.selector.ISelector<?>> parameters = new ArrayList<>();
-                        parameters.add(new HostStaticStringSelector("http://www.freelance.com"));
-                        parameters.add(new ActionXPathSelector(
-                                "//table[@id='result']/tbody//a/@href"));
-                        return parameters;
-                    }
-                }, fcHandler))));
+                        "//a[contains(text(), 'Next')]/@href")), ProcessUtils.chain(
+                        multi(new StepConfigAdapter() {
+                            @Override
+                            public Collection<ISelector<?>> getParameters() {
+                                Collection<com.jdev.crawler.core.selector.ISelector<?>> parameters = new ArrayList<>();
+                                parameters.add(new HostStaticStringSelector(
+                                        "http://www.freelance.com"));
+                                parameters.add(new ActionXPathSelector(
+                                        "//table[@id='result']/tbody//a/@href"));
+                                return parameters;
+                            }
+                        }, fcHandler), ProcessUtils.assemble(new StepConfigAdapter() {
+                            @Override
+                            public Collection<ISelector<?>> getParameters() {
+                                Collection<ISelector<?>> collection = new ArrayList<>();
+                                collection.add(new HostStaticStringSelector(
+                                        "http://www.freelance.com"));
+                                collection.add(new ActionXPathSelector(
+                                        "//a[contains(text(), 'Next')]/@href"));
+                                return collection;
+                            }
+                        })))));
     }
 }

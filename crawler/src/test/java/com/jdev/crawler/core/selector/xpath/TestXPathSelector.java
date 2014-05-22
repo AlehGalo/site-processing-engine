@@ -28,7 +28,9 @@ public class TestXPathSelector extends TestAbstractResourcableSelector<String> {
                 "input2.htm.result", null }, new String[] { "input1.htm", "input3.htm.selector",
                 "input3.htm.result", null }, new String[] { "input-fl-ru-utf8.htm",
                 "input-fl-ru.selector", "input-fl-ru.result", null }, new String[] {
-                "input-fl-ru-utf8.htm", "input-fl-ru1.selector", "input-fl-ru1.result", null });
+                "input-fl-ru-utf8.htm", "input-fl-ru1.selector", "input-fl-ru1.result", null },
+                new String[] { "input4.html", "input4.html.selector", "input4.html.result",
+                        "windows-1251" });
     }
 
     /**

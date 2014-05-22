@@ -48,10 +48,10 @@ public class FreelancerComCollector extends AbstractCollector {
             handler.addListener(observer);
         }
         return ProcessUtils.chain(
-                doGet("http://www.freelancer.com/jobs/"),
+                doGet("https://www.freelancer.com/jobs/j-fixed-hourly/1"),
                 doWhile(new ConditionalProcess(new SelectorValidator(new ActionRegexpSelector(
                         "<link rel=\"next\" href=\"(.*)\"/>")), chain(
-                        ProcessUtils.skipKnownError(multi(new StepConfigAdapter() {
+                        multi(new StepConfigAdapter() {
                             @Override
                             public Collection<ISelector<?>> getParameters() {
                                 Collection<ISelector<?>> selectorCollection = new ArrayList<>();
@@ -60,14 +60,15 @@ public class FreelancerComCollector extends AbstractCollector {
                                                 "//table[@id='project_table_static']//tbody/tr[contains(@class,'project-details')]/td[1]/a/@href"));
                                 return selectorCollection;
                             }
-                        }, handler), "No HOST specified"), assemble(new StepConfigAdapter() {
+                        }, handler), assemble(new StepConfigAdapter() {
                             @Override
                             public Collection<ISelector<?>> getParameters() {
                                 Collection<ISelector<?>> collection = new ArrayList<>();
                                 collection.add(new HostStaticStringSelector(
                                         "http://www.freelancer.com"));
-                                collection.add(new ActionRegexpSelector(
-                                        "<link rel=\"next\" href=\"(.*)\"/>"));
+                                collection
+                                        .add(new ActionXPathSelector(
+                                                "//span[@class='paginate_active']/following-sibling::span[1]/a/@href"));
                                 return collection;
                             }
                         })))));

@@ -3,8 +3,6 @@
  */
 package com.jdev.collector.site.handler;
 
-import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -20,7 +18,6 @@ import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.exception.CrawlerException;
-import com.jdev.crawler.exception.SelectionException;
 import com.jdev.domain.domain.Article;
 
 /**
@@ -106,25 +103,22 @@ public class ArticleWatcher implements IObservable, IProcessResultHandler {
         String content = new String(entity.getContent(), entity.getCharset());
         Collection<ISelectorResult> contentSelectorResult = contentSelector.select(content);
         Collection<ISelectorResult> titleSelectorResult = headerSelector.select(content);
-        if (isNotEmpty(contentSelectorResult) && isNotEmpty(titleSelectorResult)) {
-            Article article = new Article(getValueFromTheFirtSelectorResult(contentSelectorResult));
-            article.setTitle(getValueFromTheFirtSelectorResult(titleSelectorResult));
-            article.setOriginalArticleUrl(entity.getEntityUri().toString());
-            setArticle(article);
-            notifyListeners();
-        } else {
-            LOGGER.info("No title or content found for " + entity.getEntityUri().toString() + " "
-                    + entity.getContentFileRef());
-            throw new SelectionException("Content or title was not found");
-        }
+        Article article = new Article(getValueFromTheFirtSelectorResult(contentSelectorResult));
+        article.setTitle(getValueFromTheFirtSelectorResult(titleSelectorResult));
+        article.setOriginalArticleUrl(entity.getEntityUri().toString());
+        setArticle(article);
+        notifyListeners();
     }
 
     /**
      * @param collection
      *            of value results.
-     * @return string value.
+     * @return string value or null of no data.
      */
     private String getValueFromTheFirtSelectorResult(final Collection<ISelectorResult> collection) {
+        if (collection.isEmpty()) {
+            return null;
+        }
         return ((ISelectorResult) CollectionUtils.get(collection, 0)).getValue();
     }
 }

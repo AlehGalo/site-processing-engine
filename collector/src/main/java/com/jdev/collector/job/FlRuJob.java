@@ -23,11 +23,9 @@ public class FlRuJob extends AbstractScanResourceJob {
         super(new FlRuCollector(createUserData(credential)), credential);
     }
 
-    /**
-     * @throws CrawlerException
-     */
     @Scheduled(fixedDelay = 3600000, initialDelay = 100)
     public void doTheJob() throws CrawlerException {
         scan();
     }
+
 }

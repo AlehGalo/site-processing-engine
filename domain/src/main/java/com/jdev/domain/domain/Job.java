@@ -175,5 +175,4 @@ public class Job extends AbstractIdentifiable {
     public final void setCredential(final Credential credential) {
         this.credential = credential;
     }
-
 }
