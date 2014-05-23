@@ -17,7 +17,9 @@ import com.jdev.crawler.core.process.container.ConditionalProcess;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.regexp.ActionRegexpSelector;
 import com.jdev.crawler.core.selector.simple.HostStaticStringSelector;
+import com.jdev.crawler.core.selector.simple.StaticStringSelector;
 import com.jdev.crawler.core.selector.xpath.ActionXPathSelector;
+import com.jdev.crawler.core.selector.xpath.MethodXPathSelector;
 import com.jdev.crawler.core.step.StepConfigAdapter;
 import com.jdev.crawler.core.step.validator.SelectorValidator;
 import com.jdev.crawler.core.user.IUserData;
@@ -48,6 +50,23 @@ public class FreelancerComCollector extends AbstractCollector {
             handler.addListener(observer);
         }
         return ProcessUtils.chain(
+                doGet("https://www.freelancer.com"),
+                assemble(new StepConfigAdapter() {
+                    @Override
+                    public Collection<ISelector<?>> getParameters() {
+                        Collection<ISelector<?>> selectorCollection = new ArrayList<>();
+                        selectorCollection.add(new ActionXPathSelector(
+                                "//form[@id='login-form']/@action"));
+                        selectorCollection.add(new MethodXPathSelector(
+                                "//form[@id='login-form']/@method"));
+                        selectorCollection.add(new StaticStringSelector("submitted", "true"));
+                        selectorCollection.add(new StaticStringSelector("username", getUserData()
+                                .getLogin()));
+                        selectorCollection.add(new StaticStringSelector("passwd", getUserData()
+                                .getPassword()));
+                        return selectorCollection;
+                    }
+                }),
                 doGet("https://www.freelancer.com/jobs/j-fixed-hourly/1"),
                 doWhile(new ConditionalProcess(new SelectorValidator(new ActionRegexpSelector(
                         "<link rel=\"next\" href=\"(.*)\"/>")), chain(
