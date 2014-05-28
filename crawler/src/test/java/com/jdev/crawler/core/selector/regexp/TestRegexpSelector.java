@@ -20,7 +20,8 @@ public class TestRegexpSelector extends TestAbstractResourcableSelector<String> 
                 "input1.html.result", null }, new String[] { "input1.html", "input2.html.selector",
                 "input2.html.result", null }, new String[] { "input2.html",
                 "input2_1.html.selector", "input2_1.html.result", null }, new String[] {
-                "input3.html", "input3.html.selector", "input3.html.result", null });
+                "input3.html", "input3.html.selector", "input3.html.result", null }, new String[] {
+                "input4.html", "input4.html.selector", "input4.html.result", null });
     }
 
     /**
