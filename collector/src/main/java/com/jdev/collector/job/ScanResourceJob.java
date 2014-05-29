@@ -9,8 +9,7 @@ import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.HibernateException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
 
@@ -18,9 +17,6 @@ import com.jdev.collector.job.strategy.IExceptionalCaseHandler;
 import com.jdev.collector.site.AbstractCollector;
 import com.jdev.collector.site.ICollector;
 import com.jdev.collector.site.handler.IObserver;
-import com.jdev.crawler.core.user.ICompany;
-import com.jdev.crawler.core.user.IUserData;
-import com.jdev.crawler.core.user.UserData;
 import com.jdev.crawler.exception.CrawlerException;
 import com.jdev.domain.domain.Article;
 import com.jdev.domain.domain.Credential;
@@ -30,14 +26,12 @@ import com.jdev.domain.domain.Job;
  * @author Aleh
  * 
  */
-@Component
-abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
+public class ScanResourceJob implements IObserver {
 
     /**
      * 
      */
-    @Autowired
-    private IUnitOfWork unitOfWork;
+    private final IUnitOfWork unitOfWork;
 
     /**
      * 
@@ -87,21 +81,19 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
     /**
      * @param userName
      */
-    public AbstractScanResourceJob(final AbstractCollector collector, final Credential credential) {
+    public ScanResourceJob(final AbstractCollector collector, final Credential credential,
+            final IUnitOfWork unitOfWork) {
         Assert.notNull(collector);
         Assert.notNull(credential);
+        Assert.notNull(unitOfWork);
         this.collector = collector;
         this.credential = credential;
+        this.unitOfWork = unitOfWork;
         collector.setEventHandlerDelegate(this);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.jdev.collector.job.IScanResourceJob#scan()
-     */
-    @Override
-    public void scan() throws CrawlerException {
+    @Scheduled(fixedDelay = 3600000, initialDelay = 100)
+    public void scan() {
         job = createInitiatedJob();
         job.setCredential(this.credential);
         unitOfWork.saveJob(job);
@@ -111,9 +103,9 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
             ++crawlerExceptions;
             updateJobState();
             job.setStatus("FAILED_CRAWLER");
-            job.setReasonOfStopping(ce.getCause().getMessage());
+            job.setReasonOfStopping(ce.getMessage());
             unitOfWork.updateJob(job);
-            throw ce;
+            return;
         }
         updateJobState();
         job.setStatus("FINISHED");
@@ -203,32 +195,6 @@ abstract class AbstractScanResourceJob implements IScanResourceJob, IObserver {
     public final void setExceptionHandler(final IExceptionalCaseHandler<Exception> exceptionHandler) {
         Assert.notNull(exceptionHandler);
         this.exceptionHandler = exceptionHandler;
-    }
-
-    /**
-     * Constant name.
-     */
-    private static final String NAME = "Name";
-
-    /**
-     * @param credentials
-     * @return
-     */
-    static IUserData createUserData(final Credential credentials) {
-        Assert.notNull(credentials);
-        final Integer companyId = credentials.getSite().getId().intValue();
-        return new UserData(credentials.getUsername(), credentials.getPassword(), new ICompany() {
-
-            @Override
-            public String getCompanyName() {
-                return NAME + companyId;
-            }
-
-            @Override
-            public Integer getCompanyId() {
-                return companyId;
-            }
-        });
     }
 
     private boolean validateArticle(final Article article) {

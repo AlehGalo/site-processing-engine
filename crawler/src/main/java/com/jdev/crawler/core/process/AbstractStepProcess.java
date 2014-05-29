@@ -187,7 +187,7 @@ public abstract class AbstractStepProcess implements IProcess, IDescription, IRe
         } while (++count < settings.getRepeatTime() && !(valid = getValidator().validate(entity)));
         if (!valid) {
             throw new InvalidPageException(format(
-                    "Waiting {0} ms for a page {1} is failed. Operator is {2}",
+                    "Waiting {0} ms for a page {1} validator failed. Operator is {2}",
                     settings.getWaitInterval() * settings.getRepeatTime(), request.getURI()
                             .toASCIIString(), context.getUserData().getCompany().getCompanyName()));
         } else {

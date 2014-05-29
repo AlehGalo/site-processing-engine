@@ -3,11 +3,16 @@
  */
 package com.jdev.collector.job;
 
+import static com.jdev.collector.job.UserDataUtils.createUserData;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import com.jdev.collector.site.FlRuCollector;
+import com.jdev.collector.site.FreelanceComCollector;
+import com.jdev.collector.site.FreelancerComCollector;
 import com.jdev.domain.dao.IWriteDao;
 import com.jdev.domain.domain.Credential;
 
@@ -24,19 +29,30 @@ public class JobConfiguration {
     @Autowired
     private IWriteDao<Credential> credentialDao;
 
-    // @Bean
-    // public FlRuJob flruJob() {
-    // return new FlRuJob(credentialDao.find(1L));
-    // }
-    //
-    // @Bean
-    // public FreelanceComJob freelanceComJob() {
-    // return new FreelanceComJob(credentialDao.find(3L));
-    // }
+    /**
+     * Unit of transactional work for job.
+     */
+    @Autowired
+    private IUnitOfWork unitOfWork;
 
     @Bean
-    public FreelancerComJob freelancerComJob() {
-        return new FreelancerComJob(credentialDao.find(2L));
+    public ScanResourceJob flruJob() {
+        Credential credential = credentialDao.find(1L);
+        return new ScanResourceJob(new FlRuCollector(createUserData(credential)), credential,
+                unitOfWork);
     }
 
+    @Bean
+    public ScanResourceJob freelanceComJob() {
+        Credential credential = credentialDao.find(3L);
+        return new ScanResourceJob(new FreelanceComCollector(createUserData(credential)),
+                credential, unitOfWork);
+    }
+
+    @Bean
+    public ScanResourceJob freelancerComJob() {
+        Credential credential = credentialDao.find(2L);
+        return new ScanResourceJob(new FreelancerComCollector(createUserData(credential)),
+                credential, unitOfWork);
+    }
 }

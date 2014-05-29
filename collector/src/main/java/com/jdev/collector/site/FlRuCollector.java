@@ -59,6 +59,7 @@ public class FlRuCollector extends AbstractCollector {
                         collection.add(new StaticStringSelector("login", userData.getLogin()));
                         collection.add(new StaticStringSelector("passwd", userData.getPassword()));
                         collection.add(new StaticStringSelector("action", "login"));
+                        collection.add(new StaticStringSelector("autologin", "1"));
                         return collection;
                     }
 
@@ -72,7 +73,7 @@ public class FlRuCollector extends AbstractCollector {
                         return "https://www.fl.ru/";
                     }
                 }, new SelectorValidator(new XPathSelector(new SelectUnit("loginPasswordInput",
-                        "//a[@class='b-bar__name']/@href")))), ProcessUtils
+                        "//img[@alt='" + getUserData().getLogin() + "']/@alt")))), ProcessUtils
                 .assemble(new StepConfigAdapter() {
 
                     @Override
