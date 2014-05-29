@@ -20,7 +20,7 @@ import com.jdev.domain.domain.IIdentifiable;
  *            Bean name. Common dao class.
  */
 @Repository
-abstract class AbstractGenericDao<T extends IIdentifiable> {
+abstract class AbstractGenericDao<T extends IIdentifiable> implements IComposer<T> {
 
     /**
      * Entity manager.
@@ -35,7 +35,7 @@ abstract class AbstractGenericDao<T extends IIdentifiable> {
     /**
      * Composer.
      */
-    private ICriteriaComposer<T> criteriaComposer;
+    protected ICriteriaComposer<T> criteriaComposer;
 
     /**
      * @param clazz
@@ -66,6 +66,7 @@ abstract class AbstractGenericDao<T extends IIdentifiable> {
     /**
      * @return the criteriaComposer
      */
+    @Override
     public final ICriteriaComposer<T> getCriteriaComposer() {
         return criteriaComposer;
     }

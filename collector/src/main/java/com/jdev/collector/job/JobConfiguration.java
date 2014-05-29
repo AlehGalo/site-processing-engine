@@ -37,21 +37,21 @@ public class JobConfiguration {
 
     @Bean
     public ScanResourceJob flruJob() {
-        Credential credential = credentialDao.find(1L);
+        Credential credential = credentialDao.get(1L);
         return new ScanResourceJob(new FlRuCollector(createUserData(credential)), credential,
                 unitOfWork);
     }
 
     @Bean
     public ScanResourceJob freelanceComJob() {
-        Credential credential = credentialDao.find(3L);
+        Credential credential = credentialDao.get(3L);
         return new ScanResourceJob(new FreelanceComCollector(createUserData(credential)),
                 credential, unitOfWork);
     }
 
     @Bean
     public ScanResourceJob freelancerComJob() {
-        Credential credential = credentialDao.find(2L);
+        Credential credential = credentialDao.get(2L);
         return new ScanResourceJob(new FreelancerComCollector(createUserData(credential)),
                 credential, unitOfWork);
     }

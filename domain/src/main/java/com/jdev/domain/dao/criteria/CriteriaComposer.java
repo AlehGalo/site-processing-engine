@@ -21,6 +21,8 @@ import org.springframework.util.StringUtils;
  * @param <T>
  * 
  */
+// TODO: startPosition, resultNumber
+// TODO: startPosition, resultNumber, sortBy
 public class CriteriaComposer<T> implements ICriteriaComposer<T> {
 
     /**
@@ -65,7 +67,7 @@ public class CriteriaComposer<T> implements ICriteriaComposer<T> {
      */
     @Override
     public CriteriaQuery<T> createCriteriaQuery() {
-        return createCriteriaQuery(getPersistanceClass());
+        return createCriteriaQuery(getPersistenceClass());
     }
 
     /**
@@ -96,7 +98,7 @@ public class CriteriaComposer<T> implements ICriteriaComposer<T> {
             final Object value) {
         final CriteriaQuery<T> criteriaQuery = createCriteriaQuery();
         return createCriteriaQueryWithRestriction(
-                getCriteriaBuilder().equal(criteriaQuery.from(getPersistanceClass()).get(property),
+                getCriteriaBuilder().equal(criteriaQuery.from(getPersistenceClass()).get(property),
                         value), criteriaQuery);
     }
 
@@ -112,7 +114,7 @@ public class CriteriaComposer<T> implements ICriteriaComposer<T> {
             final SingularAttribute<T, E> property, final Object value) {
         final CriteriaQuery<T> criteriaQuery = createCriteriaQuery();
         return createCriteriaQueryWithRestriction(
-                getCriteriaBuilder().equal(criteriaQuery.from(getPersistanceClass()).get(property),
+                getCriteriaBuilder().equal(criteriaQuery.from(getPersistenceClass()).get(property),
                         value), criteriaQuery);
     }
 
@@ -131,10 +133,11 @@ public class CriteriaComposer<T> implements ICriteriaComposer<T> {
      * @return Criteria query with property equality.
      */
     @Override
-    public CriteriaQuery<T> createQueryOrderedBy(final String property, final boolean asc) {
+    public CriteriaQuery<T> createQueryOrderedBy(final SingularAttribute<T, ?> property,
+            final boolean asc) {
         final CriteriaQuery<T> query = createCriteriaQuery();
         if (StringUtils.isEmpty(property)) {
-            query.from(getPersistanceClass());
+            query.from(getPersistenceClass());
             return query;
         }
         return decorateQueryOrderBy(query, property, asc);
@@ -148,9 +151,9 @@ public class CriteriaComposer<T> implements ICriteriaComposer<T> {
      */
     @Override
     public CriteriaQuery<T> decorateQueryOrderBy(final CriteriaQuery<T> query,
-            final String property, final boolean asc) {
+            final SingularAttribute<T, ?> property, final boolean asc) {
         Order order = null;
-        final Path<T> path = query.from(getPersistanceClass()).get(property);
+        final Path<?> path = query.from(getPersistenceClass()).get(property);
         if (asc) {
             order = getCriteriaBuilder().asc(path);
         } else {
@@ -172,7 +175,7 @@ public class CriteriaComposer<T> implements ICriteriaComposer<T> {
         final CriteriaQuery<T> criteriaQuery = createCriteriaQuery();
         return createCriteriaQueryWithRestriction(
                 getCriteriaBuilder().like(
-                        criteriaQuery.from(getPersistanceClass()).<String> get(property), value),
+                        criteriaQuery.from(getPersistenceClass()).<String> get(property), value),
                 criteriaQuery);
     }
 
@@ -184,7 +187,7 @@ public class CriteriaComposer<T> implements ICriteriaComposer<T> {
     @Override
     public CriteriaQuery<T> createCriteriaQueryWithRestriction(
             final Expression<Boolean> restriction, final CriteriaQuery<T> criteriaQuery) {
-        criteriaQuery.select(criteriaQuery.from(getPersistanceClass()));
+        criteriaQuery.select(criteriaQuery.from(getPersistenceClass()));
         criteriaQuery.where(restriction);
         return criteriaQuery;
     }
@@ -209,7 +212,7 @@ public class CriteriaComposer<T> implements ICriteriaComposer<T> {
      * @return the persistanceClass
      */
     @Override
-    public final Class<T> getPersistanceClass() {
+    public final Class<T> getPersistenceClass() {
         return persistanceClass;
     }
 
@@ -224,7 +227,17 @@ public class CriteriaComposer<T> implements ICriteriaComposer<T> {
 
     @Override
     public Root<T> createRoot() {
-        return createCriteriaQuery().from(getPersistanceClass());
+        return createRoot(createCriteriaQuery());
     }
 
+    @Override
+    public Expression<Long> count(CriteriaQuery<Long> criteriaQuery) {
+        return getCriteriaBuilder().count(createRoot(criteriaQuery));
+    }
+
+    @Override
+    public Root<T> createRoot(CriteriaQuery<T> criteriaQuery) {
+        Assert.notNull(criteriaQuery);
+        return criteriaQuery.from(getPersistenceClass());
+    }
 }

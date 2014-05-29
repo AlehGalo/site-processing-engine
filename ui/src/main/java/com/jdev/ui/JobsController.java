@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jdev.domain.dao.IWriteDao;
-import com.jdev.domain.domain.Article;
 import com.jdev.domain.domain.Job;
 
 /**
@@ -29,16 +28,9 @@ public class JobsController {
     @Autowired
     private IWriteDao<Job> jobDao;
 
-    /**
-     * 
-     */
-    @Autowired
-    private IWriteDao<Article> articleDao;
-
     @RequestMapping(method = RequestMethod.GET, value = "/jobs")
     public ModelAndView get() {
-        int count = (int) jobDao.countAll();
-        List<Job> listOfJobs = jobDao.findAll(0, count);
+        List<Job> listOfJobs = jobDao.findAll();
         List<String> list = new LinkedList<>();
         for (Job job : listOfJobs) {
             list.add(job.getCredential().getSite().getUrl() + " " + job.getStartTime() + " - "
@@ -47,7 +39,7 @@ public class JobsController {
                     + job.getStatus() + " cause " + job.getReasonOfStopping());
         }
         ModelAndView modelAndView = new ModelAndView("results");
-        modelAndView.addObject("count", count);
+        modelAndView.addObject("count", listOfJobs.size());
         modelAndView.addObject("lists", list);
         return modelAndView;
     }

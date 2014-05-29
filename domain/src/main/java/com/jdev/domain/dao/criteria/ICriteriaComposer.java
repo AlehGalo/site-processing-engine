@@ -77,7 +77,7 @@ public interface ICriteriaComposer<T> {
      * @param asc
      * @return Criteria query with property equality.
      */
-    CriteriaQuery<T> createQueryOrderedBy(final String property, final boolean asc);
+    CriteriaQuery<T> createQueryOrderedBy(final SingularAttribute<T, ?> property, final boolean asc);
 
     /**
      * @param query
@@ -85,8 +85,8 @@ public interface ICriteriaComposer<T> {
      * @param asc
      * @return Criteria query with property equality.
      */
-    CriteriaQuery<T> decorateQueryOrderBy(final CriteriaQuery<T> query, final String property,
-            final boolean asc);
+    CriteriaQuery<T> decorateQueryOrderBy(final CriteriaQuery<T> query,
+            final SingularAttribute<T, ?> property, final boolean asc);
 
     /**
      * @param property
@@ -112,7 +112,17 @@ public interface ICriteriaComposer<T> {
     Root<T> createRoot();
 
     /**
+     * @return Root.
+     */
+    Root<T> createRoot(CriteriaQuery<T> criteriaQuery);
+
+    /**
      * @return Class.
      */
-    Class<T> getPersistanceClass();
+    Class<T> getPersistenceClass();
+
+    /**
+     * @return long expression for count.
+     */
+    Expression<Long> count(CriteriaQuery<Long> criteriaQuery);
 }

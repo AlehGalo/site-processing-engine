@@ -66,7 +66,7 @@ public abstract class AbstractDaoTest<T extends IIdentifiable> {
         long afterSaveCounter = daoService.countAll();
         Assert.assertEquals("Records number is not correct. It should be increased by 1.",
                 beforeSaveCounter, afterSaveCounter - 1);
-        T databaseEntity = daoService.find(mainEntity.getId());
+        T databaseEntity = daoService.get(mainEntity.getId());
         Assert.assertNotNull("Entity was not found in db.", databaseEntity);
     }
 
@@ -80,7 +80,7 @@ public abstract class AbstractDaoTest<T extends IIdentifiable> {
         daoService.save(mainEntity);
         T updateEntity = createUpdateEntity();
         copyValuesExceptGetId(updateEntity, mainEntity);
-        T foundEntity = daoService.find(mainEntity.getId());
+        T foundEntity = daoService.get(mainEntity.getId());
         Assert.assertTrue(compareObjects(foundEntity, updateEntity));
     }
 
@@ -97,7 +97,7 @@ public abstract class AbstractDaoTest<T extends IIdentifiable> {
         long afterDeleteCounter = daoService.countAll();
         Assert.assertEquals("Records number is not correct. It should be reduced by 1.",
                 beforeDeleteCounter, afterDeleteCounter + 1);
-        T databaseEntity = daoService.find(mainEntity.getId());
+        T databaseEntity = daoService.get(mainEntity.getId());
         Assert.assertNull("Entity was found in db. But should not.", databaseEntity);
     }
 
