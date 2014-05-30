@@ -58,4 +58,39 @@ public class DaoConfiguration {
         return new CommonGenericWriteDao<DatabaseError>(DatabaseError.class);
     }
 
+    @Bean
+    public IReadDao<Site> siteReadDao() {
+        return new CommonGenericReadDao<Site>(Site.class);
+    }
+
+    @Bean
+    public IReadDao<Article> articleReadDao() {
+        return new CommonGenericReadDao<Article>(Article.class);
+    }
+
+    @Bean
+    public IReadDao<Recommendation> recommendationReadDao() {
+        return new CommonGenericReadDao<Recommendation>(Recommendation.class);
+    }
+
+    @Bean
+    public IReadDao<Job> jobReadDao() {
+        return new CommonGenericReadDao<Job>(Job.class);
+    }
+
+    @Bean
+    public IReadDao<Credential> credentialReadDao() {
+        return new CommonGenericReadDao<Credential>(Credential.class);
+    }
+
+    @Bean
+    public IReadDao<CrawlerError> crawlerReadErrorDao() {
+        return new CommonGenericReadDao<CrawlerError>(CrawlerError.class);
+    }
+
+    @Bean
+    public IReadDao<DatabaseError> databaseReadErrorDao() {
+        return new CommonGenericReadDao<DatabaseError>(DatabaseError.class);
+    }
+
 }

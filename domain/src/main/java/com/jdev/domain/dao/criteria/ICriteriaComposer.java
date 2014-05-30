@@ -124,5 +124,5 @@ public interface ICriteriaComposer<T> {
     /**
      * @return long expression for count.
      */
-    Expression<Long> count(CriteriaQuery<Long> criteriaQuery);
+    Expression<Long> count(CriteriaQuery<T> criteriaQuery);
 }

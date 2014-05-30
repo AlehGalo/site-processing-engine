@@ -3,7 +3,6 @@
  */
 package com.jdev.ui;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jdev.domain.dao.IWriteDao;
+import com.jdev.domain.dao.IReadDao;
 import com.jdev.domain.domain.Article;
+import com.jdev.domain.domain.Article_;
 
 /**
  * @author Aleh
@@ -26,18 +26,14 @@ public class ScannedResourcesController {
      * 
      */
     @Autowired
-    private IWriteDao<Article> articleDao;
+    private IReadDao<Article> articleDao;
 
     @RequestMapping(method = RequestMethod.GET, value = "/results")
     public ModelAndView get() {
-        List<Article> listOfArticles = articleDao.findAll();
-        List<String> list = new LinkedList<>();
-        for (Article article : listOfArticles) {
-            list.add(article.getTitle());
-        }
+        List<String> listOfArticles = articleDao.find(Article_.title);
         ModelAndView modelAndView = new ModelAndView("results");
         modelAndView.addObject("count", listOfArticles.size());
-        modelAndView.addObject("lists", list);
+        modelAndView.addObject("lists", listOfArticles);
         return modelAndView;
     }
 }

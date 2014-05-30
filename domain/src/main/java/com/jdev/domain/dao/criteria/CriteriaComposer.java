@@ -231,12 +231,12 @@ public class CriteriaComposer<T> implements ICriteriaComposer<T> {
     }
 
     @Override
-    public Expression<Long> count(CriteriaQuery<Long> criteriaQuery) {
+    public Expression<Long> count(final CriteriaQuery<T> criteriaQuery) {
         return getCriteriaBuilder().count(createRoot(criteriaQuery));
     }
 
     @Override
-    public Root<T> createRoot(CriteriaQuery<T> criteriaQuery) {
+    public Root<T> createRoot(final CriteriaQuery<T> criteriaQuery) {
         Assert.notNull(criteriaQuery);
         return criteriaQuery.from(getPersistenceClass());
     }

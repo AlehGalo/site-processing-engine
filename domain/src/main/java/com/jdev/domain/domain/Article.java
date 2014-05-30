@@ -10,6 +10,7 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,7 +21,7 @@ import javax.persistence.Transient;
  * 
  */
 @Entity
-@Table(name = "ARTICLE")
+@Table(name = "ARTICLE", indexes = { @Index(columnList = "TITLE") })
 @AttributeOverrides(value = { @AttributeOverride(name = "id", column = @Column(name = "ARTICLE_ID")) })
 public class Article extends AbstractIdentifiable {
 

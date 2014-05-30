@@ -9,7 +9,7 @@ import com.jdev.domain.domain.IIdentifiable;
  * @author Aleh
  * @param <T>
  */
-public interface IWriteDao<T extends IIdentifiable> extends IReadAllDao<T> {
+public interface IWriteDao<T extends IIdentifiable> {
 
     /**
      * @param t

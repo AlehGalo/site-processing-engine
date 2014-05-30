@@ -43,11 +43,17 @@ public abstract class AbstractWriteDaoTest<T extends IIdentifiable> {
     IWriteDao<T> daoService;
 
     /**
+     * 
+     */
+    @Autowired
+    IReadDao<T> daoReadService;
+
+    /**
      * Init all context. Warm up the JPA engine.
      */
     @Test
     public void aWarmingUpJPA() {
-        daoService.countAll();
+        daoReadService.countAll();
     }
 
     /**
@@ -57,12 +63,12 @@ public abstract class AbstractWriteDaoTest<T extends IIdentifiable> {
     // @Timed(millis = 2000)
     public void testInsert() {
         T mainEntity = createEntity();
-        long beforeSaveCounter = daoService.countAll();
+        long beforeSaveCounter = daoReadService.countAll();
         daoService.save(mainEntity);
-        long afterSaveCounter = daoService.countAll();
+        long afterSaveCounter = daoReadService.countAll();
         Assert.assertEquals("Records number is not correct. It should be increased by 1",
                 beforeSaveCounter, afterSaveCounter - 1);
-        T databaseEntity = daoService.get(mainEntity.getId());
+        T databaseEntity = daoReadService.get(mainEntity.getId());
         Assert.assertTrue("Entity was not correct",
                 ReflectionUtils.compareObjects(databaseEntity, mainEntity));
     }
@@ -77,7 +83,7 @@ public abstract class AbstractWriteDaoTest<T extends IIdentifiable> {
         daoService.save(mainEntity);
         T updateEntity = createUpdateEntity();
         ReflectionUtils.copyValuesExceptGetId(updateEntity, mainEntity);
-        T foundEntity = daoService.get(mainEntity.getId());
+        T foundEntity = daoReadService.get(mainEntity.getId());
         Assert.assertTrue(ReflectionUtils.compareObjects(foundEntity, updateEntity));
     }
 
@@ -89,12 +95,12 @@ public abstract class AbstractWriteDaoTest<T extends IIdentifiable> {
     public void testDelete() {
         T mainEntity = createEntity();
         daoService.save(mainEntity);
-        long beforeDeleteCounter = daoService.countAll();
+        long beforeDeleteCounter = daoReadService.countAll();
         daoService.delete(mainEntity);
-        long afterDeleteCounter = daoService.countAll();
+        long afterDeleteCounter = daoReadService.countAll();
         Assert.assertEquals("Records number is not correct. It should be reduced by 1.",
                 beforeDeleteCounter, afterDeleteCounter + 1);
-        T databaseEntity = daoService.get(mainEntity.getId());
+        T databaseEntity = daoReadService.get(mainEntity.getId());
         Assert.assertNull("Entity was found in db. But should not.", databaseEntity);
     }
 

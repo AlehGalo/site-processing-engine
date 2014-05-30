@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jdev.domain.dao.IComposer;
+import com.jdev.domain.dao.IReadDao;
 import com.jdev.domain.dao.IWriteDao;
 import com.jdev.domain.dao.criteria.ICriteriaComposer;
 import com.jdev.domain.domain.Article;
@@ -32,6 +33,12 @@ public class UnitOfWork implements IUnitOfWork {
      * 
      */
     @Autowired
+    private IReadDao<Article> readArticleDao;
+
+    /**
+     * 
+     */
+    @Autowired
     private IWriteDao<Job> jobDao;
 
     /**
@@ -43,7 +50,7 @@ public class UnitOfWork implements IUnitOfWork {
     @Override
     public boolean saveArticle(final Article article) {
         ICriteriaComposer<Article> articleCriteriaComposer = articleComposer.getCriteriaComposer();
-        if (CollectionUtils.isEmpty(writeArticleDao.find(articleCriteriaComposer
+        if (CollectionUtils.isEmpty(readArticleDao.find(articleCriteriaComposer
                 .createCriteriaQueryByStringProperty("originalArticleUrl",
                         article.getOriginalArticleUrl())))) {
             writeArticleDao.save(article);

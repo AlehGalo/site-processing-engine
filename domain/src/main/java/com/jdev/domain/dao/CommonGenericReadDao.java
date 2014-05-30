@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Path;
+import javax.persistence.metamodel.SingularAttribute;
 
 import org.springframework.util.Assert;
 
@@ -18,7 +20,7 @@ import com.jdev.domain.domain.IIdentifiable;
  * @param <T>
  */
 class CommonGenericReadDao<T extends IIdentifiable> extends AbstractGenericDao<T> implements
-        IReadAllDao<T> {
+        IReadDao<T> {
 
     /**
      * @param clazz
@@ -38,18 +40,9 @@ class CommonGenericReadDao<T extends IIdentifiable> extends AbstractGenericDao<T
 
     @Override
     public long countAll() {
-        //
-        //
-        // final CriteriaQuery<Long> query =
-        // getCriteriaComposer().createCriteriaQuery(Long.class);
-        // return getCriteriaComposer().createTypedQuery(
-        // query.select(getCriteriaComposer().getCriteriaBuilder().count(
-        // query.from(getPersistentClass())))).getSingleResult();
-        //
-        //
-        //
         CriteriaQuery<Long> criteriaQuery = criteriaComposer.createCriteriaQuery(Long.class);
-        return count(criteriaQuery.select(criteriaComposer.count(criteriaQuery)));
+        return count(criteriaQuery.select(criteriaComposer.getCriteriaBuilder().count(
+                criteriaQuery.from(getPersistentClass()))));
     }
 
     @Override
@@ -67,12 +60,23 @@ class CommonGenericReadDao<T extends IIdentifiable> extends AbstractGenericDao<T
 
     @Override
     public List<T> findAll() {
-        return find(criteriaComposer.getCriteriaBuilder().createQuery(getPersistentClass())
-                .select(criteriaComposer.createRoot()));
+        CriteriaQuery<T> criteriaQuery = criteriaComposer.createCriteriaQuery();
+        return find(criteriaQuery.select(criteriaComposer.createRoot(criteriaQuery)));
     }
 
     @Override
-    public long count(CriteriaQuery<Long> criteriaQuery) {
+    public long count(final CriteriaQuery<Long> criteriaQuery) {
         return criteriaComposer.createTypedQuery(criteriaQuery).getSingleResult();
+    }
+
+    @Override
+    public <X> List<X> find(final SingularAttribute<T, X> singularAttribute) {
+        CriteriaQuery<X> criteriaQuery = criteriaComposer.getCriteriaBuilder().createQuery(
+                singularAttribute.getBindableJavaType());
+        Path<X> path = criteriaQuery.from(getPersistentClass()).get(singularAttribute);
+        return getEntityManager()
+                .createQuery(
+                        criteriaQuery.select(path).orderBy(
+                                criteriaComposer.getCriteriaBuilder().asc(path))).getResultList();
     }
 }
