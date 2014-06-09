@@ -81,7 +81,7 @@
 			<div class="panel-heading">
 				<h5>Number of records ${count}</h5>
 			</div>
-			<table id="mainTableId" class="table">
+			<table id="mainTableId" class="table table-striped table-bordered table-hover">
 				<thead>
 					<tr>
 						<th>#</th>
@@ -93,9 +93,9 @@
 				<tbody>
 					<c:choose>
 						<c:when test="${not empty lists}">
-							<c:forEach var="listValue" items="${lists}">
+							<c:forEach var="listValue" items="${lists}" varStatus="status">
 								<tr>
-									<td>#</td>
+									<td><c:out value="${status.count}" /></td>
 									<td>${listValue}</td>
 									<td>...</td>
 									<td>...</td>
