@@ -43,6 +43,9 @@
 		<ehcache.version>2.8.2</ehcache.version>
 		<hibernate.ehcache.version>4.3.5.Final</hibernate.ehcache.version>
 		<source.version>1.7</source.version>
+		<joda.time.version>2.3</joda.time.version>
+		<joda.time.hibernate.version>1.3</joda.time.hibernate.version>
+		<jackson.version>2.3.3</jackson.version>
 	</properties>
 	<repositories>
 		<repository>
