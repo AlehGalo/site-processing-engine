@@ -1,9 +1,9 @@
 package com.jdev.ngui.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.jdev.ngui.domain.User;
-import com.jdev.ngui.repository.UserRepository;
-import com.jdev.ngui.security.AuthoritiesConstants;
+import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
+import com.codahale.metrics.annotation.Timed;
+import com.jdev.domain.dao.repository.UserRepository;
+import com.jdev.domain.domain.User;
+import com.jdev.ngui.security.AuthoritiesConstants;
 
 /**
  * REST controller for managing users.
@@ -28,14 +29,12 @@ public class UserResource {
     private UserRepository userRepository;
 
     /**
-     * GET  /rest/users/:login -> get the "login" user.
+     * GET /rest/users/:login -> get the "login" user.
      */
-    @RequestMapping(value = "/rest/users/{login}",
-            method = RequestMethod.GET,
-            produces = "application/json")
+    @RequestMapping(value = "/rest/users/{login}", method = RequestMethod.GET, produces = "application/json")
     @Timed
     @RolesAllowed(AuthoritiesConstants.ADMIN)
-    public User getUser(@PathVariable String login, HttpServletResponse response) {
+    public User getUser(@PathVariable final String login, final HttpServletResponse response) {
         log.debug("REST request to get User : {}", login);
         User user = userRepository.findOne(login);
         if (user == null) {

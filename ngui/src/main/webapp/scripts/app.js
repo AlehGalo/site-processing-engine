@@ -3,7 +3,7 @@
 /* App Module */
 
 var informerApp = angular.module('informerApp', ['http-auth-interceptor', 'tmh.dynamicLocale',
-    'ngResource', 'ngRoute', 'ngCookies', 'informerAppUtils', 'pascalprecht.translate', 'truncate', 'ngGrid']);
+    'ngResource', 'ngRoute', 'ngCookies', 'informerAppUtils', 'pascalprecht.translate', 'truncate', 'ngGrid', 'ngResource']);
 
 informerApp
     .config(['$routeProvider', '$httpProvider', '$translateProvider',  'tmhDynamicLocaleProvider', 'USER_ROLES',
@@ -110,7 +110,7 @@ informerApp
                 })
                 .otherwise({
                     templateUrl: 'views/main.html',
-                    controller: 'MainController',
+                    controller: 'JobController',
                     access: {
                         authorizedRoles: [USER_ROLES.all]
                     }

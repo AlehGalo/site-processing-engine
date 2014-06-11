@@ -1,4 +1,4 @@
-package com.jdev.ngui.domain.util;
+package com.jdev.domain.domain.util;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

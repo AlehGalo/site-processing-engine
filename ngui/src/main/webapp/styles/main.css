@@ -39,15 +39,6 @@ body {
     background-color: red;
 }
 
-.hipster {
-  display: inline-block;
-  width: 463px;
-  height: 640px;
-  background-image: url("../images/hipster.jpg");
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
 .hand {
     cursor: pointer;
 }
@@ -100,3 +91,6 @@ ul#strength {
     width:20px;
 }
 /* end Password strength bar style */
+.gridStyle {
+    height: 500px
+}

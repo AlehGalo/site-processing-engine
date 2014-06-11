@@ -1,13 +1,17 @@
 /**
  * 
  */
-package com.jdev.domain.dao;
+package com.jdev.domain.config;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import com.jdev.domain.dao.CommonGenericReadDao;
+import com.jdev.domain.dao.CommonGenericWriteDao;
+import com.jdev.domain.dao.IReadDao;
+import com.jdev.domain.dao.IWriteDao;
 import com.jdev.domain.domain.Article;
 import com.jdev.domain.domain.CrawlerError;
 import com.jdev.domain.domain.Credential;

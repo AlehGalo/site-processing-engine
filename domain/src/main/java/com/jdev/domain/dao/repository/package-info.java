@@ -1,4 +1,4 @@
 /**
  * Spring Data JPA repositories.
  */
-package com.jdev.ngui.repository;
+package com.jdev.domain.dao.repository;

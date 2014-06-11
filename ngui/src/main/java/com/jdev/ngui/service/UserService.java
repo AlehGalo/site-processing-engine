@@ -1,13 +1,11 @@
 package com.jdev.ngui.service;
 
-import com.jdev.ngui.domain.Authority;
-import com.jdev.ngui.domain.PersistentToken;
-import com.jdev.ngui.domain.User;
-import com.jdev.ngui.repository.AuthorityRepository;
-import com.jdev.ngui.repository.PersistentTokenRepository;
-import com.jdev.ngui.repository.UserRepository;
-import com.jdev.ngui.security.SecurityUtils;
-import com.jdev.ngui.service.util.RandomUtil;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.inject.Inject;
+
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +14,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import com.jdev.domain.dao.repository.AuthorityRepository;
+import com.jdev.domain.dao.repository.PersistentTokenRepository;
+import com.jdev.domain.dao.repository.UserRepository;
+import com.jdev.domain.domain.Authority;
+import com.jdev.domain.domain.PersistentToken;
+import com.jdev.domain.domain.User;
+import com.jdev.ngui.security.SecurityUtils;
+import com.jdev.ngui.service.util.RandomUtil;
 
 /**
  * Service class for managing users.
@@ -42,7 +44,7 @@ public class UserService {
     @Inject
     private AuthorityRepository authorityRepository;
 
-    public User activateRegistration(String key) {
+    public User activateRegistration(final String key) {
         log.debug("Activating user for activation key {}", key);
         User user = userRepository.getUserByActivationKey(key);
 
@@ -56,8 +58,8 @@ public class UserService {
         return user;
     }
 
-    public User createUserInformation(String login, String password, String firstName, String lastName, String email,
-                                      String langKey) {
+    public User createUserInformation(final String login, final String password,
+            final String firstName, final String lastName, final String email, final String langKey) {
         User newUser = new User();
         Authority authority = authorityRepository.findOne("ROLE_USER");
         Set<Authority> authorities = new HashSet<Authority>();
@@ -80,7 +82,8 @@ public class UserService {
         return newUser;
     }
 
-    public void updateUserInformation(String firstName, String lastName, String email) {
+    public void updateUserInformation(final String firstName, final String lastName,
+            final String email) {
         User currentUser = userRepository.findOne(SecurityUtils.getCurrentLogin());
         currentUser.setFirstName(firstName);
         currentUser.setLastName(lastName);
@@ -89,7 +92,7 @@ public class UserService {
         log.debug("Changed Information for User: {}", currentUser);
     }
 
-    public void changePassword(String password) {
+    public void changePassword(final String password) {
         User currentUser = userRepository.findOne(SecurityUtils.getCurrentLogin());
         String encryptedPassword = passwordEncoder.encode(password);
         currentUser.setPassword(encryptedPassword);
@@ -105,8 +108,8 @@ public class UserService {
     }
 
     /**
-     * Persistent Token are used for providing automatic authentication, they should be automatically deleted after
-     * 30 days.
+     * Persistent Token are used for providing automatic authentication, they
+     * should be automatically deleted after 30 days.
      * <p/>
      * <p>
      * This is scheduled to get fired everyday, at midnight.
@@ -115,7 +118,8 @@ public class UserService {
     @Scheduled(cron = "0 0 0 * * ?")
     public void removeOldPersistentTokens() {
         LocalDate now = new LocalDate();
-        List<PersistentToken> tokens = persistentTokenRepository.findByTokenDateBefore(now.minusMonths(1));
+        List<PersistentToken> tokens = persistentTokenRepository.findByTokenDateBefore(now
+                .minusMonths(1));
         for (PersistentToken token : tokens) {
             log.debug("Deleting token {}", token.getSeries());
             User user = token.getUser();
@@ -134,7 +138,8 @@ public class UserService {
     @Scheduled(cron = "0 0 1 * * ?")
     public void removeNotActivatedUsers() {
         LocalDate now = new LocalDate();
-        List<User> users = userRepository.findNotActivatedUsersByCreationDateBefore(now.minusDays(3));
+        List<User> users = userRepository.findNotActivatedUsersByCreationDateBefore(now
+                .minusDays(3));
         for (User user : users) {
             log.debug("Deleting not activated user {}", user.getLogin());
             userRepository.delete(user);

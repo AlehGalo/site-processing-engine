@@ -1,8 +1,10 @@
 package com.jdev.ngui.security;
 
-import com.jdev.ngui.domain.Authority;
-import com.jdev.ngui.domain.User;
-import com.jdev.ngui.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,15 +14,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collection;
+import com.jdev.domain.dao.repository.UserRepository;
+import com.jdev.domain.domain.Authority;
+import com.jdev.domain.domain.User;
 
 /**
  * Authenticate a user from the database.
  */
 @Component("userDetailsService")
-public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
+public class UserDetailsService implements
+        org.springframework.security.core.userdetails.UserDetailsService {
 
     private final Logger log = LoggerFactory.getLogger(UserDetailsService.class);
 
@@ -35,7 +38,8 @@ public class UserDetailsService implements org.springframework.security.core.use
 
         User userFromDatabase = userRepository.findOne(lowercaseLogin);
         if (userFromDatabase == null) {
-            throw new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database");
+            throw new UsernameNotFoundException("User " + lowercaseLogin
+                    + " was not found in the database");
         } else if (!userFromDatabase.getActivated()) {
             throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
         }
@@ -46,7 +50,7 @@ public class UserDetailsService implements org.springframework.security.core.use
             grantedAuthorities.add(grantedAuthority);
         }
 
-        return new org.springframework.security.core.userdetails.User(lowercaseLogin, userFromDatabase.getPassword(),
-                grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(lowercaseLogin,
+                userFromDatabase.getPassword(), grantedAuthorities);
     }
 }

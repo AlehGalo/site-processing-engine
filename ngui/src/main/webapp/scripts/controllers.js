@@ -316,3 +316,7 @@ informerApp.controller('AuditsController', ['$scope', '$translate', '$filter', '
         });
     }]);
 
+informerApp.controller('JobController', ['$scope', 'Job', function($scope, Job) {
+    $scope.myData = Job.get();
+    $scope.gridOptions = { data: 'myData' };
+}]);

@@ -1,33 +1,32 @@
-package com.jdev.ngui.service;
+package com.abc.informer.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import javax.inject.Inject;
-
+import com.abc.informer.Application;
+import com.abc.informer.domain.PersistentToken;
+import com.abc.informer.domain.User;
+import com.abc.informer.repository.PersistentTokenRepository;
+import com.abc.informer.repository.UserRepository;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.jdev.domain.dao.repository.PersistentTokenRepository;
-import com.jdev.domain.dao.repository.UserRepository;
-import com.jdev.domain.domain.PersistentToken;
-import com.jdev.domain.domain.User;
-import com.jdev.ngui.Application;
+import javax.inject.Inject;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * Test class for the UserResource REST controller.
- * 
+ *
  * @see UserService
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_CLASS)
 @ActiveProfiles("dev")
 public class UserServiceTest {
 
@@ -52,8 +51,7 @@ public class UserServiceTest {
         assertThat(persistentTokenRepository.findAll()).hasSize(1);
     }
 
-    private void generateUserToken(final User user, final String tokenSeries,
-            final LocalDate localDate) {
+    private void generateUserToken(User user, String tokenSeries, LocalDate localDate) {
         PersistentToken token = new PersistentToken();
         token.setSeries(tokenSeries);
         token.setUser(user);

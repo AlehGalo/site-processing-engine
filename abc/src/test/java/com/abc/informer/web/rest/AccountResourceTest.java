@@ -1,16 +1,11 @@
-package com.jdev.ngui.web.rest;
+package com.abc.informer.web.rest;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.inject.Inject;
-
+import com.abc.informer.Application;
+import com.abc.informer.domain.Authority;
+import com.abc.informer.domain.User;
+import com.abc.informer.repository.UserRepository;
+import com.abc.informer.security.AuthoritiesConstants;
+import com.abc.informer.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,16 +23,19 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.jdev.domain.dao.repository.UserRepository;
-import com.jdev.domain.domain.Authority;
-import com.jdev.domain.domain.User;
-import com.jdev.ngui.Application;
-import com.jdev.ngui.security.AuthoritiesConstants;
-import com.jdev.ngui.service.UserService;
+import javax.inject.Inject;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the AccountResource REST controller.
- * 
+ *
  * @see UserService
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -66,20 +64,24 @@ public class AccountResourceTest {
 
     @Test
     public void testNonAuthenticatedUser() throws Exception {
-        restUserMockMvc.perform(get("/app/rest/authenticate").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(content().string(""));
+        restUserMockMvc.perform(get("/app/rest/authenticate")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(""));
 
     }
 
     @Test
     public void testAuthenticatedUser() throws Exception {
-        restUserMockMvc.perform(get("/app/rest/authenticate").with(new RequestPostProcessor() {
-            @Override
-            public MockHttpServletRequest postProcessRequest(final MockHttpServletRequest request) {
-                request.setRemoteUser("test");
-                return request;
-            }
-        }).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        restUserMockMvc.perform(get("/app/rest/authenticate")
+                .with(new RequestPostProcessor() {
+                    public MockHttpServletRequest postProcessRequest(MockHttpServletRequest request) {
+                        request.setRemoteUser("test");
+                        return request;
+                    }
+                })
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andExpect(content().string("test"));
     }
 
@@ -98,7 +100,8 @@ public class AccountResourceTest {
         user.setAuthorities(authorities);
         when(userService.getUserWithAuthorities()).thenReturn(user);
 
-        restUserMockMvc.perform(get("/app/rest/account").accept(MediaType.APPLICATION_JSON))
+        restUserMockMvc.perform(get("/app/rest/account")
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.login").value("test"))
@@ -112,7 +115,8 @@ public class AccountResourceTest {
     public void testGetUnknownAccount() throws Exception {
         when(userService.getUserWithAuthorities()).thenReturn(null);
 
-        restUserMockMvc.perform(get("/app/rest/account").accept(MediaType.APPLICATION_JSON))
+        restUserMockMvc.perform(get("/app/rest/account")
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError());
     }
 }

@@ -1,7 +1,8 @@
-package com.jdev.ngui.repository;
+package com.jdev.domain.dao.repository;
 
-import com.jdev.ngui.domain.Authority;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.jdev.domain.domain.Authority;
 
 /**
  * Spring Data JPA repository for the Authority entity.

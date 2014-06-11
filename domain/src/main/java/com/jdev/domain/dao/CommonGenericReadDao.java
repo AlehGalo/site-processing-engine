@@ -19,7 +19,7 @@ import com.jdev.domain.domain.IIdentifiable;
  * 
  * @param <T>
  */
-class CommonGenericReadDao<T extends IIdentifiable> extends AbstractGenericDao<T> implements
+public class CommonGenericReadDao<T extends IIdentifiable> extends AbstractGenericDao<T> implements
         IReadDao<T> {
 
     /**

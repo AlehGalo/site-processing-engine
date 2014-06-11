@@ -1,11 +1,12 @@
-package com.jdev.ngui.repository;
+package com.jdev.domain.dao.repository;
 
-import com.jdev.ngui.domain.PersistentToken;
-import com.jdev.ngui.domain.User;
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import com.jdev.domain.domain.PersistentToken;
+import com.jdev.domain.domain.User;
 
 /**
  * Spring Data JPA repository for the PersistentToken entity.
