@@ -7,6 +7,8 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.jdev.domain.dao.CommonGenericReadDao;
 import com.jdev.domain.dao.CommonGenericWriteDao;
@@ -25,6 +27,8 @@ import com.jdev.domain.domain.Site;
  */
 @Configuration
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
+@EnableJpaRepositories("com.jdev.domain.dao.repository")
+@EnableJpaAuditing
 public class DaoConfiguration {
 
     @Bean
