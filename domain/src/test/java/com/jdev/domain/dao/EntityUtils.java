@@ -4,6 +4,7 @@
 package com.jdev.domain.dao;
 
 import java.util.Date;
+import java.util.UUID;
 
 import com.jdev.domain.domain.Article;
 import com.jdev.domain.domain.CrawlerError;
@@ -42,8 +43,8 @@ final class EntityUtils {
      */
     public static Credential createCredential() {
         Credential credential = new Credential();
-        credential.setPassword(currentTimeAsString());
-        credential.setUsername(currentTimeAsString());
+        credential.setPassword(generatedUUIDAsString());
+        credential.setUsername(generatedUUIDAsString());
         return credential;
     }
 
@@ -53,8 +54,8 @@ final class EntityUtils {
      */
     public static DatabaseError createDatabaseError() {
         DatabaseError error = new DatabaseError();
-        error.setUrl(currentTimeAsString());
-        error.setError(currentTimeAsString());
+        error.setUrl(generatedUUIDAsString());
+        error.setError(generatedUUIDAsString());
         return error;
     }
 
@@ -67,8 +68,8 @@ final class EntityUtils {
             final IWriteDao<Credential> credeDao, final IWriteDao<Site> siteDao) {
         DatabaseError databaseError = createDatabaseError();
         databaseError.setJob(createPersistentJob(jobDao, credeDao, siteDao));
-        databaseError.setError(currentTimeAsString());
-        databaseError.setUrl(currentTimeAsString());
+        databaseError.setError(generatedUUIDAsString());
+        databaseError.setUrl(generatedUUIDAsString());
         return databaseError;
     }
 
@@ -78,7 +79,7 @@ final class EntityUtils {
      */
     private static Job createPersistentJob(final IWriteDao<Job> jobDao,
             final IWriteDao<Credential> credeDao, final IWriteDao<Site> siteDao) {
-        Job job = createJobWithDependencies(currentTimeAsString(), siteDao, credeDao);
+        Job job = createJobWithDependencies(generatedUUIDAsString(), siteDao, credeDao);
         jobDao.save(job);
         return job;
     }
@@ -90,7 +91,7 @@ final class EntityUtils {
             final IWriteDao<Credential> credeDao, final IWriteDao<Site> siteDao) {
         CrawlerError error = new CrawlerError();
         error.setJob(createPersistentJob(jobDao, credeDao, siteDao));
-        error.setError(currentTimeAsString());
+        error.setError(generatedUUIDAsString());
         return error;
     }
 
@@ -98,7 +99,7 @@ final class EntityUtils {
      * @return
      */
     public static Site createSite() {
-        return new Site(currentTimeAsString(), currentTimeAsString(), currentTimeAsString());
+        return new Site(generatedUUIDAsString(), generatedUUIDAsString(), generatedUUIDAsString());
     }
 
     /**
@@ -126,8 +127,8 @@ final class EntityUtils {
             final IWriteDao<Site> siteDao, final IWriteDao<Credential> credentialDao,
             final IWriteDao<Job> jobDao) {
         Article article = new Article(content);
-        article.setOriginalArticleUrl(currentTimeAsString());
-        article.setTitle(currentTimeAsString());
+        article.setOriginalArticleUrl(generatedUUIDAsString());
+        article.setTitle(generatedUUIDAsString());
         article.setJob(createPersistentJob(jobDao, credentialDao, siteDao));
         return article;
     }
@@ -147,10 +148,10 @@ final class EntityUtils {
     }
 
     /**
-     * @return string presentation of current time mills.
+     * @return UUID as string.
      */
-    private static String currentTimeAsString() {
-        return String.valueOf(System.currentTimeMillis());
+    private static String generatedUUIDAsString() {
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 
 }

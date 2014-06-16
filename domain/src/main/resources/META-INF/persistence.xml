@@ -10,5 +10,10 @@
 		<class>com.jdev.domain.domain.Site</class>
 		<class>com.jdev.domain.domain.Recommendation</class>
 		<class>com.jdev.domain.domain.Job</class>
+		<class>com.jdev.domain.domain.Authority</class>
+		<class>com.jdev.domain.domain.CrawlerError</class>
+		<class>com.jdev.domain.domain.DatabaseError</class>
+		<class>com.jdev.domain.domain.PersistentAuditEvent</class>
+		<class>com.jdev.domain.domain.PersistentToken</class>
 	</persistence-unit>
 </persistence>
