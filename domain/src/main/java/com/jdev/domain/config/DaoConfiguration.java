@@ -29,6 +29,7 @@ import com.jdev.domain.domain.Site;
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @EnableJpaRepositories("com.jdev.domain.dao.repository")
 @EnableJpaAuditing
+// @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 public class DaoConfiguration {
 
     @Bean
