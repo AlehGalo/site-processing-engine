@@ -1,15 +1,16 @@
 package com.jdev.ngui.config.metrics;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import javax.inject.Inject;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-
-import javax.inject.Inject;
-import javax.sql.DataSource;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 @Configuration
 public class JHipsterHealthIndicatorConfiguration implements InitializingBean {
@@ -18,10 +19,10 @@ public class JHipsterHealthIndicatorConfiguration implements InitializingBean {
     private JavaMailSenderImpl javaMailSender;
 
     @Inject
-    private DataSource dataSource;
+    private DriverManagerDataSource dataSource;
 
-    private JavaMailHealthCheckIndicator javaMailHealthCheckIndicator = new JavaMailHealthCheckIndicator();
-    private DatabaseHealthCheckIndicator databaseHealthCheckIndicator = new DatabaseHealthCheckIndicator();
+    private final JavaMailHealthCheckIndicator javaMailHealthCheckIndicator = new JavaMailHealthCheckIndicator();
+    private final DatabaseHealthCheckIndicator databaseHealthCheckIndicator = new DatabaseHealthCheckIndicator();
 
     @Bean
     public HealthIndicator<Map<String, HealthCheckIndicator.Result>> healthIndicator() {

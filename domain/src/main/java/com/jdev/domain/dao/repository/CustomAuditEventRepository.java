@@ -19,7 +19,6 @@ import com.jdev.domain.domain.PersistentAuditEvent;
 @Repository
 public class CustomAuditEventRepository {
 
-    // @Inject
     @Autowired
     private PersistenceAuditEventRepository persistenceAuditEventRepository;
 
