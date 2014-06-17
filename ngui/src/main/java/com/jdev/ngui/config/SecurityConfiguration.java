@@ -1,6 +1,6 @@
 package com.jdev.ngui.config;
 
-import com.jdev.ngui.security.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -16,31 +16,35 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.authentication.RememberMeServices;
 
-import javax.inject.Inject;
+import com.jdev.ngui.security.AjaxAuthenticationFailureHandler;
+import com.jdev.ngui.security.AjaxAuthenticationSuccessHandler;
+import com.jdev.ngui.security.AjaxLogoutSuccessHandler;
+import com.jdev.ngui.security.AuthoritiesConstants;
+import com.jdev.ngui.security.Http401UnauthorizedEntryPoint;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
-    @Inject
+   @Autowired
     private Environment env;
 
-    @Inject
+   @Autowired
     private AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler;
 
-    @Inject
+   @Autowired
     private AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler;
 
-    @Inject
+   @Autowired
     private AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler;
 
-    @Inject
+   @Autowired
     private Http401UnauthorizedEntryPoint authenticationEntryPoint;
 
-    @Inject
+   @Autowired
     private UserDetailsService userDetailsService;
     
-    @Inject
+   @Autowired
     private RememberMeServices rememberMeServices;
 
     @Bean
@@ -48,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new StandardPasswordEncoder();
     }
 
-    @Inject
+   @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .userDetailsService(userDetailsService)

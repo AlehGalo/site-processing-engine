@@ -1,10 +1,10 @@
 package com.jdev.ngui.config.metrics;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.springframework.boot.actuate.health.HealthIndicator;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.springframework.boot.actuate.health.HealthIndicator;
 
 /**
  * A health indicator check for a component of your application

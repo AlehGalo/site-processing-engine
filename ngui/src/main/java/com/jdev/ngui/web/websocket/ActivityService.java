@@ -1,19 +1,24 @@
 package com.jdev.ngui.web.websocket;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jdev.ngui.web.websocket.dto.ActivityDTO;
-import com.jdev.ngui.web.websocket.dto.ActivityDTOJacksonDecoder;
+import java.io.IOException;
+import java.util.Calendar;
+
 import org.atmosphere.config.service.Disconnect;
 import org.atmosphere.config.service.ManagedService;
 import org.atmosphere.config.service.Message;
-import org.atmosphere.cpr.*;
+import org.atmosphere.cpr.AtmosphereRequest;
+import org.atmosphere.cpr.AtmosphereResource;
+import org.atmosphere.cpr.AtmosphereResourceEvent;
+import org.atmosphere.cpr.Broadcaster;
+import org.atmosphere.cpr.BroadcasterFactory;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.Calendar;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jdev.ngui.web.websocket.dto.ActivityDTO;
+import com.jdev.ngui.web.websocket.dto.ActivityDTOJacksonDecoder;
 
 @ManagedService(
         path = "/websocket/activity")

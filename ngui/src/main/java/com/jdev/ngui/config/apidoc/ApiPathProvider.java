@@ -1,15 +1,16 @@
 package com.jdev.ngui.config.apidoc;
 
-import com.mangofactory.swagger.core.SwaggerPathProvider;
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.inject.Inject;
-import javax.servlet.ServletContext;
+import com.mangofactory.swagger.core.SwaggerPathProvider;
 
 public class ApiPathProvider implements SwaggerPathProvider {
     private SwaggerPathProvider defaultSwaggerPathProvider;
 
-    @Inject
+   @Autowired
     private ServletContext servletContext;
 
     private String docsLocation;

@@ -1,16 +1,22 @@
 package com.jdev.ngui.web.rest;
 
+import java.util.List;
+
+import javax.annotation.security.RolesAllowed;
+
+import org.joda.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.audit.AuditEvent;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.jdev.ngui.security.AuthoritiesConstants;
 import com.jdev.ngui.service.AuditEventService;
 import com.jdev.ngui.web.propertyeditors.LocaleDateTimeEditor;
-import org.joda.time.LocalDateTime;
-import org.springframework.boot.actuate.audit.AuditEvent;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
-import java.util.List;
 
 /**
  * REST controller for getting the audit events.
@@ -19,7 +25,7 @@ import java.util.List;
 @RequestMapping("/app")
 public class AuditResource {
 
-    @Inject
+   @Autowired
     private AuditEventService auditEventService;
 
     @InitBinder

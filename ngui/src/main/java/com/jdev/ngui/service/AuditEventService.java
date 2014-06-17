@@ -2,9 +2,8 @@ package com.jdev.ngui.service;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.joda.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,10 +24,10 @@ import com.jdev.domain.domain.PersistentAuditEvent;
 @Transactional
 public class AuditEventService {
 
-    @Inject
+   @Autowired
     private PersistenceAuditEventRepository persistenceAuditEventRepository;
 
-    @Inject
+   @Autowired
     private AuditEventConverter auditEventConverter;
 
     public List<AuditEvent> findAll() {

@@ -2,11 +2,10 @@ package com.jdev.ngui.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.inject.Inject;
-
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
@@ -31,13 +30,13 @@ import com.jdev.ngui.Application;
 @ActiveProfiles("dev")
 public class UserServiceTest {
 
-    @Inject
+   @Autowired
     private PersistentTokenRepository persistentTokenRepository;
 
-    @Inject
+   @Autowired
     private UserRepository userRepository;
 
-    @Inject
+   @Autowired
     private UserService userService;
 
     @Test

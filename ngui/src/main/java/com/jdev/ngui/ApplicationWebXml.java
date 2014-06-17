@@ -1,10 +1,11 @@
 package com.jdev.ngui;
 
-import com.jdev.ngui.config.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+
+import com.jdev.ngui.config.Constants;
 
 /**
  * This is an helper Java class that provides an alternative to creating a web.xml.

@@ -1,12 +1,9 @@
 package com.jdev.ngui.config.apidoc;
 
-import com.mangofactory.swagger.configuration.JacksonScalaSupport;
-import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
-import com.mangofactory.swagger.configuration.SpringSwaggerModelConfig;
-import com.mangofactory.swagger.configuration.SwaggerGlobalSettings;
-import com.mangofactory.swagger.core.SwaggerApiResourceListing;
-import com.mangofactory.swagger.scanners.ApiListingReferenceScanner;
-import com.wordnik.swagger.model.ApiInfo;
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
@@ -14,9 +11,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import javax.inject.Inject;
-import java.util.Arrays;
-import java.util.List;
+import com.mangofactory.swagger.configuration.JacksonScalaSupport;
+import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
+import com.mangofactory.swagger.configuration.SpringSwaggerModelConfig;
+import com.mangofactory.swagger.configuration.SwaggerGlobalSettings;
+import com.mangofactory.swagger.core.SwaggerApiResourceListing;
+import com.mangofactory.swagger.scanners.ApiListingReferenceScanner;
+import com.wordnik.swagger.model.ApiInfo;
 
 @Configuration
 @ComponentScan(basePackages = "com.mangofactory.swagger")
@@ -31,10 +32,10 @@ public class SwaggerConfiguration implements EnvironmentAware {
         this.propertyResolver = new RelaxedPropertyResolver(environment, "swagger.");
     }
 
-    @Inject
+   @Autowired
     private SpringSwaggerConfig springSwaggerConfig;
 
-    @Inject
+   @Autowired
     private SpringSwaggerModelConfig springSwaggerModelConfig;
 
     /**

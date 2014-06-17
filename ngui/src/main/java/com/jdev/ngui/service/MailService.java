@@ -1,19 +1,20 @@
 package com.jdev.ngui.service;
 
+import java.util.Locale;
+
+import javax.annotation.PostConstruct;
+import javax.mail.internet.MimeMessage;
+
 import org.apache.commons.lang.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.mail.internet.MimeMessage;
-import java.util.Locale;
 
 /**
  * Service for sending e-mails.
@@ -30,13 +31,13 @@ public class MailService {
 
     private final Logger log = LoggerFactory.getLogger(MailService.class);
 
-    @Inject
+   @Autowired
     private Environment env;
 
-    @Inject
+   @Autowired
     private JavaMailSenderImpl javaMailSender;
 
-    @Inject
+   @Autowired
     private MessageSource messageSource;
 
     /**

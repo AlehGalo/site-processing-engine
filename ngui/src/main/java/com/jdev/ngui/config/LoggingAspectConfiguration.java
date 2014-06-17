@@ -1,10 +1,11 @@
 package com.jdev.ngui.config;
 
-import com.jdev.ngui.aop.logging.LoggingAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Profile;
+
+import com.jdev.ngui.aop.logging.LoggingAspect;
 
 @Configuration
 @EnableAspectJAutoProxy

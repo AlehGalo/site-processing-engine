@@ -3,13 +3,13 @@ package com.jdev.ngui.security;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
@@ -76,13 +76,13 @@ public class CustomPersistentRememberMeServices extends AbstractRememberMeServic
 
     private final SecureRandom random;
 
-    @Inject
+   @Autowired
     private PersistentTokenRepository persistentTokenRepository;
 
-    @Inject
+   @Autowired
     private UserRepository userRepository;
 
-    @Inject
+   @Autowired
     public CustomPersistentRememberMeServices(
             final Environment env,
             final org.springframework.security.core.userdetails.UserDetailsService userDetailsService) {

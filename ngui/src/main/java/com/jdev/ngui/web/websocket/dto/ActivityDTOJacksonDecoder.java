@@ -1,11 +1,12 @@
 package com.jdev.ngui.web.websocket.dto;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+
 import org.atmosphere.config.managed.Decoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ActivityDTOJacksonDecoder implements Decoder<String, ActivityDTO> {
 

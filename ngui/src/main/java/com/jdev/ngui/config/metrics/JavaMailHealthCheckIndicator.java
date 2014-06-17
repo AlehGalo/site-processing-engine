@@ -1,10 +1,10 @@
 package com.jdev.ngui.config.metrics;
 
+import javax.mail.MessagingException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-
-import javax.mail.MessagingException;
 
 /**
  * SpringBoot Actuator HealthIndicator check for JavaMail.

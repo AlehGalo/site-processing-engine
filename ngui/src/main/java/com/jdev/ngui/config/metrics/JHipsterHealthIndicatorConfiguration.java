@@ -3,9 +3,8 @@ package com.jdev.ngui.config.metrics;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,10 +14,10 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 @Configuration
 public class JHipsterHealthIndicatorConfiguration implements InitializingBean {
 
-    @Inject
+   @Autowired
     private JavaMailSenderImpl javaMailSender;
 
-    @Inject
+   @Autowired
     private DriverManagerDataSource dataSource;
 
     private final JavaMailHealthCheckIndicator javaMailHealthCheckIndicator = new JavaMailHealthCheckIndicator();

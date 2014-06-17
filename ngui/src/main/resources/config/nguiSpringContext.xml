@@ -7,8 +7,8 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
 	<context:annotation-config />
-
 	<context:component-scan annotation-config="true"
 		base-package="com.jdev.ngui" />
 	<mvc:annotation-driven />
+	
 </beans>

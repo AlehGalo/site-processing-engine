@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,25 +49,25 @@ public class AccountResource {
 
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
-    @Inject
+   @Autowired
     private ServletContext servletContext;
 
-    @Inject
+   @Autowired
     private ApplicationContext applicationContext;
 
-    @Inject
+   @Autowired
     private SpringTemplateEngine templateEngine;
 
-    @Inject
+   @Autowired
     private UserRepository userRepository;
 
-    @Inject
+   @Autowired
     private UserService userService;
 
-    @Inject
+   @Autowired
     private PersistentTokenRepository persistentTokenRepository;
 
-    @Inject
+   @Autowired
     private MailService mailService;
 
     /**

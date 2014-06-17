@@ -1,8 +1,13 @@
 package com.jdev.ngui;
 
-import com.jdev.ngui.config.Constants;
+import java.io.IOException;
+import java.util.Arrays;
+
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.MetricRepositoryAutoConfiguration;
@@ -11,10 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.SimpleCommandLinePropertySource;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import java.io.IOException;
-import java.util.Arrays;
+import com.jdev.ngui.config.Constants;
 
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
@@ -22,7 +24,7 @@ public class Application {
 
     private final Logger log = LoggerFactory.getLogger(Application.class);
 
-    @Inject
+   @Autowired
     private Environment env;
 
     /**

@@ -4,13 +4,13 @@ import java.util.Set;
 import java.util.SortedSet;
 
 import javax.annotation.PreDestroy;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.metamodel.EntityType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -37,10 +37,10 @@ public class CacheConfiguration {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Inject
+   @Autowired
     private Environment env;
 
-    @Inject
+   @Autowired
     private MetricRegistry metricRegistry;
 
     private net.sf.ehcache.CacheManager cacheManager;
