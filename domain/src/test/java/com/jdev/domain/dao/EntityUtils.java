@@ -56,7 +56,7 @@ final class EntityUtils {
     public static DatabaseError createDatabaseError() {
         DatabaseError error = new DatabaseError();
         error.setUrl(generatedUUIDAsString());
-        PersistentError errorPer = new PersistentError();
+        PersistentError errorPer = error.getError();
         errorPer.setError(generatedUUIDAsString());
         error.setError(errorPer);
         return error;
@@ -70,7 +70,7 @@ final class EntityUtils {
     public static DatabaseError createDatabaseErrorWithDependencies(final IWriteDao<Job> jobDao,
             final IWriteDao<Credential> credeDao, final IWriteDao<Site> siteDao) {
         DatabaseError databaseError = createDatabaseError();
-        PersistentError errorPer = new PersistentError();
+        PersistentError errorPer = databaseError.getError();
         errorPer.setJob(createPersistentJob(jobDao, credeDao, siteDao));
         errorPer.setError(generatedUUIDAsString());
         databaseError.setUrl(generatedUUIDAsString());
@@ -95,7 +95,7 @@ final class EntityUtils {
     public static CrawlerError createCrawlerErrorWithDependencies(final IWriteDao<Job> jobDao,
             final IWriteDao<Credential> credeDao, final IWriteDao<Site> siteDao) {
         CrawlerError error = new CrawlerError();
-        PersistentError errorPer = new PersistentError();
+        PersistentError errorPer = error.getError();
         errorPer.setJob(createPersistentJob(jobDao, credeDao, siteDao));
         errorPer.setError(generatedUUIDAsString());
         error.setError(errorPer);

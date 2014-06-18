@@ -37,6 +37,13 @@ public class DatabaseError extends AbstractIdentifiable {
     private PersistentError error;
 
     /**
+     * 
+     */
+    public DatabaseError() {
+        setError(new PersistentError());
+    }
+
+    /**
      * @return the url
      */
     public final String getUrl() {

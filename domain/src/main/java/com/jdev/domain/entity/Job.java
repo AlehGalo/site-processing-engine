@@ -65,6 +65,13 @@ public class Job extends AbstractIdentifiable {
     private int databaseErrorsCount;
 
     /**
+     * Constructor.
+     */
+    public Job() {
+        setStatus(JobStatusEnum.STARTED);
+    }
+
+    /**
      * 
      */
     @ManyToOne(fetch = FetchType.EAGER)

@@ -26,6 +26,13 @@ public class CrawlerError extends AbstractIdentifiable {
     private PersistentError error;
 
     /**
+     * Constructor.
+     */
+    public CrawlerError() {
+        setError(new PersistentError());
+    }
+
+    /**
      * @return the error
      */
     public final PersistentError getError() {

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jdev.domain.dao.IReadDao;
+import com.jdev.domain.dto.JobDto;
 import com.jdev.domain.entity.Job;
 
 /**
@@ -31,17 +32,14 @@ public class JobsController {
     @RequestMapping(method = RequestMethod.GET, value = "/jobs")
     public ModelAndView get() {
         List<Job> listOfJobs = jobDao.findAll();
-        List<String> list = new LinkedList<>();
+        List<JobDto> list = new LinkedList<>();
         for (Job job : listOfJobs) {
-            list.add(job.getCredential().getSite().getUrl() + " " + job.getStartTime() + " - "
-                    + job.getEndTime() + ": crawler errors " + job.getCrawlerErrorsCount()
-                    + ", database errors " + job.getDatabaseErrorsCount() + " status "
-                    + job.getStatus() + " cause " + job.getReasonOfStopping());
+            list.add(new JobDto(job.getStartTime(), job.getEndTime(), job.getStatus(), job
+                    .getCredential().getSite().getUrl()));
         }
-        ModelAndView modelAndView = new ModelAndView("results");
+        ModelAndView modelAndView = new ModelAndView("jobs");
         modelAndView.addObject("count", listOfJobs.size());
         modelAndView.addObject("lists", list);
         return modelAndView;
     }
-
 }

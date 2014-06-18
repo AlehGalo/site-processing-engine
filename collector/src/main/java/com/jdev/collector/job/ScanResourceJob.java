@@ -27,6 +27,7 @@ import com.jdev.domain.entity.Credential;
 import com.jdev.domain.entity.DatabaseError;
 import com.jdev.domain.entity.Job;
 import com.jdev.domain.entity.JobStatusEnum;
+import com.jdev.domain.entity.PersistentError;
 
 /**
  * @author Aleh
@@ -103,17 +104,26 @@ public class ScanResourceJob implements IObserver {
         try {
             collector.congregate();
         } catch (CrawlerException ce) {
-            CrawlerError crawlerError = new CrawlerError();
-            crawlerError.setError(ce.getMessage());
-            crawlerError.setJob(job);
-            updateJobEndTime();
-            job.setStatus(JobStatusEnum.FAILED_CRAWLER);
-            unitOfWork.updateJob(job);
-            unitOfWork.saveCrawlerError(crawlerError);
+            saveCrawlerError(ce);
             return;
         }
         job.setStatus(JobStatusEnum.FINISHED);
         finishExecutionWell();
+    }
+
+    /**
+     * @param ce
+     *            Exception.
+     */
+    private void saveCrawlerError(CrawlerException ce) {
+        CrawlerError crawlerError = new CrawlerError();
+        PersistentError error = crawlerError.getError();
+        error.setError(ce.getMessage());
+        error.setJob(job);
+        updateJobEndTime();
+        job.setStatus(JobStatusEnum.FAILED_CRAWLER);
+        unitOfWork.updateJob(job);
+        unitOfWork.saveCrawlerError(crawlerError);
     }
 
     /**
@@ -176,9 +186,10 @@ public class ScanResourceJob implements IObserver {
     private void processError(final Exception e, final String resourceUrl) {
         if (e instanceof HibernateException || e instanceof PersistenceException) {
             DatabaseError error = new DatabaseError();
-            error.setError(e.getMessage());
+            PersistentError perError = error.getError();
+            perError.setError(e.getMessage());
             error.setUrl(resourceUrl);
-            error.setJob(job);
+            perError.setJob(job);
             unitOfWork.saveDatabaseError(error);
             ++dbQueueErrorsCounter;
             if (dbQueueErrorsCounter >= 10) {
@@ -239,6 +250,6 @@ public class ScanResourceJob implements IObserver {
      *            the articleValidator to set
      */
     public final void setEntityValidator(final CommonEntityValidator<Article> entityValidator) {
-        this.articleValidator = entityValidator;
+        articleValidator = entityValidator;
     }
 }
