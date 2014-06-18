@@ -12,7 +12,7 @@ import javax.persistence.metamodel.SingularAttribute;
 
 import org.springframework.util.Assert;
 
-import com.jdev.domain.domain.IIdentifiable;
+import com.jdev.domain.entity.IIdentifiable;
 
 /**
  * @author Aleh

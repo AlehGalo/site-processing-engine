@@ -14,8 +14,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.jdev.domain.dao.repository.PersistentTokenRepository;
 import com.jdev.domain.dao.repository.UserRepository;
-import com.jdev.domain.domain.PersistentToken;
-import com.jdev.domain.domain.User;
+import com.jdev.domain.entity.PersistentToken;
+import com.jdev.domain.entity.User;
 import com.jdev.ngui.Application;
 
 /**

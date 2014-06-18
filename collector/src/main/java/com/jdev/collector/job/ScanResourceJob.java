@@ -18,9 +18,9 @@ import com.jdev.collector.site.AbstractCollector;
 import com.jdev.collector.site.ICollector;
 import com.jdev.collector.site.handler.IObserver;
 import com.jdev.crawler.exception.CrawlerException;
-import com.jdev.domain.domain.Article;
-import com.jdev.domain.domain.Credential;
-import com.jdev.domain.domain.Job;
+import com.jdev.domain.entity.Article;
+import com.jdev.domain.entity.Credential;
+import com.jdev.domain.entity.Job;
 
 /**
  * @author Aleh
@@ -95,7 +95,7 @@ public class ScanResourceJob implements IObserver {
     @Scheduled(fixedDelay = 3600000, initialDelay = 100)
     public void scan() {
         job = createInitiatedJob();
-        job.setCredential(this.credential);
+        job.setCredential(credential);
         unitOfWork.saveJob(job);
         try {
             collector.congregate();

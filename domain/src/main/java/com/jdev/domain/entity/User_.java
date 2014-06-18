@@ -1,4 +1,4 @@
-package com.jdev.domain.domain;
+package com.jdev.domain.entity;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
@@ -7,7 +7,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(User.class)
-public abstract class User_ extends com.jdev.domain.domain.AbstractAuditingEntity_ {
+public abstract class User_ extends com.jdev.domain.entity.AbstractAuditingEntity_ {
 
 	public static volatile SetAttribute<User, PersistentToken> persistentTokens;
 	public static volatile SingularAttribute<User, String> activationKey;

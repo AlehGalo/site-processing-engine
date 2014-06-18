@@ -5,8 +5,8 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.jdev.domain.domain.PersistentToken;
-import com.jdev.domain.domain.User;
+import com.jdev.domain.entity.PersistentToken;
+import com.jdev.domain.entity.User;
 
 /**
  * Spring Data JPA repository for the PersistentToken entity.

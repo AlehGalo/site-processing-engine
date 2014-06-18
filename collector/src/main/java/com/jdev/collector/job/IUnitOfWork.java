@@ -3,8 +3,8 @@
  */
 package com.jdev.collector.job;
 
-import com.jdev.domain.domain.Article;
-import com.jdev.domain.domain.Job;
+import com.jdev.domain.entity.Article;
+import com.jdev.domain.entity.Job;
 
 /**
  * @author Aleh

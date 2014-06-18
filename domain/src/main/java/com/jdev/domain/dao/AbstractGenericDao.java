@@ -12,7 +12,7 @@ import org.springframework.util.Assert;
 
 import com.jdev.domain.dao.criteria.CriteriaComposer;
 import com.jdev.domain.dao.criteria.ICriteriaComposer;
-import com.jdev.domain.domain.IIdentifiable;
+import com.jdev.domain.entity.IIdentifiable;
 
 /**
  * @author Aleh

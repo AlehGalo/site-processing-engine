@@ -6,14 +6,14 @@
 	<persistence-unit name="informerPersistence"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>com.jdev.domain.domain.Article</class>
-		<class>com.jdev.domain.domain.Site</class>
-		<class>com.jdev.domain.domain.Recommendation</class>
-		<class>com.jdev.domain.domain.Job</class>
-		<class>com.jdev.domain.domain.Authority</class>
-		<class>com.jdev.domain.domain.CrawlerError</class>
-		<class>com.jdev.domain.domain.DatabaseError</class>
-		<class>com.jdev.domain.domain.PersistentAuditEvent</class>
-		<class>com.jdev.domain.domain.PersistentToken</class>
+		<class>com.jdev.domain.entity.Article</class>
+		<class>com.jdev.domain.entity.Site</class>
+		<class>com.jdev.domain.entity.Recommendation</class>
+		<class>com.jdev.domain.entity.Job</class>
+		<class>com.jdev.domain.entity.Authority</class>
+		<class>com.jdev.domain.entity.CrawlerError</class>
+		<class>com.jdev.domain.entity.DatabaseError</class>
+		<class>com.jdev.domain.entity.PersistentAuditEvent</class>
+		<class>com.jdev.domain.entity.PersistentToken</class>
 	</persistence-unit>
 </persistence>

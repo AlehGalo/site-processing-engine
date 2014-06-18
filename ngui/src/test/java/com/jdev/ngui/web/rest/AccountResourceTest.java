@@ -28,8 +28,8 @@ import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.jdev.domain.dao.repository.UserRepository;
-import com.jdev.domain.domain.Authority;
-import com.jdev.domain.domain.User;
+import com.jdev.domain.entity.Authority;
+import com.jdev.domain.entity.User;
 import com.jdev.ngui.Application;
 import com.jdev.ngui.security.AuthoritiesConstants;
 import com.jdev.ngui.service.UserService;

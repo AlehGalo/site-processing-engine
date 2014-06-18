@@ -1,4 +1,4 @@
-package com.jdev.domain.domain;
+package com.jdev.domain.entity;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;

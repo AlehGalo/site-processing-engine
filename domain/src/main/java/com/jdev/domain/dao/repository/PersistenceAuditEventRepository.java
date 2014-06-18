@@ -6,7 +6,7 @@ import org.joda.time.LocalDateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.jdev.domain.domain.PersistentAuditEvent;
+import com.jdev.domain.entity.PersistentAuditEvent;
 
 /**
  * Spring Data JPA repository for the PersistentAuditEvent entity.

@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jdev.domain.domain.IIdentifiable;
+import com.jdev.domain.entity.IIdentifiable;
 
 /**
  * @author Aleh Super class for dao tests with annotations.

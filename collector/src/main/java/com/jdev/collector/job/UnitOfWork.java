@@ -12,8 +12,8 @@ import com.jdev.domain.dao.IComposer;
 import com.jdev.domain.dao.IReadDao;
 import com.jdev.domain.dao.IWriteDao;
 import com.jdev.domain.dao.criteria.ICriteriaComposer;
-import com.jdev.domain.domain.Article;
-import com.jdev.domain.domain.Job;
+import com.jdev.domain.entity.Article;
+import com.jdev.domain.entity.Job;
 
 /**
  * @author Aleh

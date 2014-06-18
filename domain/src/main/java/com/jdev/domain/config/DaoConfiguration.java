@@ -14,13 +14,13 @@ import com.jdev.domain.dao.CommonGenericReadDao;
 import com.jdev.domain.dao.CommonGenericWriteDao;
 import com.jdev.domain.dao.IReadDao;
 import com.jdev.domain.dao.IWriteDao;
-import com.jdev.domain.domain.Article;
-import com.jdev.domain.domain.CrawlerError;
-import com.jdev.domain.domain.Credential;
-import com.jdev.domain.domain.DatabaseError;
-import com.jdev.domain.domain.Job;
-import com.jdev.domain.domain.Recommendation;
-import com.jdev.domain.domain.Site;
+import com.jdev.domain.entity.Article;
+import com.jdev.domain.entity.CrawlerError;
+import com.jdev.domain.entity.Credential;
+import com.jdev.domain.entity.DatabaseError;
+import com.jdev.domain.entity.Job;
+import com.jdev.domain.entity.Recommendation;
+import com.jdev.domain.entity.Site;
 
 /**
  * @author Aleh Dao beans configuration.

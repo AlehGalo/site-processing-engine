@@ -5,10 +5,10 @@ package com.jdev.domain.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.jdev.domain.domain.Article;
-import com.jdev.domain.domain.Credential;
-import com.jdev.domain.domain.Job;
-import com.jdev.domain.domain.Site;
+import com.jdev.domain.entity.Article;
+import com.jdev.domain.entity.Credential;
+import com.jdev.domain.entity.Job;
+import com.jdev.domain.entity.Site;
 
 /**
  * @author Aleh

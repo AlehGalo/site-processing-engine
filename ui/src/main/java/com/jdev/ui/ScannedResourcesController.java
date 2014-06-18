@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jdev.domain.dao.IReadDao;
-import com.jdev.domain.domain.Article;
-import com.jdev.domain.domain.Article_;
+import com.jdev.domain.entity.Article;
+import com.jdev.domain.entity.Article_;
 
 /**
  * @author Aleh

@@ -174,7 +174,7 @@
 				<configuration>
 					<filesets>
 						<fileset>
-							<directory>${basedir}/src/main/java/com/jdev/domain/</directory>
+							<directory>${basedir}/src/main/java/com/jdev/domain/entity</directory>
 							<includes>
 								<include>**/*_.java</include>
 							</includes>

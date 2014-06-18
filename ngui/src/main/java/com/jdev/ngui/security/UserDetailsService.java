@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jdev.domain.dao.repository.UserRepository;
-import com.jdev.domain.domain.Authority;
-import com.jdev.domain.domain.User;
+import com.jdev.domain.entity.Authority;
+import com.jdev.domain.entity.User;
 
 /**
  * Authenticate a user from the database.

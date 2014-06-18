@@ -16,9 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jdev.domain.dao.repository.AuthorityRepository;
 import com.jdev.domain.dao.repository.PersistentTokenRepository;
 import com.jdev.domain.dao.repository.UserRepository;
-import com.jdev.domain.domain.Authority;
-import com.jdev.domain.domain.PersistentToken;
-import com.jdev.domain.domain.User;
+import com.jdev.domain.entity.Authority;
+import com.jdev.domain.entity.PersistentToken;
+import com.jdev.domain.entity.User;
 import com.jdev.ngui.security.SecurityUtils;
 import com.jdev.ngui.service.util.RandomUtil;
 

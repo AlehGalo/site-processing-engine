@@ -6,7 +6,7 @@ import org.joda.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.jdev.domain.domain.User;
+import com.jdev.domain.entity.User;
 
 /**
  * Spring Data JPA repository for the User entity.

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jdev.domain.dao.IReadDao;
-import com.jdev.domain.domain.Job;
+import com.jdev.domain.entity.Job;
 
 /**
  * @author Aleh

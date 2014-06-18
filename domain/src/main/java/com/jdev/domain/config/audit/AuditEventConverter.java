@@ -10,7 +10,7 @@ import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
-import com.jdev.domain.domain.PersistentAuditEvent;
+import com.jdev.domain.entity.PersistentAuditEvent;
 
 @Configuration
 public class AuditEventConverter {

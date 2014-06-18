@@ -18,7 +18,7 @@ import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.core.selector.ISelector;
 import com.jdev.crawler.core.selector.ISelectorResult;
 import com.jdev.crawler.exception.CrawlerException;
-import com.jdev.domain.domain.Article;
+import com.jdev.domain.entity.Article;
 
 /**
  * @author Aleh

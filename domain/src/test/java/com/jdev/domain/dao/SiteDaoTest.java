@@ -3,7 +3,7 @@
  */
 package com.jdev.domain.dao;
 
-import com.jdev.domain.domain.Site;
+import com.jdev.domain.entity.Site;
 
 /**
  * @author Aleh

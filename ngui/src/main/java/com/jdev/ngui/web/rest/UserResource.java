@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.jdev.domain.dao.repository.UserRepository;
-import com.jdev.domain.domain.User;
+import com.jdev.domain.entity.User;
 import com.jdev.ngui.security.AuthoritiesConstants;
 
 /**

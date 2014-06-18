@@ -3,7 +3,7 @@
  */
 package com.jdev.domain.dao;
 
-import com.jdev.domain.domain.IIdentifiable;
+import com.jdev.domain.entity.IIdentifiable;
 
 /**
  * @author Aleh

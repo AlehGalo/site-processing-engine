@@ -3,7 +3,7 @@
  */
 package com.jdev.collector.site.handler;
 
-import com.jdev.domain.domain.Article;
+import com.jdev.domain.entity.Article;
 
 /**
  * @author Aleh

@@ -1,4 +1,4 @@
-package com.jdev.domain.domain;
+package com.jdev.domain.entity;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.MapAttribute;

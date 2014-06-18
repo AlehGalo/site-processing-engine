@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jdev.domain.config.audit.AuditEventConverter;
 import com.jdev.domain.dao.repository.PersistenceAuditEventRepository;
-import com.jdev.domain.domain.PersistentAuditEvent;
+import com.jdev.domain.entity.PersistentAuditEvent;
 
 /**
  * Service for managing audit events.

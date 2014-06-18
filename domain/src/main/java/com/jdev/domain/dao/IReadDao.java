@@ -9,7 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.metamodel.SingularAttribute;
 
-import com.jdev.domain.domain.IIdentifiable;
+import com.jdev.domain.entity.IIdentifiable;
 
 /**
  * @author Aleh Common read dao.

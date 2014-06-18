@@ -8,7 +8,7 @@ import org.springframework.util.Assert;
 import com.jdev.crawler.core.user.ICompany;
 import com.jdev.crawler.core.user.IUserData;
 import com.jdev.crawler.core.user.UserData;
-import com.jdev.domain.domain.Credential;
+import com.jdev.domain.entity.Credential;
 
 /**
  * @author Aleh

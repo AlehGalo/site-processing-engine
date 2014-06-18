@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
 import com.jdev.domain.config.audit.AuditEventConverter;
-import com.jdev.domain.domain.PersistentAuditEvent;
+import com.jdev.domain.entity.PersistentAuditEvent;
 
 /**
  * Wraps an implementation of Spring Boot's AuditEventRepository.
