@@ -16,13 +16,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.URL;
+
 /**
  * @author Aleh
  * 
  */
 @Entity
 @Table(name = "ARTICLE", indexes = { @Index(columnList = "TITLE") })
-@AttributeOverrides(value = { @AttributeOverride(name = "id", column = @Column(name = "ARTICLE_ID")) })
+@AttributeOverrides({ @AttributeOverride(name = "id", column = @Column(name = "ARTICLE_ID")) })
 public class Article extends AbstractIdentifiable {
 
     /**
@@ -34,18 +37,23 @@ public class Article extends AbstractIdentifiable {
      * Article's content.
      */
     @Column(name = "CONTENT", nullable = false, columnDefinition = "MEDIUMTEXT")
+    @NotEmpty
     private String content;
 
     /**
      * Article's content.
      */
     @Column(name = "ORIGINAL_ARTICLE_URL", nullable = false, columnDefinition = "VARCHAR(256)", unique = true)
+    @NotEmpty
+    @URL
+    // TODO: add validation
     private String originalArticleUrl;
 
     /**
      * Title.
      */
     @Column(name = "TITLE", nullable = false, columnDefinition = "VARCHAR(255)")
+    @NotEmpty
     private String title;
 
     /**

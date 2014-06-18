@@ -18,7 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "RECOMMENDATION")
-@AttributeOverrides(value = { @AttributeOverride(name = "id", column = @Column(name = "RECOMMENDATION_ID")) })
+@AttributeOverrides({ @AttributeOverride(name = "id", column = @Column(name = "RECOMMENDATION_ID")) })
 public class Recommendation extends AbstractIdentifiable {
 
     /**

@@ -7,20 +7,26 @@ import java.util.Date;
 
 import javax.persistence.PersistenceException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.HibernateException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
 
-import com.jdev.collector.job.strategy.IExceptionalCaseHandler;
+import com.jdev.collector.job.handler.IExceptionalCaseHandler;
+import com.jdev.collector.job.strategy.DefaultCongregationStrategy;
+import com.jdev.collector.job.strategy.ICongragationFlowStrategy;
+import com.jdev.collector.job.validator.CommonEntityValidator;
+import com.jdev.collector.job.validator.IValidator;
 import com.jdev.collector.site.AbstractCollector;
 import com.jdev.collector.site.ICollector;
 import com.jdev.collector.site.handler.IObserver;
 import com.jdev.crawler.exception.CrawlerException;
 import com.jdev.domain.entity.Article;
+import com.jdev.domain.entity.CrawlerError;
 import com.jdev.domain.entity.Credential;
+import com.jdev.domain.entity.DatabaseError;
 import com.jdev.domain.entity.Job;
+import com.jdev.domain.entity.JobStatusEnum;
 
 /**
  * @author Aleh
@@ -39,24 +45,19 @@ public class ScanResourceJob implements IObserver {
     private final ICollector collector;
 
     /**
+     * Strategy that defines of processing flow.
+     */
+    private final ICongragationFlowStrategy strategy;
+
+    /**
      *
      */
     private IExceptionalCaseHandler<Exception> exceptionHandler;
 
     /**
-     * 
+     * Entity validator.
      */
-    private final StringBuilder builder = new StringBuilder();
-
-    /**
-     * Counters.
-     */
-    private int crawlerExceptions = 0;
-
-    /**
-     * 
-     */
-    private int databaseExceptions = 0;
+    private CommonEntityValidator<Article> articleValidator;
 
     /**
      * 
@@ -90,6 +91,8 @@ public class ScanResourceJob implements IObserver {
         this.credential = credential;
         this.unitOfWork = unitOfWork;
         collector.setEventHandlerDelegate(this);
+        articleValidator = new CommonEntityValidator<>();
+        strategy = new DefaultCongregationStrategy();
     }
 
     @Scheduled(fixedDelay = 3600000, initialDelay = 100)
@@ -100,15 +103,25 @@ public class ScanResourceJob implements IObserver {
         try {
             collector.congregate();
         } catch (CrawlerException ce) {
-            ++crawlerExceptions;
-            updateJobState();
-            job.setStatus("FAILED_CRAWLER");
-            job.setReasonOfStopping(ce.getMessage());
+            CrawlerError crawlerError = new CrawlerError();
+            crawlerError.setError(ce.getMessage());
+            crawlerError.setJob(job);
+            updateJobEndTime();
+            job.setStatus(JobStatusEnum.FAILED_CRAWLER);
             unitOfWork.updateJob(job);
+            unitOfWork.saveCrawlerError(crawlerError);
             return;
         }
-        updateJobState();
-        job.setStatus("FINISHED");
+        job.setStatus(JobStatusEnum.FINISHED);
+        finishExecutionWell();
+    }
+
+    /**
+     * Just update job details.
+     */
+    private void finishExecutionWell() {
+        job.setStatus(JobStatusEnum.FINISHED);
+        updateJobEndTime();
         unitOfWork.updateJob(job);
     }
 
@@ -120,19 +133,22 @@ public class ScanResourceJob implements IObserver {
         Date date = new Date();
         job.setStartTime(date);
         job.setEndTime(date);
-        job.setReasonOfStopping("NONE");
-        job.setStatus("STARTED");
         return job;
     }
 
     @Override
     public void articleCollected(final Article article) {
+        final String url = article.getOriginalArticleUrl();
         article.setJob(job);
         try {
             saveArticle(article);
             dbQueueErrorsCounter = 0;
         } catch (Exception e) {
-            processError(e);
+            processError(e, url);
+        }
+        if (!strategy.isCongregationContinued()) {
+            // TODO: remove this ugly code.
+            processError(new IllegalArgumentException(), url);
         }
     }
 
@@ -143,27 +159,31 @@ public class ScanResourceJob implements IObserver {
         ++transactionCounter;
         if (validateArticle(article) && unitOfWork.saveArticle(article)) {
             if (transactionCounter >= 10) {
-                updateJobState();
+                updateJobEndTime();
                 unitOfWork.updateJob(job);
                 transactionCounter = 0;
             }
         } else {
-            processError(new PersistenceException());
+            processError(new PersistenceException(), article.getOriginalArticleUrl());
         }
     }
 
     /**
      * @param e
+     * @param resourceUrl
+     *            url of the resource.
      */
-    private void processError(final Exception e) {
+    private void processError(final Exception e, final String resourceUrl) {
         if (e instanceof HibernateException || e instanceof PersistenceException) {
-            builder.append(e.getMessage());
-            ++databaseExceptions;
+            DatabaseError error = new DatabaseError();
+            error.setError(e.getMessage());
+            error.setUrl(resourceUrl);
+            error.setJob(job);
+            unitOfWork.saveDatabaseError(error);
             ++dbQueueErrorsCounter;
             if (dbQueueErrorsCounter >= 10) {
-                updateJobState();
-                job.setStatus("DB_ERRORS_MUCH");
-                job.setReasonOfStopping(builder.toString());
+                updateJobEndTime();
+                job.setStatus(JobStatusEnum.DB_ERRORS_MUCH);
                 unitOfWork.updateJob(job);
                 ReflectionUtils.rethrowRuntimeException(e);
             }
@@ -175,9 +195,7 @@ public class ScanResourceJob implements IObserver {
     /**
      * 
      */
-    private void updateJobState() {
-        job.setCrawlerErrorsCount(crawlerExceptions);
-        job.setDatabaseErrorsCount(databaseExceptions);
+    private void updateJobEndTime() {
         job.setEndTime(new Date());
     }
 
@@ -197,9 +215,30 @@ public class ScanResourceJob implements IObserver {
         this.exceptionHandler = exceptionHandler;
     }
 
+    /**
+     * @param article
+     * @return
+     */
     private boolean validateArticle(final Article article) {
-        return StringUtils.isNotBlank(article.getTitle())
-                && StringUtils.isNotBlank(article.getContent())
-                && StringUtils.isNotBlank(article.getOriginalArticleUrl());
+        if (articleValidator != null) {
+            articleValidator.setEntity(article);
+            return articleValidator.validate();
+        }
+        throw new UnsupportedOperationException("Validator is null");
+    }
+
+    /**
+     * @return the articleValidator
+     */
+    public final IValidator getEntityValidator() {
+        return articleValidator;
+    }
+
+    /**
+     * @param articleValidator
+     *            the articleValidator to set
+     */
+    public final void setEntityValidator(final CommonEntityValidator<Article> entityValidator) {
+        this.articleValidator = entityValidator;
     }
 }

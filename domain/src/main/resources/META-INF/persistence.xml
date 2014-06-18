@@ -12,7 +12,6 @@
 		<class>com.jdev.domain.entity.Job</class>
 		<class>com.jdev.domain.entity.Authority</class>
 		<class>com.jdev.domain.entity.CrawlerError</class>
-		<class>com.jdev.domain.entity.DatabaseError</class>
 		<class>com.jdev.domain.entity.PersistentAuditEvent</class>
 		<class>com.jdev.domain.entity.PersistentToken</class>
 	</persistence-unit>

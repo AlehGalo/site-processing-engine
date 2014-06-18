@@ -25,35 +25,30 @@
 
 	<changeSet id="5" author="aleh">
 		<sqlFile relativeToChangelogFile="true"
-			path="20140424_alter_job_table.sql" encoding="UTF-8" />
+			path="20140502_insert_site_table.sql" encoding="UTF-8" />
 	</changeSet>
 
 	<changeSet id="6" author="aleh">
 		<sqlFile relativeToChangelogFile="true"
-			path="20140502_insert_site_table.sql" encoding="UTF-8" />
+			path="20140519_create_credentials_for_sites.sql" encoding="UTF-8" />
 	</changeSet>
 
 	<changeSet id="7" author="aleh">
 		<sqlFile relativeToChangelogFile="true"
-			path="20140519_create_credentials_for_sites.sql" encoding="UTF-8" />
+			path="20140519_insert_credentials_for_sites.sql" encoding="UTF-8" />
 	</changeSet>
 
 	<changeSet id="8" author="aleh">
 		<sqlFile relativeToChangelogFile="true"
-			path="20140519_insert_credentials_for_sites.sql" encoding="UTF-8" />
+			path="20140520_alter_job_table.sql" encoding="UTF-8" />
 	</changeSet>
 
 	<changeSet id="9" author="aleh">
 		<sqlFile relativeToChangelogFile="true"
-			path="20140520_alter_job_table.sql" encoding="UTF-8" />
-	</changeSet>
-
-	<changeSet id="10" author="aleh">
-		<sqlFile relativeToChangelogFile="true"
 			path="20140522_create_tables_for_errors.sql" encoding="UTF-8" />
 	</changeSet>
 
-	<changeSet id="11" author="aleh">
+	<changeSet id="10" author="aleh">
 		<sqlFile relativeToChangelogFile="true"
 			path="20140616_update_current_time_at_user.sql" encoding="UTF-8" />
 	</changeSet>

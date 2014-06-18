@@ -9,7 +9,7 @@ import com.jdev.crawler.exception.CrawlerException;
 /**
  * @author Aleh
  */
-public interface ICrawler {
+public interface ICrawler extends IStop {
 
     /**
      * Process collecting.

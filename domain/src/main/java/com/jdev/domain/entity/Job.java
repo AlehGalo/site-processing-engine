@@ -9,10 +9,13 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * @author Aleh
@@ -20,7 +23,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "JOB")
-@AttributeOverrides(value = { @AttributeOverride(name = "id", column = @Column(name = "JOB_ID")) })
+@AttributeOverrides({ @AttributeOverride(name = "id", column = @Column(name = "JOB_ID")) })
 public class Job extends AbstractIdentifiable {
 
     /**
@@ -43,25 +46,22 @@ public class Job extends AbstractIdentifiable {
     /**
      * 
      */
-    @Column(name = "STOP_REASON", nullable = false, columnDefinition = "VARCHAR(256)")
-    private String reasonOfStopping;
+    @Column(name = "STATUS", nullable = false, columnDefinition = "ENUM('FAILED_CRAWLER', 'FINISHED', 'STARTED', 'DB_ERRORS_MUCH') DEFAULT 'STARTED'")
+    @Enumerated(EnumType.STRING)
+    private JobStatusEnum status;
 
     /**
      * 
      */
-    @Column(name = "STATUS", nullable = false, columnDefinition = "VARCHAR(16)")
-    private String status;
-
-    /**
-     * 
-     */
-    @Column(name = "CRAWLER_ERRORS_COUNT", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    @Transient
+    // @Formula("(select count(*) from ad_category_hierarchy ah join " +
+    // "ad_categories ac on ac.id = ah.childid where ah.parentid = id)")
     private int crawlerErrorsCount;
 
     /**
      * 
      */
-    @Column(name = "DATABASE_ERRORS_COUNT", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    @Transient
     private int databaseErrorsCount;
 
     /**
@@ -102,66 +102,6 @@ public class Job extends AbstractIdentifiable {
     }
 
     /**
-     * @return the reasonOfStopping
-     */
-    public final String getReasonOfStopping() {
-        return reasonOfStopping;
-    }
-
-    /**
-     * @param reasonOfStopping
-     *            the reasonOfStopping to set
-     */
-    public final void setReasonOfStopping(final String reasonOfStopping) {
-        this.reasonOfStopping = reasonOfStopping;
-    }
-
-    /**
-     * @return the status
-     */
-    public final String getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status
-     *            the status to set
-     */
-    public final void setStatus(final String status) {
-        this.status = status;
-    }
-
-    /**
-     * @return the crawlerErrorsCount
-     */
-    public final Integer getCrawlerErrorsCount() {
-        return crawlerErrorsCount;
-    }
-
-    /**
-     * @param crawlerErrorsCount
-     *            the crawlerErrorsCount to set
-     */
-    public final void setCrawlerErrorsCount(final Integer crawlerErrorsCount) {
-        this.crawlerErrorsCount = crawlerErrorsCount;
-    }
-
-    /**
-     * @return the databaseErrorsCount
-     */
-    public final Integer getDatabaseErrorsCount() {
-        return databaseErrorsCount;
-    }
-
-    /**
-     * @param databaseErrorsCount
-     *            the databaseErrorsCount to set
-     */
-    public final void setDatabaseErrorsCount(final Integer databaseErrorsCount) {
-        this.databaseErrorsCount = databaseErrorsCount;
-    }
-
-    /**
      * @return the credential
      */
     public final Credential getCredential() {
@@ -174,5 +114,20 @@ public class Job extends AbstractIdentifiable {
      */
     public final void setCredential(final Credential credential) {
         this.credential = credential;
+    }
+
+    /**
+     * @return the status
+     */
+    public final JobStatusEnum getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status
+     *            the status to set
+     */
+    public final void setStatus(final JobStatusEnum status) {
+        this.status = status;
     }
 }

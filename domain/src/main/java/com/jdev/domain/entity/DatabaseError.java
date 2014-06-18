@@ -1,14 +1,19 @@
+/**
+ * 
+ */
 package com.jdev.domain.entity;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * @author Aleh
+ * 
+ */
 @Entity
 @Table(name = "DATABASE_ERROR")
 @AttributeOverrides(value = { @AttributeOverride(name = "id", column = @Column(name = "DATABASE_ERROR_ID")) })
@@ -20,7 +25,7 @@ public class DatabaseError extends AbstractIdentifiable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 
+     * Url of the error resource.
      */
     @Column(name = "URL", nullable = false, columnDefinition = "VARCHAR(256)")
     private String url;
@@ -28,15 +33,8 @@ public class DatabaseError extends AbstractIdentifiable {
     /**
      * 
      */
-    @Column(name = "ERROR", nullable = false, columnDefinition = "VARCHAR(1024)")
-    private String error;
-
-    /**
-     * 
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FK_JOB_ID")
-    private Job job;
+    @Embedded
+    private PersistentError error;
 
     /**
      * @return the url
@@ -56,7 +54,7 @@ public class DatabaseError extends AbstractIdentifiable {
     /**
      * @return the error
      */
-    public final String getError() {
+    public final PersistentError getError() {
         return error;
     }
 
@@ -64,23 +62,7 @@ public class DatabaseError extends AbstractIdentifiable {
      * @param error
      *            the error to set
      */
-    public final void setError(final String error) {
+    public final void setError(final PersistentError error) {
         this.error = error;
     }
-
-    /**
-     * @return the job
-     */
-    public final Job getJob() {
-        return job;
-    }
-
-    /**
-     * @param job
-     *            the job to set
-     */
-    public final void setJob(final Job job) {
-        this.job = job;
-    }
-
 }

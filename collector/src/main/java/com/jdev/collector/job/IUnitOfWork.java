@@ -4,6 +4,8 @@
 package com.jdev.collector.job;
 
 import com.jdev.domain.entity.Article;
+import com.jdev.domain.entity.CrawlerError;
+import com.jdev.domain.entity.DatabaseError;
 import com.jdev.domain.entity.Job;
 
 /**
@@ -26,4 +28,16 @@ public interface IUnitOfWork {
      * @param job
      */
     void updateJob(Job job);
+
+    /**
+     * @param error
+     *            database error to be stored.
+     */
+    void saveDatabaseError(DatabaseError error);
+
+    /**
+     * @param error
+     *            database error to be stored.
+     */
+    void saveCrawlerError(CrawlerError message);
 }

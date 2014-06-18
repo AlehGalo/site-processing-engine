@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.jdev.collector.job.strategy;
+package com.jdev.collector.job.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

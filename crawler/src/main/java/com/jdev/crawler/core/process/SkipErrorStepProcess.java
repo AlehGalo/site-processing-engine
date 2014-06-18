@@ -3,6 +3,9 @@
  */
 package com.jdev.crawler.core.process;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jdev.crawler.core.process.extract.ISelectorExtractStrategy;
 import com.jdev.crawler.core.process.model.IEntity;
 import com.jdev.crawler.exception.CrawlerException;
@@ -13,6 +16,11 @@ import com.jdev.crawler.util.Assert;
  * 
  */
 public class SkipErrorStepProcess implements IProcess, IDescription {
+
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(SkipErrorStepProcess.class);
 
     /**
      * Default serial version id.
@@ -64,7 +72,7 @@ public class SkipErrorStepProcess implements IProcess, IDescription {
         try {
             return process.process(session, content, extractStrategy);
         } catch (Exception e) {
-            // TODO: add logger with message using.
+            LOGGER.info(message, e);
         }
         return null;
     }

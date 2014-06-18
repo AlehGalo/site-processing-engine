@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.jdev.collector.job.strategy;
+package com.jdev.collector.job.handler;
 
 /**
  * @author Aleh

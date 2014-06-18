@@ -13,6 +13,8 @@ import com.jdev.domain.dao.IReadDao;
 import com.jdev.domain.dao.IWriteDao;
 import com.jdev.domain.dao.criteria.ICriteriaComposer;
 import com.jdev.domain.entity.Article;
+import com.jdev.domain.entity.CrawlerError;
+import com.jdev.domain.entity.DatabaseError;
 import com.jdev.domain.entity.Job;
 
 /**
@@ -45,6 +47,17 @@ public class UnitOfWork implements IUnitOfWork {
      * 
      */
     @Autowired
+    private IWriteDao<CrawlerError> crawlerErrorDao;
+
+    /**
+     * 
+     */
+    @Autowired
+    private IWriteDao<DatabaseError> databaseErrorDao;
+    /**
+     * 
+     */
+    @Autowired
     private IComposer<Article> articleComposer;
 
     @Override
@@ -67,5 +80,15 @@ public class UnitOfWork implements IUnitOfWork {
     @Override
     public void updateJob(final Job job) {
         jobDao.update(job);
+    }
+
+    @Override
+    public void saveDatabaseError(final DatabaseError error) {
+        databaseErrorDao.save(error);
+    }
+
+    @Override
+    public void saveCrawlerError(final CrawlerError error) {
+        crawlerErrorDao.save(error);
     }
 }

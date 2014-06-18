@@ -11,6 +11,8 @@ import com.jdev.domain.entity.CrawlerError;
 import com.jdev.domain.entity.Credential;
 import com.jdev.domain.entity.DatabaseError;
 import com.jdev.domain.entity.Job;
+import com.jdev.domain.entity.JobStatusEnum;
+import com.jdev.domain.entity.PersistentError;
 import com.jdev.domain.entity.Site;
 
 /**
@@ -33,8 +35,7 @@ final class EntityUtils {
         Job job = new Job();
         job.setStartTime(new Date());
         job.setEndTime(new Date());
-        job.setStatus("IN PROGRESS");
-        job.setReasonOfStopping(reason);
+        job.setStatus(JobStatusEnum.STARTED);
         return job;
     }
 
@@ -55,7 +56,9 @@ final class EntityUtils {
     public static DatabaseError createDatabaseError() {
         DatabaseError error = new DatabaseError();
         error.setUrl(generatedUUIDAsString());
-        error.setError(generatedUUIDAsString());
+        PersistentError errorPer = new PersistentError();
+        errorPer.setError(generatedUUIDAsString());
+        error.setError(errorPer);
         return error;
     }
 
@@ -67,9 +70,11 @@ final class EntityUtils {
     public static DatabaseError createDatabaseErrorWithDependencies(final IWriteDao<Job> jobDao,
             final IWriteDao<Credential> credeDao, final IWriteDao<Site> siteDao) {
         DatabaseError databaseError = createDatabaseError();
-        databaseError.setJob(createPersistentJob(jobDao, credeDao, siteDao));
-        databaseError.setError(generatedUUIDAsString());
+        PersistentError errorPer = new PersistentError();
+        errorPer.setJob(createPersistentJob(jobDao, credeDao, siteDao));
+        errorPer.setError(generatedUUIDAsString());
         databaseError.setUrl(generatedUUIDAsString());
+        databaseError.setError(errorPer);
         return databaseError;
     }
 
@@ -90,8 +95,10 @@ final class EntityUtils {
     public static CrawlerError createCrawlerErrorWithDependencies(final IWriteDao<Job> jobDao,
             final IWriteDao<Credential> credeDao, final IWriteDao<Site> siteDao) {
         CrawlerError error = new CrawlerError();
-        error.setJob(createPersistentJob(jobDao, credeDao, siteDao));
-        error.setError(generatedUUIDAsString());
+        PersistentError errorPer = new PersistentError();
+        errorPer.setJob(createPersistentJob(jobDao, credeDao, siteDao));
+        errorPer.setError(generatedUUIDAsString());
+        error.setError(errorPer);
         return error;
     }
 

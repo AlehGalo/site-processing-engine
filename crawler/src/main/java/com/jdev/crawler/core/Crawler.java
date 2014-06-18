@@ -121,4 +121,9 @@ public class Crawler implements ICrawler, IProcessContext {
     public HttpClient getHttpClient() {
         return this.client;
     }
+
+    @Override
+    public void stop() {
+        // TODO: implement it.
+    }
 }

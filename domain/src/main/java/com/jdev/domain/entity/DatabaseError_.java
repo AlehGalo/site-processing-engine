@@ -8,8 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(DatabaseError.class)
 public abstract class DatabaseError_ extends com.jdev.domain.entity.AbstractIdentifiable_ {
 
-	public static volatile SingularAttribute<DatabaseError, String> error;
-	public static volatile SingularAttribute<DatabaseError, Job> job;
+	public static volatile SingularAttribute<DatabaseError, PersistentError> error;
 	public static volatile SingularAttribute<DatabaseError, String> url;
 
 }

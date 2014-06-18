@@ -3,15 +3,15 @@ package com.jdev.domain.entity;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "CRAWLER_ERROR")
-@AttributeOverrides(value = { @AttributeOverride(name = "id", column = @Column(name = "CRAWLER_ERROR_ID")) })
+@AttributeOverrides({ @AttributeOverride(name = "id", column = @Column(name = "CRAWLER_ERROR_ID")) })
+@Embeddable
 public class CrawlerError extends AbstractIdentifiable {
 
     /**
@@ -22,20 +22,13 @@ public class CrawlerError extends AbstractIdentifiable {
     /**
      * 
      */
-    @Column(name = "ERROR", nullable = false, columnDefinition = "VARCHAR(1024)")
-    private String error;
-
-    /**
-     * 
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FK_JOB_ID")
-    private Job job;
+    @Embedded
+    private PersistentError error;
 
     /**
      * @return the error
      */
-    public final String getError() {
+    public final PersistentError getError() {
         return error;
     }
 
@@ -43,22 +36,8 @@ public class CrawlerError extends AbstractIdentifiable {
      * @param error
      *            the error to set
      */
-    public final void setError(final String error) {
+    public final void setError(final PersistentError error) {
         this.error = error;
     }
 
-    /**
-     * @return the job
-     */
-    public final Job getJob() {
-        return job;
-    }
-
-    /**
-     * @param job
-     *            the job to set
-     */
-    public final void setJob(final Job job) {
-        this.job = job;
-    }
 }

@@ -21,7 +21,7 @@ import org.hibernate.annotations.Cache;
  */
 @Entity
 @Table(name = "SITE", uniqueConstraints = { @UniqueConstraint(columnNames = "URL") })
-@AttributeOverrides(value = { @AttributeOverride(name = "id", column = @Column(name = "SITE_ID")) })
+@AttributeOverrides({ @AttributeOverride(name = "id", column = @Column(name = "SITE_ID")) })
 @SqlResultSetMapping(name = "implicitSite", entities = @EntityResult(entityClass = Site.class))
 @NamedNativeQuery(name = "findAllSite", query = "select * from site", resultSetMapping = "implicitSite")
 @Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_ONLY)

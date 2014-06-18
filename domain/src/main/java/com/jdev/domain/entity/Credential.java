@@ -18,7 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CREDENTIAL")
-@AttributeOverrides(value = { @AttributeOverride(name = "id", column = @Column(name = "CREDENTIAL_ID")) })
+@AttributeOverrides({ @AttributeOverride(name = "id", column = @Column(name = "CREDENTIAL_ID")) })
 public class Credential extends AbstractIdentifiable {
 
     /**
