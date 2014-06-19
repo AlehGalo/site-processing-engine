@@ -52,7 +52,7 @@ public interface IReadDao<T extends IIdentifiable> extends IComposer<T> {
      * @param singularAttribute
      * @return
      */
-    <X> List<X> find(SingularAttribute<T, X> singularAttribute);
+    <X extends Object> List<T> findFields(List<SingularAttribute<T, X>> singularAttribute);
 
     /**
      * @return number of records in db.

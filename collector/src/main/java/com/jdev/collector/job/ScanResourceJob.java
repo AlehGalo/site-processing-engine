@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.persistence.PersistenceException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.HibernateException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.Assert;
@@ -34,6 +35,11 @@ import com.jdev.domain.entity.PersistentError;
  * 
  */
 public class ScanResourceJob implements IObserver {
+
+    /**
+     * 
+     */
+    private static final String EMTPY_ERROR_MESSAGE = "Empty Error Message";
 
     /**
      * 
@@ -115,10 +121,10 @@ public class ScanResourceJob implements IObserver {
      * @param ce
      *            Exception.
      */
-    private void saveCrawlerError(CrawlerException ce) {
+    private void saveCrawlerError(final CrawlerException ce) {
         CrawlerError crawlerError = new CrawlerError();
         PersistentError error = crawlerError.getError();
-        error.setError(ce.getMessage());
+        setErrorMessage(error, ce.getMessage());
         error.setJob(job);
         updateJobEndTime();
         job.setStatus(JobStatusEnum.FAILED_CRAWLER);
@@ -187,7 +193,7 @@ public class ScanResourceJob implements IObserver {
         if (e instanceof HibernateException || e instanceof PersistenceException) {
             DatabaseError error = new DatabaseError();
             PersistentError perError = error.getError();
-            perError.setError(e.getMessage());
+            setErrorMessage(perError, e.getMessage());
             error.setUrl(resourceUrl);
             perError.setJob(job);
             unitOfWork.saveDatabaseError(error);
@@ -251,5 +257,17 @@ public class ScanResourceJob implements IObserver {
      */
     public final void setEntityValidator(final CommonEntityValidator<Article> entityValidator) {
         articleValidator = entityValidator;
+    }
+
+    /**
+     * @param error
+     * @param errorMessage
+     */
+    private void setErrorMessage(final PersistentError error, final String errorMessage) {
+        String res = errorMessage;
+        if (StringUtils.isEmpty(errorMessage)) {
+            res = EMTPY_ERROR_MESSAGE;
+        }
+        error.setError(res);
     }
 }

@@ -17,10 +17,10 @@
 <title>Informer main page</title>
 
 <!-- Bootstrap core CSS -->
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
 
-<link href="../css/navbar-fixed-top.css" rel="stylesheet">
+<link href="css/navbar-fixed-top.css" rel="stylesheet">
 
 <!-- Just for debugging purposes. Don't actually copy this line! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -49,9 +49,9 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="../">Home</a></li>
-					<li class="active"><a href="results.html">Results</a></li>
-					<li><a href="jobs.html">Jobs</a></li>
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="app/results.html">Results</a></li>
+					<li><a href="app/jobs.html">Jobs</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 						<ul class="dropdown-menu">
@@ -74,53 +74,14 @@
 		</div>
 	</nav>
 	<div class="container">
-
-
-		<div class="panel panel-default">
-			<!-- Default panel contents -->
-			<div class="panel-heading">
-				<h5>Number of records ${count}</h5>
-			</div>
-			<table id="mainTableId"
-				class="table table-striped table-bordered table-hover">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>Title</th>
-						<th>in progress</th>
-						<th>in progress</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:choose>
-						<c:when test="${not empty lists}">
-							<c:forEach var="listValue" items="${lists}" varStatus="status">
-								<tr>
-									<td><c:out value="${status.count}" /></td>
-									<td><a href="<c:out value="${listValue.url}" />"><c:out
-												value="${listValue.title}" /></a></td>
-									<td><c:out value='${listValue.url}' /></td>
-									<td>...</td>
-								</tr>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<h5>No Data</h5>
-						</c:otherwise>
-					</c:choose>
-				<tfoot>
-					<tr>
-						<th>#</th>
-						<th>Title</th>
-						<th>in progress</th>
-						<th>in progress</th>
-					</tr>
-				</tfoot>
-				</tbody>
-			</table>
+		<div class="jumbotron">
+			<h1>Hi there.</h1>
+			<p>This is an example to show the potential of an offcanvas
+				layout pattern in Bootstrap. Try some responsive-range viewport
+				sizes to see it in action.</p>
 		</div>
 	</div>
-	<script src="../js/jquery.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -73,7 +73,27 @@ public class Article extends AbstractIdentifiable {
     /**
      * Persistence layer using this constructor.
      */
-    protected Article() {
+    public Article() {
+    }
+
+    /**
+     * @param content
+     * @param originalArticleUrl
+     * @param title
+     */
+    public Article(final String content, final String originalArticleUrl, final String title) {
+        this.content = content;
+        this.originalArticleUrl = originalArticleUrl;
+        this.title = title;
+    }
+
+    /**
+     * @param originalArticleUrl
+     * @param title
+     */
+    public Article(final String originalArticleUrl, final String title) {
+        this.originalArticleUrl = originalArticleUrl;
+        this.title = title;
     }
 
     /**

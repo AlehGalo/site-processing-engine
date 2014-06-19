@@ -38,6 +38,16 @@ public interface ICriteriaComposer<T> {
     TypedQuery<T> createTypedQuery();
 
     /**
+     * @return
+     */
+    CriteriaQuery<T> createCriteriaQueryLimited(int startIndex, int endIndex);
+
+    /**
+     * @return
+     */
+    <E> CriteriaQuery<T> createCriteriaQuerySorted(final SingularAttribute<T, E> sortproperty);
+
+    /**
      * @param query
      * @return Criteria query.
      */

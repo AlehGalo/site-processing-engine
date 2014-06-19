@@ -240,4 +240,14 @@ public class CriteriaComposer<T> implements ICriteriaComposer<T> {
         Assert.notNull(criteriaQuery);
         return criteriaQuery.from(getPersistenceClass());
     }
+
+    @Override
+    public CriteriaQuery<T> createCriteriaQueryLimited(final int startIndex, final int endIndex) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <E> CriteriaQuery<T> createCriteriaQuerySorted(final SingularAttribute<T, E> sortproperty) {
+        throw new UnsupportedOperationException();
+    }
 }

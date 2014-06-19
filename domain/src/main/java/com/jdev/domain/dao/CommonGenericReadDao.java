@@ -7,9 +7,11 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Selection;
 import javax.persistence.metamodel.SingularAttribute;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.util.Assert;
 
 import com.jdev.domain.entity.IIdentifiable;
@@ -70,13 +72,17 @@ public class CommonGenericReadDao<T extends IIdentifiable> extends AbstractGener
     }
 
     @Override
-    public <X> List<X> find(final SingularAttribute<T, X> singularAttribute) {
-        CriteriaQuery<X> criteriaQuery = criteriaComposer.getCriteriaBuilder().createQuery(
-                singularAttribute.getBindableJavaType());
-        Path<X> path = criteriaQuery.from(getPersistentClass()).get(singularAttribute);
-        return getEntityManager()
-                .createQuery(
-                        criteriaQuery.select(path).orderBy(
-                                criteriaComposer.getCriteriaBuilder().asc(path))).getResultList();
+    public <X extends Object> List<T> findFields(
+            final List<SingularAttribute<T, X>> singularAttributeList) {
+        if (CollectionUtils.isEmpty(singularAttributeList)) {
+            return findAll();
+        }
+        CriteriaQuery<T> criteriaQuery = criteriaComposer.createCriteriaQuery();
+        Root<T> root = criteriaComposer.createRoot(criteriaQuery);
+        Selection<?>[] values = new Selection<?>[singularAttributeList.size()];
+        for (int i = 0; i < singularAttributeList.size(); i++) {
+            values[i] = root.get(singularAttributeList.get(i));
+        }
+        return getEntityManager().createQuery(criteriaQuery.multiselect(values)).getResultList();
     }
 }

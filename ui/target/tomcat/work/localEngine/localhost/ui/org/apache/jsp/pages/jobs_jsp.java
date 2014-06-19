@@ -116,9 +116,9 @@ public final class jobs_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t\t</div>\r\n");
       out.write("\t\t\t<div class=\"navbar-collapse collapse\">\r\n");
       out.write("\t\t\t\t<ul class=\"nav navbar-nav\">\r\n");
-      out.write("\t\t\t\t\t<li class=\"active\"><a href=\"#\">Home</a></li>\r\n");
-      out.write("\t\t\t\t\t<li><a href=\"#\">About</a></li>\r\n");
-      out.write("\t\t\t\t\t<li><a href=\"#\">Contact</a></li>\r\n");
+      out.write("\t\t\t\t\t<li><a href=\"../\">Home</a></li>\r\n");
+      out.write("\t\t\t\t\t<li><a href=\"results.html\">Results</a></li>\r\n");
+      out.write("\t\t\t\t\t<li class=\"active\"><a href=\"jobs.html\">Jobs</a></li>\r\n");
       out.write("\t\t\t\t\t<li class=\"dropdown\"><a href=\"#\" class=\"dropdown-toggle\"\r\n");
       out.write("\t\t\t\t\t\tdata-toggle=\"dropdown\">Dropdown <b class=\"caret\"></b></a>\r\n");
       out.write("\t\t\t\t\t\t<ul class=\"dropdown-menu\">\r\n");
