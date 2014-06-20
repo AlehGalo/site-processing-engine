@@ -88,6 +88,9 @@
 						<th>#</th>
 						<th>Site</th>
 						<th>Start - End Time</th>
+						<th>Database Errors</th>
+						<th>Crawler Errors</th>
+						<th>Records Processed</th>
 						<th>Status</th>
 					</tr>
 				</thead>
@@ -100,6 +103,9 @@
 									<td><c:out value="${job.siteUrl}" /></td>
 									<td><c:out value="${job.startTime}" />&nbsp;&nbsp;<c:out
 											value="${job.endTime}" /></td>
+									<td><c:out value="${job.databaseErrorCount}" /></td>
+									<td><c:out value="${job.crawlerErrorCount}" /></td>
+									<td><c:out value="${job.articlesCollected}" /></td>
 									<td><c:out value="${job.status}" /></td>
 								</tr>
 							</c:forEach>

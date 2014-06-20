@@ -56,21 +56,21 @@ public class Job extends AbstractIdentifiable {
      * 
      */
     @Basic(fetch = FetchType.LAZY)
-    @Formula("(SELECT COUNT(*) FROM CRAWLER_ERROR ce where ce.CRAWLER_ERROR_ID = JOB_ID)")
+    @Formula("(SELECT COUNT(*) FROM CRAWLER_ERROR ce where ce.FK_JOB_ID = JOB_ID)")
     private Integer crawlerErrorsCount;
 
     /**
      * 
      */
     @Basic(fetch = FetchType.LAZY)
-    @Formula("(SELECT COUNT(*) FROM DATABASE_ERROR de where de.DATABASE_ERROR_ID = JOB_ID)")
+    @Formula("(SELECT COUNT(*) FROM DATABASE_ERROR de where de.FK_JOB_ID = JOB_ID)")
     private Integer databaseErrorsCount;
 
     /**
      * 
      */
     @Basic(fetch = FetchType.LAZY)
-    @Formula("(SELECT COUNT(*) FROM ARTICLE a where a.ARTICLE_ID = JOB_ID)")
+    @Formula("(SELECT COUNT(*) FROM ARTICLE a where a.FK_JOB_ID = JOB_ID)")
     private Integer recordsCount;
 
     /**

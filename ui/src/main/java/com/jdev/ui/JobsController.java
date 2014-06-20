@@ -6,8 +6,6 @@ package com.jdev.ui;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jdev.domain.dao.IReadDao;
 import com.jdev.domain.dto.JobDto;
-import com.jdev.domain.entity.CrawlerError;
 import com.jdev.domain.entity.Job;
 
 @RestController
@@ -28,14 +25,7 @@ public class JobsController {
     @Autowired
     private IReadDao<Job> jobDao;
 
-    /**
-     * 
-     */
-    @Autowired
-    private IReadDao<CrawlerError> readCrawlerErrorDao;
-
     @RequestMapping(method = RequestMethod.GET, value = "/jobs")
-    @Transactional
     public ModelAndView get() {
         List<Job> listOfJobs = jobDao.findAll();
         List<JobDto> list = new LinkedList<>();
