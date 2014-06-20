@@ -40,12 +40,18 @@ public class JobDto implements Serializable {
     private String siteUrl;
 
     /**
+     * 
+     */
+    private int databaseErrorCount, crawlerErrorCount, articlesCollected;
+
+    /**
      * @param startTime
      * @param endTime
      * @param status
      * @param siteUrl
      */
-    public JobDto(Date startTime, Date endTime, JobStatusEnum status, String siteUrl) {
+    public JobDto(final Date startTime, final Date endTime, final JobStatusEnum status,
+            final String siteUrl) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.status = status;
@@ -69,7 +75,7 @@ public class JobDto implements Serializable {
      * @param startTime
      *            the startTime to set
      */
-    public final void setStartTime(Date startTime) {
+    public final void setStartTime(final Date startTime) {
         this.startTime = startTime;
     }
 
@@ -84,7 +90,7 @@ public class JobDto implements Serializable {
      * @param endTime
      *            the endTime to set
      */
-    public final void setEndTime(Date endTime) {
+    public final void setEndTime(final Date endTime) {
         this.endTime = endTime;
     }
 
@@ -99,7 +105,7 @@ public class JobDto implements Serializable {
      * @param status
      *            the status to set
      */
-    public final void setStatus(JobStatusEnum status) {
+    public final void setStatus(final JobStatusEnum status) {
         this.status = status;
     }
 
@@ -114,7 +120,52 @@ public class JobDto implements Serializable {
      * @param siteUrl
      *            the siteUrl to set
      */
-    public final void setSiteUrl(String siteUrl) {
+    public final void setSiteUrl(final String siteUrl) {
         this.siteUrl = siteUrl;
+    }
+
+    /**
+     * @return the databaseErrorCount
+     */
+    public final int getDatabaseErrorCount() {
+        return databaseErrorCount;
+    }
+
+    /**
+     * @param databaseErrorCount
+     *            the databaseErrorCount to set
+     */
+    public final void setDatabaseErrorCount(final int databaseErrorCount) {
+        this.databaseErrorCount = databaseErrorCount;
+    }
+
+    /**
+     * @return the crawlerErrorCount
+     */
+    public final int getCrawlerErrorCount() {
+        return crawlerErrorCount;
+    }
+
+    /**
+     * @param crawlerErrorCount
+     *            the crawlerErrorCount to set
+     */
+    public final void setCrawlerErrorCount(final int crawlerErrorCount) {
+        this.crawlerErrorCount = crawlerErrorCount;
+    }
+
+    /**
+     * @return the articlesCollected
+     */
+    public final int getArticlesCollected() {
+        return articlesCollected;
+    }
+
+    /**
+     * @param articlesCollected
+     *            the articlesCollected to set
+     */
+    public final void setArticlesCollected(final int articlesCollected) {
+        this.articlesCollected = articlesCollected;
     }
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,7 +16,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import org.hibernate.annotations.Formula;
 
 /**
  * @author Aleh
@@ -53,16 +55,42 @@ public class Job extends AbstractIdentifiable {
     /**
      * 
      */
-    @Transient
-    // @Formula("(select count(*) from ad_category_hierarchy ah join " +
-    // "ad_categories ac on ac.id = ah.childid where ah.parentid = id)")
-    private int crawlerErrorsCount;
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(*) FROM CRAWLER_ERROR ce where ce.CRAWLER_ERROR_ID = JOB_ID)")
+    private Integer crawlerErrorsCount;
 
     /**
      * 
      */
-    @Transient
-    private int databaseErrorsCount;
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(*) FROM DATABASE_ERROR de where de.DATABASE_ERROR_ID = JOB_ID)")
+    private Integer databaseErrorsCount;
+
+    /**
+     * 
+     */
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(*) FROM ARTICLE a where a.ARTICLE_ID = JOB_ID)")
+    private Integer recordsCount;
+
+    /**
+     * @param startTime
+     * @param endTime
+     * @param status
+     * @param crawlerErrorsCount
+     * @param databaseErrorsCount
+     * @param recordsCount
+     */
+    public Job(final Date startTime, final Date endTime, final JobStatusEnum status,
+            final Integer crawlerErrorsCount, final Integer databaseErrorsCount,
+            final Integer recordsCount) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = status;
+        this.crawlerErrorsCount = crawlerErrorsCount;
+        this.databaseErrorsCount = databaseErrorsCount;
+        this.recordsCount = recordsCount;
+    }
 
     /**
      * Constructor.
@@ -136,5 +164,50 @@ public class Job extends AbstractIdentifiable {
      */
     public final void setStatus(final JobStatusEnum status) {
         this.status = status;
+    }
+
+    /**
+     * @return the crawlerErrorsCount
+     */
+    public final Integer getCrawlerErrorsCount() {
+        return crawlerErrorsCount;
+    }
+
+    /**
+     * @param crawlerErrorsCount
+     *            the crawlerErrorsCount to set
+     */
+    public final void setCrawlerErrorsCount(final Integer crawlerErrorsCount) {
+        this.crawlerErrorsCount = crawlerErrorsCount;
+    }
+
+    /**
+     * @return the databaseErrorsCount
+     */
+    public final Integer getDatabaseErrorsCount() {
+        return databaseErrorsCount;
+    }
+
+    /**
+     * @param databaseErrorsCount
+     *            the databaseErrorsCount to set
+     */
+    public final void setDatabaseErrorsCount(final Integer databaseErrorsCount) {
+        this.databaseErrorsCount = databaseErrorsCount;
+    }
+
+    /**
+     * @return the recordsCount
+     */
+    public final Integer getRecordsCount() {
+        return recordsCount;
+    }
+
+    /**
+     * @param recordsCount
+     *            the recordsCount to set
+     */
+    public final void setRecordsCount(final Integer recordsCount) {
+        this.recordsCount = recordsCount;
     }
 }

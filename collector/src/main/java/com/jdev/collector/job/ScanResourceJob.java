@@ -64,7 +64,7 @@ public class ScanResourceJob implements IObserver {
     /**
      * Entity validator.
      */
-    private CommonEntityValidator<Article> articleValidator;
+    private CommonEntityValidator entityValidator;
 
     /**
      * 
@@ -98,7 +98,7 @@ public class ScanResourceJob implements IObserver {
         this.credential = credential;
         this.unitOfWork = unitOfWork;
         collector.setEventHandlerDelegate(this);
-        articleValidator = new CommonEntityValidator<>();
+        entityValidator = new CommonEntityValidator();
         strategy = new DefaultCongregationStrategy();
     }
 
@@ -237,26 +237,25 @@ public class ScanResourceJob implements IObserver {
      * @return
      */
     private boolean validateArticle(final Article article) {
-        if (articleValidator != null) {
-            articleValidator.setEntity(article);
-            return articleValidator.validate();
+        if (entityValidator != null) {
+            return entityValidator.validate(article);
         }
         throw new UnsupportedOperationException("Validator is null");
     }
 
     /**
-     * @return the articleValidator
+     * @return the entityValidator
      */
     public final IValidator getEntityValidator() {
-        return articleValidator;
+        return entityValidator;
     }
 
     /**
-     * @param articleValidator
-     *            the articleValidator to set
+     * @param entityValidator
+     *            the entityValidator to set
      */
-    public final void setEntityValidator(final CommonEntityValidator<Article> entityValidator) {
-        articleValidator = entityValidator;
+    public final void setEntityValidator(final CommonEntityValidator entityValidator) {
+        this.entityValidator = entityValidator;
     }
 
     /**

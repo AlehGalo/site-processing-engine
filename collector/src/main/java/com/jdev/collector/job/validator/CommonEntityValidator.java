@@ -3,6 +3,7 @@
  */
 package com.jdev.collector.job.validator;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -15,12 +16,7 @@ import org.apache.commons.collections.CollectionUtils;
  * @author Aleh
  * 
  */
-public class CommonEntityValidator<T> implements IValidator {
-
-    /**
-     * Object.
-     */
-    private T t;
+public class CommonEntityValidator implements IValidator {
 
     /**
      * Javax validator.
@@ -30,13 +26,14 @@ public class CommonEntityValidator<T> implements IValidator {
     /**
      * 
      */
-    private Set<ConstraintViolation<T>> setOfConstraints;
+    private final Set<ConstraintViolation<?>> setOfConstraints;
 
     /**
      * Constructor.
      */
     public CommonEntityValidator() {
         validator = Validation.buildDefaultValidatorFactory().getValidator();
+        setOfConstraints = new HashSet<>();
     }
 
     /*
@@ -47,30 +44,16 @@ public class CommonEntityValidator<T> implements IValidator {
      * .core.process.model.IEntity)
      */
     @Override
-    public boolean validate() {
-        setOfConstraints = validator.validate(getEntity());
+    public <T> boolean validate(final T entity) {
+        setOfConstraints.clear();
+        setOfConstraints.addAll(validator.<T> validate(entity));
         return CollectionUtils.isEmpty(setOfConstraints);
-    }
-
-    /**
-     * @return the t
-     */
-    public final T getEntity() {
-        return t;
-    }
-
-    /**
-     * @param t
-     *            the t to set
-     */
-    public final void setEntity(final T t) {
-        this.t = t;
     }
 
     /**
      * @return the setOfConstraints
      */
-    public final Set<ConstraintViolation<T>> getSetOfConstraints() {
+    public final Set<ConstraintViolation<?>> getfConstraints() {
         return setOfConstraints;
     }
 

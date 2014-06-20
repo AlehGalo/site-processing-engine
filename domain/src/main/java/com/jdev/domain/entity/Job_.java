@@ -10,9 +10,12 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Job_ extends com.jdev.domain.entity.AbstractIdentifiable_ {
 
 	public static volatile SingularAttribute<Job, Date> startTime;
+	public static volatile SingularAttribute<Job, Integer> crawlerErrorsCount;
 	public static volatile SingularAttribute<Job, JobStatusEnum> status;
+	public static volatile SingularAttribute<Job, Integer> databaseErrorsCount;
 	public static volatile SingularAttribute<Job, Date> endTime;
 	public static volatile SingularAttribute<Job, Credential> credential;
+	public static volatile SingularAttribute<Job, Integer> recordsCount;
 
 }
 

@@ -6,7 +6,7 @@
 	<property name="now" value="now()" dbms="mysql" />
 
 	<!-- JHipster core -->
-	<changeSet id="h1" author="jhipster">
+	<changeSet id="h1" author="jhipster" context="prod">
 		<createTable tableName="T_USER">
 			<column name="login" type="varchar(50)">
 				<constraints primaryKey="true" nullable="false" />
@@ -80,7 +80,7 @@
 	</changeSet>
 
 	<!-- Manage the new Springboot actuator Audit event -->
-	<changeSet id="h2" author="jhipster">
+	<changeSet id="h2" author="jhipster" context="prod">
 		<createTable tableName="T_PERSISTENT_AUDIT_EVENT">
 			<column name="event_id" type="bigint">
 				<constraints primaryKey="true" nullable="false" />
@@ -119,7 +119,7 @@
 	</changeSet>
 
 	<!-- Manage the new registration facility -->
-	<changeSet id="h4" author="jhipster">
+	<changeSet id="h4" author="jhipster" context="prod">
 		<addColumn tableName="T_USER">
 			<column name="activated" type="int" defaultValue="1">
 				<constraints nullable="false" />

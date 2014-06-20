@@ -3,52 +3,52 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-	<changeSet id="1" author="aleh">
+	<changeSet id="1" author="aleh" context="dev, prod">
 		<sqlFile relativeToChangelogFile="true"
 			path="20140408_create_database_tables.sql" encoding="UTF-8" />
 	</changeSet>
 
-	<changeSet id="2" author="aleh">
+	<changeSet id="2" author="aleh" context="dev, prod">
 		<sqlFile relativeToChangelogFile="true"
 			path="20140408_create_databases_for_recomendations.sql" encoding="UTF-8" />
 	</changeSet>
 
-	<changeSet id="3" author="aleh">
+	<changeSet id="3" author="aleh" context="dev, prod">
 		<sqlFile relativeToChangelogFile="true"
 			path="20140422_create_job_table.sql" encoding="UTF-8" />
 	</changeSet>
 
-	<changeSet id="4" author="aleh">
+	<changeSet id="4" author="aleh" context="dev, prod">
 		<sqlFile relativeToChangelogFile="true"
 			path="20140422_alter_article_table.sql" encoding="UTF-8" />
 	</changeSet>
 
-	<changeSet id="5" author="aleh">
+	<changeSet id="5" author="aleh" context="dev, prod">
 		<sqlFile relativeToChangelogFile="true"
 			path="20140502_insert_site_table.sql" encoding="UTF-8" />
 	</changeSet>
 
-	<changeSet id="6" author="aleh">
+	<changeSet id="6" author="aleh" context="dev, prod">
 		<sqlFile relativeToChangelogFile="true"
 			path="20140519_create_credentials_for_sites.sql" encoding="UTF-8" />
 	</changeSet>
 
-	<changeSet id="7" author="aleh">
+	<changeSet id="7" author="aleh" context="dev, prod">
 		<sqlFile relativeToChangelogFile="true"
 			path="20140519_insert_credentials_for_sites.sql" encoding="UTF-8" />
 	</changeSet>
 
-	<changeSet id="8" author="aleh">
+	<changeSet id="8" author="aleh" context="dev, prod">
 		<sqlFile relativeToChangelogFile="true"
 			path="20140520_alter_job_table.sql" encoding="UTF-8" />
 	</changeSet>
 
-	<changeSet id="9" author="aleh">
+	<changeSet id="9" author="aleh" context="dev, prod">
 		<sqlFile relativeToChangelogFile="true"
 			path="20140522_create_tables_for_errors.sql" encoding="UTF-8" />
 	</changeSet>
 
-	<changeSet id="10" author="aleh">
+	<changeSet id="10" author="aleh" context="dev, prod">
 		<sqlFile relativeToChangelogFile="true"
 			path="20140616_update_current_time_at_user.sql" encoding="UTF-8" />
 	</changeSet>

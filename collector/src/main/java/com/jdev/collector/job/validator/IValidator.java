@@ -12,6 +12,6 @@ public interface IValidator {
     /**
      * @return true/false.
      */
-    boolean validate();
+    <T> boolean validate(T object);
 
 }
