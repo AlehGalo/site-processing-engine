@@ -19,12 +19,11 @@ import com.jdev.collector.job.strategy.ICongragationFlowStrategy;
 import com.jdev.collector.job.validator.CommonEntityValidator;
 import com.jdev.collector.job.validator.IValidator;
 import com.jdev.collector.site.AbstractCollector;
-import com.jdev.collector.site.ICollector;
+import com.jdev.collector.site.factory.ICollectorBuilder;
 import com.jdev.collector.site.handler.IObserver;
 import com.jdev.crawler.exception.CrawlerException;
 import com.jdev.domain.entity.Article;
 import com.jdev.domain.entity.CrawlerError;
-import com.jdev.domain.entity.Credential;
 import com.jdev.domain.entity.DatabaseError;
 import com.jdev.domain.entity.Job;
 import com.jdev.domain.entity.JobStatusEnum;
@@ -44,12 +43,12 @@ public class ScanResourceJob implements IObserver {
     /**
      * 
      */
-    private final IUnitOfWork unitOfWork;
+    private final int MAX_DATABASE_ERROR_QUEUE_COUNT = 10;
 
     /**
      * 
      */
-    private final ICollector collector;
+    private final IUnitOfWork unitOfWork;
 
     /**
      * Strategy that defines of processing flow.
@@ -84,34 +83,38 @@ public class ScanResourceJob implements IObserver {
     /**
      * 
      */
-    private final Credential credential;
+    private final ICollectorBuilder collectorBuilder;
 
     /**
-     * @param userName
+     * @param collectorBuilder
+     * @param unitOfWork
      */
-    public ScanResourceJob(final AbstractCollector collector, final Credential credential,
-            final IUnitOfWork unitOfWork) {
-        Assert.notNull(collector);
-        Assert.notNull(credential);
+    public ScanResourceJob(ICollectorBuilder collectorBuilder, final IUnitOfWork unitOfWork) {
+        Assert.notNull(collectorBuilder);
         Assert.notNull(unitOfWork);
-        this.collector = collector;
-        this.credential = credential;
-        this.unitOfWork = unitOfWork;
-        collector.setEventHandlerDelegate(this);
+        this.collectorBuilder = collectorBuilder;
         entityValidator = new CommonEntityValidator();
         strategy = new DefaultCongregationStrategy();
+        this.unitOfWork = unitOfWork;
     }
 
-    @Scheduled(fixedDelay = 3600000, initialDelay = 100)
+    @Scheduled(fixedDelay = 10000, initialDelay = 100)
     public void scan() {
+        AbstractCollector collector = collectorBuilder.createCollector();
+        System.out.println(collector);
+        collector.setEventHandlerDelegate(this);
         job = createInitiatedJob();
-        job.setCredential(credential);
+        System.out.println(collectorBuilder.getCredential());
+        job.setCredential(collectorBuilder.getCredential());
         unitOfWork.saveJob(job);
         try {
             collector.congregate();
         } catch (CrawlerException ce) {
             saveCrawlerError(ce);
             return;
+        } catch (RuntimeException re) {
+            re.printStackTrace();
+            // TODO: change it
         }
         job.setStatus(JobStatusEnum.FINISHED);
         finishExecutionWell();
@@ -156,12 +159,12 @@ public class ScanResourceJob implements IObserver {
     public void articleCollected(final Article article) {
         final String url = article.getOriginalArticleUrl();
         article.setJob(job);
-        try {
-            saveArticle(article);
+        if (saveArticle(article)) {
             dbQueueErrorsCounter = 0;
-        } catch (Exception e) {
-            processError(e, url);
+        } else {
+            ++dbQueueErrorsCounter;
         }
+        checkDBErrors();
         if (!strategy.isCongregationContinued()) {
             // TODO: remove this ugly code.
             processError(new IllegalArgumentException(), url);
@@ -171,17 +174,18 @@ public class ScanResourceJob implements IObserver {
     /**
      * @param article
      */
-    private void saveArticle(final Article article) {
+    private boolean saveArticle(final Article article) {
         ++transactionCounter;
-        if (validateArticle(article) && unitOfWork.saveArticle(article)) {
+        boolean saveArticle = unitOfWork.saveArticle(article);
+        if (validateArticle(article) && saveArticle) {
             if (transactionCounter >= 10) {
                 updateJobEndTime();
                 unitOfWork.updateJob(job);
                 transactionCounter = 0;
             }
-        } else {
-            processError(new PersistenceException(), article.getOriginalArticleUrl());
+            return true;
         }
+        return false;
     }
 
     /**
@@ -198,14 +202,18 @@ public class ScanResourceJob implements IObserver {
             perError.setJob(job);
             unitOfWork.saveDatabaseError(error);
             ++dbQueueErrorsCounter;
-            if (dbQueueErrorsCounter >= 10) {
-                updateJobEndTime();
-                job.setStatus(JobStatusEnum.DB_ERRORS_MUCH);
-                unitOfWork.updateJob(job);
-                ReflectionUtils.rethrowRuntimeException(e);
-            }
+            checkDBErrors();
         } else {
             ReflectionUtils.rethrowRuntimeException(e);
+        }
+    }
+
+    private void checkDBErrors() {
+        if (dbQueueErrorsCounter >= MAX_DATABASE_ERROR_QUEUE_COUNT) {
+            updateJobEndTime();
+            job.setStatus(JobStatusEnum.DB_ERRORS_MUCH);
+            unitOfWork.updateJob(job);
+            throw new RuntimeException();
         }
     }
 
