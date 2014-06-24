@@ -25,6 +25,12 @@ public class DatabaseError extends AbstractIdentifiable {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 
+     */
+    @Embedded
+    private PersistentError error;
+
+    /**
      * Url of the error resource.
      */
     @Column(name = "URL", nullable = false, columnDefinition = "VARCHAR(256)")
@@ -33,29 +39,8 @@ public class DatabaseError extends AbstractIdentifiable {
     /**
      * 
      */
-    @Embedded
-    private PersistentError error;
-
-    /**
-     * 
-     */
     public DatabaseError() {
         setError(new PersistentError());
-    }
-
-    /**
-     * @return the url
-     */
-    public final String getUrl() {
-        return url;
-    }
-
-    /**
-     * @param url
-     *            the url to set
-     */
-    public final void setUrl(final String url) {
-        this.url = url;
     }
 
     /**
@@ -71,5 +56,20 @@ public class DatabaseError extends AbstractIdentifiable {
      */
     public final void setError(final PersistentError error) {
         this.error = error;
+    }
+
+    /**
+     * @return the url
+     */
+    public final String getUrl() {
+        return url;
+    }
+
+    /**
+     * @param url
+     *            the url to set
+     */
+    public final void setUrl(final String url) {
+        this.url = url;
     }
 }

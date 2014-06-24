@@ -3,16 +3,17 @@
  */
 package com.jdev.collector.job;
 
+import static com.jdev.collector.job.ErrorMessages.DUPLICATE_ERROR_MESSAGE;
+import static com.jdev.collector.job.ErrorMessages.INVALID_ENTITY_MESSAGE;
+import static com.jdev.domain.entity.JobStatusEnum.FAILED_CRAWLER;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 import java.util.Date;
 
-import javax.persistence.PersistenceException;
-
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.HibernateException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.Assert;
-import org.springframework.util.ReflectionUtils;
 
+import com.jdev.collector.job.exception.EmergencyStopExecutionException;
 import com.jdev.collector.job.handler.IExceptionalCaseHandler;
 import com.jdev.collector.job.strategy.DefaultCongregationStrategy;
 import com.jdev.collector.job.strategy.ICongragationFlowStrategy;
@@ -34,11 +35,6 @@ import com.jdev.domain.entity.PersistentError;
  * 
  */
 public class ScanResourceJob implements IObserver {
-
-    /**
-     * 
-     */
-    private static final String EMTPY_ERROR_MESSAGE = "Empty Error Message";
 
     /**
      * 
@@ -68,12 +64,12 @@ public class ScanResourceJob implements IObserver {
     /**
      * 
      */
-    private int transactionCounter = 0;
+    private int transactionCounter;
 
     /**
      * 
      */
-    private int dbQueueErrorsCounter = 0;
+    private int queueErrorsCounter;
 
     /**
      * 
@@ -89,7 +85,7 @@ public class ScanResourceJob implements IObserver {
      * @param collectorBuilder
      * @param unitOfWork
      */
-    public ScanResourceJob(ICollectorBuilder collectorBuilder, final IUnitOfWork unitOfWork) {
+    public ScanResourceJob(final ICollectorBuilder collectorBuilder, final IUnitOfWork unitOfWork) {
         Assert.notNull(collectorBuilder);
         Assert.notNull(unitOfWork);
         this.collectorBuilder = collectorBuilder;
@@ -98,48 +94,88 @@ public class ScanResourceJob implements IObserver {
         this.unitOfWork = unitOfWork;
     }
 
-    @Scheduled(fixedDelay = 10000, initialDelay = 100)
+    /**
+     * 
+     */
+    @Scheduled(fixedDelay = 600000, initialDelay = 100)
     public void scan() {
-        AbstractCollector collector = collectorBuilder.createCollector();
-        System.out.println(collector);
-        collector.setEventHandlerDelegate(this);
-        job = createInitiatedJob();
-        System.out.println(collectorBuilder.getCredential());
-        job.setCredential(collectorBuilder.getCredential());
-        unitOfWork.saveJob(job);
+        AbstractCollector collector = forceStartValues();
         try {
             collector.congregate();
-        } catch (CrawlerException ce) {
-            saveCrawlerError(ce);
+        } catch (EmergencyStopExecutionException emergencyExit) {
+            finishExecution(JobStatusEnum.DB_ERRORS_MUCH);
             return;
-        } catch (RuntimeException re) {
-            re.printStackTrace();
-            // TODO: change it
+        } catch (CrawlerException | RuntimeException exception) {
+            saveCrawlerError(exception.getMessage(), FAILED_CRAWLER);
+            return;
         }
-        job.setStatus(JobStatusEnum.FINISHED);
-        finishExecutionWell();
+        finishExecution(JobStatusEnum.FINISHED);
     }
 
     /**
-     * @param ce
-     *            Exception.
+     * 
      */
-    private void saveCrawlerError(final CrawlerException ce) {
+    private AbstractCollector forceStartValues() {
+        transactionCounter = 0;
+        queueErrorsCounter = 0;
+        AbstractCollector collector = collectorBuilder.createCollector();
+        collector.setEventHandlerDelegate(this);
+        job = createInitiatedJob();
+        job.setCredential(collectorBuilder.getCredential());
+        unitOfWork.saveJob(job);
+        return collector;
+    }
+
+    /**
+     * @param errorMessage
+     * @param status
+     */
+    private void saveCrawlerError(final String errorMessage, final JobStatusEnum status) {
+        saveCrawlerError(errorMessage, status, null);
+    }
+
+    /**
+     * @param errorMessage
+     * @param jobStatus
+     * @param url
+     */
+    private void saveCrawlerError(final String errorMessage, final JobStatusEnum jobStatus,
+            final String url) {
+        final String errorMessageFinal = isEmpty(errorMessage) ? INVALID_ENTITY_MESSAGE
+                : errorMessage;
         CrawlerError crawlerError = new CrawlerError();
         PersistentError error = crawlerError.getError();
-        setErrorMessage(error, ce.getMessage());
+        crawlerError.setUrl(url);
+        error.setError(errorMessageFinal);
         error.setJob(job);
-        updateJobEndTime();
-        job.setStatus(JobStatusEnum.FAILED_CRAWLER);
-        unitOfWork.updateJob(job);
+        if (jobStatus != null) {
+            finishExecution(jobStatus);
+        }
         unitOfWork.saveCrawlerError(crawlerError);
+    }
+
+    /**
+     * @param e
+     * @param resourceUrl
+     *            url of the resource.
+     */
+    private void saveDBError(final String errorMessage, final String resourceUrl) {
+        Assert.hasLength(errorMessage);
+        Assert.hasLength(resourceUrl);
+        DatabaseError error = new DatabaseError();
+        PersistentError perError = error.getError();
+        perError.setError(errorMessage);
+        error.setUrl(resourceUrl);
+        perError.setJob(job);
+        unitOfWork.saveDatabaseError(error);
     }
 
     /**
      * Just update job details.
      */
-    private void finishExecutionWell() {
-        job.setStatus(JobStatusEnum.FINISHED);
+    private void finishExecution(final JobStatusEnum status) {
+        Assert.notNull(status);
+        job.setStatus(status);
         updateJobEndTime();
         unitOfWork.updateJob(job);
     }
@@ -156,64 +192,57 @@ public class ScanResourceJob implements IObserver {
     }
 
     @Override
-    public void articleCollected(final Article article) {
-        final String url = article.getOriginalArticleUrl();
-        article.setJob(job);
-        if (saveArticle(article)) {
-            dbQueueErrorsCounter = 0;
-        } else {
-            ++dbQueueErrorsCounter;
-        }
-        checkDBErrors();
+    public void articleCollected(final Article article) throws EmergencyStopExecutionException {
+        ++transactionCounter;
+        saveArticle(article);
+        checkErrorsQueue();
+        persistsJobState();
         if (!strategy.isCongregationContinued()) {
             // TODO: remove this ugly code.
-            processError(new IllegalArgumentException(), url);
         }
     }
 
     /**
      * @param article
      */
-    private boolean saveArticle(final Article article) {
-        ++transactionCounter;
-        boolean saveArticle = unitOfWork.saveArticle(article);
-        if (validateArticle(article) && saveArticle) {
-            if (transactionCounter >= 10) {
-                updateJobEndTime();
-                unitOfWork.updateJob(job);
-                transactionCounter = 0;
+    private void saveArticle(final Article article) {
+        Assert.notNull(article);
+        article.setJob(job);
+        boolean validateArticle = validateArticle(article);
+        if (validateArticle) {
+            boolean isArticleAbsent = unitOfWork.isArticleAbsent(article);
+            if (isArticleAbsent) {
+                unitOfWork.saveArticle(article);
+                queueErrorsCounter = 0;
+                return;
+            } else {
+                saveDBError(DUPLICATE_ERROR_MESSAGE, article.getOriginalArticleUrl());
             }
-            return true;
+        } else {
+            saveCrawlerError(ErrorMessages.INVALID_ENTITY_MESSAGE, null,
+                    article.getOriginalArticleUrl());
         }
-        return false;
+        ++queueErrorsCounter;
     }
 
     /**
-     * @param e
-     * @param resourceUrl
-     *            url of the resource.
+     * 
      */
-    private void processError(final Exception e, final String resourceUrl) {
-        if (e instanceof HibernateException || e instanceof PersistenceException) {
-            DatabaseError error = new DatabaseError();
-            PersistentError perError = error.getError();
-            setErrorMessage(perError, e.getMessage());
-            error.setUrl(resourceUrl);
-            perError.setJob(job);
-            unitOfWork.saveDatabaseError(error);
-            ++dbQueueErrorsCounter;
-            checkDBErrors();
-        } else {
-            ReflectionUtils.rethrowRuntimeException(e);
+    private void persistsJobState() {
+        if (transactionCounter >= 10) {
+            updateJobEndTime();
+            unitOfWork.updateJob(job);
+            transactionCounter = 0;
         }
     }
 
-    private void checkDBErrors() {
-        if (dbQueueErrorsCounter >= MAX_DATABASE_ERROR_QUEUE_COUNT) {
-            updateJobEndTime();
-            job.setStatus(JobStatusEnum.DB_ERRORS_MUCH);
-            unitOfWork.updateJob(job);
-            throw new RuntimeException();
+    /**
+     * @throws EmergencyStopExecutionException
+     * 
+     */
+    private void checkErrorsQueue() throws EmergencyStopExecutionException {
+        if (queueErrorsCounter >= MAX_DATABASE_ERROR_QUEUE_COUNT) {
+            throw new EmergencyStopExecutionException(ErrorMessages.MAXIMUM_EXCEEDED_MESSAGE);
         }
     }
 
@@ -264,17 +293,5 @@ public class ScanResourceJob implements IObserver {
      */
     public final void setEntityValidator(final CommonEntityValidator entityValidator) {
         this.entityValidator = entityValidator;
-    }
-
-    /**
-     * @param error
-     * @param errorMessage
-     */
-    private void setErrorMessage(final PersistentError error, final String errorMessage) {
-        String res = errorMessage;
-        if (StringUtils.isEmpty(errorMessage)) {
-            res = EMTPY_ERROR_MESSAGE;
-        }
-        error.setError(res);
     }
 }

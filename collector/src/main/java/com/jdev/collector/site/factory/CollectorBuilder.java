@@ -3,9 +3,10 @@
  */
 package com.jdev.collector.site.factory;
 
+import static com.jdev.collector.job.UserDataUtils.createUserData;
+
 import org.springframework.util.Assert;
 
-import com.jdev.collector.job.UserDataUtils;
 import com.jdev.collector.site.AbstractCollector;
 import com.jdev.collector.site.FlRuCollector;
 import com.jdev.collector.site.FreelanceComCollector;
@@ -56,16 +57,14 @@ public class CollectorBuilder implements ICollectorBuilder {
     @Override
     public AbstractCollector createCollector() {
         credential = credentialDao.get(((long) site.ordinal() + 1));
-        System.out.println(credential);
-        System.out.println(credential.getUsername());
         Assert.notNull(credential);
         switch (site) {
         case FREELANCE_COM:
-            return new FreelanceComCollector(UserDataUtils.createUserData(credential));
+            return new FreelanceComCollector(createUserData(credential));
         case FREELANCE_RU:
-            return new FlRuCollector(UserDataUtils.createUserData(credential));
+            return new FlRuCollector(createUserData(credential));
         case FREELANCER_COM:
-            return new FreelancerComCollector(UserDataUtils.createUserData(credential));
+            return new FreelancerComCollector(createUserData(credential));
         default:
             throw new UnsupportedOperationException(site.name());
         }

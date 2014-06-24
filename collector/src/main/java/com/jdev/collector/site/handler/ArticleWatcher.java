@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
+import com.jdev.collector.job.exception.EmergencyStopExecutionException;
 import com.jdev.crawler.core.process.IProcessResultHandler;
 import com.jdev.crawler.core.process.IProcessSession;
 import com.jdev.crawler.core.process.model.IEntity;
@@ -77,7 +78,7 @@ public class ArticleWatcher implements IObservable, IProcessResultHandler {
     }
 
     @Override
-    public void notifyListeners() {
+    public void notifyListeners() throws EmergencyStopExecutionException {
         for (IObserver listener : listeners) {
             listener.articleCollected(article);
         }

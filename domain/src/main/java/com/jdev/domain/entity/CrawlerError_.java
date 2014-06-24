@@ -9,6 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class CrawlerError_ extends com.jdev.domain.entity.AbstractIdentifiable_ {
 
 	public static volatile SingularAttribute<CrawlerError, PersistentError> error;
+	public static volatile SingularAttribute<CrawlerError, String> url;
 
 }
 

@@ -3,6 +3,8 @@
  */
 package com.jdev.collector.site.handler;
 
+import com.jdev.collector.job.exception.EmergencyStopExecutionException;
+
 /**
  * @author Aleh
  * 
@@ -22,5 +24,5 @@ public interface IObservable {
     /**
      * 
      */
-    void notifyListeners();
+    void notifyListeners() throws EmergencyStopExecutionException;
 }

@@ -61,15 +61,8 @@ public class UnitOfWork implements IUnitOfWork {
     private IComposer<Article> articleComposer;
 
     @Override
-    public boolean saveArticle(final Article article) {
-        ICriteriaComposer<Article> articleCriteriaComposer = articleComposer.getCriteriaComposer();
-        if (CollectionUtils.isEmpty(readArticleDao.find(articleCriteriaComposer
-                .createCriteriaQueryByStringProperty("originalArticleUrl",
-                        article.getOriginalArticleUrl())))) {
-            writeArticleDao.save(article);
-            return true;
-        }
-        return false;
+    public void saveArticle(final Article article) {
+        writeArticleDao.save(article);
     }
 
     @Override
@@ -90,5 +83,13 @@ public class UnitOfWork implements IUnitOfWork {
     @Override
     public void saveCrawlerError(final CrawlerError error) {
         crawlerErrorDao.save(error);
+    }
+
+    @Override
+    public boolean isArticleAbsent(final Article article) {
+        ICriteriaComposer<Article> articleCriteriaComposer = articleComposer.getCriteriaComposer();
+        return CollectionUtils.isEmpty(readArticleDao.find(articleCriteriaComposer
+                .createCriteriaQueryByStringProperty("originalArticleUrl",
+                        article.getOriginalArticleUrl())));
     }
 }

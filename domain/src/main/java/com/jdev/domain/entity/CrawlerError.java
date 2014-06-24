@@ -26,6 +26,12 @@ public class CrawlerError extends AbstractIdentifiable {
     private PersistentError error;
 
     /**
+     * Url of the error resource.
+     */
+    @Column(name = "URL", nullable = true, columnDefinition = "VARCHAR(256)")
+    private String url;
+
+    /**
      * Constructor.
      */
     public CrawlerError() {
@@ -45,6 +51,21 @@ public class CrawlerError extends AbstractIdentifiable {
      */
     public final void setError(final PersistentError error) {
         this.error = error;
+    }
+
+    /**
+     * @return the url
+     */
+    public final String getUrl() {
+        return url;
+    }
+
+    /**
+     * @param url
+     *            the url to set
+     */
+    public final void setUrl(final String url) {
+        this.url = url;
     }
 
 }

@@ -70,7 +70,7 @@ final class HttpClientUtils {
                 }
             }
         } catch (SelectionException e) {
-            e.printStackTrace();
+            throw new InvalidPageException(e.getMessage());
         }
 
         // TODO: add logging
