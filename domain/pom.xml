@@ -145,6 +145,11 @@
 			<version>2.3.0</version>
 		</dependency>
 		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
 			<groupId>org.jadira.usertype</groupId>
 			<artifactId>usertype.core</artifactId>
 			<version>3.2.0.GA</version>
@@ -215,11 +220,11 @@
 						<configuration>
 							<propertyFileWillOverride>true</propertyFileWillOverride>
 							<propertyFile>src/main/resources/database.properties</propertyFile>
-							<logging>debug</logging>
+							<logging>severe</logging>
 							<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
 							<password>${database.password}</password>
 							<username>${database.username}</username>
-							<contexts>dev</contexts>
+							<contexts>dev, prod</contexts>
 							<url>jdbc:mysql://${database.host}:3306/${database.db.name}?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf8</url>
 						</configuration>
 						<goals>

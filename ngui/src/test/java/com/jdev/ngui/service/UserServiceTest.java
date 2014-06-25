@@ -17,6 +17,7 @@ import com.jdev.domain.dao.repository.UserRepository;
 import com.jdev.domain.entity.PersistentToken;
 import com.jdev.domain.entity.User;
 import com.jdev.ngui.Application;
+import com.jdev.ui.service.UserService;
 
 /**
  * Test class for the UserResource REST controller.

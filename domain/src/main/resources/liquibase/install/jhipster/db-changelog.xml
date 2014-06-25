@@ -143,5 +143,10 @@
 		<loadData encoding="UTF-8"
 			file="liquibase/install/jhipster/users_authorities_upd.csv"
 			separator=";" tableName="T_USER_AUTHORITY" />
+
+		<update tableName="T_USER">
+			<column name="created_date" value="${now}" />
+			<column name="last_modified_date" value="${now}" />
+		</update>
 	</changeSet>
 </databaseChangeLog>

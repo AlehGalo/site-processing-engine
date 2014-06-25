@@ -31,8 +31,8 @@ import com.jdev.domain.dao.repository.UserRepository;
 import com.jdev.domain.entity.Authority;
 import com.jdev.domain.entity.User;
 import com.jdev.ngui.Application;
-import com.jdev.ngui.security.AuthoritiesConstants;
-import com.jdev.ngui.service.UserService;
+import com.jdev.ui.security.AuthoritiesConstants;
+import com.jdev.ui.service.UserService;
 
 /**
  * Test class for the AccountResource REST controller.
