@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jdev.domain.dao.IReadDao;
 import com.jdev.domain.entity.DatabaseError;
-import com.jdev.domain.entity.Job;
 
 /**
  * @author Aleh
@@ -28,9 +27,6 @@ public class DatabaseErrorController {
      */
     @Autowired
     private IReadDao<DatabaseError> databaseErrorReadDao;
-
-    @Autowired
-    private IReadDao<Job> jobReadDao;
 
     @RequestMapping(method = RequestMethod.GET, value = "/dberror/{jobId}")
     public ModelAndView get(@PathVariable(value = "jobId") int jobId) {

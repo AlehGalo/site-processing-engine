@@ -1,4 +1,4 @@
-package com.jdev.ui.config;
+package com.jdev.domain.config;
 
 import java.lang.management.ManagementFactory;
 import java.net.InetSocketAddress;

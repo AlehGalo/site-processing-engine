@@ -1,4 +1,7 @@
-<ehcache updateCheck="false">
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" name="CM1"
+	updateCheck="false">
 
 	<!-- Sets the path to the directory where cache .data files are created. 
 		If the path is a Java System Property it is replaced by its value in the 
@@ -34,6 +37,26 @@
 	<cache name="com.jdev.domain.Site" maxElementsInMemory="10"
 		eternal="false" timeToIdleSeconds="1800" timeToLiveSeconds="3600"
 		overflowToDisk="false" />
+
+	<cache name="com.jdev.ngui.domain.User" timeToLiveSeconds="3600"
+		maxBytesLocalHeap="16M">
+	</cache>
+
+	<cache name="com.jdev.ngui.domain.Authority" timeToLiveSeconds="3600"
+		maxBytesLocalHeap="16M">
+	</cache>
+
+	<cache name="com.jdev.ngui.domain.User.authorities"
+		timeToLiveSeconds="3600" maxBytesLocalHeap="16M">
+	</cache>
+
+	<cache name="com.jdev.ngui.domain.PersistentToken"
+		timeToLiveSeconds="3600" maxBytesLocalHeap="16M">
+	</cache>
+
+	<cache name="com.jdev.ngui.domain.User.persistentTokens"
+		timeToLiveSeconds="3600" maxBytesLocalHeap="16M">
+	</cache>
 
 	<!-- See http://ehcache.sourceforge.net/documentation/#mozTocId258426 for 
 		how to configure caching for your objects -->

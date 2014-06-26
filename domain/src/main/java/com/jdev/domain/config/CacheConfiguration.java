@@ -1,4 +1,4 @@
-package com.jdev.ui.config;
+package com.jdev.domain.config;
 
 import java.util.Set;
 import java.util.SortedSet;
@@ -57,8 +57,9 @@ public class CacheConfiguration {
     public CacheManager cacheManager() {
         log.debug("Starting Ehcache");
         cacheManager = net.sf.ehcache.CacheManager.create();
-        cacheManager.getConfiguration().setMaxBytesLocalHeap(
-                env.getProperty("cache.ehcache.maxBytesLocalHeap", String.class, "16M"));
+        // cacheManager.getConfiguration().setMaxBytesLocalHeap(
+        // env.getProperty("cache.ehcache.maxBytesLocalHeap", String.class,
+        // "16M"));
         log.debug("Registring Ehcache Metrics gauges");
         Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
         for (EntityType<?> entity : entities) {
@@ -71,8 +72,9 @@ public class CacheConfiguration {
 
             net.sf.ehcache.Cache cache = cacheManager.getCache(name);
             if (cache != null) {
-                cache.getCacheConfiguration().setTimeToLiveSeconds(
-                        env.getProperty("cache.timeToLiveSeconds", Integer.class, 3600));
+                // cache.getCacheConfiguration().setTimeToLiveSeconds(
+                // env.getProperty("cache.timeToLiveSeconds", Integer.class,
+                // 3600));
                 net.sf.ehcache.Ehcache decoratedCache = InstrumentedEhcache.instrument(
                         metricRegistry, cache);
                 cacheManager.replaceCacheWithDecoratedCache(cache, decoratedCache);

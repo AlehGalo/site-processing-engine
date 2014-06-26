@@ -1,15 +1,16 @@
-package com.jdev.ui.config.metrics;
+package com.jdev.domain.config.metrics;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.boot.actuate.health.HealthIndicator;
 
 /**
  * A health indicator check for a component of your application
  */
-public abstract class HealthCheckIndicator implements HealthIndicator<Map<String, HealthCheckIndicator.Result>> {
+public abstract class HealthCheckIndicator implements
+        HealthIndicator<Map<String, HealthCheckIndicator.Result>> {
 
     private static final Result HEALTHY = new Result(true, null, null);
 
@@ -20,11 +21,13 @@ public abstract class HealthCheckIndicator implements HealthIndicator<Map<String
 
     /**
      * Perform a check of the application component.
-     *
-     * @return if the component is healthy, a healthy Result; otherwise, an unhealthy Result
-     *          with a descriptive error message or/and exception
-     * @throws Exception if there is an unhandled error during the health check; this will result in
-     *                   a failed health check
+     * 
+     * @return if the component is healthy, a healthy Result; otherwise, an
+     *         unhealthy Result with a descriptive error message or/and
+     *         exception
+     * @throws Exception
+     *             if there is an unhandled error during the health check; this
+     *             will result in a failed health check
      */
     protected abstract Result check() throws Exception;
 
@@ -47,7 +50,8 @@ public abstract class HealthCheckIndicator implements HealthIndicator<Map<String
     }
 
     /**
-     * @param message an informative message
+     * @param message
+     *            an informative message
      * @return a healthy Result with an additional message
      */
     public static Result healthy(String message) {
@@ -55,7 +59,9 @@ public abstract class HealthCheckIndicator implements HealthIndicator<Map<String
     }
 
     /**
-     * @param message an informative message describing how the health check indicator failed
+     * @param message
+     *            an informative message describing how the health check
+     *            indicator failed
      * @return an unhealthy Result with the given message
      */
     public static Result unhealthy(String message) {
@@ -63,7 +69,8 @@ public abstract class HealthCheckIndicator implements HealthIndicator<Map<String
     }
 
     /**
-     * @param error an exception thrown during the health check
+     * @param error
+     *            an exception thrown during the health check
      * @return an unhealthy Result with the given error
      */
     public static Result unhealthy(Throwable error) {
@@ -71,8 +78,11 @@ public abstract class HealthCheckIndicator implements HealthIndicator<Map<String
     }
 
     /**
-     * @param message an informative message describing how the health check indicator failed
-     * @param error an exception thrown during the health check
+     * @param message
+     *            an informative message describing how the health check
+     *            indicator failed
+     * @param error
+     *            an exception thrown during the health check
      * @return an unhealthy Result with the given error
      */
     public static Result unhealthy(String message, Throwable error) {
@@ -83,8 +93,8 @@ public abstract class HealthCheckIndicator implements HealthIndicator<Map<String
      * The result of a HealthCheckIndicator
      */
     public static class Result {
-        private boolean healthy;
-        private String message;
+        private final boolean healthy;
+        private final String message;
         private Throwable exception;
 
         public Result(boolean healthy, String message) {
@@ -107,7 +117,7 @@ public abstract class HealthCheckIndicator implements HealthIndicator<Map<String
         }
 
         public String getException() {
-            return ExceptionUtils.getFullStackTrace(exception);
+            return ExceptionUtils.getStackTrace(exception);
         }
     }
 }

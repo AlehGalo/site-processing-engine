@@ -1,4 +1,4 @@
-package com.jdev.ui.config.metrics;
+package com.jdev.domain.config.metrics;
 
 import java.sql.Connection;
 import java.sql.SQLException;
