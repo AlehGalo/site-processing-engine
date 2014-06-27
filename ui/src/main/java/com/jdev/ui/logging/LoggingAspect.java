@@ -19,6 +19,7 @@ import com.jdev.ui.Constants;
  * Aspect for logging execution of service and repository Spring components.
  */
 @Aspect
+@Deprecated
 public class LoggingAspect {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());

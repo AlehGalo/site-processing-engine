@@ -108,6 +108,21 @@
 			<artifactId>snakeyaml</artifactId>
 			<version>1.13</version>
 		</dependency>
+		<dependency>
+			<groupId>com.codahale.metrics</groupId>
+			<artifactId>metrics-servlet</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.codahale.metrics</groupId>
+			<artifactId>metrics-servlets</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.infomas</groupId>
+			<artifactId>annotation-detector</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 	</dependencies>
 	<profiles>
 		<profile>
@@ -148,6 +163,11 @@
 		</profile>
 		<profile>
 			<id>startTomcat</id>
+			<properties>
+				<spring.profiles.active>prod</spring.profiles.active>
+				<logback.loglevel>TRACE</logback.loglevel>
+				<logback.appender>FILE</logback.appender>
+			</properties>
 			<build>
 				<plugins>
 					<plugin>

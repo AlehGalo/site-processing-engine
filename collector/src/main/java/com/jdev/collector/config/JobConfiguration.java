@@ -3,16 +3,11 @@
  */
 package com.jdev.collector.config;
 
-import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.jdev.collector.job.IUnitOfWork;
-import com.jdev.collector.job.ScanResourceJob;
-import com.jdev.collector.site.SiteEnum;
-import com.jdev.collector.site.factory.CollectorBuilder;
 import com.jdev.domain.dao.IReadDao;
 import com.jdev.domain.entity.Credential;
 
@@ -35,21 +30,17 @@ public class JobConfiguration {
     @Autowired
     private IReadDao<Credential> credentialDao;
 
-    @Bean(autowire = Autowire.BY_NAME)
-    public ScanResourceJob flruJob() {
-        return new ScanResourceJob(new CollectorBuilder(SiteEnum.FREELANCE_RU, credentialDao),
-                unitOfWork);
-    }
-
-    @Bean(autowire = Autowire.BY_NAME)
-    public ScanResourceJob freelanceComJob() {
-        return new ScanResourceJob(new CollectorBuilder(SiteEnum.FREELANCE_COM, credentialDao),
-                unitOfWork);
-    }
-
-    @Bean(autowire = Autowire.BY_NAME)
-    public ScanResourceJob freelancerComJob() {
-        return new ScanResourceJob(new CollectorBuilder(SiteEnum.FREELANCER_COM, credentialDao),
-                unitOfWork);
-    }
+    /*
+     * @Bean(autowire = Autowire.BY_NAME) public ScanResourceJob flruJob() {
+     * return new ScanResourceJob(new CollectorBuilder(SiteEnum.FREELANCE_RU,
+     * credentialDao), unitOfWork); }
+     * 
+     * @Bean(autowire = Autowire.BY_NAME) public ScanResourceJob
+     * freelanceComJob() { return new ScanResourceJob(new
+     * CollectorBuilder(SiteEnum.FREELANCE_COM, credentialDao), unitOfWork); }
+     * 
+     * @Bean(autowire = Autowire.BY_NAME) public ScanResourceJob
+     * freelancerComJob() { return new ScanResourceJob(new
+     * CollectorBuilder(SiteEnum.FREELANCER_COM, credentialDao), unitOfWork); }
+     */
 }

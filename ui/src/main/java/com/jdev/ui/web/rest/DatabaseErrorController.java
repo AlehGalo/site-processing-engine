@@ -21,6 +21,7 @@ import com.jdev.domain.entity.Job;
  * 
  */
 @RestController
+@RequestMapping("/app")
 public class DatabaseErrorController {
 
     /**
@@ -33,7 +34,7 @@ public class DatabaseErrorController {
     private IReadDao<Job> jobReadDao;
 
     @RequestMapping(method = RequestMethod.GET, value = "/dberror/{jobId}")
-    public ModelAndView get(@PathVariable(value = "jobId") int jobId) {
+    public ModelAndView get(@PathVariable(value = "jobId") final int jobId) {
         List<DatabaseError> listOfDatabaseErrors = databaseErrorReadDao.findAll();
         // TODO: implement
         ModelAndView modelAndView = new ModelAndView("dberrors");

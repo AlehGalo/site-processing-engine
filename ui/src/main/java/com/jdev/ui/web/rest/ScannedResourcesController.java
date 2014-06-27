@@ -23,6 +23,7 @@ import com.jdev.domain.entity.Article_;
  * 
  */
 @RestController
+@RequestMapping("/app")
 public class ScannedResourcesController {
 
     /**

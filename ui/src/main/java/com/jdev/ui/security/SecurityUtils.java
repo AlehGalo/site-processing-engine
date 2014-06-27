@@ -21,7 +21,9 @@ public final class SecurityUtils {
      */
     public static String getCurrentLogin() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
+        System.out.println(securityContext);
         Authentication authentication = securityContext.getAuthentication();
+        System.out.println(authentication);
         UserDetails springSecurityUser = null;
         String userName = null;
 
@@ -37,13 +39,14 @@ public final class SecurityUtils {
 
     /**
      * Check if a user is authenticated.
-     *
+     * 
      * @return true if the user is authenticated, false otherwise
      */
     public static boolean isAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
 
-        final Collection<? extends GrantedAuthority> authorities = securityContext.getAuthentication().getAuthorities();
+        final Collection<? extends GrantedAuthority> authorities = securityContext
+                .getAuthentication().getAuthorities();
 
         if (authorities != null) {
             for (GrantedAuthority authority : authorities) {

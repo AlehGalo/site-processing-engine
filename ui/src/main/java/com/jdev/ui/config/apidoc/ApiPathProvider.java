@@ -10,12 +10,12 @@ import com.mangofactory.swagger.core.SwaggerPathProvider;
 public class ApiPathProvider implements SwaggerPathProvider {
     private SwaggerPathProvider defaultSwaggerPathProvider;
 
-   @Autowired
+    @Autowired
     private ServletContext servletContext;
 
-    private String docsLocation;
+    private final String docsLocation;
 
-    public ApiPathProvider(String docsLocation) {
+    public ApiPathProvider(final String docsLocation) {
         this.docsLocation = docsLocation;
     }
 
@@ -24,29 +24,24 @@ public class ApiPathProvider implements SwaggerPathProvider {
         return defaultSwaggerPathProvider.getApiResourcePrefix();
     }
 
+    @Override
     public String getAppBasePath() {
-        return UriComponentsBuilder
-                .fromHttpUrl(docsLocation)
-                .path(servletContext.getContextPath())
-                .build()
-                .toString();
+        return UriComponentsBuilder.fromHttpUrl(docsLocation).path(servletContext.getContextPath())
+                .build().toString();
     }
 
     @Override
     public String getSwaggerDocumentationBasePath() {
-        return UriComponentsBuilder
-                .fromHttpUrl(getAppBasePath())
-                .pathSegment("api-docs/")
-                .build()
+        return UriComponentsBuilder.fromHttpUrl(getAppBasePath()).pathSegment("api-docs/").build()
                 .toString();
     }
 
     @Override
-    public String getRequestMappingEndpoint(String requestMappingPattern) {
+    public String getRequestMappingEndpoint(final String requestMappingPattern) {
         return defaultSwaggerPathProvider.getRequestMappingEndpoint(requestMappingPattern);
     }
 
-    public void setDefaultSwaggerPathProvider(SwaggerPathProvider defaultSwaggerPathProvider) {
+    public void setDefaultSwaggerPathProvider(final SwaggerPathProvider defaultSwaggerPathProvider) {
         this.defaultSwaggerPathProvider = defaultSwaggerPathProvider;
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	version="2.5">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
 	<display-name>Informer Web-App</display-name>
 	<description>Informer system</description>
 	<session-config>
@@ -16,13 +16,14 @@ java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		</param-value>
 	</context-param>
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener
-		</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.jdev.ui.config.CustomInstrumentedFilterContextListener</listener-class>
 	</listener>
 	<servlet>
 		<servlet-name>DispatcherServlet</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet
-		</servlet-class>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath:com/jdev/ui/uiSpringContext.xml
@@ -33,4 +34,56 @@ java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>DispatcherServlet</servlet-name>
 		<url-pattern>/app/*</url-pattern>
 	</servlet-mapping>
+	<filter>
+		<filter-name>InstrumentedFilter</filter-name>
+		<filter-class>com.codahale.metrics.servlet.InstrumentedFilter</filter-class>
+		<async-supported>true</async-supported>
+	</filter>
+	<filter-mapping>
+		<filter-name>InstrumentedFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>MetricsServlet</servlet-name>
+		<servlet-class>com.codahale.metrics.servlets.MetricsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MetricsServlet</servlet-name>
+		<url-pattern>/metrics/metrics/*</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>AtmosphereServlet</servlet-name>
+		<servlet-class>org.atmosphere.cpr.AtmosphereServlet</servlet-class>
+		<init-param>
+			<param-name>org.atmosphere.cpr.packages</param-name>
+			<param-value>com.jdev.ngui.web.websocket</param-value>
+		</init-param>
+		<init-param>
+			<param-name>org.atmosphere.cpr.broadcasterCacheClass</param-name>
+			<param-value>org.atmosphere.cache.UUIDBroadcasterCache</param-value>
+		</init-param>
+		<init-param>
+			<param-name>org.atmosphere.cpr.broadcaster.shareableThreadPool</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>org.atmosphere.cpr.broadcaster.maxProcessingThreads</param-name>
+			<param-value>10</param-value>
+		</init-param>
+		<!-- <init-param> <param-name>org.atmosphere.websocket.messageContentType</param-name> 
+			<param-value>application/json</param-value> </init-param> -->
+		<init-param>
+			<param-name>org.atmosphere.cpr.broadcaster.maxAsyncWriteThreads</param-name>
+			<param-value>10</param-value>
+		</init-param>
+		<load-on-startup>3</load-on-startup>
+		<async-supported>true</async-supported>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AtmosphereServlet</servlet-name>
+		<url-pattern>/websocket/*</url-pattern>
+	</servlet-mapping>
+	<listener>
+		<listener-class>org.atmosphere.cpr.SessionSupport</listener-class>
+	</listener>
 </web-app>

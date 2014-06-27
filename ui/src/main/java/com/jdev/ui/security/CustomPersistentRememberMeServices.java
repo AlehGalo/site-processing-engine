@@ -10,6 +10,7 @@ import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
@@ -61,6 +62,7 @@ import com.jdev.domain.entity.User;
  * <p/>
  */
 @Service
+@PropertySource("classpath:/config/application-dev.properties")
 public class CustomPersistentRememberMeServices extends AbstractRememberMeServices {
 
     private final Logger log = LoggerFactory.getLogger(CustomPersistentRememberMeServices.class);
@@ -76,17 +78,16 @@ public class CustomPersistentRememberMeServices extends AbstractRememberMeServic
 
     private final SecureRandom random;
 
-   @Autowired
+    @Autowired
     private PersistentTokenRepository persistentTokenRepository;
 
-   @Autowired
+    @Autowired
     private UserRepository userRepository;
 
-   @Autowired
+    @Autowired
     public CustomPersistentRememberMeServices(
             final Environment env,
             final org.springframework.security.core.userdetails.UserDetailsService userDetailsService) {
-
         super(env.getProperty("jhipster.security.rememberme.key"), userDetailsService);
         random = new SecureRandom();
     }

@@ -8,35 +8,42 @@ import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @Configuration
+@PropertySource("classpath:/config/application-dev.properties")
 public class MailConfiguration implements EnvironmentAware {
 
-    private static final String ENV_SPRING_MAIL = "spring.mail.";
-    private static final String DEFAULT_HOST = "127.0.0.1";
-    private static final String PROP_HOST = "host";
-    private static final String DEFAULT_PROP_HOST = "localhost";
-    private static final String PROP_PORT = "port";
-    private static final String PROP_USER = "user";
-    private static final String PROP_PASSWORD = "password";
-    private static final String PROP_PROTO = "protocol";
-    private static final String PROP_TLS = "tls";
-    private static final String PROP_AUTH = "auth";
-    private static final String PROP_SMTP_AUTH = "mail.smtp.auth";
-    private static final String PROP_STARTTLS = "mail.smtp.starttls.enable";
-    private static final String PROP_TRANSPORT_PROTO = "mail.transport.protocol";
+    // spring.mail.host= localhost
+    // spring.mail.port= 25
+    // spring.mail.user=
+    // spring.mail.password=
+    // spring.mail.protocol= smtp
+    // spring.mail.tls= false
+    // spring.mail.auth= false
+
+    private final String ENV_SPRING_MAIL = "spring.mail.";
+    private final String DEFAULT_HOST = "127.0.0.1";
+    private final String PROP_HOST = "host";
+    private final String DEFAULT_PROP_HOST = "localhost";
+    private final String PROP_PORT = "port";
+    private final String PROP_USER = "user";
+    private final String PROP_PASSWORD = "password";
+    private final String PROP_PROTO = "protocol";
+    private final String PROP_TLS = "tls";
+    private final String PROP_AUTH = "auth";
+    private final String PROP_SMTP_AUTH = "mail.smtp.auth";
+    private final String PROP_STARTTLS = "mail.smtp.starttls.enable";
+    private final String PROP_TRANSPORT_PROTO = "mail.transport.protocol";
 
     private final Logger log = LoggerFactory.getLogger(MailConfiguration.class);
 
     private RelaxedPropertyResolver propertyResolver;
 
-    public MailConfiguration() {
-    }
-
     @Override
-    public void setEnvironment(Environment environment) {
+    public void setEnvironment(final Environment environment) {
         this.propertyResolver = new RelaxedPropertyResolver(environment, ENV_SPRING_MAIL);
     }
 

@@ -6,13 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import com.jdev.domain.config.metrics.HealthCheckIndicator;
+
 /**
  * SpringBoot Actuator HealthIndicator check for JavaMail.
  */
 public class JavaMailHealthCheckIndicator extends HealthCheckIndicator {
 
     public static final String EMAIL_HEALTH_INDICATOR = "email";
-	
+
     private final Logger log = LoggerFactory.getLogger(JavaMailHealthCheckIndicator.class);
 
     private JavaMailSenderImpl javaMailSender;
@@ -20,7 +22,7 @@ public class JavaMailHealthCheckIndicator extends HealthCheckIndicator {
     public JavaMailHealthCheckIndicator() {
     }
 
-    public void setJavaMailSender(JavaMailSenderImpl javaMailSender) {
+    public void setJavaMailSender(final JavaMailSenderImpl javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
 
@@ -34,9 +36,11 @@ public class JavaMailHealthCheckIndicator extends HealthCheckIndicator {
         log.debug("Initializing JavaMail health indicator");
 
         try {
-            javaMailSender.getSession().getTransport().connect(javaMailSender.getHost(),
-                    javaMailSender.getUsername(),
-                    javaMailSender.getPassword());
+            javaMailSender
+                    .getSession()
+                    .getTransport()
+                    .connect(javaMailSender.getHost(), javaMailSender.getUsername(),
+                            javaMailSender.getPassword());
 
             return healthy();
 

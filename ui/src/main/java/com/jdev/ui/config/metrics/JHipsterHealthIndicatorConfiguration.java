@@ -11,13 +11,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import com.jdev.domain.config.metrics.DatabaseHealthCheckIndicator;
+import com.jdev.domain.config.metrics.HealthCheckIndicator;
+
 @Configuration
 public class JHipsterHealthIndicatorConfiguration implements InitializingBean {
 
-   @Autowired
+    @Autowired
     private JavaMailSenderImpl javaMailSender;
 
-   @Autowired
+    @Autowired
     private DriverManagerDataSource dataSource;
 
     private final JavaMailHealthCheckIndicator javaMailHealthCheckIndicator = new JavaMailHealthCheckIndicator();

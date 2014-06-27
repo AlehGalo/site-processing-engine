@@ -17,6 +17,7 @@ import com.jdev.domain.dto.JobDto;
 import com.jdev.domain.entity.Job;
 
 @RestController
+@RequestMapping("/app")
 public class JobsController {
 
     /**
