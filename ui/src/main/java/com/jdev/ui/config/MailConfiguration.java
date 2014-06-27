@@ -16,14 +16,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 @PropertySource("classpath:/config/application-dev.properties")
 public class MailConfiguration implements EnvironmentAware {
 
-    // spring.mail.host= localhost
-    // spring.mail.port= 25
-    // spring.mail.user=
-    // spring.mail.password=
-    // spring.mail.protocol= smtp
-    // spring.mail.tls= false
-    // spring.mail.auth= false
-
     private final String ENV_SPRING_MAIL = "spring.mail.";
     private final String DEFAULT_HOST = "127.0.0.1";
     private final String PROP_HOST = "host";
