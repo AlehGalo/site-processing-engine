@@ -11,7 +11,6 @@
 		<module>collector</module>
 		<module>domain</module>
 		<module>ui</module>
-		<module>ngui</module>
 	</modules>
 	<properties>
 		<external.resources.version>1.0</external.resources.version>
